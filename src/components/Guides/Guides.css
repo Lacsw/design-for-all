@@ -1,0 +1,10 @@
+.guides {
+	background-color: #000;
+}
+
+.guides__container {
+	width: calc(100% - 240px);
+	margin: 30px auto;
+	display: flex;
+	gap: 40px;
+}

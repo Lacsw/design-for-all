@@ -1,0 +1,46 @@
+.tree-menu {
+	background: #161616;
+	border-radius: 12px;
+	width: 222px;
+	padding: 13px;
+	box-sizing: border-box;
+}
+
+.rc-tree-title {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 130%;
+	color: #ffffff;
+	padding-left: 20px;
+}
+
+.node {
+	display: flex;
+	color: #fff;
+	cursor: pointer;
+	padding-top: 6px;
+}
+
+.tree {
+	padding: 0;
+	list-style: none;
+	margin: 0;
+}
+
+.tree-node {
+	padding: 0 10px !important;
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 130%;
+}
+
+.tree-branch-wrapper::marker {
+	display: none;
+}
+.tree-leaf-list-item {
+	list-style: none;
+}

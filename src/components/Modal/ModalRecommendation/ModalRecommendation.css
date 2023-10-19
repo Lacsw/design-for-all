@@ -1,0 +1,15 @@
+.modal-reccomendation__input {
+	width: 100%;
+}
+
+.modal-reccomendation__input-span {
+	display: block;
+	margin-bottom: 5px;
+	color: #fff;
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%;
+	letter-spacing: 0.24px;
+}

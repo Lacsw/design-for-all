@@ -1,0 +1,29 @@
+.input {
+	display: flex;
+	border-radius: 12px;
+	background: #242424;
+	padding: 10px;
+}
+
+.input_valid {
+	border: 2px solid #45861d;
+}
+
+.input_error {
+	border: 2px solid #ac3e3e;
+}
+
+.input__field {
+	width: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+
+	color: #fff;
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%;
+	letter-spacing: 0.24px;
+}

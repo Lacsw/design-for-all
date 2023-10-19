@@ -1,0 +1,51 @@
+.application {
+	background: #161616;
+	border-radius: 12px;
+	padding: 30px;
+	width: 409px;
+	height: 330.92px;
+	box-sizing: border-box;
+}
+.application__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+.application__title {
+	margin: 0;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 28px;
+	line-height: 130%;
+	letter-spacing: 0.02em;
+	color: #ffffff;
+}
+.application__text {
+	margin: 0;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 130%;
+	text-align: center;
+	color: #dadada;
+}
+
+.application__link {
+	color: inherit;
+	font-weight: bolder;
+}
+
+.application__button {
+	width: 42px;
+	height: 42px;
+	background: #ffffff;
+	border-radius: 50%;
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -1,0 +1,8 @@
+.input-editable__btn {
+	display: flex;
+	border: none;
+	outline: none;
+	background: transparent;
+	padding: 0;
+	cursor: pointer;
+}

@@ -1,0 +1,67 @@
+.guides-menu {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	background-color: inherit;
+	max-width: 222px;
+}
+.guides-menu__header {
+	display: flex;
+	gap: 46px;
+	align-items: center;
+	justify-content: space-between;
+}
+.guides-menu__title {
+	margin: 0;
+	color: #fff;
+	font-size: 16px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	line-height: 130%;
+	border-radius: 12px;
+	background: var(--unnamed, #161616);
+	padding: 7.5px 10px;
+
+	cursor: pointer;
+}
+
+.guides-menu__title::after {
+	content: url(../../images/tree-menu-icon.svg);
+	margin-left: 9px;
+}
+.guides-menu__search-button {
+	min-width: 36px;
+	min-height: 36px;
+	padding: 0;
+	background-color: #fff;
+	border-radius: 50%;
+	border: none;
+	background-image: url(../../images/loupe-icon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.guides-menu__guides-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.guides-menu__guide {
+	min-width: 194px;
+	padding: 12px 14px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 12px;
+	background-color: #161616;
+	box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
+	color: #ffffff;
+	font-size: 14px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	line-height: 130%;
+	letter-spacing: 0.28px;
+}

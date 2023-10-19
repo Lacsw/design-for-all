@@ -1,0 +1,119 @@
+.new-article {
+	color: #fff;
+	width: 676px;
+	border-radius: 12px;
+	background-color: #161616;
+}
+
+.new-article__container {
+	padding: 20px;
+}
+
+.new-article__title {
+	margin: 0;
+	font-family: Inter;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.new-aritcle__sub-title {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.new-article__label {
+	display: block;
+	margin-top: 15px;
+
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 150%;
+	letter-spacing: 0.24px;
+}
+
+.new-article__input {
+	display: block;
+	box-sizing: border-box;
+	border: none;
+	outline: none;
+	color: #fff;
+	background-color: #242424;
+	padding: 8px 16px;
+	border-radius: 12px;
+}
+
+.new-article__input::placeholder {
+	color: #343434;
+}
+
+.new-article__input_article-header {
+	width: 100%;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 150%;
+	letter-spacing: 0.48px;
+}
+
+.new-article__input_article-content {
+	width: 100%;
+	padding: 10px 16px;
+	resize: vertical;
+	overflow: auto;
+}
+
+.new-article__main-image {
+	color: transparent;
+	width: 100%;
+	height: 98px;
+	cursor: pointer;
+}
+
+.new-article__main-image::-webkit-file-upload-button {
+	visibility: hidden;
+}
+
+.new-article__main-image::before {
+	content: url('../../images/upload-img-icon.svg');
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 12px;
+	background: #242424;
+}
+
+.new-article__recommendations {
+	height: 100px;
+	border-radius: 12px;
+	background: #242424;
+	padding: 16px 20px;
+	display: flex;
+	gap: 20px;
+}
+
+.new-article__recommendations-btn {
+	border: none;
+	border-radius: 12px;
+	background: #161616;
+	height: 100%;
+	width: 119px;
+	cursor: pointer;
+	box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
+}
+
+.new-article__recommendations-tip {
+	display: block;
+	padding-top: 5px;
+
+	color: #fff;
+	text-align: center;
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}

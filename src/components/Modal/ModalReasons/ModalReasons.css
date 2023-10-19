@@ -1,0 +1,35 @@
+.modal__reasons-list {
+	align-self: flex-start;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.modal__reason {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+
+	color: #fff;
+	font-family: Inter;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 130%;
+}
+
+.modal__reason-icon {
+	padding: 8px;
+}
+
+.modal__reason-text {
+	margin: 0;
+	padding: 0;
+
+	color: #fff;
+	font-family: Inter;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 130%;
+}

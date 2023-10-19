@@ -1,0 +1,49 @@
+.admin-create-user__container {
+	display: flex;
+	gap: 40px;
+}
+
+.admin-create-user__form {
+	padding: 30px 66px;
+	width: 676px;
+	box-sizing: border-box;
+	background-color: #161616;
+	border-radius: 12px;
+	display: flex;
+	justify-content: space-around;
+	gap: 20px;
+}
+
+.admin-create-user__fieldset {
+	display: flex;
+	flex-direction: column;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.admin-create-user__field {
+	padding-bottom: 15px;
+}
+
+.admin-create-user__field:last-child {
+	padding-bottom: 0;
+}
+
+.admin-create-user__sub-title {
+	display: block;
+	padding-bottom: 5px;
+	color: #fff;
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%;
+	letter-spacing: 0.24px;
+}
+
+.admin-create-user__buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}

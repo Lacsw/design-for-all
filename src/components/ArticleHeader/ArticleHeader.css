@@ -1,0 +1,49 @@
+.article-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.article-header__title {
+	margin: 0;
+	color: #fff;
+	font-size: 30px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	line-height: 130%;
+	letter-spacing: 0.6px;
+}
+
+.article-header__icon-container {
+	display: flex;
+	gap: 10px;
+}
+
+.article-header__button {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.article-header__button-image {
+	width: 20px;
+	height: 20px;
+}
+
+.article-header__timing {
+	margin: 0;
+	color: #dadada;
+	font-size: 12px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	line-height: 130%;
+	letter-spacing: 0.24px;
+}
