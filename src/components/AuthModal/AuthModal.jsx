@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import './AuthModal.css';
-import plusIcon from '../../images/plus-icon.svg';
+import LoginForm from './LoginForm/LoginForm';
+import SigininForm from './SigininForm/SigininForm';
 
 const AuthModal = ({ isOpen, onClose }) => {
 	const [isAuthTabActive, setIsAuthTabActive] = useState(true);
@@ -22,11 +23,6 @@ const AuthModal = ({ isOpen, onClose }) => {
 		if (evt.target.classList.contains('modal')) {
 			onClose();
 		}
-	};
-
-	const handleSubmit = (evt) => {
-		evt.preventDefault();
-		onClose();
 	};
 
 	const handleSigninTabClick = () => {
@@ -67,80 +63,9 @@ const AuthModal = ({ isOpen, onClose }) => {
 				</button>
 			</div>
 			{isAuthTabActive ? (
-				<form className="auth-modal__container">
-					<label className="auth-modal__field">
-						Логин
-						<input
-							type="email"
-							className="auth-modal__input"
-							placeholder="Логин"
-						/>
-					</label>
-
-					<label className="auth-modal__field">
-						Пароль
-						<input
-							type="password"
-							className="auth-modal__input"
-							placeholder="Пароль"
-						/>
-					</label>
-
-					<button
-						onClick={handleSubmit}
-						className="auth-modal__main-btn"
-						type="submit"
-						aria-label="кнопка входа"
-					>
-						Войти
-					</button>
-				</form>
+				<LoginForm onClose={onClose} />
 			) : (
-				<form className="auth-modal__container auth-modal__container_signin">
-					<label className="auth-modal__field">
-						*Email
-						<input
-							type="Email"
-							className="auth-modal__input"
-							placeholder="email"
-						/>
-					</label>
-
-					<label className="auth-modal__field">
-						*Ссылки на ваши проекты
-						<div className="auth-modal__input-projects">
-							<input
-								type="url"
-								className="auth-modal__input"
-								placeholder="Ссылка на проект"
-							/>
-							<button className="auth-modal__input-projects-btn">
-								<img src={plusIcon} alt="добавить проект" />
-							</button>
-						</div>
-					</label>
-
-					<p className="auth-modal__politics">
-						Нажимая кнопку «Зарегистрироваться» вы:
-						<br /> Даете право на обработку{' '}
-						<a href="personal" className="auth-modal__politics-link">
-							персональных данных
-						</a>{' '}
-						Соглашаетесь с{' '}
-						<a href="terms-of-service" className="auth-modal__politics-link">
-							пользовательским соглашением
-						</a>
-					</p>
-
-					<button
-						onClick={handleSubmit}
-						className="auth-modal__main-btn"
-						type="submit"
-						aria-label="кнопка входа"
-					>
-						Регистрация
-					</button>
-				</form>
+				<SigininForm onClose={onClose} />
 			)}
 		</div>
 	);

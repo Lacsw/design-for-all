@@ -61,7 +61,7 @@ export default function Main() {
 				</div>
 			</div>
 			<Footer />
-			<AuthModal />
+			<AuthModal isOpen={true} />
 		</>
 	);
 }

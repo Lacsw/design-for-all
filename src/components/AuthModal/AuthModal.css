@@ -137,6 +137,10 @@
 	line-height: normal;
 }
 
+.auth-modal__main-btn_active {
+	color:  #161616;
+}
+
 .auth-modal__input-projects {
 	display: flex;
 }

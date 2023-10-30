@@ -27,3 +27,12 @@
 	line-height: 150%;
 	letter-spacing: 0.24px;
 }
+
+.input__hide-icon {
+	cursor: pointer;
+	transition: opacity 0.3s ease-in-out;
+}
+
+.input__hide-icon:hover {
+	opacity: 0.5;
+}
