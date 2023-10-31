@@ -1,16 +1,14 @@
-import { useState } from 'react';
+import { useFormValidation } from '../../../utils/hooks/useFormValidation';
 import Input from '../../Input/Input';
 
 export default function LoginForm({ onClose }) {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const { values, handleChange, errors, isValid } = useFormValidation();
+	const isFormValid = values.login && values.password;
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		onClose();
 	};
-
-	const isFormValid = email && password;
 
 	return (
 		<form className="auth-modal__container">
@@ -18,21 +16,29 @@ export default function LoginForm({ onClose }) {
 				Логин
 				<Input
 					type="email"
+					name="login"
 					className="auth-modal__input"
 					placeholder="Логин"
-					value={email}
-					onChange={(evt) => setEmail(evt.target.value)}
+					value={values.login}
+					onChange={handleChange}
+					isValid={isValid}
+					required={true}
+					errors={errors.login}
 				/>
 			</label>
 
 			<label className="auth-modal__field">
 				Пароль
 				<Input
+					name="password"
 					type="password"
 					className="auth-modal__input"
 					placeholder="Пароль"
-					value={password}
-					onChange={(evt) => setPassword(evt.target.value)}
+					value={values.password}
+					onChange={handleChange}
+					isValid={isValid}
+					required={true}
+					errors={errors.password}
 				/>
 			</label>
 

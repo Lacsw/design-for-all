@@ -10,21 +10,35 @@ export default function Input({
 	value,
 	placeholder,
 	onChange,
+	name,
+	errors,
+	required = false,
 }) {
 	const [visibility, setVisibility] = useState(type);
+	const [hasFocus, setHasFocus] = useState(false);
+	const validationClass = !errors && value ? 'input_valid' : 'input_error';
 
 	function toggleInputVisibility() {
 		setVisibility(visibility === 'password' ? 'text' : 'password');
 	}
 
+	function handleBlur({ target }) {
+		target.value = target.value.trim();
+		setHasFocus(true);
+	}
+
 	return (
-		<div className="input">
+		<div className={`input ${hasFocus ? validationClass : ''}`}>
 			<input
+				name={name}
 				className="input__field"
 				type={visibility}
 				value={value}
 				placeholder={placeholder}
+				required={required}
 				onChange={onChange}
+				onBlur={handleBlur}
+				autoComplete="off"
 			/>
 			{type === 'password' && (
 				<img
