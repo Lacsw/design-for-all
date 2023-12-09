@@ -5,7 +5,7 @@ import LoginForm from './LoginForm/LoginForm';
 import SigininForm from './SigininForm/SigininForm';
 
 const AuthModal = ({ isOpen, onClose }) => {
-	const [isAuthTabActive, setIsAuthTabActive] = useState(true);
+	const [isAuthTabActive, setIsAuthTabActive] = useState(false);
 
 	useEffect(() => {
 		if (isOpen) {
