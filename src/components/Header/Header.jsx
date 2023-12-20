@@ -7,6 +7,9 @@ import flag from '../../images/flag-icon.svg';
 import dollar from '../../images/dollar-icon.svg';
 import account from '../../images/account-icon.svg';
 import { NavLink } from 'react-router-dom';
+import DropdownNavigation from '../DropdownNavigation/DropdownNavigation';
+import { accountNavigationList, navigationOptionsList } from '../../utils/constants';
+import dropdownIconWhite from '../../images/navigation/dropdown-icon-white.svg';
 
 export default function Header() {
 	return (
@@ -21,12 +24,8 @@ export default function Header() {
 							<img src={loupe} alt="Иконка лупы" className="header__icon" />
 						</button>
 					</li>
-					<li>
-						<NavLink to="/articles">
-							<button className="header__icon-background">
-								<img src={list} alt="Иконка списка" className="header__icon" />
-							</button>
-						</NavLink>
+					<li >
+						<DropdownNavigation options={navigationOptionsList} titleIcon={dropdownIconWhite}/>
 					</li>
 					<li>
 						<button className="header__icon-background">
@@ -39,7 +38,8 @@ export default function Header() {
 						</button>
 					</li>
 					<li>
-						<NavLink to="/author/articles">
+						<DropdownNavigation options={accountNavigationList} titleIcon={account}/>
+						{/* <NavLink to="/author/articles">
 							<button className="header__icon-background">
 								<img
 									src={account}
@@ -47,7 +47,7 @@ export default function Header() {
 									className="header__icon"
 								/>
 							</button>
-						</NavLink>
+						</NavLink> */}
 					</li>
 				</ul>
 			</div>
