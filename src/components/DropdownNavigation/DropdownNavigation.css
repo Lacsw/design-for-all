@@ -6,13 +6,13 @@
 }
 
 .dropdown-navigation__title-icon-white {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	background-color: #fff;
 	border-radius: 50%;
-    width: 36px;
-    height: 36px;
+	width: 36px;
+	height: 36px;
 }
 
 .dropdown-navigation__menu-list {
@@ -22,8 +22,10 @@
 	padding: 40px 1px 28px 1px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 10px;
 	margin: 0;
+	width: 34px;
 	list-style: none;
 	background-color: #fff;
 	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
@@ -32,6 +34,10 @@
 	animation: downAni 0.3s forwards;
 }
 
+.dropdown-navigation__menu-list-item {
+	padding: 5px;
+	cursor: pointer;
+}
 
 .dropdown-navigation__sidebar {
 	position: absolute;

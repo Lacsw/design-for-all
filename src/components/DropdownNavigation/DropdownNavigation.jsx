@@ -2,9 +2,20 @@ import { useState } from 'react';
 import './DropdownNavigation.css';
 import { NavLink } from 'react-router-dom';
 
-export default function DropdownNavigation({ options, titleIcon, title }) {
+export default function DropdownNavigation({
+	options,
+	type,
+	titleIcon,
+	title,
+}) {
+	const [selectedOption, setSelectedOption] = useState(options[0]);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+
+	const handleOptionClick = (option) => {
+		const currentOption = options.filter((i) => i.name === option);
+		setSelectedOption(...currentOption);
+	};
 
 	return (
 		<div
@@ -16,30 +27,47 @@ export default function DropdownNavigation({ options, titleIcon, title }) {
 			}}
 		>
 			<div className="dropdown-navigation__title-icon-white">
-				<img src={titleIcon} alt={title} />
+				{type === 'dropdownWithLinks' ? (
+					<img src={titleIcon} alt={title} />
+				) : (
+					<img src={selectedOption.src} alt={selectedOption.name} />
+				)}
 			</div>
 
 			{isDropdownOpen ? (
 				<>
 					<ul className="dropdown-navigation__menu-list">
-						{options.map((option) => (
-							<li onMouseEnter={() => setIsSideMenuOpen(true)}>
-								{option.name === 'Свернуть' ? (
+						{options.map((option) =>
+							type === 'dropdownWithLinks' ? (
+								<li onMouseEnter={() => setIsSideMenuOpen(true)}>
+									{option.name === 'Свернуть' ? (
+										<img
+											className={
+												isSideMenuOpen
+													? 'dropdown-navigation__hide-button'
+													: null
+											}
+											src={option.src}
+											alt={option.name}
+											onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
+										/>
+									) : (
+										<NavLink to={option.link}>
+											<img src={option.src} alt={option.name} />
+										</NavLink>
+									)}
+								</li>
+							) : (
+								<li>
 									<img
-										className={
-											isSideMenuOpen ? 'dropdown-navigation__hide-button' : null
-										}
+										className="dropdown-navigation__menu-list-item "
 										src={option.src}
 										alt={option.name}
-										onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
+										onClick={() => handleOptionClick(option.name)}
 									/>
-								) : (
-									<NavLink to={option.link}>
-										<img src={option.src} alt={option.name} />
-									</NavLink>
-								)}
-							</li>
-						))}
+								</li>
+							)
+						)}
 					</ul>
 
 					{isSideMenuOpen ? (

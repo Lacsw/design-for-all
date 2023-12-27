@@ -2,13 +2,14 @@ import React from 'react';
 import './Header.css';
 import logo from '../../images/logo.svg';
 import loupe from '../../images/loupe-icon.svg';
-import list from '../../images/list-icon.svg';
-import flag from '../../images/flag-icon.svg';
-import dollar from '../../images/dollar-icon.svg';
 import account from '../../images/account-icon.svg';
-import { NavLink } from 'react-router-dom';
 import DropdownNavigation from '../DropdownNavigation/DropdownNavigation';
-import { accountNavigationList, navigationOptionsList } from '../../utils/constants';
+import {
+	accountNavigationList,
+	navigationOptionsList,
+	languageList,
+	currencyList,
+} from '../../utils/constants';
 import dropdownIconWhite from '../../images/navigation/dropdown-icon-white.svg';
 
 export default function Header() {
@@ -24,30 +25,25 @@ export default function Header() {
 							<img src={loupe} alt="Иконка лупы" className="header__icon" />
 						</button>
 					</li>
-					<li >
-						<DropdownNavigation options={navigationOptionsList} titleIcon={dropdownIconWhite}/>
+					<li>
+						<DropdownNavigation
+							options={navigationOptionsList}
+							titleIcon={dropdownIconWhite}
+							type="dropdownWithLinks"
+						/>
 					</li>
 					<li>
-						<button className="header__icon-background">
-							<img src={flag} alt="Иконка флага" className="header__icon" />
-						</button>
+						<DropdownNavigation options={languageList} />
 					</li>
 					<li>
-						<button className="header__icon-background">
-							<img src={dollar} alt="Иконка доллара" className="header__icon" />
-						</button>
+						<DropdownNavigation options={currencyList}/>
 					</li>
 					<li>
-						<DropdownNavigation options={accountNavigationList} titleIcon={account}/>
-						{/* <NavLink to="/author/articles">
-							<button className="header__icon-background">
-								<img
-									src={account}
-									alt="Иконка аккаунта"
-									className="header__icon"
-								/>
-							</button>
-						</NavLink> */}
+						<DropdownNavigation
+							options={accountNavigationList}
+							titleIcon={account}
+							type="dropdownWithLinks"
+						/>
 					</li>
 				</ul>
 			</div>
