@@ -10,6 +10,11 @@ import webBlack from '../images/navigation/web-icon-black.svg';
 import exitBlack from '../images/navigation/exit-icon-black.svg';
 import newArticleBlack from '../images/navigation/new-article-icon-black.svg';
 import profileBlack from '../images/navigation/profile-icon-black.svg';
+import ruFlag from '../images/flag-icon.svg';
+import chFlag from '../images/ch-flag-icon.svg';
+import enFlag from '../images/en-flag-icon.svg';
+import spaFlag from '../images/spa-flag-icon.svg';
+import usdIcon from '../images/dollar-icon.svg';
 
 export const langSelectOptions = [
 	{ label: 'Русский', value: 'ru' },
@@ -67,7 +72,16 @@ export const navigationOptionsList = [
 
 export const accountNavigationList = [
 	{ name: 'Написать статью', src: newArticleBlack, link: '/' },
-	{ name: 'Публикации', src: articleBlack, link: '/' },
-	{ name: 'Профиль', src: profileBlack, link: '/' },
+	{ name: 'Публикации', src: articleBlack, link: '/articles' },
+	{ name: 'Профиль', src: profileBlack, link: '/author/articles' },
 	{ name: 'Выйти', src: exitBlack, link: '/' },
+];
+
+export const currencyList = [{ name: 'USD', src: usdIcon }];
+
+export const languageList = [
+	{ name: 'RU', src: ruFlag },
+	{ name: 'CH', src: chFlag },
+	{ name: 'EN', src: enFlag },
+	{ name: 'SPA', src: spaFlag },
 ];
