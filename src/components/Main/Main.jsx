@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './Main.css';
 import listIcon from '../../images/main/list-icon.svg';
@@ -16,9 +16,15 @@ import { NavLink } from 'react-router-dom';
 import AuthModal from '../AuthModal/AuthModal';
 
 export default function Main() {
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+
+  const toogleModal = () => {
+    setIsAuthOpen(!isAuthOpen);
+  };
+
   return (
     <>
-      <Header />
+      <Header onProfileClick={toogleModal} />
       <Intro />
       <ul className="main-nav">
         <li className="main-nav__item">
@@ -118,7 +124,7 @@ export default function Main() {
         </div>
       </div>
       <Footer />
-      <AuthModal isOpen={true} />
+      <AuthModal isOpen={isAuthOpen} onClose={toogleModal} />
     </>
   );
 }

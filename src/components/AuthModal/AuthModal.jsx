@@ -18,7 +18,7 @@ const AuthModal = ({ isOpen, onClose }) => {
   }, [isOpen, onClose]);
 
   const closeByOver = (evt) => {
-    if (evt.target.classList.contains('modal')) {
+    if (evt.target.classList.contains('auth-modal')) {
       onClose();
     }
   };
