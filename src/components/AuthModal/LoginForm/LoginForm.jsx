@@ -4,7 +4,12 @@ import Input from '../../Input/Input';
 
 export default function LoginForm({ onClose }) {
   const { values, handleChange, errors, isValid } = useFormValidation();
-  const isFormValid = values.login && values.password;
+  const isFormValid =
+    values.login !== '' &&
+    values.password !== '' &&
+    isValid &&
+    !errors.login &&
+    !errors.password;
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -27,7 +32,7 @@ export default function LoginForm({ onClose }) {
       <label className="auth-modal__field">
         Логин
         <Input
-          type="email"
+          type="text"
           name="login"
           className="auth-modal__input"
           placeholder="Логин"
@@ -61,7 +66,7 @@ export default function LoginForm({ onClose }) {
         }`}
         type="submit"
         aria-label="кнопка входа"
-        disabled={!isFormValid}
+        disabled={isFormValid}
       >
         Войти
       </button>
