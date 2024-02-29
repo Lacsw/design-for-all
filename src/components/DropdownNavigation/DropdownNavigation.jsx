@@ -9,7 +9,7 @@ export default function DropdownNavigation({
 	title,
 }) {
 	const [selectedOption, setSelectedOption] = useState(options[0]);
-	const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
 	const handleOptionClick = (option) => {
@@ -37,9 +37,10 @@ export default function DropdownNavigation({
 			{isDropdownOpen ? (
 				<>
 					<ul className="dropdown-navigation__menu-list">
-						{options.map((option) =>
+						{options.map((option, i) =>
 							type === 'dropdownWithLinks' ? (
 								<li
+									key={i}
 									onMouseEnter={() => {
 										setIsSideMenuOpen(true);
 									}}
@@ -62,7 +63,7 @@ export default function DropdownNavigation({
 									)}
 								</li>
 							) : (
-								<li>
+								<li key={i}>
 									<img
 										className="dropdown-navigation__menu-list-item "
 										src={option.src}
@@ -76,8 +77,8 @@ export default function DropdownNavigation({
 
 					{isSideMenuOpen ? (
 						<ul className="dropdown-navigation__sidebar">
-							{options.map((option) => (
-								<li className="dropdown-navigation__sidebar-list-item">
+							{options.map((option, i) => (
+								<li key={i} className="dropdown-navigation__sidebar-list-item">
 									{option.name}
 								</li>
 							))}
