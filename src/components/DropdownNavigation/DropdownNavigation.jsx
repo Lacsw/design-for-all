@@ -39,7 +39,11 @@ export default function DropdownNavigation({
 					<ul className="dropdown-navigation__menu-list">
 						{options.map((option) =>
 							type === 'dropdownWithLinks' ? (
-								<li onMouseEnter={() => setIsSideMenuOpen(true)}>
+								<li
+									onMouseEnter={() => {
+										setIsSideMenuOpen(true);
+									}}
+								>
 									{option.name === 'Свернуть' ? (
 										<img
 											className={
@@ -71,10 +75,7 @@ export default function DropdownNavigation({
 					</ul>
 
 					{isSideMenuOpen ? (
-						<ul
-							onMouseLeave={() => setIsSideMenuOpen(false)}
-							className="dropdown-navigation__sidebar"
-						>
+						<ul className="dropdown-navigation__sidebar">
 							{options.map((option) => (
 								<li className="dropdown-navigation__sidebar-list-item">
 									{option.name}
