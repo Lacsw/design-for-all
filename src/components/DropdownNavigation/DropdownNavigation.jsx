@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './DropdownNavigation.css';
 import { NavLink } from 'react-router-dom';
+import './DropdownNavigation.css';
 
 export default function DropdownNavigation({
 	options,
@@ -9,7 +9,7 @@ export default function DropdownNavigation({
 	title,
 }) {
 	const [selectedOption, setSelectedOption] = useState(options[0]);
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(true);
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
 	const handleOptionClick = (option) => {

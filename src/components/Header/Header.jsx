@@ -30,19 +30,21 @@ export default function Header() {
 							options={navigationOptionsList}
 							titleIcon={dropdownIconWhite}
 							type="dropdownWithLinks"
+							title="Меню"
 						/>
 					</li>
 					<li>
-						<DropdownNavigation options={languageList} />
+						<DropdownNavigation options={languageList} title="Язык" />
 					</li>
 					<li>
-						<DropdownNavigation options={currencyList}/>
+						<DropdownNavigation options={currencyList} title="Валюта" />
 					</li>
 					<li>
 						<DropdownNavigation
 							options={accountNavigationList}
 							titleIcon={account}
 							type="dropdownWithLinks"
+							title="Профиль"
 						/>
 					</li>
 				</ul>
