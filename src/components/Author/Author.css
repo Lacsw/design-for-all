@@ -21,9 +21,8 @@
 .author__avatar {
 	width: 62px;
 	height: 62px;
-}
-
-.author__author {
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .author__name {

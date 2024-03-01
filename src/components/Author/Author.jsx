@@ -2,14 +2,24 @@ import React, { useContext } from 'react';
 
 import './Author.css';
 import avatar from '../../images/author/avatar.svg';
-import social from '../../images/author/social-icon.svg';
-import social1 from '../../images/author/social-icon (2).svg';
-import social2 from '../../images/author/social-icon (3).svg';
-import social3 from '../../images/author/social-icon (4).svg';
+import telegramSocial from '../../images/author/telegram-social.svg';
+import behanceSocial from '../../images/author/behance-social.svg';
+import dribbleSocial from '../../images/author/dribble-social.svg';
+import youtubeSocial from '../../images/author/youtube-social.svg';
+
 import { UserContext } from '../../contexts/UserContext';
 
 export default function Author({ isAuthorAccount, avatarImg }) {
-	const user = useContext(UserContext);
+	const { user } = useContext(UserContext);
+	const ava = 'https://i.ibb.co/FnbXMMq/image.png';
+
+	//TODO: вынеси в консты
+	const socialImages = {
+		telegram: telegramSocial,
+		behance: behanceSocial,
+		dribble: dribbleSocial,
+		youtube: youtubeSocial,
+	};
 
 	return (
 		<>
@@ -20,21 +30,29 @@ export default function Author({ isAuthorAccount, avatarImg }) {
 					}
 				>
 					<div className="author__container">
-						<img
-							src={avatar} /*{user.avatar || avatar}*/
-							alt="Аватар"
-							className="author__avatar"
-						/>
+						<img src={ava || avatar} alt="Аватар" className="author__avatar" />
 						<div className="author__author">
 							<p className="author__name">{user.fio}</p>
 							<p className="author__position">{user.role}</p>
 						</div>
-						{user.social_media.length ? (
+						{user.social_media ? (
 							<div className="author__socials-container">
-								<img src={social} alt="Иконка" className="author__social" />
-								<img src={social1} alt="Иконка" className="author__social" />
-								<img src={social2} alt="Иконка" className="author__social" />
-								<img src={social3} alt="Иконка" className="author__social" />
+								{Object.entries(user.social_media).map(
+									([key, value], index) => (
+										<a
+											key={index}
+											href={value}
+											target="_blank"
+											rel="noreferrer"
+										>
+											<img
+												src={socialImages[key]}
+												alt="Иконка"
+												className="author__social"
+											/>
+										</a>
+									)
+								)}
 							</div>
 						) : (
 							<p className="author__socials-text">

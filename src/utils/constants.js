@@ -71,9 +71,13 @@ export const navigationOptionsList = [
 ];
 
 export const accountNavigationList = [
-	{ name: 'Написать статью', src: newArticleBlack, link: '/' },
-	{ name: 'Публикации', src: articleBlack, link: '/articles' },
-	{ name: 'Профиль', src: profileBlack, link: '/author/articles' },
+	{
+		name: 'Написать статью',
+		src: newArticleBlack,
+		link: '/author/new-article',
+	},
+	{ name: 'Публикации', src: articleBlack, link: '/author/articles' },
+	{ name: 'Профиль', src: profileBlack, link: '/author/profile' },
 	{ name: 'Выйти', src: exitBlack, link: '/' },
 ];
 
