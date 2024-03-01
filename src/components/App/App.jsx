@@ -15,21 +15,18 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (user) {
-      authorApi
-        .profileAuthor()
-        .then((user) => {
-          setUser(user);
-        })
-        .catch((error) => console.log(error));
+    if (!user) {
+      authorApi.profileAuthor().then((user) => {
+        setUser(user);
+      });
     }
   }, [user]);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{ user, setUser }}>
       <div className="page">
         <Routes>
-          <Route path="/" element={<Main onLogin={setUser} />} />
+          <Route path="/" element={<Main />} />
           <Route path="/map" element={<Map />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:lang/:articleId" element={<Articles />} />

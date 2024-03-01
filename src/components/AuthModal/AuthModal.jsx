@@ -4,7 +4,7 @@ import './AuthModal.css';
 import LoginForm from './LoginForm/LoginForm';
 import SignUpForm from './SignUpForm/SignUpForm';
 
-const AuthModal = ({ isOpen, onClose, onLogin }) => {
+const AuthModal = ({ isOpen, onClose }) => {
   const [isAuthTabActive, setIsAuthTabActive] = useState(true);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const AuthModal = ({ isOpen, onClose, onLogin }) => {
         </button>
       </div>
       {isAuthTabActive ? (
-        <LoginForm onClose={onClose} onLogin={onLogin} />
+        <LoginForm onClose={onClose} />
       ) : (
         <SignUpForm onClose={onClose} />
       )}

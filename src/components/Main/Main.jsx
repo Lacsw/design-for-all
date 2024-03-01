@@ -13,10 +13,10 @@ import Header from '../Header/Header';
 import Intro from '../Intro/Intro';
 import Footer from '../Footer/Footer';
 
-export default function Main({ onLogin }) {
+export default function Main() {
   return (
     <>
-      <Header onLogin={onLogin} />
+      <Header />
       <Intro />
       <ul className="main-nav">
         <li className="main-nav__item">

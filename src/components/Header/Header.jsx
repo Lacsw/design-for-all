@@ -15,9 +15,9 @@ import dropdownIconWhite from '../../images/navigation/dropdown-icon-white.svg';
 import { UserContext } from '../../contexts/UserContext';
 import AuthModal from '../AuthModal/AuthModal';
 
-export default function Header({ onLogin }) {
+export default function Header() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   console.log(user);
 
   const toogleModal = () => {
@@ -66,7 +66,7 @@ export default function Header({ onLogin }) {
           </li>
         </ul>
       </div>
-      <AuthModal isOpen={isAuthOpen} onClose={toogleModal} onLogin={onLogin} />
+      <AuthModal isOpen={isAuthOpen} onClose={toogleModal} />
     </header>
   );
 }
