@@ -2,7 +2,7 @@ import authApi from '../../../utils/api/auth';
 import { useFormValidation } from '../../../utils/hooks/useFormValidation';
 import Input from '../../Input/Input';
 
-export default function LoginForm({ onClose }) {
+export default function LoginForm({ onClose, onLogin }) {
   const { values, handleChange, errors, isValid } = useFormValidation();
   const isFormValid =
     values.login !== '' &&
@@ -13,14 +13,12 @@ export default function LoginForm({ onClose }) {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(values);
     try {
       const user = await authApi.loginAuthor({
         login: values.login,
         password: values.password,
       });
-      //TODO: достать юзера в стейт
-      console.log(user);
+      onLogin(user);
     } catch (error) {
       console.log(error);
     }
