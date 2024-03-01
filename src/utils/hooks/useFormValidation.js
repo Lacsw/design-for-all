@@ -20,7 +20,7 @@ function validateEmail(value) {
 }
 
 function validateName(value) {
-  const regex = /^[a-zA-Zа-яА-ЯёЁ\s-]{2,50}$/;
+  const regex = /^[a-zA-Zа-яА-ЯёЁ\s_-]{2,50}$/;
   return regex.test(value) ? '' : errorMessages.name;
 }
 

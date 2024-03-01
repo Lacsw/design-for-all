@@ -15,7 +15,7 @@ export default function LoginForm({ onClose }) {
     evt.preventDefault();
     console.log(values);
     try {
-      const user = authApi.loginAuthor({
+      const user = await authApi.loginAuthor({
         login: values.login,
         password: values.password,
       });
@@ -28,7 +28,7 @@ export default function LoginForm({ onClose }) {
   };
 
   return (
-    <form className="auth-modal__container">
+    <form className="auth-modal__container" onSubmit={handleSubmit}>
       <label className="auth-modal__field">
         Логин
         <Input
@@ -60,13 +60,12 @@ export default function LoginForm({ onClose }) {
       </label>
 
       <button
-        onClick={handleSubmit}
         className={`auth-modal__main-btn ${
           isFormValid ? 'auth-modal__main-btn_active' : ''
         }`}
         type="submit"
         aria-label="кнопка входа"
-        disabled={isFormValid}
+        disabled={!isFormValid}
       >
         Войти
       </button>
