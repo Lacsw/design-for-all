@@ -11,13 +11,13 @@
 }
 
 .profile__form {
-	padding: 30px 66px;
+	padding: 30px 60px;
 	width: 676px;
 	box-sizing: border-box;
 	background-color: #161616;
 	border-radius: 12px;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	gap: 20px;
 }
 
@@ -27,6 +27,7 @@
 	border: none;
 	margin: 0;
 	padding: 0;
+	width: 222px;
 }
 
 .profile__field {
