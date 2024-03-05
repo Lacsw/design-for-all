@@ -16,6 +16,15 @@
 	cursor: pointer;
 }
 
+.dropdown-navigation__title-image {
+	background-color: #fff;
+	border-radius: 50%;
+	width: 34px;
+	height: 34px;
+	cursor: pointer;
+	object-fit: cover;
+}
+
 .dropdown-navigation__menu-list {
 	position: absolute;
 	top: 20px;

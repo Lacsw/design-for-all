@@ -6,6 +6,8 @@
 .profile__avatar {
 	border-radius: 12px;
 	object-fit: contain;
+	max-height: 450px;
+	max-width: 300px;
 }
 
 .profile__form {

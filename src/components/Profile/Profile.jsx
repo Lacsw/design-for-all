@@ -1,22 +1,24 @@
+import { useContext } from 'react';
 import './Profile.css';
-
-import avatar from '../../images/profile-img.png';
 
 import Button from '../Button/Button';
 import SocialsBar from '../SocialsBar/SocialsBar';
 import InputEditable from '../InputEditable/InputEditable';
+import { UserContext } from '../../contexts/UserContext';
 
 export default function Profile() {
+	const { user } = useContext(UserContext);
+
 	return (
 		<section className="profile">
 			<div className="profile__container">
 				<form className="profile__form" id="profile-form">
-					<img src={avatar} alt="Аватар" className="profile__avatar" />
+					<img src={user.avatar} alt="Аватар" className="profile__avatar" />
 
 					<fieldset className="profile__fieldset">
 						<label className="profile__field">
 							<span className="profile__sub-title">Фамилия, имя, отчество</span>
-							<InputEditable type={'text'} value={'Иванова Иванка'} />
+							<InputEditable type={'text'} value={user.fio} />
 						</label>
 
 						<div className="profile__field">
@@ -26,7 +28,7 @@ export default function Profile() {
 
 						<label className="profile__field">
 							<span className="profile__sub-title">Логин</span>
-							<InputEditable type={'text'} value={'Ivanka_ivanova'} />
+							<InputEditable type={'text'} value={user.login} />
 						</label>
 
 						<label className="profile__field">

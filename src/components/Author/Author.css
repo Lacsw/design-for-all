@@ -52,8 +52,12 @@
 	align-items: center;
 	gap: 4px;
 }
+
 .author__social {
+	width: 24px;
+	height: 24px;
 }
+
 .author__see-more {
 	margin: 0;
 	color: #fff;

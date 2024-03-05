@@ -15,6 +15,15 @@ import chFlag from '../images/ch-flag-icon.svg';
 import enFlag from '../images/en-flag-icon.svg';
 import spaFlag from '../images/spa-flag-icon.svg';
 import usdIcon from '../images/dollar-icon.svg';
+//socials
+import telegram from '../images/socials/telegram-icon.svg';
+import behance from '../images/socials/behance-icon.svg';
+import facebook from '../images/socials/facebook-icon.svg';
+import instagram from '../images/socials/instagram-icon.svg';
+import twitter from '../images/socials/twitter-icon.svg';
+import vk from '../images/socials/vk-icon.svg';
+import dribble from '../images/socials/dribble-icon.svg';
+import youtube from '../images/socials/youtube-icon.svg';
 
 export const langSelectOptions = [
 	{ label: 'Русский', value: 'ru' },
@@ -89,3 +98,16 @@ export const languageList = [
 	{ name: 'EN', src: enFlag },
 	{ name: 'SPA', src: spaFlag },
 ];
+
+// SOCIALS //
+
+export const socialIcons = {
+	telegram,
+	behance,
+	dribble,
+	youtube,
+	twitter,
+	vk,
+	facebook,
+	instagram,
+};
