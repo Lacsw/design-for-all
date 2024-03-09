@@ -21,9 +21,8 @@
 .author__avatar {
 	width: 62px;
 	height: 62px;
-}
-
-.author__author {
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .author__name {
@@ -53,8 +52,12 @@
 	align-items: center;
 	gap: 4px;
 }
+
 .author__social {
+	width: 24px;
+	height: 24px;
 }
+
 .author__see-more {
 	margin: 0;
 	color: #fff;

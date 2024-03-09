@@ -8,27 +8,26 @@ import Articles from '../Articles/Articles';
 import Guides from '../Guides/Guides';
 import AccountAuthor from '../AccountAuthor/AccountAuthor';
 import AccountAdmin from '../AccountAdmin/AccountAdmin';
-import authApi from '../../utils/api/auth';
-import authorApi from '../../utils/api/author';
 import { UserContext } from '../../contexts/UserContext';
+import authorApi from '../../utils/api/author';
 
 export default function App() {
   const [user, setUser] = useState(null);
+  console.log(user);
 
-  // useEffect(() => {
-  // 	authApi
-  // 		.loginAuthor()
-  // 		.then(() => {})
-  // 		.catch((err) => {
-  // 			authorApi.profileAuthor().then((user) => {
-  // 				setUser(user.success);
-  // 			});
-  // 			console.log(err);
-  // 		});
-  // }, []);
+  useEffect(() => {
+    if (!user) {
+      authorApi
+        .profileAuthor()
+        .then((user) => {
+          setUser(user);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [user]);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{ user, setUser }}>
       <div className="page">
         <Routes>
           <Route path="/" element={<Main />} />
@@ -36,7 +35,7 @@ export default function App() {
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:lang/:articleId" element={<Articles />} />
           <Route path="/guides" element={<Guides />} />
-          <Route path="/author/*" element={<AccountAuthor />} />
+          <Route path="/author/*" element={user && <AccountAuthor />} />
           <Route path="/admin/*" element={<AccountAdmin />} />
         </Routes>
       </div>

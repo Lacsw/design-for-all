@@ -28,7 +28,11 @@ export default function DropdownNavigation({
 		>
 			<div className="dropdown-navigation__title-icon-white">
 				{type === 'dropdownWithLinks' ? (
-					<img src={titleIcon} alt={title} />
+					<img
+						src={titleIcon}
+						alt={title}
+						className="dropdown-navigation__title-image"
+					/>
 				) : (
 					<img src={selectedOption.src} alt={selectedOption.name} />
 				)}

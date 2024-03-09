@@ -1,8 +1,11 @@
+import React, { useContext } from 'react';
 import authApi from '../../../utils/api/auth';
 import { useFormValidation } from '../../../utils/hooks/useFormValidation';
+import { UserContext } from '../../../contexts/UserContext';
 import Input from '../../Input/Input';
 
-export default function LoginForm({ onClose }) {
+function LoginForm({ onClose }) {
+  const { user, setUser } = useContext(UserContext);
   const { values, handleChange, errors, isValid } = useFormValidation();
   const isFormValid =
     values.login !== '' &&
@@ -13,14 +16,12 @@ export default function LoginForm({ onClose }) {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(values);
     try {
-      const user = await authApi.loginAuthor({
+      const userData = await authApi.loginAuthor({
         login: values.login,
         password: values.password,
       });
-      //TODO: достать юзера в стейт
-      console.log(user);
+      if (!user) setUser(userData);
     } catch (error) {
       console.log(error);
     }
@@ -72,3 +73,5 @@ export default function LoginForm({ onClose }) {
     </form>
   );
 }
+
+export default React.memo(LoginForm);
