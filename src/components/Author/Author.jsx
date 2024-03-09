@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 
 import './Author.css';
-import defaultAvatar from '../../images/author/avatar.svg';
-import { socialIcons } from '../../utils/constants';
+import defaultAvatar from 'images/author/avatar.svg';
+import { socialIcons } from 'utils/constants';
 
 export default function Author({ isAuthorAccount }) {
   const { currentUser } = useSelector((state) => state.user);

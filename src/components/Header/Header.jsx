@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import './Header.css';
-import logo from '../../images/logo.svg';
-import loupe from '../../images/loupe-icon.svg';
-import accountDefaultIcon from '../../images/account-icon.svg';
-import siginInIcon from '../../images/siginin-icon.svg';
+import logo from 'images/logo.svg';
+import loupe from 'images/loupe-icon.svg';
+import accountDefaultIcon from 'images/account-icon.svg';
+import siginInIcon from 'images/siginin-icon.svg';
 import DropdownNavigation from '../DropdownNavigation/DropdownNavigation';
 import {
   accountNavigationList,

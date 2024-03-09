@@ -1,5 +1,5 @@
 import React from 'react';
-import plusIcon from '../../../images/plus-icon.svg';
+import plusIcon from 'images/plus-icon.svg';
 
 export default function SignUpForm({ onClose }) {
   const handleSubmit = (evt) => {

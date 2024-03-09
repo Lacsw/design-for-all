@@ -1,13 +1,9 @@
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import authApi from '../../../utils/api/auth';
-import { useFormValidation } from '../../../utils/hooks/useFormValidation';
-import {
-  signInStart,
-  signInSuccess,
-  signInFailure,
-} from '../../../store/slices';
-import Input from '../../Input/Input';
+import authApi from 'utils/api/auth';
+import { useFormValidation } from 'utils/hooks/useFormValidation';
+import { signInStart, signInSuccess, signInFailure } from 'store/slices';
+import Input from 'components/Input/Input';
 
 function LoginForm({ onClose }) {
   // TODO: обработать загрузгу и ошибки валидации/сервера

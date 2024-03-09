@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import './SocialsBar.css';
 
-import { socialIcons } from '../../utils/constants';
-import plusBigIcon from '../../images/author/plus-icon.svg';
+import { socialIcons } from 'utils/constants';
+import plusBigIcon from 'images/author/plus-icon.svg';
 
 export default function SocialsBar() {
   const { currentUser } = useSelector((state) => state.user);
