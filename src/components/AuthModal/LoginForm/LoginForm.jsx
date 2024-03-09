@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
+import { memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import authApi from '../../../utils/api/auth';
 import { useFormValidation } from '../../../utils/hooks/useFormValidation';
-import { UserContext } from '../../../contexts/UserContext';
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from '../../../store/slices';
 import Input from '../../Input/Input';
 
 function LoginForm({ onClose }) {
-  const { user, setUser } = useContext(UserContext);
+  // TODO: обработать загрузгу и ошибки валидации/сервера
+  // const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const { values, handleChange, errors, isValid } = useFormValidation();
   const isFormValid =
     values.login !== '' &&
@@ -16,16 +23,23 @@ function LoginForm({ onClose }) {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+
+    if (!values.login || !values.password) {
+      return dispatch(signInFailure('Please fill out all fields'));
+    }
+
     try {
+      dispatch(signInStart());
       const userData = await authApi.loginAuthor({
         login: values.login,
         password: values.password,
       });
-      if (!user) setUser(userData);
+
+      dispatch(signInSuccess(userData));
+      onClose();
     } catch (error) {
-      console.log(error);
+      dispatch(signInFailure(error.message));
     }
-    onClose();
   };
 
   return (
@@ -74,4 +88,4 @@ function LoginForm({ onClose }) {
   );
 }
 
-export default React.memo(LoginForm);
+export default memo(LoginForm);
