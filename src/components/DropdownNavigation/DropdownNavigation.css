@@ -22,7 +22,7 @@
   width: 34px;
   height: 34px;
   cursor: pointer;
-  object-fit: scale-down;
+  object-fit: cover;
 }
 
 .dropdown-navigation__menu-list {
