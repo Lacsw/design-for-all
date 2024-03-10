@@ -70,6 +70,15 @@ export const navigationOptionsList = [
 	{ name: 'Свернуть', src: arrowBackBlack, link: '/' },
 ];
 
+export const mainNavigationOptionsList = [
+	{ name: 'Обновления', src: updatesBlack, link: '/' },
+	{ name: 'Веб приложения', src: webBlack, link: '/' },
+	{ name: 'Десктоп приложения', src: desktopBlack, link: '/' },
+	{ name: 'Мобильные приложения', src: mobileBlack, link: '/' },
+	{ name: 'Статьи', src: articleBlack, link: '/articles' },
+	{ name: 'Руководства', src: manualBlack, link: '/' },
+];
+
 export const accountNavigationList = [
 	{ name: 'Написать статью', src: newArticleBlack, link: '/' },
 	{ name: 'Публикации', src: articleBlack, link: '/articles' },
