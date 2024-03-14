@@ -1,5 +1,5 @@
 import './SideBar.css';
-import MenuTree from '../MenuTree/MenuTree';
+import { MenuTree } from 'components';
 import treeIcon from 'images/tree-menu-icon.svg';
 import searchIcon from 'images/search-icon.svg';
 

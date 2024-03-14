@@ -1,12 +1,11 @@
 import './AuthorAndReviewers.css';
-import Author from '../Author/Author';
-import Reviewers from '../Reviewers/Reviewers';
+import { Author, Reviewers } from 'components';
 
 export default function AuthorAndReviewers() {
-	return (
-		<div className="author-and-reviewers">
-			<Author />
-			<Reviewers />
-		</div>
-	);
+  return (
+    <div className="author-and-reviewers">
+      <Author />
+      <Reviewers />
+    </div>
+  );
 }

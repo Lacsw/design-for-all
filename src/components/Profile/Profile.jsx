@@ -1,9 +1,6 @@
 import { useSelector } from 'react-redux';
 import './Profile.css';
-
-import Button from '../Button/Button';
-import SocialsBar from '../SocialsBar/SocialsBar';
-import FieldEditable from '../FieldEditable/FieldEditable';
+import { Button, SocialsBar, FieldEditable } from 'components';
 
 export default function Profile() {
   const { currentUser } = useSelector((state) => state.user);

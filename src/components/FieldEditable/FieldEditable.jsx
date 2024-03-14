@@ -1,5 +1,4 @@
 import './FieldEditable.css';
-
 import editIcon from 'images/edit-icon.svg';
 
 export default function FieldEditable({ value }) {

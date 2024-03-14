@@ -1,8 +1,6 @@
 import { accessLvlSelectOptions, userRoleSelectOptions } from 'utils/constants';
 import './AdminCreateUser.css';
-import Button from '../Button/Button';
-import Dropdown from '../Dropdown/Dropdown';
-import InputEditable from '../InputEditable/InputEditable';
+import { Button, Dropdown, InputEditable } from 'components';
 
 export default function AdminCreateUser() {
   return (

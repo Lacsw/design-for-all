@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import './Articles.css';
-import Header from '../Header/Header';
-import SideBar from '../SideBar/SideBar';
-import Article from '../Article/Article';
-import AuthorAndReviewers from '../AuthorAndReviewers/AuthorAndReviewers';
+import { Header, SideBar, Article, AuthorAndReviewers } from 'components';
 import authorApi from 'utils/api/author';
 
 export default function Articles() {

@@ -5,9 +5,7 @@ import './AuthorArticlesList.css';
 import view from 'images/account/view-icon.svg';
 import draft from 'images/account/draft-icon.svg';
 import reason from 'images/account/reason-deny-icon.svg';
-
-import SearchInput from '../SearchInput/SearchInput';
-import ModalReasons from '../Modal/ModalReasons/ModalReasons';
+import { SearchInput, ModalReasons } from 'components';
 
 export default function AuthorArticlesList({ articles }) {
   const [showReason, setShowReason] = useState(false);

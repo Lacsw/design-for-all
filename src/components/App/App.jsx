@@ -1,12 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import Main from '../Main/Main';
-import Map from '../Map/Map';
-import Articles from '../Articles/Articles';
-import Guides from '../Guides/Guides';
-import AccountAuthor from '../AccountAuthor/AccountAuthor';
-import AccountAdmin from '../AccountAdmin/AccountAdmin';
+import {
+  Main,
+  Map,
+  Articles,
+  Guides,
+  AccountAuthor,
+  AccountAdmin,
+} from 'components';
 
 export default function App() {
   return (

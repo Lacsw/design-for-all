@@ -1,12 +1,8 @@
 import { useState } from 'react';
-
 import './NewArticle.css';
-
 import plus from 'images/plus-icon.svg';
 import { langSelectOptions, categorySelectOptions } from 'utils/constants';
-
-import Dropdown from '../Dropdown/Dropdown';
-import ModalRecommendation from '../Modal/ModalRecommendation/ModalRecommendation';
+import { Dropdown, ModalRecommendation } from 'components';
 
 export default function NewArticle() {
   // const [value, changeValue] = useState('');

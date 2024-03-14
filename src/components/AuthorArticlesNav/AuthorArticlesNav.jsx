@@ -1,5 +1,5 @@
 import './AuthorArticlesNav.css';
-import DropdownAmount from '../DropdownAmount/DropdownAmount';
+import { DropdownAmount } from 'components';
 import { listRangeOptions, authorArticlesTabs } from 'utils/constants';
 
 export default function AuthorArticlesNav({

@@ -1,5 +1,4 @@
 import TreeView, { flattenTree } from 'react-accessible-treeview';
-
 import './MenuTree.css';
 import treeIcon from 'images/tree-menu-icon.svg';
 

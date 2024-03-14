@@ -6,15 +6,14 @@ import logo from 'images/logo.svg';
 import loupe from 'images/loupe-icon.svg';
 import accountDefaultIcon from 'images/account-icon.svg';
 import siginInIcon from 'images/siginin-icon.svg';
-import DropdownNavigation from '../DropdownNavigation/DropdownNavigation';
+import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
 import {
   accountNavigationList,
   navigationOptionsList,
   languageList,
   currencyList,
-} from '../../utils/constants';
-import dropdownIconWhite from '../../images/navigation/dropdown-icon-white.svg';
-import AuthModal from '../AuthModal/AuthModal';
+} from 'utils/constants';
+import { DropdownNavigation, AuthModal } from 'components';
 
 export default function Header() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);

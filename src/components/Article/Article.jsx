@@ -1,7 +1,7 @@
 import './Article.css';
-import ArticleHeader from '../ArticleHeader/ArticleHeader';
 import previewImage from 'images/article/preview.png';
 import image1 from 'images/article/image-1.png';
+import { ArticleHeader } from 'components';
 
 export default function Article() {
   return (
