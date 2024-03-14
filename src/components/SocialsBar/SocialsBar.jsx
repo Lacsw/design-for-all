@@ -1,19 +1,24 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import './SocialsBar.css';
 
-import { socialIcons } from '../../utils/constants';
-import plusBigIcon from '../../images/author/plus-icon.svg';
-import { UserContext } from '../../contexts/UserContext';
+import { socialIcons } from 'utils/constants';
+import plusBigIcon from 'images/author/plus-icon.svg';
 
 export default function SocialsBar() {
-  const { user } = useContext(UserContext);
+  const { currentUser } = useSelector((state) => state.user);
 
   const renderSocialMedia = () => {
-    return Object.entries(user.social_media).map(([key, value], index) => (
-      <a key={index} href={value} target="_blank" rel="noreferrer">
-        <img src={socialIcons[key]} alt="Иконка" className="socials-bar-btn" />
-      </a>
-    ));
+    return Object.entries(currentUser.social_media).map(
+      ([key, value], index) => (
+        <a key={index} href={value} target="_blank" rel="noreferrer">
+          <img
+            src={socialIcons[key]}
+            alt="Иконка"
+            className="socials-bar-btn"
+          />
+        </a>
+      )
+    );
   };
 
   return (

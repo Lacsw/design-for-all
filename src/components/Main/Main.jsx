@@ -1,17 +1,13 @@
 import { NavLink } from 'react-router-dom';
-
 import './Main.css';
-import listIcon from '../../images/main/list-icon.svg';
-import webIcon from '../../images/main/web-icon.svg';
-import desktopActiveIcon from '../../images/main/desktop-active-icon.svg';
-import mobileIcon from '../../images/main/mobile-icon.svg';
-import articlesIcon from '../../images/main/acticles-icon.svg';
-import contactIcon from '../../images/main/contact-icon.svg';
-import slideImg from '../../images/main/slide-img.png';
-
-import Header from '../Header/Header';
-import Intro from '../Intro/Intro';
-import Footer from '../Footer/Footer';
+import listIcon from 'images/main/list-icon.svg';
+import webIcon from 'images/main/web-icon.svg';
+import desktopActiveIcon from 'images/main/desktop-active-icon.svg';
+import mobileIcon from 'images/main/mobile-icon.svg';
+import articlesIcon from 'images/main/acticles-icon.svg';
+import contactIcon from 'images/main/contact-icon.svg';
+import slideImg from 'images/main/slide-img.png';
+import { Header, Footer, Intro } from 'components';
 
 export default function Main() {
   return (

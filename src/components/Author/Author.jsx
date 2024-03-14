@@ -1,24 +1,25 @@
-import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 import './Author.css';
-import defaultAvatar from '../../images/author/avatar.svg';
-import { socialIcons } from '../../utils/constants';
-import { UserContext } from '../../contexts/UserContext';
+import defaultAvatar from 'images/author/avatar.svg';
+import { socialIcons } from 'utils/constants';
 
 export default function Author({ isAuthorAccount }) {
-  const { user } = useContext(UserContext);
+  const { currentUser } = useSelector((state) => state.user);
 
   const renderSocialMedia = () => {
-    return Object.entries(user.social_media).map(([key, value], index) => (
-      <a key={index} href={value} target="_blank" rel="noreferrer">
-        <img src={socialIcons[key]} alt="Иконка" className="author__social" />
-      </a>
-    ));
+    return Object.entries(currentUser.social_media).map(
+      ([key, value], index) => (
+        <a key={index} href={value} target="_blank" rel="noreferrer">
+          <img src={socialIcons[key]} alt="Иконка" className="author__social" />
+        </a>
+      )
+    );
   };
 
   return (
     <>
-      {user && (
+      {currentUser && (
         <div
           className={
             !isAuthorAccount ? 'author' : 'author author_account-position'
@@ -26,15 +27,15 @@ export default function Author({ isAuthorAccount }) {
         >
           <div className="author__container">
             <img
-              src={user.avatar || defaultAvatar}
+              src={currentUser.avatar || defaultAvatar}
               alt="Аватар"
               className="author__avatar"
             />
             <div className="author__author">
-              <p className="author__name">{user.fio}</p>
-              <p className="author__position">{user.role}</p>
+              <p className="author__name">{currentUser.fio}</p>
+              <p className="author__position">{currentUser.role}</p>
             </div>
-            {user.social_media ? (
+            {currentUser.social_media ? (
               <div className="author__socials-container">
                 {renderSocialMedia()}
               </div>

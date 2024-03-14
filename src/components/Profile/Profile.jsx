@@ -1,13 +1,9 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import './Profile.css';
-
-import Button from '../Button/Button';
-import SocialsBar from '../SocialsBar/SocialsBar';
-import FieldEditable from '../FieldEditable/FieldEditable';
-import { UserContext } from '../../contexts/UserContext';
+import { Button, SocialsBar, FieldEditable } from 'components';
 
 export default function Profile() {
-  const { user } = useContext(UserContext);
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -22,12 +18,16 @@ export default function Profile() {
           id="profile-form"
           onSubmit={handleFormSubmit}
         >
-          <img src={user.avatar} alt="Аватар" className="profile__avatar" />
+          <img
+            src={currentUser.avatar}
+            alt="Аватар"
+            className="profile__avatar"
+          />
 
           <fieldset className="profile__fieldset">
             <label className="profile__field">
               <span className="profile__sub-title">Фамилия, имя, отчество</span>
-              <FieldEditable value={user.fio} />
+              <FieldEditable value={currentUser.fio || 'Not your name'} />
             </label>
 
             <div className="profile__field">
@@ -37,7 +37,7 @@ export default function Profile() {
 
             <label className="profile__field">
               <span className="profile__sub-title">Логин</span>
-              <FieldEditable value={user.login} />
+              <FieldEditable value={currentUser.login || 'notyourlogin'} />
             </label>
 
             <label className="profile__field">

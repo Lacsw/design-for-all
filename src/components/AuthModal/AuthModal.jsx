@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './AuthModal.css';
-import LoginForm from './LoginForm/LoginForm';
-import SignUpForm from './SignUpForm/SignUpForm';
+import { LoginForm, SignUpForm } from 'components';
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [isAuthTabActive, setIsAuthTabActive] = useState(true);

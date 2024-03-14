@@ -1,23 +1,24 @@
-import React, { useContext, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import './Header.css';
-import logo from '../../images/logo.svg';
-import loupe from '../../images/loupe-icon.svg';
-import accountDefaultIcon from '../../images/account-icon.svg';
-import siginInIcon from '../../images/siginin-icon.svg';
-import DropdownNavigation from '../DropdownNavigation/DropdownNavigation';
+import logo from 'images/logo.svg';
+import loupe from 'images/loupe-icon.svg';
+import accountDefaultIcon from 'images/account-icon.svg';
+import siginInIcon from 'images/siginin-icon.svg';
+import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
 import {
   accountNavigationList,
   navigationOptionsList,
   languageList,
   currencyList,
-} from '../../utils/constants';
-import dropdownIconWhite from '../../images/navigation/dropdown-icon-white.svg';
-import { UserContext } from '../../contexts/UserContext';
-import AuthModal from '../AuthModal/AuthModal';
+} from 'utils/constants';
+import { DropdownNavigation, AuthModal } from 'components';
 
 export default function Header() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser);
 
   const toogleModal = () => {
     setIsAuthOpen(!isAuthOpen);
@@ -50,14 +51,14 @@ export default function Header() {
             <DropdownNavigation options={currencyList} title="Валюта" />
           </li>
           <li>
-            {!user ? (
+            {!currentUser ? (
               <button className="header__icon-background" onClick={toogleModal}>
                 <img src={siginInIcon} alt="войти" />
               </button>
             ) : (
               <DropdownNavigation
                 options={accountNavigationList}
-                titleIcon={user.avatar || accountDefaultIcon}
+                titleIcon={currentUser.avatar || accountDefaultIcon}
                 type="dropdownWithLinks"
                 title="Профиль"
               />
