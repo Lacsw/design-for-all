@@ -1,4 +1,5 @@
 export { default as Author } from './Author/Author';
+export { default as App } from './App/App';
 export { default as Header } from './Header/Header';
 export { default as AuthorArticlesList } from './AuthorArticlesList/AuthorArticlesList';
 export { default as AuthorArticlesNav } from './AuthorArticlesNav/AuthorArticlesNav';
@@ -20,3 +21,4 @@ export { default as LoginForm } from './AuthModal/LoginForm/LoginForm';
 export { default as SignUpForm } from './AuthModal/SignUpForm/SignUpForm';
 export { default as Input } from './Input/Input';
 export { default as Modal } from './Modal/Modal';
+export { default as MenuTree } from './MenuTree/MenuTree';
