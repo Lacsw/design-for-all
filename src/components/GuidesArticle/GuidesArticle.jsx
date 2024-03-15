@@ -58,7 +58,7 @@ export default function GuidesArticle() {
         Но всё это не без помощи сеошника. Однако, возможно, у вас получится
         собрать семантическое ядро и самостоятельно. Например,{' '}
         <span>
-          <a href="/" className="guide-article__text_link">
+          <a href="/" target="_blank" rel="noreferrer">
             по этой инструкции.
           </a>
         </span>

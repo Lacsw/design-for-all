@@ -23,10 +23,7 @@ export default function Reviewers() {
         </>
       ) : (
         <p className="reviewers__text">
-          <Link href="/" className="reviewers__text-link">
-            Предложите правки
-          </Link>
-          , чтобы стать рецензентом
+          <Link href="/">Предложите правки</Link>, чтобы стать рецензентом
         </p>
       )}
     </div>

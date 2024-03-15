@@ -1,22 +1,18 @@
 .guide-article {
-	display: flex;
-	flex-direction: column;
-	gap: 30px;
-	border-radius: 12px;
-	background: #161616;
-	padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border-radius: 12px;
+  background: #161616;
+  padding: 20px;
 }
 
 .guide-article__text {
-	margin: 0;
-	color: #ffffff;
-	font-size: 14px;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-}
-
-.guide-article__text_link {
-	color: inherit;
+  margin: 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

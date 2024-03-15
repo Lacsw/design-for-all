@@ -31,11 +31,11 @@ export default function SignUpForm({ onClose }) {
       <p className="auth-modal__politics">
         Нажимая кнопку «Зарегистрироваться» вы:
         <br /> Даете право на обработку{' '}
-        <a href="personal" className="auth-modal__politics-link">
+        <a href="personal" target="_blank" rel="noreferrer">
           персональных данных
         </a>{' '}
         Соглашаетесь с{' '}
-        <a href="terms-of-service" className="auth-modal__politics-link">
+        <a href="terms-of-service" target="_blank" rel="noreferrer">
           пользовательским соглашением
         </a>
       </p>
