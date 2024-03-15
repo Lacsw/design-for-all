@@ -7,6 +7,12 @@ export default defineConfig(() => {
     base: '/',
     build: {
       outDir: 'build',
+      rollupOptions: {
+        output: {
+          entryFileNames: `assets/[name].js`,
+          assetFileNames: `assets/[name].[ext]`,
+        },
+      },
     },
     plugins: [
       react(),
