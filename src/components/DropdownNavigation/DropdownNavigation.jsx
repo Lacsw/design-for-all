@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './DropdownNavigation.css';
 import { NavLink } from 'react-router-dom';
+import './DropdownNavigation.css';
 
 export default function DropdownNavigation({
 	options,
@@ -28,7 +28,11 @@ export default function DropdownNavigation({
 		>
 			<div className="dropdown-navigation__title-icon-white">
 				{type === 'dropdownWithLinks' ? (
-					<img src={titleIcon} alt={title} />
+					<img
+						src={titleIcon}
+						alt={title}
+						className="dropdown-navigation__title-image"
+					/>
 				) : (
 					<img src={selectedOption.src} alt={selectedOption.name} />
 				)}
@@ -37,9 +41,14 @@ export default function DropdownNavigation({
 			{isDropdownOpen ? (
 				<>
 					<ul className="dropdown-navigation__menu-list">
-						{options.map((option) =>
+						{options.map((option, i) =>
 							type === 'dropdownWithLinks' ? (
-								<li onMouseEnter={() => setIsSideMenuOpen(true)}>
+								<li
+									key={i}
+									onMouseEnter={() => {
+										setIsSideMenuOpen(true);
+									}}
+								>
 									{option.name === 'Свернуть' ? (
 										<img
 											className={
@@ -58,7 +67,7 @@ export default function DropdownNavigation({
 									)}
 								</li>
 							) : (
-								<li>
+								<li key={i}>
 									<img
 										className="dropdown-navigation__menu-list-item "
 										src={option.src}
@@ -71,12 +80,9 @@ export default function DropdownNavigation({
 					</ul>
 
 					{isSideMenuOpen ? (
-						<ul
-							onMouseLeave={() => setIsSideMenuOpen(false)}
-							className="dropdown-navigation__sidebar"
-						>
-							{options.map((option) => (
-								<li className="dropdown-navigation__sidebar-list-item">
+						<ul className="dropdown-navigation__sidebar">
+							{options.map((option, i) => (
+								<li key={i} className="dropdown-navigation__sidebar-list-item">
 									{option.name}
 								</li>
 							))}

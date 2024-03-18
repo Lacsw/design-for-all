@@ -1,0 +1,28 @@
+.field-editable {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 12px;
+	background: #242424;
+	padding: 10px;
+	border: 2px solid transparent;
+}
+
+.field-editable__text {
+	color: #fff;
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%;
+	letter-spacing: 0.24px;
+}
+
+.field-editable__btn {
+	display: flex;
+	border: none;
+	outline: none;
+	background: transparent;
+	padding: 0;
+	cursor: pointer;
+}

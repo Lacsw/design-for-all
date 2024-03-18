@@ -20,12 +20,9 @@ class AuthApi {
 		return this._checkResponse(response);
 	}
 
-	async loginAuthor(
-		data = {
-			login: 'test_account',
-			password: '00xMgxOASRdsz0RZ',
-		}
-	) {
+	// login: 'test_account',
+	// password: '00xMgxOASRdsz0RZ',
+	async loginAuthor(data) {
 		const response = await fetch(`${this._baseUrl}/login`, {
 			method: 'POST',
 			headers: this._headers,

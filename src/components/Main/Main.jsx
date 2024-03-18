@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import './Main.css';
-import slideImg from '../../images/main/slide-img.png';
+import slideImg from 'images/main/slide-img.png';
 import { mainNavigationOptionsList } from '../../utils/constants';
-import Header from '../Header/Header';
-import Intro from '../Intro/Intro';
-import Footer from '../Footer/Footer';
-import AuthModal from '../AuthModal/AuthModal';
 import MainNavigationBar from '../MainNavigationBar/MainNavigationBar';
+import { Header, Footer, Intro } from 'components';
 
 export default function Main() {
 	const [activeTab, setActiveTab] = useState('Десктоп приложения');
@@ -88,7 +85,6 @@ export default function Main() {
 				</div>
 			</div>
 			<Footer />
-			<AuthModal isOpen={false} />
 		</>
 	);
 }

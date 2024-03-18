@@ -1,20 +1,22 @@
 import './Guides.css';
-import Header from '../Header/Header';
-import GuidesMenu from '../GuidesMenu/GuidesMenu';
-import GuidesArticle from '../GuidesArticle/GuidesArticle';
-import Footer from '../Footer/Footer';
-import AuthorAndReviewers from '../AuthorAndReviewers/AuthorAndReviewers';
+import {
+  Header,
+  Footer,
+  GuidesMenu,
+  GuidesArticle,
+  AuthorAndReviewers,
+} from 'components';
 
 export default function Guides() {
-	return (
-		<div className="guides">
-			<Header />
-			<div className="guides__container">
-				<GuidesMenu />
-				<GuidesArticle />
-				<AuthorAndReviewers />
-			</div>
-			<Footer />
-		</div>
-	);
+  return (
+    <div className="guides">
+      <Header />
+      <div className="guides__container">
+        <GuidesMenu />
+        <GuidesArticle />
+        <AuthorAndReviewers />
+      </div>
+      <Footer />
+    </div>
+  );
 }

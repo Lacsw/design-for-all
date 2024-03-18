@@ -1,26 +1,32 @@
+import { useSelector } from 'react-redux';
 import './SocialsBar.css';
 
-import telegramIcon from '../../images/socials/telegram-icon.svg';
-import plusBigIcon from '../../images/plus-big-icon.svg';
+import { socialIcons } from 'utils/constants';
+import plusBigIcon from 'images/author/plus-icon.svg';
 
 export default function SocialsBar() {
-	return (
-		<div className="socials-bar">
-			<button className="socials-bar-btn">
-				<img src={telegramIcon} alt="Иконка соцсети" />
-			</button>
-			<button className="socials-bar-btn">
-				<img src={telegramIcon} alt="Иконка соцсети" />
-			</button>
-			<button className="socials-bar-btn">
-				<img src={telegramIcon} alt="Иконка соцсети" />
-			</button>
-			<button className="socials-bar-btn">
-				<img src={telegramIcon} alt="Иконка соцсети" />
-			</button>
-			<button className="socials-bar-btn">
-				<img src={plusBigIcon} alt="Иконка добавить" />
-			</button>
-		</div>
-	);
+  const { currentUser } = useSelector((state) => state.user);
+
+  const renderSocialMedia = () => {
+    return Object.entries(currentUser.social_media).map(
+      ([key, value], index) => (
+        <a key={index} href={value} target="_blank" rel="noreferrer">
+          <img
+            src={socialIcons[key]}
+            alt="Иконка"
+            className="socials-bar-btn"
+          />
+        </a>
+      )
+    );
+  };
+
+  return (
+    <div className="socials-bar">
+      {renderSocialMedia()}
+      <button className="socials-bar-btn">
+        <img src={plusBigIcon} alt="Иконка добавить" />
+      </button>
+    </div>
+  );
 }
