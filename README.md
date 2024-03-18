@@ -2,7 +2,7 @@
 ## Install
 
  ```bash
-  git clone https://github.com/Lacsw/design_for_all.git
+  git clone git@github.com:Lacsw/design-for-all.git
   npm install
   ```
 
