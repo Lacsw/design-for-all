@@ -1,51 +1,23 @@
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import './Main.css';
-import listIcon from 'images/main/list-icon.svg';
-import webIcon from 'images/main/web-icon.svg';
-import desktopActiveIcon from 'images/main/desktop-active-icon.svg';
-import mobileIcon from 'images/main/mobile-icon.svg';
-import articlesIcon from 'images/main/acticles-icon.svg';
-import contactIcon from 'images/main/contact-icon.svg';
 import slideImg from 'images/main/slide-img.png';
-import { Header, Footer, Intro } from 'components';
+import { mainNavigationOptionsList } from '../../utils/constants';
+import { Header, Footer, Intro, MainNavigationBar } from 'components';
 
 export default function Main() {
+  const [activeTab, setActiveTab] = useState('Десктоп приложения');
+  const handleActiveTab = (name) => {
+    setActiveTab(name);
+  };
   return (
     <>
       <Header />
       <Intro />
-      <ul className="main-nav">
-        <li className="main-nav__item">
-          <NavLink to="/" className="main-nav__btn">
-            <img src={listIcon} alt="navigation" />
-          </NavLink>
-        </li>
-        <li className="main-nav__item">
-          <NavLink to="/web" className="main-nav__btn">
-            <img src={webIcon} alt="web" />
-          </NavLink>
-        </li>
-        <li className="main-nav__item">
-          <NavLink to="/desktop" className="main-nav__btn">
-            <img src={desktopActiveIcon} alt="desktop" />
-          </NavLink>
-        </li>
-        <li className="main-nav__item">
-          <NavLink to="/mobile" className="main-nav__btn">
-            <img src={mobileIcon} alt="desktop" />
-          </NavLink>
-        </li>
-        <li className="main-nav__item">
-          <NavLink to="/articles" className="main-nav__btn">
-            <img src={articlesIcon} alt="desktop" />
-          </NavLink>
-        </li>
-        <li className="main-nav__item">
-          <NavLink to="/contact" className="main-nav__btn">
-            <img src={contactIcon} alt="desktop" />
-          </NavLink>
-        </li>
-      </ul>
+      <MainNavigationBar
+        navLinksList={mainNavigationOptionsList}
+        onClick={handleActiveTab}
+        activeTab={activeTab}
+      />
       <div className="main__content">
         <div className="main__slide">
           <h2 className="main__title">Веб-приложения</h2>
