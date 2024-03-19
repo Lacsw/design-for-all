@@ -16,6 +16,11 @@
   cursor: pointer;
 }
 
+.dropdown-navigation__title-icon-white_size_m {
+  width: 26px;
+  height: 26px;
+}
+
 .dropdown-navigation__title-image {
   background-color: #fff;
   border-radius: 50%;
@@ -23,6 +28,16 @@
   height: 34px;
   cursor: pointer;
   object-fit: cover;
+}
+
+.dropdown-navigation__image {
+  width: 24px;
+  height: 24px;
+}
+
+.dropdown-navigation__image_size_m {
+  width: 20px;
+  height: 20px;
 }
 
 .dropdown-navigation__menu-list {
@@ -44,9 +59,20 @@
   animation: downAni 0.3s forwards;
 }
 
+.dropdown-navigation__menu-list_size_m {
+  width: 26px;
+  gap: 5px;
+  border-radius: 0 0 13px 13px;
+  top: 15px;
+  padding: 16px 0px 1px;
+}
+
 .dropdown-navigation__menu-list-item {
-  padding: 5px;
   cursor: pointer;
+}
+
+.dropdown-navigation__menu-list-item_size_m {
+  width: 20px;
 }
 
 .dropdown-navigation__sidebar {

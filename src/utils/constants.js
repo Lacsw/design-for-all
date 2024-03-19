@@ -15,6 +15,9 @@ import chFlag from 'images/ch-flag-icon.svg';
 import enFlag from 'images/en-flag-icon.svg';
 import spaFlag from 'images/spa-flag-icon.svg';
 import usdIcon from 'images/dollar-icon.svg';
+import changeIconBlack from 'images/change-icon-black.svg';
+import dotsIcon from 'images/dots-icon.svg';
+import giveTranslationBlack from 'images/give-translation-black.svg';
 //socials
 import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
@@ -97,6 +100,12 @@ export const languageList = [
   { name: 'CH', src: chFlag },
   { name: 'EN', src: enFlag },
   { name: 'SPA', src: spaFlag },
+];
+
+export const editList = [
+  { name: 'menu', src: dotsIcon },
+  { name: 'edit', src: changeIconBlack },
+  { name: 'translation', src: giveTranslationBlack },
 ];
 
 // SOCIALS //

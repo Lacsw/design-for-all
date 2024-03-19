@@ -18,7 +18,7 @@ import { DropdownNavigation, AuthModal } from 'components';
 export default function Header() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  console.log(languageList);
 
   const toogleModal = () => {
     setIsAuthOpen(!isAuthOpen);
