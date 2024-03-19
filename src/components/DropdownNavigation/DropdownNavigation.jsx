@@ -28,8 +28,10 @@ export default function DropdownNavigation({
         setIsSideMenuOpen(false);
       }}
     >
-      <div className={
-        `dropdown-navigation__title-icon-white ${size === 'm' ? "dropdown-navigation__title-icon-white_size_m" : ""}`
+      <div className={`dropdown-navigation__title-icon-white
+       ${size === 'm'
+          ? "dropdown-navigation__title-icon-white_size_m"
+          : ""}`
       }>
         {type === 'dropdownWithLinks' ? (
           <img
@@ -38,16 +40,25 @@ export default function DropdownNavigation({
             className="dropdown-navigation__title-image"
           />
         ) : (
-          <img src={selectedOption.src} alt={selectedOption.name} className={`dropdown-navigation__image ${size === 'm' ? "dropdown-navigation__image_size_m" : ""} `}/>
+          <img
+            src={selectedOption.src}
+            alt={selectedOption.name}
+            className={`dropdown-navigation__image 
+            ${size === 'm'
+                ? "dropdown-navigation__image_size_m"
+                : ""} `} />
         )}
       </div>
 
       {isDropdownOpen ? (
         <>
-          <ul className={`dropdown-navigation__menu-list ${size === 'm' ? "dropdown-navigation__menu-list_size_m" : ""}`
+          <ul className={`dropdown-navigation__menu-list 
+          ${size === 'm'
+              ? "dropdown-navigation__menu-list_size_m"
+              : ""}`
           }>
-            {options.filter((option) => option !== selectedOption).map((option, i) =>
-              type === 'dropdownWithLinks' ? (
+            {type === 'dropdownWithLinks' &&
+              options.map((option, i) =>
                 <li
                   key={i}
                   onMouseEnter={() => {
@@ -70,8 +81,9 @@ export default function DropdownNavigation({
                       <img src={option.src} alt={option.name} />
                     </NavLink>
                   )}
-                </li>
-              ) : (
+                </li>)}
+            {type !== 'dropdownWithLinks' &&
+              options.filter((option) => option !== selectedOption).map((option, i) =>
                 <li key={i}>
                   <img
                     className={`dropdown-navigation__menu-list-item ${sizeItem === 'm' ? "dropdown-navigation__menu-list-item_size_m" : ""}`}
@@ -81,9 +93,8 @@ export default function DropdownNavigation({
                   />
                 </li>
               )
-            )}
+            }
           </ul>
-
           {isSideMenuOpen ? (
             <ul className="dropdown-navigation__sidebar">
               {options.map((option, i) => (
