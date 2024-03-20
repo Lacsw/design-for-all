@@ -44,7 +44,7 @@
   position: absolute;
   top: 20px;
   left: 0;
-  padding: 35px 1px 0px 1px;
+  padding: 35px 1px 28px 1px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,7 +64,12 @@
   gap: 5px;
   border-radius: 0 0 13px 13px;
   top: 15px;
-  padding: 16px 0px 1px;
+  padding: 16px 0px 0px;
+}
+
+.dropdown-navigation__menu-list_size_m-smallPadding {
+  border-radius: 0 0 17px 17px;
+  padding-bottom: 1px;
 }
 
 .dropdown-navigation__menu-list-item {
@@ -115,6 +120,11 @@
   animation: rotateCounterClockWiseAni 0.3s both;
   cursor: pointer;
   transform: rotate(180deg);
+}
+
+.dropdown-navigation__wrap-container {
+  width: 34px;
+  height: 34px;
 }
 
 @keyframes downAni {

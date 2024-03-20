@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './DropdownNavigation.css';
-import ArrowBackIcon from '../../images/navigation/Arrow-Back-Icon-Black';
+import ArrowBackIcon from '../icons/ArrowBackIcon';
 
 export default function DropdownNavigation({
   options,
@@ -49,11 +49,16 @@ export default function DropdownNavigation({
         )}
       </div>
 
-      {isDropdownOpen ? (
+      {isDropdownOpen && options.length !== 1 ? (
         <>
           <ul
             className={`dropdown-navigation__menu-list 
-          ${size === 'm' ? 'dropdown-navigation__menu-list_size_m' : ''}`}
+          ${size === 'm' ? 'dropdown-navigation__menu-list_size_m' : ''}
+          ${
+            size === 'm-smallPadding'
+              ? 'dropdown-navigation__menu-list_size_m-smallPadding'
+              : ''
+          }`}
           >
             {type === 'dropdownWithLinks' &&
               options.map((option, i) => (

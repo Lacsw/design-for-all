@@ -44,7 +44,11 @@ export default function Header() {
             />
           </li>
           <li>
-            <DropdownNavigation options={languageList} title="Язык" />
+            <DropdownNavigation
+              options={languageList}
+              title="Язык"
+              size="m-smallPadding"
+            />
           </li>
           <li>
             <DropdownNavigation options={currencyList} title="Валюта" />
