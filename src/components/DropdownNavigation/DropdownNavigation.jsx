@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './DropdownNavigation.css';
+import ArrowBackIcon from '../../images/navigation/Arrow-Back-Icon-Black';
 
 export default function DropdownNavigation({
   options,
@@ -8,7 +9,7 @@ export default function DropdownNavigation({
   titleIcon,
   title,
   size,
-  sizeItem
+  sizeItem,
 }) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,11 +29,10 @@ export default function DropdownNavigation({
         setIsSideMenuOpen(false);
       }}
     >
-      <div className={`dropdown-navigation__title-icon-white
-       ${size === 'm'
-          ? "dropdown-navigation__title-icon-white_size_m"
-          : ""}`
-      }>
+      <div
+        className={`dropdown-navigation__title-icon-white
+       ${size === 'm' ? 'dropdown-navigation__title-icon-white_size_m' : ''}`}
+      >
         {type === 'dropdownWithLinks' ? (
           <img
             src={titleIcon}
@@ -44,21 +44,19 @@ export default function DropdownNavigation({
             src={selectedOption.src}
             alt={selectedOption.name}
             className={`dropdown-navigation__image 
-            ${size === 'm'
-                ? "dropdown-navigation__image_size_m"
-                : ""} `} />
+            ${size === 'm' ? 'dropdown-navigation__image_size_m' : ''} `}
+          />
         )}
       </div>
 
       {isDropdownOpen ? (
         <>
-          <ul className={`dropdown-navigation__menu-list 
-          ${size === 'm'
-              ? "dropdown-navigation__menu-list_size_m"
-              : ""}`
-          }>
+          <ul
+            className={`dropdown-navigation__menu-list 
+          ${size === 'm' ? 'dropdown-navigation__menu-list_size_m' : ''}`}
+          >
             {type === 'dropdownWithLinks' &&
-              options.map((option, i) =>
+              options.map((option, i) => (
                 <li
                   key={i}
                   onMouseEnter={() => {
@@ -66,34 +64,42 @@ export default function DropdownNavigation({
                   }}
                 >
                   {option.name === 'Свернуть' ? (
-                    <img
-                      className={
-                        isSideMenuOpen
-                          ? 'dropdown-navigation__hide-button'
-                          : null
-                      }
-                      src={option.src}
-                      alt={option.name}
+                    <div
+                      className="dropdown-navigation__wrap-container"
                       onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
-                    />
+                    >
+                      <ArrowBackIcon
+                        className={
+                          isSideMenuOpen
+                            ? 'dropdown-navigation__hide-button'
+                            : 'dropdown-navigation__hide-button_closed'
+                        }
+                      />
+                    </div>
                   ) : (
                     <NavLink to={option.link}>
                       <img src={option.src} alt={option.name} />
                     </NavLink>
                   )}
-                </li>)}
-            {type !== 'dropdownWithLinks' &&
-              options.filter((option) => option !== selectedOption).map((option, i) =>
-                <li key={i}>
-                  <img
-                    className={`dropdown-navigation__menu-list-item ${sizeItem === 'm' ? "dropdown-navigation__menu-list-item_size_m" : ""}`}
-                    src={option.src}
-                    alt={option.name}
-                    onClick={() => handleOptionClick(option.name)}
-                  />
                 </li>
-              )
-            }
+              ))}
+            {type !== 'dropdownWithLinks' &&
+              options
+                .filter((option) => option !== selectedOption)
+                .map((option, i) => (
+                  <li key={i}>
+                    <img
+                      className={`dropdown-navigation__menu-list-item ${
+                        sizeItem === 'm'
+                          ? 'dropdown-navigation__menu-list-item_size_m'
+                          : ''
+                      }`}
+                      src={option.src}
+                      alt={option.name}
+                      onClick={() => handleOptionClick(option.name)}
+                    />
+                  </li>
+                ))}
           </ul>
           {isSideMenuOpen ? (
             <ul className="dropdown-navigation__sidebar">

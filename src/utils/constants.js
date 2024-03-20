@@ -1,4 +1,3 @@
-import arrowBackBlack from 'images/navigation/arrow-back-icon-black.svg';
 import articleBlack from 'images/navigation/article-icon-black.svg';
 import desktopBlack from 'images/navigation/desktop-icon-black.svg';
 import mainBlack from 'images/navigation/main-icon-black.svg';
@@ -79,7 +78,7 @@ export const navigationOptionsList = [
   { name: 'Статьи', src: articleBlack, link: '/articles' },
   { name: 'Руководства', src: manualBlack, link: '/' },
   { name: 'Светлая тема', src: themeBlack, link: '/' },
-  { name: 'Свернуть', src: arrowBackBlack, link: '/' },
+  { name: 'Свернуть' },
 ];
 
 export const accountNavigationList = [
