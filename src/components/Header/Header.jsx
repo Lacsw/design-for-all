@@ -51,7 +51,11 @@ export default function Header() {
             />
           </li>
           <li>
-            <DropdownNavigation options={currencyList} title="Валюта" />
+            <DropdownNavigation
+              options={currencyList}
+              title="Валюта"
+              sizeItem="m"
+            />
           </li>
           <li>
             {!currentUser ? (

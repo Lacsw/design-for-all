@@ -31,7 +31,13 @@ export default function DropdownNavigation({
     >
       <div
         className={`dropdown-navigation__title-icon-white
-       ${size === 'm' ? 'dropdown-navigation__title-icon-white_size_m' : ''}`}
+       ${size === 'm' ? 'dropdown-navigation__title-icon-white_size_m' : ''}
+       ${
+         options.length === 1
+           ? 'dropdown-navigation__title-icon-white_disabled'
+           : ''
+       }
+       `}
       >
         {type === 'dropdownWithLinks' ? (
           <img
@@ -44,7 +50,11 @@ export default function DropdownNavigation({
             src={selectedOption.src}
             alt={selectedOption.name}
             className={`dropdown-navigation__image 
-            ${size === 'm' ? 'dropdown-navigation__image_size_m' : ''} `}
+            ${
+              size === 'm' || sizeItem === 'm'
+                ? 'dropdown-navigation__image_size_m'
+                : ''
+            } `}
           />
         )}
       </div>
