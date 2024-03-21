@@ -54,7 +54,7 @@ export default function Header() {
             <DropdownNavigation
               options={currencyList}
               title="Валюта"
-              sizeItem="m"
+              sizeItem="s"
             />
           </li>
           <li>

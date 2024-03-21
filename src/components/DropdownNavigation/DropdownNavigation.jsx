@@ -50,10 +50,10 @@ export default function DropdownNavigation({
             src={selectedOption.src}
             alt={selectedOption.name}
             className={`dropdown-navigation__image 
+            ${size === 'm' ? 'dropdown-navigation__image_size_m' : ''}
+            ${sizeItem === 'm' ? 'dropdown-navigation__image_sizeItem_m' : ''}
             ${
-              size === 'm' || sizeItem === 'm'
-                ? 'dropdown-navigation__image_size_m'
-                : ''
+              sizeItem === 's' ? 'dropdown-navigation__image_sizeItem_s' : ''
             } `}
           />
         )}
