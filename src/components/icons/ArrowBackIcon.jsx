@@ -1,4 +1,8 @@
-export default function ArrowBackIcon({ className }) {
+export default function ArrowBackIcon({ isOpen }) {
+  const className = isOpen
+    ? 'dropdown-navigation__hide-button'
+    : 'dropdown-navigation__hide-button_closed';
+
   return (
     <svg
       width="34"
@@ -15,7 +19,7 @@ export default function ArrowBackIcon({ className }) {
         height="32"
         rx="17"
         fill={
-          className === 'dropdown-navigation__hide-button_closed'
+          !isOpen
             ? '#161616'
             : '#fff'
         }
@@ -25,7 +29,7 @@ export default function ArrowBackIcon({ className }) {
       <path
         d="M15.2505 12L10.0005 17M10.0005 17L15.2505 22M10.0005 17H24.0005"
         stroke={
-          className === 'dropdown-navigation__hide-button_closed'
+          !isOpen
             ? '#fff'
             : '#242424'
         }

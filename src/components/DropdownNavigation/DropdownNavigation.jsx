@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './DropdownNavigation.css';
-import ArrowBackIcon from '../icons/ArrowBackIcon';
+import ArrowBackIcon from 'components/icons/ArrowBackIcon';
 
 export default function DropdownNavigation({
   options,
@@ -10,6 +10,7 @@ export default function DropdownNavigation({
   title,
   size,
   sizeItem,
+  padding,
 }) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -31,13 +32,13 @@ export default function DropdownNavigation({
     >
       <div
         className={`dropdown-navigation__title-icon-white
-       ${size === 'm' ? 'dropdown-navigation__title-icon-white_size_m' : ''}
-       ${
-         options.length === 1
-           ? 'dropdown-navigation__title-icon-white_disabled'
-           : ''
-       }
-       `}
+        ${size === 'm' ? 'dropdown-navigation__title-icon-white_size_m' : ''}
+        ${
+          options.length === 1
+            ? 'dropdown-navigation__title-icon-white_disabled'
+            : ''
+        }
+        `}
       >
         {type === 'dropdownWithLinks' ? (
           <img
@@ -51,10 +52,8 @@ export default function DropdownNavigation({
             alt={selectedOption.name}
             className={`dropdown-navigation__image 
             ${size === 'm' ? 'dropdown-navigation__image_size_m' : ''}
-            ${sizeItem === 'm' ? 'dropdown-navigation__image_sizeItem_m' : ''}
-            ${
-              sizeItem === 's' ? 'dropdown-navigation__image_sizeItem_s' : ''
-            } `}
+            ${sizeItem === 's' ? 'dropdown-navigation__image_sizeItem_s' : ''} 
+            `}
           />
         )}
       </div>
@@ -65,10 +64,11 @@ export default function DropdownNavigation({
             className={`dropdown-navigation__menu-list 
           ${size === 'm' ? 'dropdown-navigation__menu-list_size_m' : ''}
           ${
-            size === 'm-smallPadding'
+            padding === 'm'
               ? 'dropdown-navigation__menu-list_size_m-smallPadding'
               : ''
-          }`}
+          }
+          `}
           >
             {type === 'dropdownWithLinks' &&
               options.map((option, i) => (
@@ -83,13 +83,7 @@ export default function DropdownNavigation({
                       className="dropdown-navigation__wrap-container"
                       onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
                     >
-                      <ArrowBackIcon
-                        className={
-                          isSideMenuOpen
-                            ? 'dropdown-navigation__hide-button'
-                            : 'dropdown-navigation__hide-button_closed'
-                        }
-                      />
+                      <ArrowBackIcon isOpen={isSideMenuOpen} />
                     </div>
                   ) : (
                     <NavLink to={option.link}>
