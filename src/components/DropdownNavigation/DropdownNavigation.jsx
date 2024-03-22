@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './DropdownNavigation.css';
-import ArrowBackIcon from 'components/icons/ArrowBackIcon';
+import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
 
 export default function DropdownNavigation({
   options,
@@ -21,6 +21,49 @@ export default function DropdownNavigation({
     setSelectedOption(...currentOption);
   };
 
+  const isClassName = (className) => {
+    const newClass = className;
+    if (
+      padding === 's' &&
+      className !== 'dropdown-navigation__title-icon-white'
+    ) {
+      return newClass + ` ${className}_padding_s`;
+    }
+    if (size === 'm' && title !== 'Редактировать') {
+      return newClass + ` ${className}_size_m`;
+    }
+    if (size === 'm' && title === 'Редактировать') {
+      if (className === 'dropdown-navigation__title-icon-white') {
+        return newClass + ` ${className}_size_m`;
+      }
+      if (
+        className === 'dropdown-navigation__image' &&
+        selectedOption.name === 'menu'
+      ) {
+        return newClass + ` ${className}_size_xs`;
+      }
+      if (
+        className === 'dropdown-navigation__image' &&
+        selectedOption.name !== 'menu'
+      ) {
+        return newClass + ` ${className}_size_m`;
+      }
+      if (className === 'dropdown-navigation__menu-list') {
+        return newClass + ` ${className}_size_m`;
+      }
+    }
+    if (
+      sizeItem === 's' &&
+      className !== 'dropdown-navigation__title-icon-white'
+    ) {
+      return newClass + ` ${className}_sizeItem_s`;
+    }
+    if (options.length === 1) {
+      return newClass + ` ${className}_disabled`;
+    }
+    return newClass;
+  };
+
   return (
     <div
       className="dropdown-navigation"
@@ -30,16 +73,7 @@ export default function DropdownNavigation({
         setIsSideMenuOpen(false);
       }}
     >
-      <div
-        className={`dropdown-navigation__title-icon-white
-        ${size === 'm' ? 'dropdown-navigation__title-icon-white_size_m' : ''}
-        ${
-          options.length === 1
-            ? 'dropdown-navigation__title-icon-white_disabled'
-            : ''
-        }
-        `}
-      >
+      <div className={isClassName('dropdown-navigation__title-icon-white')}>
         {type === 'dropdownWithLinks' ? (
           <img
             src={titleIcon}
@@ -50,26 +84,14 @@ export default function DropdownNavigation({
           <img
             src={selectedOption.src}
             alt={selectedOption.name}
-            className={`dropdown-navigation__image 
-            ${size === 'm' ? 'dropdown-navigation__image_size_m' : ''}
-            ${sizeItem === 's' ? 'dropdown-navigation__image_sizeItem_s' : ''} 
-            `}
+            className={isClassName('dropdown-navigation__image')}
           />
         )}
       </div>
 
       {isDropdownOpen && options.length !== 1 ? (
         <>
-          <ul
-            className={`dropdown-navigation__menu-list 
-          ${size === 'm' ? 'dropdown-navigation__menu-list_size_m' : ''}
-          ${
-            padding === 'm'
-              ? 'dropdown-navigation__menu-list_size_m-smallPadding'
-              : ''
-          }
-          `}
-          >
+          <ul className={isClassName('dropdown-navigation__menu-list')}>
             {type === 'dropdownWithLinks' &&
               options.map((option, i) => (
                 <li
@@ -98,11 +120,9 @@ export default function DropdownNavigation({
                 .map((option, i) => (
                   <li key={i}>
                     <img
-                      className={`dropdown-navigation__menu-list-item ${
-                        sizeItem === 'm'
-                          ? 'dropdown-navigation__menu-list-item_size_m'
-                          : ''
-                      }`}
+                      className={isClassName(
+                        'dropdown-navigation__menu-list-item'
+                      )}
                       src={option.src}
                       alt={option.name}
                       onClick={() => handleOptionClick(option.name)}

@@ -1,3 +1,5 @@
+import './ArrowBackIcon.css';
+
 export default function ArrowBackIcon({ isOpen }) {
   const className = isOpen
     ? 'dropdown-navigation__hide-button'
@@ -18,21 +20,13 @@ export default function ArrowBackIcon({ isOpen }) {
         width="32"
         height="32"
         rx="17"
-        fill={
-          !isOpen
-            ? '#161616'
-            : '#fff'
-        }
+        fill={isOpen ? '#fff' : '#161616'}
         stroke="#161616"
         strokeWidth="2"
       />
       <path
         d="M15.2505 12L10.0005 17M10.0005 17L15.2505 22M10.0005 17H24.0005"
-        stroke={
-          !isOpen
-            ? '#fff'
-            : '#242424'
-        }
+        stroke={isOpen ? '#242424' : '#fff'}
         strokeWidth="1.36364"
         strokeLinecap="round"
         strokeLinejoin="round"

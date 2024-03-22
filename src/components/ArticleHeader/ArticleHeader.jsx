@@ -13,7 +13,6 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
               options={languageList}
               title="Язык"
               size="m"
-              sizeItem="m"
             />
           </button>
           <button type="button" className="article-header__button">
