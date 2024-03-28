@@ -11,7 +11,7 @@ import { Header, Footer, Intro } from 'components';
 
 export default function Main() {
   return (
-    <>
+    <div className="main-container">
       <Header />
       <Intro />
       <ul className="main-nav">
@@ -112,6 +112,6 @@ export default function Main() {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
