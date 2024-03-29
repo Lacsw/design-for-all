@@ -1,4 +1,9 @@
 .intro {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 120px;
+  margin: 0 auto;
   padding-top: 107px;
   padding-bottom: 150px;
 
@@ -7,9 +12,24 @@
   position: relative;
 }
 
+.intro::before {
+  content: '';
+  width: 100%;
+  max-width: 1440px;
+  height: 523px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+
+  background-image: url(/src/images/intro-hex.png);
+  background-repeat: no-repeat;
+  background-size: auto 107%;
+  background-position: top 0 right 8px;
+}
+
 .intro__container {
   width: 100%;
-  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
