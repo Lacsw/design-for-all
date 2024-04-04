@@ -2,11 +2,20 @@ import './Article.css';
 import previewImage from 'images/article/preview.png';
 import image1 from 'images/article/image-1.png';
 import { ArticleHeader } from 'components';
+import { Link } from 'react-router-dom';
 
-export default function Article() {
-  return (
+export default function Article({ data }) {
+  return data.author && data.author !== 'template' ? (
+    <div className="article__text">{data.publication.description}</div>
+  ) : (
     <div className="article">
       <div className="article__container">
+        <Link to="ru/2a78df4073ecf0e3b045f6f7ed76b6f6">
+          Перейти на реальную статью
+        </Link>
+        <Link to="ru/2a78df4073ecf0e3b045f6f7ed76b6f67">
+          Перейти на несуществующую статью
+        </Link>
         <ArticleHeader
           title={'Вэб-дизайн'}
           timeCreate={'3 ноября 2022'}

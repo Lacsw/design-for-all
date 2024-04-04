@@ -35,24 +35,15 @@ class AuthorApi {
   }
 
   async getArticleById({ lang, articleId }) {
-    const queryParams = {
-      lang,
-      uuid: articleId,
-    };
-
-    const queryString = Object.entries(queryParams)
-      .filter(([key, value]) => value !== undefined && value !== '')
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
-
     const response = await fetch(
-      `${this._baseUrl}/get_publication_p?${queryString}`,
+      `${this._baseUrl}/get_publication/${lang}/${articleId}`,
       {
         method: 'GET',
         headers: this._headers,
         credentials: 'include',
       }
     );
+
     return this._checkResponse(response);
   }
 

@@ -3,8 +3,14 @@
 
 .body {
   background: #000;
+  height: 100vh;
+  height: 100dvh;
 }
 
 a {
   color: #0b8aff;
+}
+
+#root {
+  height: 100%;
 }
