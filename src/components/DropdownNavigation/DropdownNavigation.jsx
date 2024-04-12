@@ -21,45 +21,46 @@ export default function DropdownNavigation({
     setSelectedOption(...currentOption);
   };
 
-  const isClassName = (className) => {
+  const isClassNameTitleWhite = (className) => {
     const newClass = className;
-    if (
-      padding === 's' &&
-      className !== 'dropdown-navigation__title-icon-white'
-    ) {
-      return newClass + ` ${className}_padding_s`;
-    }
-    if (size === 'm' && title !== 'Редактировать') {
+    if (size === 'm') {
       return newClass + ` ${className}_size_m`;
-    }
-    if (size === 'm' && title === 'Редактировать') {
-      if (className === 'dropdown-navigation__title-icon-white') {
-        return newClass + ` ${className}_size_m`;
-      }
-      if (
-        className === 'dropdown-navigation__image' &&
-        selectedOption.name === 'menu'
-      ) {
-        return newClass + ` ${className}_size_xs`;
-      }
-      if (
-        className === 'dropdown-navigation__image' &&
-        selectedOption.name !== 'menu'
-      ) {
-        return newClass + ` ${className}_size_m`;
-      }
-      if (className === 'dropdown-navigation__menu-list') {
-        return newClass + ` ${className}_size_m`;
-      }
-    }
-    if (
-      sizeItem === 's' &&
-      className !== 'dropdown-navigation__title-icon-white'
-    ) {
-      return newClass + ` ${className}_sizeItem_s`;
     }
     if (options.length === 1) {
       return newClass + ` ${className}_disabled`;
+    }
+    return newClass;
+  };
+
+  const isClassNameNavigationImage = (className) => {
+    const newClass = className;
+    if (size === 'm' && selectedOption.name === 'menu') {
+      return newClass + ` ${className}_sizeItem_xs`;
+    }
+    if (sizeItem === 'm') {
+      return newClass + ` ${className}_sizeItem_m`;
+    }
+    if (sizeItem === 's') {
+      return newClass + ` ${className}_sizeItem_s`;
+    }
+    return newClass;
+  };
+
+  const isClassNameList = (className) => {
+    const newClass = className;
+    if (padding === 's') {
+      return newClass + ` ${className}_padding_s`;
+    }
+    if (size === 'm') {
+      return newClass + ` ${className}_size_m`;
+    }
+    return newClass;
+  };
+
+  const isClassNameListItem = (className) => {
+    const newClass = className;
+    if (sizeItem === 'm') {
+      return newClass + ` ${className}_sizeItem_m`;
     }
     return newClass;
   };
@@ -73,7 +74,11 @@ export default function DropdownNavigation({
         setIsSideMenuOpen(false);
       }}
     >
-      <div className={isClassName('dropdown-navigation__title-icon-white')}>
+      <div
+        className={isClassNameTitleWhite(
+          'dropdown-navigation__title-icon-white'
+        )}
+      >
         {type === 'dropdownWithLinks' ? (
           <img
             src={titleIcon}
@@ -84,14 +89,14 @@ export default function DropdownNavigation({
           <img
             src={selectedOption.src}
             alt={selectedOption.name}
-            className={isClassName('dropdown-navigation__image')}
+            className={isClassNameNavigationImage('dropdown-navigation__image')}
           />
         )}
       </div>
 
       {isDropdownOpen && options.length !== 1 ? (
         <>
-          <ul className={isClassName('dropdown-navigation__menu-list')}>
+          <ul className={isClassNameList('dropdown-navigation__menu-list')}>
             {type === 'dropdownWithLinks' &&
               options.map((option, i) => (
                 <li
@@ -120,7 +125,7 @@ export default function DropdownNavigation({
                 .map((option, i) => (
                   <li key={i}>
                     <img
-                      className={isClassName(
+                      className={isClassNameListItem(
                         'dropdown-navigation__menu-list-item'
                       )}
                       src={option.src}

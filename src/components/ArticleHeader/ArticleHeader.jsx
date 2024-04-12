@@ -12,7 +12,8 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
             <DropdownNavigation
               options={languageList}
               title="Язык"
-              size="m"
+              sizeItem="m"
+              size='m'
             />
           </button>
           <button type="button" className="article-header__button">

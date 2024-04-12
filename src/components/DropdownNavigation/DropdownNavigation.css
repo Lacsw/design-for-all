@@ -39,12 +39,12 @@
   height: 24px;
 }
 
-.dropdown-navigation__image_size_m {
+.dropdown-navigation__image_sizeItem_m {
   width: 20px;
   height: 20px;
 }
 
-.dropdown-navigation__image_size_xs {
+.dropdown-navigation__image_sizeItem_xs {
   width: 14px;
   height: 14px;
 }
@@ -91,7 +91,7 @@
   cursor: pointer;
 }
 
-.dropdown-navigation__menu-list-item_size_m {
+.dropdown-navigation__menu-list-item_sizeItem_m {
   width: 20px;
 }
 
