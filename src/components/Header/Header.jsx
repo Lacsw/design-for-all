@@ -47,7 +47,8 @@ export default function Header() {
             <DropdownNavigation
               options={languageList}
               title="Язык"
-              padding="s"
+              paddingBottom="5"
+              size='34'
             />
           </li>
           <li>

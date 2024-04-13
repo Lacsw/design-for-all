@@ -10,7 +10,8 @@ export default function DropdownNavigation({
   title,
   size,
   sizeItem,
-  padding,
+  paddingBottom,
+  gap,
 }) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -22,47 +23,48 @@ export default function DropdownNavigation({
   };
 
   const isClassNameTitleWhite = (className) => {
-    const newClass = className;
-    if (size === 'm') {
-      return newClass + ` ${className}_size_m`;
+    if (size) {
+      return className + ` ${className}_size_${size}`;
     }
     if (options.length === 1) {
-      return newClass + ` ${className}_disabled`;
+      return className + ` ${className}_disabled`;
     }
-    return newClass;
+    return className;
   };
 
   const isClassNameNavigationImage = (className) => {
-    const newClass = className;
-    if (size === 'm' && selectedOption.name === 'menu') {
-      return newClass + ` ${className}_sizeItem_xs`;
+    if (selectedOption.name === 'menu') {
+      return className + ` ${className}_sizeItem_xs`;
     }
-    if (sizeItem === 'm') {
-      return newClass + ` ${className}_sizeItem_m`;
+    if (sizeItem) {
+      return className + ` ${className}_sizeItem_${sizeItem}`;
     }
-    if (sizeItem === 's') {
-      return newClass + ` ${className}_sizeItem_s`;
-    }
-    return newClass;
+    return className;
   };
 
   const isClassNameList = (className) => {
-    const newClass = className;
-    if (padding === 's') {
-      return newClass + ` ${className}_padding_s`;
+    let newClass;
+    if (paddingBottom) {
+      newClass = className + ` ${className}_paddingBottom_${paddingBottom}`;
     }
-    if (size === 'm') {
-      return newClass + ` ${className}_size_m`;
+    if (size && newClass !== undefined) {
+      newClass = newClass + ` ${className}_size_${size}`;
     }
-    return newClass;
+    if (gap && newClass !== undefined) {
+      newClass = newClass + ` ${className}_gap_${gap}`;
+    }
+    if (newClass !== undefined) {
+      return newClass;
+    } else {
+      return className;
+    }
   };
 
   const isClassNameListItem = (className) => {
-    const newClass = className;
-    if (sizeItem === 'm') {
-      return newClass + ` ${className}_sizeItem_m`;
+    if (sizeItem) {
+      return className + ` ${className}_sizeItem_${sizeItem}`;
     }
-    return newClass;
+    return className;
   };
 
   return (
@@ -70,8 +72,8 @@ export default function DropdownNavigation({
       className="dropdown-navigation"
       onMouseEnter={() => setIsDropdownOpen(true)}
       onMouseLeave={() => {
-        // setIsDropdownOpen(false);
-        // setIsSideMenuOpen(false);
+        setIsDropdownOpen(false);
+        setIsSideMenuOpen(false);
       }}
     >
       <div
@@ -119,11 +121,11 @@ export default function DropdownNavigation({
                   )}
                 </li>
               ))}
-            {type !== 'dropdownWithLinks' &&
+            {!type &&
               options
                 .filter((option) => option !== selectedOption)
                 .map((option, i) => (
-                  <li key={i}>
+                  <li key={i} className="dropdown-navigation__menu-item">
                     <img
                       className={isClassNameListItem(
                         'dropdown-navigation__menu-list-item'
@@ -131,6 +133,21 @@ export default function DropdownNavigation({
                       src={option.src}
                       alt={option.name}
                       onClick={() => handleOptionClick(option.name)}
+                    />
+                  </li>
+                ))}
+            {type === 'dropdownWithTools' &&
+              options
+                .filter((option) => option !== selectedOption)
+                .map((option, i) => (
+                  <li key={i} className="dropdown-navigation__menu-item">
+                    <img
+                      className={isClassNameListItem(
+                        'dropdown-navigation__menu-list-item'
+                      )}
+                      src={option.src}
+                      alt={option.name}
+                      onClick={() => console.log(option.name)}
                     />
                   </li>
                 ))}

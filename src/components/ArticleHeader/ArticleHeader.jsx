@@ -13,7 +13,8 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
               options={languageList}
               title="Язык"
               sizeItem="m"
-              size='m'
+              size="m"
+              paddingBottom="2"
             />
           </button>
           <button type="button" className="article-header__button">
@@ -21,6 +22,9 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
               options={editList}
               title="Редактировать"
               size="m"
+              paddingBottom="1"
+              gap="5"
+              type="dropdownWithTools"
             />
           </button>
         </div>
