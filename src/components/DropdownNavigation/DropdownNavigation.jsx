@@ -70,8 +70,8 @@ export default function DropdownNavigation({
       className="dropdown-navigation"
       onMouseEnter={() => setIsDropdownOpen(true)}
       onMouseLeave={() => {
-        setIsDropdownOpen(false);
-        setIsSideMenuOpen(false);
+        // setIsDropdownOpen(false);
+        // setIsSideMenuOpen(false);
       }}
     >
       <div
