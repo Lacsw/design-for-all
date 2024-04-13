@@ -1,11 +1,22 @@
-import './NotFoundArticle.css';
-import notFound404Svg from '../../../images/404.svg';
 import { useSelector } from 'react-redux';
+import { Link, useSearchParams } from 'react-router-dom';
+
+import './NotFoundArticle.css';
+import { Button } from 'components';
+import notFound404Svg from 'images/404.svg';
 import { getCurrentUser } from 'store/selectors';
-import { Link } from 'react-router-dom';
 
 function NotFoundArcticle() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentUser = useSelector(getCurrentUser);
+
+  const openModal = (evt) => {
+    if (evt.target.textContent === 'Войти') {
+      setSearchParams({ 'modal-auth': 'login' });
+    } else {
+      setSearchParams({ 'modal-auth': 'signUp' });
+    }
+  };
 
   return (
     <section className="not-found-article">
@@ -13,25 +24,29 @@ function NotFoundArcticle() {
       <h2 className="not-found-article__text">Данная статья ещё не создана.</h2>
       {currentUser ? (
         <Link
-          to="/articles/create"
+          to="/author/new-article"
           className="button button_type_bright not-found-article__button"
         >
           Создать
         </Link>
       ) : (
         <div className="not-found-article__actions-container">
-          <Link
-            to="/login"
-            className="button button_type_bright not-found-article__button"
+          <Button
+            type="button"
+            theme="bright"
+            extraClass="not-found-article__button"
+            onClick={openModal}
           >
             Войти
-          </Link>
-          <Link
-            to="/registration"
-            className="button button_type_bright not-found-article__button"
+          </Button>
+          <Button
+            type="button"
+            theme="bright"
+            extraClass="not-found-article__button"
+            onClick={openModal}
           >
             Регистрация
-          </Link>
+          </Button>
         </div>
       )}
     </section>

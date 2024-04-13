@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import './Articles.css';
 import {
   Header,
@@ -47,7 +48,7 @@ export default function Articles() {
         <SideBar />
 
         {error ? (
-          <Error data="Произошла ошибка при загрузке статьи" />
+          <Error message="Произошла ошибка при загрузке статьи" />
         ) : isLoading !== false ? (
           <Loader />
         ) : article.author ? (

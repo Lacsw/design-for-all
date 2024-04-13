@@ -3,19 +3,21 @@ import './Button.css';
 export default function Button({
   children,
   type,
-  variant = 'dark',
+  theme = 'dark',
   extraClass,
   relatedForm,
   disabled,
+  onClick,
 }) {
   return (
     <button
       type={type}
       className={`button ${
-        variant !== 'dark' ? 'button_type_bright' : ''
+        theme !== 'dark' ? 'button_type_bright' : ''
       } ${extraClass}`}
       form={relatedForm}
       disabled={disabled}
+      onClick={onClick}
     >
       {children}
     </button>

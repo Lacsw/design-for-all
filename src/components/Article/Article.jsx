@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
+
 import './Article.css';
 import previewImage from 'images/article/preview.png';
 import image1 from 'images/article/image-1.png';
 import { ArticleHeader } from 'components';
-import { Link } from 'react-router-dom';
 
 export default function Article({ data }) {
   return data.author && data.author !== 'template' ? (

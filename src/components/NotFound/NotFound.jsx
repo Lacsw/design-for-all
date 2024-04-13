@@ -1,6 +1,7 @@
-import './NotFound.css';
-import notFound404Svg from '../../images/404.svg';
 import { Link } from 'react-router-dom';
+
+import './NotFound.css';
+import notFound404Svg from 'images/404.svg';
 
 function NotFound() {
   return (
