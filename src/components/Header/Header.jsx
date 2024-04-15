@@ -48,7 +48,7 @@ export default function Header() {
               options={languageList}
               title="Язык"
               paddingBottom="5"
-              size='34'
+              size='m'
             />
           </li>
           <li>

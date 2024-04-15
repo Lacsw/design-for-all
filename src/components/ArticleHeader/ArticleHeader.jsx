@@ -13,7 +13,7 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
               options={languageList}
               title="Язык"
               sizeItem="m"
-              size="m"
+              size="s"
               paddingBottom="2"
             />
           </button>
@@ -21,7 +21,7 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
             <DropdownNavigation
               options={editList}
               title="Редактировать"
-              size="m"
+              size="s"
               paddingBottom="1"
               gap="5"
               type="dropdownWithTools"
