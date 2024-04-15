@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import './Header.css';
 import logo from 'images/logo.svg';
@@ -14,15 +15,49 @@ import {
   currencyList,
 } from 'utils/constants';
 import { DropdownNavigation, AuthModal } from 'components';
+import { getCurrentUser } from 'store/selectors';
 
 export default function Header() {
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  const currentUser = useSelector(getCurrentUser);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const toogleModal = () => {
-    setIsAuthOpen(!isAuthOpen);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState(false);
+
+  /* в шапке сайта при клике на иконку входа по ум. открывается
+  авторизация, а не регистрация */
+  const openAuthModal = () => {
+    setSearchParams({ 'modal-auth': 'login' });
   };
+
+  const deleteAuthModalParams = () => {
+    if (searchParams.has('modal-auth')) {
+      searchParams.delete('modal-auth');
+      setSearchParams(searchParams);
+    }
+  };
+
+  useEffect(() => {
+    const authModalMode = searchParams.get('modal-auth');
+    if (authModalMode && authModalMode === 'login') {
+      setAuthModalMode(authModalMode);
+      setIsAuthModalOpen(true);
+    } else if (authModalMode && authModalMode === 'signUp') {
+      setAuthModalMode(authModalMode);
+      setIsAuthModalOpen(true);
+    } else {
+      setIsAuthModalOpen(false);
+    }
+  }, [searchParams]);
+
+  // обработка кликов на табы внутри самой модалки авторизации
+  useEffect(() => {
+    /* если открыть модалку и перейти на другую страницу нашего
+    сайта (напр. на логотип кликнуть), то поисковый параметр становится false */
+    if (authModalMode !== false) {
+      setSearchParams({ 'modal-auth': authModalMode });
+    }
+  }, [authModalMode]);
 
   return (
     <header className="header">
@@ -52,7 +87,10 @@ export default function Header() {
           </li>
           <li>
             {!currentUser ? (
-              <button className="header__icon-background" onClick={toogleModal}>
+              <button
+                className="header__icon-background"
+                onClick={openAuthModal}
+              >
                 <img src={siginInIcon} alt="войти" />
               </button>
             ) : (
@@ -66,7 +104,12 @@ export default function Header() {
           </li>
         </ul>
       </div>
-      <AuthModal isOpen={isAuthOpen} onClose={toogleModal} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={deleteAuthModalParams}
+        modalMode={authModalMode}
+        setModalMode={setAuthModalMode}
+      />
     </header>
   );
 }
