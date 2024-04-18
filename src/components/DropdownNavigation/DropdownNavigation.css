@@ -27,7 +27,7 @@
 }
 
 .dropdown-navigation__title-icon-white_disabled {
-  cursor: default;
+  pointer-events: none;
 }
 
 .dropdown-navigation__title-image {
@@ -57,7 +57,6 @@
 .dropdown-navigation__image_sizeItem_s {
   width: 10px;
   height: 16px;
-  cursor: default;
 }
 
 .dropdown-navigation__menu-list {
