@@ -1,44 +1,54 @@
 class AuthApi {
-	constructor(options) {
-		this._baseUrl = options.baseUrl;
-		this._headers = options.headers;
-	}
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
 
-	_checkResponse(res) {
-		if (res.ok) {
-			return res.json();
-		} else {
-			return Promise.reject(`Ошибка ${res.status}`);
-		}
-	}
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка ${res.status}`);
+    }
+  }
 
-	async mainPage() {
-		const response = await fetch(`https://design-for-all.net/`, {
-			method: 'GET',
-			headers: this._headers,
-		});
-		return this._checkResponse(response);
-	}
+  async mainPage() {
+    const response = await fetch(`https://design-for-all.net/`, {
+      method: 'GET',
+      headers: this._headers,
+    });
+    return this._checkResponse(response);
+  }
 
-	// login: 'test_account',
-	// password: '00xMgxOASRdsz0RZ',
-	async loginAuthor(data) {
-		const response = await fetch(`${this._baseUrl}/login`, {
-			method: 'POST',
-			headers: this._headers,
-			body: JSON.stringify(data),
-			credentials: 'include',
-		});
+  // login: 'test_account',
+  // password: '00xMgxOASRdsz0RZ',
+  async loginAuthor(data) {
+    const response = await fetch(`${this._baseUrl}/login`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+      credentials: 'include',
+    });
 
-		return this._checkResponse(response);
-	}
+    return this._checkResponse(response);
+  }
+
+  async logoutAuthor() {
+    const response = await fetch(`${this._baseUrl}/logout`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+    });
+
+    return this._checkResponse(response);
+  }
 }
 
 const authApi = new AuthApi({
-	baseUrl: 'https://design-for-all.net/api/v1',
-	headers: {
-		'Content-Type': 'application/json',
-	},
+  baseUrl: 'https://design-for-all.net/api/v1',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export default authApi;
