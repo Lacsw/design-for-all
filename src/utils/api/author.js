@@ -1,3 +1,5 @@
+import { uploadMainImageThunk } from 'store/middlewares/author';
+
 class AuthorApi {
   constructor(options) {
     this._baseUrl = options.baseUrl;
@@ -55,6 +57,10 @@ class AuthorApi {
     });
 
     return this._checkResponse(response);
+  }
+
+  uploadMainImage(evt, dispatch) {
+    dispatch(uploadMainImageThunk({ evt, context: this }));
   }
 }
 

@@ -2,9 +2,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './slices';
+import { newArticleReducer } from './slices/authorSlices';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  author: combineReducers({
+    newArticle: newArticleReducer,
+  }),
 });
 
 const persistConfig = {

@@ -1,15 +1,28 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import { langSelectOptions, categorySelectOptions } from 'utils/constants';
-import { Dropdown, ModalRecommendation } from 'components';
+import { Dropdown, Loader, ModalRecommendation } from 'components';
+import authorApi from 'utils/api/author';
+import { getIsMainImageLoading, getMainImage } from 'store/selectors';
 
 export default function NewArticle() {
+  console.log('начало NewArticle');
   // const [value, changeValue] = useState('');
+  const dispatch = useDispatch();
+
   const [isShownAddRec, setIsShownAddRec] = useState(false);
+
+  const mainImage = useSelector(getMainImage);
+  const isMainImageLoading = useSelector(getIsMainImageLoading);
 
   const toggleRecommendation = () => {
     setIsShownAddRec(!isShownAddRec);
+  };
+
+  const handleImage = (evt) => {
+    authorApi.uploadMainImage(evt, dispatch);
   };
 
   return (
@@ -43,7 +56,7 @@ export default function NewArticle() {
               type="text"
               name="sub-category"
               id="sub-category"
-              value="component/active elements/button/"
+              // value="component/active elements/button/"
               className="new-article__input"
               size={32}
             />
@@ -55,7 +68,7 @@ export default function NewArticle() {
               type="text"
               name="ref-category"
               id="ref-category"
-              value=".../button"
+              // value=".../button"
               size={8}
               // size={Math.min(Math.max(value.length, 2), 20)}
               // value={value}
@@ -70,11 +83,14 @@ export default function NewArticle() {
             <span className="new-aritcle__sub-title">Картинка статьи</span>
             <input
               type="file"
+              accept=".png, .jpg, .jpeg, .gif, .webp"
               name="main-image"
               id="main-image"
               className="new-article__main-image"
+              onChange={handleImage}
             />
           </label>
+          {isMainImageLoading && <Loader />}
 
           <label className="new-article__label" htmlFor="article-header">
             <span className="new-aritcle__sub-title">Заголовок статьи</span>
@@ -114,6 +130,9 @@ export default function NewArticle() {
             </div>
           </label>
         </form>
+        <div id="qwerty">
+          <img src={mainImage && mainImage.original_size} alt="222" />
+        </div>
       </div>
       <ModalRecommendation
         isOpen={isShownAddRec}
