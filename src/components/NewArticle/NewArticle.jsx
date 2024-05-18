@@ -6,9 +6,10 @@ import { langSelectOptions, categorySelectOptions } from 'utils/constants';
 import { Dropdown, Loader, ModalRecommendation } from 'components';
 import authorApi from 'utils/api/author';
 import { getIsMainImageLoading, getMainImage } from 'store/selectors';
+import DropdownActions from 'components/DropdownActions/DropdownActions';
+import EllipsisIcon from 'components/Icons/EllipsisIcon/EllipsisIcon';
 
 export default function NewArticle() {
-  console.log('начало NewArticle');
   // const [value, changeValue] = useState('');
   const dispatch = useDispatch();
 
@@ -91,6 +92,7 @@ export default function NewArticle() {
             />
           </label>
           {isMainImageLoading && <Loader />}
+          <DropdownActions node={<EllipsisIcon />} />
 
           <label className="new-article__label" htmlFor="article-header">
             <span className="new-aritcle__sub-title">Заголовок статьи</span>

@@ -99,6 +99,11 @@ export const languageList = [
   { name: 'SPA', src: spaFlag },
 ];
 
+// export const actionsOnImagesAuthor = [
+//   { name: 'Заменить', src: changeImg },
+//   { name: 'Удалить', src: deleteImg },
+// ];
+
 // SOCIALS //
 
 export const socialIcons = {
