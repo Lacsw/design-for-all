@@ -1,10 +1,10 @@
 import slideImg from 'images/main/slide-img.png';
-import './MainSlide.css';
-export default function MainSlide() {
+import './DesktopSlide.css';
+export default function DesktopSlide() {
   return (
-    <div className="main-slide">
-      <h2 className="main-slide__title">Веб-приложения</h2>
-      <p className="main-slide__text">
+    <div className="desktop-slide">
+      <h2 className="desktop-slide__title">Веб-приложения</h2>
+      <p className="desktop-slide__text">
         Давно выяснено, что при оценке дизайна и композиции читаемый текст
         мешает сосредоточиться. Lorem Ipsum используют потому, что тот
         обеспечивает более или менее стандартное заполнение шаблона, а также
@@ -34,8 +34,8 @@ export default function MainSlide() {
         <br />
         Классический текст Lorem Ipsum, используемый с XVI века
       </p>
-      <img className="main-slide__img" src={slideImg} alt="main" />
-      <p className="main-slide__text">
+      <img className="desktop-slide__img" src={slideImg} alt="desktop" />
+      <p className="desktop-slide__text">
         Давно выяснено, что при оценке дизайна и композиции читаемый текст
         мешает сосредоточиться. Lorem Ipsum используют потому, что тот
         обеспечивает более или менее стандартное заполнение шаблона, а также

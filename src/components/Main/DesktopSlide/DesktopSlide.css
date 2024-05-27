@@ -1,4 +1,4 @@
-.main-slide {
+.desktop-slide {
   max-width: 1000px;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   color: #fff;
 }
 
-.main-slide__title {
+.desktop-slide__title {
   margin: 0;
 
   font-family: Inter;
@@ -23,7 +23,7 @@
   line-height: normal;
 }
 
-.main-slide__text {
+.desktop-slide__text {
   margin: 0;
 
   font-family: Inter;
@@ -34,7 +34,7 @@
   letter-spacing: 0.32px;
 }
 
-.main-slide__slide-img {
+.desktop-slide__slide-img {
   overflow: hidden;
   border-radius: 6px;
 }
