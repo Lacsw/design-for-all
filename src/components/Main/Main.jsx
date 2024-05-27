@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import './Main.css';
-import slideImg from 'images/main/slide-img.png';
 import { mainNavigationOptionsList } from '../../utils/constants';
 import { Header, Footer, Intro, MainNavigationBar } from 'components';
-import MainSlide from './MainSlide/MainSlide';
+import MainSlider from './MainSlider/MainSlider';
 
 export default function Main() {
-  const [activeTab, setActiveTab] = useState('Десктоп приложения');
-  const handleActiveTab = (name) => {
-    setActiveTab(name);
+  const [activeTab, setActiveTab] = useState({
+    name: 'Десктоп приложения',
+    index: 2,
+  });
+
+  const handleActiveTab = ({ name, index }) => {
+    setActiveTab({ name, index });
   };
+console.log(activeTab)
   return (
     <>
       <Header />
@@ -20,7 +24,7 @@ export default function Main() {
         activeTab={activeTab}
       />
       <div className="main__content">
-        <MainSlide />
+        <MainSlider index={activeTab.index} />
       </div>
       <Footer />
     </>
