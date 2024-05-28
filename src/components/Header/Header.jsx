@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -16,8 +16,11 @@ import {
 } from 'utils/constants';
 import { DropdownNavigation, AuthModal } from 'components';
 import { getCurrentUser } from 'store/selectors';
+import { ThemeContext } from 'styles/ThemeContext';
 
 export default function Header() {
+  const { theme, setTheme } = useContext(ThemeContext);
+
   const currentUser = useSelector(getCurrentUser);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -59,6 +62,14 @@ export default function Header() {
     }
   }, [authModalMode]);
 
+  const toggleTheme = useCallback(() => {
+    if (theme === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  }, [setTheme, theme]);
+
   return (
     <header className="header">
       <div className="header__container">
@@ -70,6 +81,9 @@ export default function Header() {
             <button className="header__icon-background">
               <img src={loupe} alt="Иконка лупы" className="header__icon" />
             </button>
+          </li>
+          <li>
+            <button onClick={toggleTheme}>Смена темы. Текущая: {theme}</button>
           </li>
           <li>
             <DropdownNavigation
