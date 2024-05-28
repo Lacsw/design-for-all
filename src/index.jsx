@@ -6,6 +6,7 @@ import Providers from 'components/Providers/Providers';
 import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
+import { CssBaseline } from '@mui/material';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
     <PersistGate persistor={persistor}>
       <BrowserRouter>
         <Providers>
+          <CssBaseline />
           <App />
         </Providers>
       </BrowserRouter>

@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -83,7 +84,9 @@ export default function Header() {
             </button>
           </li>
           <li>
-            <button onClick={toggleTheme}>Смена темы. Текущая: {theme}</button>
+            <Button variant="contained" onClick={toggleTheme}>
+              Смена темы. Текущая: {theme}
+            </Button>
           </li>
           <li>
             <DropdownNavigation

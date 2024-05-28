@@ -4,10 +4,10 @@
   margin: 0;
   border: none;
   border-radius: 12px;
-  background: #161616;
+  background: var(--color-bg-main);
   box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
 
-  color: #fff;
+  color: (--color-main);
   text-align: center;
   font-family: Inter;
   font-size: 14px;
@@ -17,25 +17,12 @@
   letter-spacing: 0.28px;
 }
 
-.button_type_bright {
-  color: #161616;
-  background: #fff;
-}
-
 .button:hover:not(:disabled) {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
-  background: #242424;
+  background: var(--color-bg-low-accent);
   cursor: pointer;
 }
 
-.button_type_bright:hover:not(:disabled) {
-  background: #dadada;
-}
-
 .button:disabled {
-  color: #343434;
-}
-
-.button_type_bright:disabled {
-  background: #dadada;
+  color: var(--color-main-disabled);
 }

@@ -5,7 +5,7 @@
   max-height: 444px;
   padding: 20px;
 
-  color: #fff;
+  color: var(--color-main);
 
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   justify-content: center;
   row-gap: 20px;
 
-  background-color: #161616;
+  background-color: var(--color-bg-secondary);
   border-radius: 12px;
 }
 

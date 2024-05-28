@@ -47,7 +47,7 @@
   line-height: 1.3;
   letter-spacing: 2px;
   text-align: center;
-  color: #ffffff;
+  color: var(--color-main);
 }
 
 .intro__subtitle {
@@ -58,5 +58,5 @@
   font-weight: 500;
   font-size: 32px;
   line-height: 1.3;
-  color: #ffffff;
+  color: var(--color-main);
 }

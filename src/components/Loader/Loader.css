@@ -4,7 +4,7 @@
   box-sizing: border-box;
   width: 100%;
 
-  color: #fff;
+  color: var(--color-main);
   font-family: 'Inter';
   font-size: 20px;
   line-height: 1.3;
