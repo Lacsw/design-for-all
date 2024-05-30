@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import './Header.css';
@@ -16,15 +16,16 @@ import {
   currencyList,
 } from 'utils/constants';
 import { DropdownNavigation, AuthModal } from 'components';
-import { getCurrentUser } from 'store/selectors';
-import { ThemeContext } from 'styles/ThemeContext';
+import { getCurrentTheme, getCurrentUser } from 'store/selectors';
+import { setTheme } from 'store/middlewares';
 
 export default function Header() {
-  const { theme, setTheme } = useContext(ThemeContext);
-
-  const currentUser = useSelector(getCurrentUser);
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const theme = useSelector(getCurrentTheme);
+
+  const currentUser = useSelector(getCurrentUser);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState(false);
 
@@ -54,7 +55,7 @@ export default function Header() {
     }
   }, [searchParams]);
 
-  // обработка кликов на табы внутри самой модалки авторизации
+  // Обработка кликов на табы внутри самой модалки авторизации
   useEffect(() => {
     /* если открыть модалку и перейти на другую страницу нашего
     сайта (напр. на логотип кликнуть), то поисковый параметр становится false */
@@ -63,13 +64,22 @@ export default function Header() {
     }
   }, [authModalMode]);
 
+  // Установка темы, сохранённой persist-ом, при загрузке сайта
+  useEffect(() => {
+    /* без этого условия, если тема и так начальная,
+      то в setTheme будет попытка удалить несуществющий тег style */
+    if (theme !== 'dark') {
+      dispatch(setTheme(theme));
+    }
+  }, []);
+
   const toggleTheme = useCallback(() => {
     if (theme === 'dark') {
-      setTheme('light');
+      dispatch(setTheme('light'));
     } else {
-      setTheme('dark');
+      dispatch(setTheme('dark'));
     }
-  }, [setTheme, theme]);
+  }, [theme, dispatch, setTheme]);
 
   return (
     <header className="header">
