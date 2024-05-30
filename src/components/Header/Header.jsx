@@ -18,8 +18,10 @@ import { DropdownNavigation, AuthModal } from 'components';
 import { getCurrentUser } from 'store/selectors';
 
 export default function Header() {
+
   const currentUser = useSelector(getCurrentUser);
   const [searchParams, setSearchParams] = useSearchParams();
+
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState(false);
@@ -80,10 +82,19 @@ export default function Header() {
             />
           </li>
           <li>
-            <DropdownNavigation options={languageList} title="Язык" />
+            <DropdownNavigation
+              options={languageList}
+              title="Язык"
+              paddingBottom="5"
+              size='m'
+            />
           </li>
           <li>
-            <DropdownNavigation options={currencyList} title="Валюта" />
+            <DropdownNavigation
+              options={currencyList}
+              title="Валюта"
+              sizeItem="s"
+            />
           </li>
           <li>
             {!currentUser ? (
