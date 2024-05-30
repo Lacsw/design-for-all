@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 import './AuthModal.css';
 import { LoginForm, SignUpForm } from 'components';
+import { modalRoot } from 'utils/modal';
 
-const AuthModal = ({ isOpen, onClose }) => {
-  const [isAuthTabActive, setIsAuthTabActive] = useState(true);
-
+/**
+ * modalMode - 'login' (по ум.) | 'signUp'
+ */
+const AuthModal = ({ isOpen, onClose, modalMode = 'login', setModalMode }) => {
   useEffect(() => {
     if (isOpen) {
       const closeByEsc = (evt) => {
@@ -23,16 +26,14 @@ const AuthModal = ({ isOpen, onClose }) => {
   };
 
   const handleSignUpTabClick = () => {
-    console.log('111');
-    setIsAuthTabActive(false);
+    setModalMode('signUp');
   };
 
   const handleLoginTabClick = () => {
-    console.log('222');
-    setIsAuthTabActive(true);
+    setModalMode('login');
   };
 
-  return (
+  return ReactDOM.createPortal(
     <div
       className={`auth-modal ${isOpen && 'auth-modal_opened'}`}
       onClick={closeByOver}
@@ -40,7 +41,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       <div className="auth-modal__btns">
         <button
           className={
-            isAuthTabActive
+            modalMode === 'login'
               ? 'auth-modal__active-btn'
               : 'auth-modal__inactive-btn auth-modal__inactive-btn_login'
           }
@@ -50,7 +51,7 @@ const AuthModal = ({ isOpen, onClose }) => {
         </button>
         <button
           className={
-            !isAuthTabActive
+            modalMode === 'signUp'
               ? 'auth-modal__active-btn'
               : 'auth-modal__inactive-btn'
           }
@@ -59,12 +60,13 @@ const AuthModal = ({ isOpen, onClose }) => {
           Регистрация
         </button>
       </div>
-      {isAuthTabActive ? (
+      {modalMode === 'login' ? (
         <LoginForm onClose={onClose} />
       ) : (
         <SignUpForm onClose={onClose} />
       )}
-    </div>
+    </div>,
+    modalRoot
   );
 };
 

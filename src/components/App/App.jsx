@@ -8,6 +8,7 @@ import {
   Guides,
   AccountAuthor,
   AccountAdmin,
+  NotFound,
 } from 'components';
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/guides" element={<Guides />} />
         <Route path="/author/*" element={<AccountAuthor />} />
         <Route path="/admin/*" element={<AccountAdmin />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

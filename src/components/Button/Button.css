@@ -17,12 +17,25 @@
   letter-spacing: 0.28px;
 }
 
+.button_type_bright {
+  color: #161616;
+  background: #fff;
+}
+
 .button:hover:not(:disabled) {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   background: #242424;
   cursor: pointer;
 }
 
+.button_type_bright:hover:not(:disabled) {
+  background: #dadada;
+}
+
 .button:disabled {
   color: #343434;
+}
+
+.button_type_bright:disabled {
+  background: #dadada;
 }
