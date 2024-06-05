@@ -1,0 +1,13 @@
+:root {
+  --color-main: #161616;
+  --color-main-disabled: #bcbcbc;
+  --color-secondary: #ffffff;
+  --color-secondary-disabled: #343434;
+  --color-success: #45861d;
+  --color-failure: #ac3e3e;
+
+  --color-bg-main: #f2f2f2;
+  --color-bg-secondary: #ffffff;
+  --color-bg-accent: #242424;
+  --color-bg-low-accent: #dadada;
+}

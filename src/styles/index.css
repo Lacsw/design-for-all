@@ -1,0 +1,17 @@
+@import url(../vendor/fonts/fonts.css);
+@import url(./theme-default.css);
+@import url(./vars.css);
+
+.body {
+  background: var(--color-bg-main);
+  height: 100vh;
+  height: 100dvh;
+}
+
+a {
+  color: #0b8aff;
+}
+
+#root {
+  height: 100%;
+}

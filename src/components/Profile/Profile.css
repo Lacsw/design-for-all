@@ -1,57 +1,57 @@
 .profile__container {
-	display: flex;
-	gap: 40px;
+  display: flex;
+  gap: 40px;
 }
 
 .profile__avatar {
-	border-radius: 12px;
-	object-fit: contain;
-	max-height: 450px;
-	max-width: 300px;
+  border-radius: 12px;
+  object-fit: contain;
+  max-height: 450px;
+  max-width: 300px;
 }
 
 .profile__form {
-	padding: 30px 60px;
-	width: 676px;
-	box-sizing: border-box;
-	background-color: #161616;
-	border-radius: 12px;
-	display: flex;
-	justify-content: space-between;
-	gap: 20px;
+  padding: 30px 60px;
+  width: 676px;
+  box-sizing: border-box;
+  background-color: var(--color-bg-secondary);
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .profile__fieldset {
-	display: flex;
-	flex-direction: column;
-	border: none;
-	margin: 0;
-	padding: 0;
-	width: 222px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 222px;
 }
 
 .profile__field {
-	padding-bottom: 15px;
+  padding-bottom: 15px;
 }
 
 .profile__field:last-child {
-	padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 .profile__sub-title {
-	display: block;
-	padding-bottom: 5px;
-	color: #fff;
-	font-family: Inter;
-	font-size: 12px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 150%;
-	letter-spacing: 0.24px;
+  display: block;
+  padding-bottom: 5px;
+  color: var(--color-main);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.24px;
 }
 
 .profile__buttons {
-	display: flex;
-	flex-direction: column;
-	gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }

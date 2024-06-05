@@ -3,13 +3,13 @@
   flex-direction: column;
   gap: 30px;
   border-radius: 12px;
-  background: #161616;
+  background-color: var(--color-bg-secondary);
   padding: 20px;
 }
 
 .guide-article__text {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-main);
   font-size: 14px;
   font-family: 'Inter';
   font-style: normal;

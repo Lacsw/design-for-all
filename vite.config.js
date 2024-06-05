@@ -23,6 +23,7 @@ export default defineConfig(() => {
           store: '/src/store',
           components: '/src/components',
           images: '/src/images',
+          styles: '/src/styles',
         },
       }),
     ],

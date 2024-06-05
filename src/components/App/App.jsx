@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { memo } from 'react';
 
 import './App.css';
 import {
@@ -11,7 +12,8 @@ import {
   NotFound,
 } from 'components';
 
-export default function App() {
+function App() {
+  console.log('App');
   return (
     <div className="page">
       <Routes>
@@ -27,3 +29,5 @@ export default function App() {
     </div>
   );
 }
+
+export default memo(App);

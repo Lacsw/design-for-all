@@ -3,7 +3,7 @@
   margin: 10% 0 0;
   width: 100%;
 
-  color: #fff;
+  color: var(--color-main);
   font-family: 'Inter';
   font-size: 20px;
   line-height: 1.3;
