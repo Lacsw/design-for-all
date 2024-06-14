@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import alias from '@rollup/plugin-alias';
+import checker from 'vite-plugin-checker';
 
 export default defineConfig(() => {
   return {
@@ -24,6 +25,18 @@ export default defineConfig(() => {
           components: '/src/components',
           images: '/src/images',
           styles: '/src/styles',
+        },
+      }),
+      checker({
+        overlay: {
+          initialIsOpen: 'error',
+        },
+        eslint: {
+          lintCommand: 'eslint "./src/**/*.{js,jsx}"',
+          useFlatConfig: false,
+          dev: {
+            logLevel: ['error', 'warning'],
+          },
         },
       }),
     ],
