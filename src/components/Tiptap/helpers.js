@@ -1,0 +1,15 @@
+export const commandsNames = {
+  italic: 'italic',
+  bold: 'bold',
+  underline: 'underline',
+  code: 'code',
+  codeBlock: 'codeBlock',
+  left: 'left',
+  center: 'center',
+  right: 'right',
+  justify: 'justify',
+  bulletList: 'bulletList',
+  orderedList: 'orderedList',
+  subscript: 'subscript',
+  superscript: 'superscript',
+};
