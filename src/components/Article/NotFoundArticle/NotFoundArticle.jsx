@@ -7,7 +7,7 @@ import notFound404Svg from 'images/404.svg';
 import { getCurrentUser } from 'store/selectors';
 
 function NotFoundArcticle() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const currentUser = useSelector(getCurrentUser);
 
   const openModal = (evt) => {
@@ -20,7 +20,11 @@ function NotFoundArcticle() {
 
   return (
     <section className="not-found-article">
-      <img src={notFound404Svg} className="not-found-article__status-code" />
+      <img
+        src={notFound404Svg}
+        className="not-found-article__status-code"
+        alt="404"
+      />
       <h2 className="not-found-article__text">Данная статья ещё не создана.</h2>
       {currentUser ? (
         <Link
