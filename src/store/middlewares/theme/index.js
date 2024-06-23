@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import lightThemeCssString from '/src/styles/theme-light.css?inline';
+import lightThemeCssString from 'styles/theme-light.css?inline';
 
 export const setTheme = createAsyncThunk('theme/set', (payload) => {
   return new Promise((resolve, reject) => {
