@@ -62,7 +62,7 @@ export default function Header() {
     if (authModalMode !== false) {
       setSearchParams({ 'modal-auth': authModalMode });
     }
-  }, [authModalMode]);
+  }, [authModalMode, setSearchParams]);
 
   // Установка темы, сохранённой persist-ом, при загрузке сайта
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function Header() {
     if (theme !== 'dark') {
       dispatch(setTheme(theme));
     }
-  }, []);
+  }, [dispatch, theme]);
 
   const toggleTheme = useCallback(() => {
     if (theme === 'dark') {
@@ -79,7 +79,7 @@ export default function Header() {
     } else {
       dispatch(setTheme('dark'));
     }
-  }, [theme, dispatch, setTheme]);
+  }, [theme, dispatch]);
 
   return (
     <header className="header">
@@ -111,7 +111,7 @@ export default function Header() {
               options={languageList}
               title="Язык"
               paddingBottom="5"
-              size='m'
+              size="m"
             />
           </li>
           <li>

@@ -13,7 +13,6 @@ import {
 } from 'components';
 
 function App() {
-  console.log('App');
   return (
     <div className="page">
       <Routes>
