@@ -11,6 +11,7 @@
   "extends": [
     "eslint:recommended",
     "react-app",
+    "plugin:import/recommended",
     "plugin:jsdoc/recommended",
     "prettier"
   ],
@@ -37,7 +38,29 @@
     "jsdoc/require-yields": 0,
     "jsdoc/require-yields-check": 0,
     "jsdoc/tag-lines": 0,
-    "jsdoc/multiline-blocks": 0
-    // --- --- --- ---  --- --- --- ---
+    "jsdoc/multiline-blocks": 0,
+    // --- --- --- --- import --- --- --- ---
+    "import/no-unresolved": [
+      2,
+      {
+        "ignore": ["\\?.+$"]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "extensions": [".js", ".jsx", ".json"],
+        "map": [
+          ["utils", "./src/utils"],
+          ["contexts", "./src/contexts"],
+          ["store", "./src/store"],
+          ["components", "./src/components"],
+          ["images", "./src/images"],
+          ["styles", "./src/styles"],
+          ["", "./public"] // for imports from "public" folder, e.g. "import favicon from "/favicon.ico"
+        ]
+      }
+    }
   }
 }

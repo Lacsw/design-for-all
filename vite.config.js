@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import alias from '@rollup/plugin-alias';
-import checker from 'vite-plugin-checker';
+import { checker } from 'vite-plugin-checker';
 
 export default defineConfig(() => {
   return {
@@ -19,6 +19,8 @@ export default defineConfig(() => {
       react(),
       alias({
         entries: {
+          /* При изменениях alias не забудьте соответствующе обновить:
+          settings → import/resolver → alias в eslintrc.json */
           utils: '/src/utils',
           contexts: '/src/contexts',
           store: '/src/store',
