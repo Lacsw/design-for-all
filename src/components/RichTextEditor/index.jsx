@@ -1,13 +1,13 @@
+// TODO разобраться, почему Еслинт не видит модули
+// eslint-disable-next-line import/no-unresolved
 import Placeholder from '@tiptap/extension-placeholder';
-import Superscript from '@tiptap/extension-superscript';
-import Subscript from '@tiptap/extension-subscript';
-import Underline from '@tiptap/extension-underline';
+// eslint-disable-next-line import/no-unresolved
 import TextAlign from '@tiptap/extension-text-align';
+// eslint-disable-next-line import/no-unresolved
 import StarterKit from '@tiptap/starter-kit';
-import { useEditor, EditorContent } from '@tiptap/react';
+// eslint-disable-next-line import/no-unresolved
+import { EditorContent, useEditor } from '@tiptap/react';
 // icons
-import SuperscriptIcon from '@mui/icons-material/Superscript';
-import SubscriptIcon from '@mui/icons-material/Subscript';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
@@ -16,18 +16,21 @@ import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import CodeIcon from '@mui/icons-material/Code';
-import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 // --- --- --- ---
-import { Divider } from '@material-ui/core';
-import React, { memo, useEffect } from 'react';
+import { Divider } from '@mui/material';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
-import MenuBar from './MenuBar';
-import { useTiptapStyles } from './styles';
-import { TtButton } from './MenuBar';
+import { MenuBar, RteButton } from './components';
 import { validate } from './validators';
-import { commandsNames } from './help6ers';
+import { commandsNames } from './helpers';
+import './index.css';
+
+const defaultValidationsOptions = {
+  kinds: {},
+  mode: 'check',
+};
 
 // Для тестов
 // let mockContent = "";
@@ -37,13 +40,8 @@ import { commandsNames } from './help6ers';
 // }
 // mockContent = mockArr.join("");
 
-const defaultValidationsOptions = {
-  kinds: {},
-  mode: 'check',
-};
-
 /** Богатый текстовый редактор */
-export const Tiptap = memo(function Tiptap({
+export const RichTextEditor = memo(function RichTextEditor({
   initialValue = null,
   validationsOptions,
   onInput,
@@ -52,7 +50,7 @@ export const Tiptap = memo(function Tiptap({
   cancel,
   maxHeight = 'auto',
 }) {
-  const classes = useTiptapStyles({ readOnly, maxHeight });
+  console.log('render Tiptap');
   const extensions = [
     StarterKit.configure({
       blockquote: false,
@@ -60,35 +58,28 @@ export const Tiptap = memo(function Tiptap({
       strike: false,
       bulletList: {
         HTMLAttributes: {
-          class: classes.bulletList,
+          class: 'rte__node rte__node_bullet-list',
         },
       },
       orderedList: {
         HTMLAttributes: {
-          class: classes.orderedList,
+          class: 'rte__node rte__node_ordered-list',
         },
       },
       code: {
         HTMLAttributes: {
-          class: classes.code,
+          class: 'rte__node rte__node_code',
         },
       },
       codeBlock: {
         HTMLAttributes: {
-          class: classes.codeBlock,
+          class: 'rte__node rte__node_code rte__node_code-block',
         },
       },
     }),
     TextAlign.configure({
       types: ['heading', 'paragraph'],
     }),
-    Underline.configure({
-      HTMLAttributes: {
-        class: classes.underline,
-      },
-    }),
-    Subscript,
-    Superscript,
     Placeholder.configure({
       placeholder: 'Введите текст',
     }),
@@ -112,12 +103,15 @@ export const Tiptap = memo(function Tiptap({
     _validationsOptions = undefined;
   }
 
+  const wrapperRef = useRef(null);
+  const [inFocusWithin, setInFocusWithin] = useState(false);
+
   const onUpdate = ({ editor, transaction }) => {
-    // Передаём данные о вводе в родител
+    // Передаём данные о вводе в родителя
     if (onInput) {
       const htmlString = editor.getHTML();
       if (_validationsOptions) {
-        const result = validate(_validationsOptions, htmlString);
+        const result = validate(_validationsOptions, editor);
         onInput(result);
       } else {
         onInput({ validity: { isValid: true }, content: htmlString });
@@ -143,55 +137,96 @@ export const Tiptap = memo(function Tiptap({
     editor.commands.setContent(initialValue);
   }
 
+  /* Имеет ли обёртка редактора псевдокласс focus-within?
+      Проверка необходима, чтобы не было скачков цвета у рамок
+      редактора и его кнопок */
+  useEffect(() => {
+    if (wrapperRef.current?.matches(':focus-within')) {
+      setInFocusWithin(true);
+    } else {
+      setInFocusWithin(false);
+    }
+  });
+
   return (
-    <div className={`${classes.wrapper} ${className ?? ''}`}>
-      <EditorContent editor={editor} className={classes.editor} />
+    <div className={`rte ${className ?? ''}`}>
+      <EditorContent editor={editor} className="rte__editor" />
       {!readOnly && (
-        <MenuBar editor={editor} className={classes.menuBar}>
-          <TtButton editor={editor} name={commandsNames.italic}>
+        <MenuBar editor={editor}>
+          <RteButton
+            editor={editor}
+            name={commandsNames.italic}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatItalicIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.bold}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.bold}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatBoldIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.underline}>
-            <FormatUnderlinedIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.code}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.code}
+            inFocusWithin={inFocusWithin}
+          >
             <CodeIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.codeBlock}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.codeBlock}
+            inFocusWithin={inFocusWithin}
+          >
             <DataObjectIcon />
-          </TtButton>
+          </RteButton>
 
           <Divider orientation="vertical" />
 
-          <TtButton editor={editor} name={commandsNames.left}>
+          <RteButton
+            editor={editor}
+            name={commandsNames.left}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatAlignLeftIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.center}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.center}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatAlignCenterIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.right}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.right}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatAlignRightIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.justify}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.justify}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatAlignJustifyIcon />
-          </TtButton>
+          </RteButton>
 
-          <TtButton editor={editor} name={commandsNames.bulletList}>
+          <RteButton
+            editor={editor}
+            name={commandsNames.bulletList}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatListBulletedIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.orderedList}>
+          </RteButton>
+          <RteButton
+            editor={editor}
+            name={commandsNames.orderedList}
+            inFocusWithin={inFocusWithin}
+          >
             <FormatListNumberedIcon />
-          </TtButton>
-
-          <TtButton editor={editor} name={commandsNames.subscript}>
-            <SubscriptIcon />
-          </TtButton>
-          <TtButton editor={editor} name={commandsNames.superscript}>
-            <SuperscriptIcon />
-          </TtButton>
+          </RteButton>
         </MenuBar>
       )}
     </div>

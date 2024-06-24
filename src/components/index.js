@@ -53,3 +53,4 @@ export { default as SearchInput } from './SearchInput/SearchInput';
 export { default as Reviewers } from './Reviewers/Reviewers';
 export { default as SideBar } from './SideBar/SideBar';
 export { default as Map } from './Map/Map';
+export { RichTextEditor } from './RichTextEditor';

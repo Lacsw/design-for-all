@@ -1,0 +1,15 @@
+.rte {
+}
+
+.rte__editor {
+}
+
+.rte__editor .tiptap {
+  background-color: rgb(140, 207, 131);
+  border: 2px rgb(55, 164, 236) solid;
+  min-height: 100px;
+}
+
+.rte__menu-bar {
+  display: flex;
+}

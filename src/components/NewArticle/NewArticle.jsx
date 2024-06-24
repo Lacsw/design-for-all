@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import { langSelectOptions, categorySelectOptions } from 'utils/constants';
-import { Dropdown, ModalRecommendation } from 'components';
+import { Dropdown, ModalRecommendation, RichTextEditor } from 'components';
 
 export default function NewArticle() {
   // const [value, changeValue] = useState('');
@@ -87,16 +87,7 @@ export default function NewArticle() {
             />
           </label>
 
-          <label className="new-article__label" htmlFor="article-content">
-            <span className="new-aritcle__sub-title">Контент статьи</span>
-            <textarea
-              type="text"
-              name="article-content"
-              id="article-content"
-              className="new-article__input new-article__input_article-content"
-              placeholder="Введите текст статьи"
-            />
-          </label>
+          <RichTextEditor />
 
           <label className="new-article__label" htmlFor="recommendations">
             <span className="new-aritcle__sub-title">Рекомендации авторов</span>
