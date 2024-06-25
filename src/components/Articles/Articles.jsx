@@ -12,6 +12,7 @@ import {
   Loader,
   Error,
 } from 'components';
+import TranslationArticle from 'components/Article/TranslationArticle/TranslationArticle';
 import authorApi from 'utils/api/author';
 
 export default function Articles() {
@@ -52,7 +53,7 @@ export default function Articles() {
         ) : isLoading !== false ? (
           <Loader />
         ) : article.author ? (
-          <Article data={article} />
+          <TranslationArticle />
         ) : (
           <NotFoundArticle />
         )}
