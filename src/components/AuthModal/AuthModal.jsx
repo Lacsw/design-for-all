@@ -8,29 +8,29 @@ import { modalRoot } from 'utils/modal';
 /**
  * modalMode - 'login' (по ум.) | 'signUp'
  */
-const AuthModal = ({ isOpen, onClose, modalMode = 'login', setModalMode }) => {
+const AuthModal = ({ isOpen, onChange, modalMode = 'login' }) => {
   useEffect(() => {
     if (isOpen) {
       const closeByEsc = (evt) => {
-        if (evt.key === 'Escape') onClose();
+        if (evt.key === 'Escape') onChange();
       };
       document.addEventListener('keydown', closeByEsc);
       return () => document.removeEventListener('keydown', closeByEsc);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onChange]);
 
   const closeByOver = (evt) => {
     if (evt.target.classList.contains('auth-modal')) {
-      onClose();
+      onChange();
     }
   };
 
   const handleSignUpTabClick = () => {
-    setModalMode('signUp');
+    onChange('signUp');
   };
 
   const handleLoginTabClick = () => {
-    setModalMode('login');
+    onChange('login');
   };
 
   return ReactDOM.createPortal(
@@ -61,9 +61,9 @@ const AuthModal = ({ isOpen, onClose, modalMode = 'login', setModalMode }) => {
         </button>
       </div>
       {modalMode === 'login' ? (
-        <LoginForm onClose={onClose} />
+        <LoginForm onClose={onChange} />
       ) : (
-        <SignUpForm onClose={onClose} />
+        <SignUpForm onClose={onChange} />
       )}
     </div>,
     modalRoot
