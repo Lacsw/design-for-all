@@ -2,10 +2,19 @@
 }
 
 .rte__editor {
+  height: 100px;
+  transition:
+    height 2s ease,
+    background-color 2s ease;
+  background-color: rgb(140, 207, 131);
+}
+.rte__editor:active {
+  height: 20px;
+  background-color: rgb(236, 70, 58);
 }
 
 .rte__editor .tiptap {
-  background-color: rgb(140, 207, 131);
+  /* background-color: rgb(140, 207, 131); */
   border: 2px rgb(55, 164, 236) solid;
   min-height: 100px;
 }
