@@ -6,10 +6,6 @@ import { checker } from 'vite-plugin-checker';
 export default defineConfig(() => {
   return {
     base: '/',
-    preview: {
-      port: 5555,
-      host: '0.0.0.0',
-    },
     build: {
       outDir: 'build',
       rollupOptions: {
