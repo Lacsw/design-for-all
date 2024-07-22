@@ -35,12 +35,14 @@ export default function Header() {
     setSearchParams({ 'modal-auth': 'login' });
   };
 
-  const deleteAuthModalParams = () => {
-    if (searchParams.has('modal-auth')) {
-      searchParams.delete('modal-auth');
-      setSearchParams(searchParams);
+  function setModalParams(mode = false) {
+    setAuthModalMode(mode);
+    if (mode) {
+      setSearchParams({'modal-auth': mode});
+    } else {
+      setSearchParams({});
     }
-  };
+  }
 
   useEffect(() => {
     const authModalMode = searchParams.get('modal-auth');
@@ -54,15 +56,6 @@ export default function Header() {
       setIsAuthModalOpen(false);
     }
   }, [searchParams]);
-
-  // Обработка кликов на табы внутри самой модалки авторизации
-  useEffect(() => {
-    /* если открыть модалку и перейти на другую страницу нашего
-    сайта (напр. на логотип кликнуть), то поисковый параметр становится false */
-    if (authModalMode !== false) {
-      setSearchParams({ 'modal-auth': authModalMode });
-    }
-  }, [authModalMode, setSearchParams]);
 
   // Установка темы, сохранённой persist-ом, при загрузке сайта
   useEffect(() => {
@@ -142,9 +135,8 @@ export default function Header() {
       </div>
       <AuthModal
         isOpen={isAuthModalOpen}
-        onClose={deleteAuthModalParams}
+        onChange={setModalParams}
         modalMode={authModalMode}
-        setModalMode={setAuthModalMode}
       />
     </header>
   );
