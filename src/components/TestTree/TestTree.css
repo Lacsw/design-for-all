@@ -1,0 +1,7 @@
+ul,
+li {
+  color: white;
+  display: block;
+  list-style: none;
+  cursor: default;
+}

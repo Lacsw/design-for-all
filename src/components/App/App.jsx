@@ -12,6 +12,8 @@ import {
   NotFound,
 } from 'components';
 
+import TestTree from 'components/TestTree/TestTree';
+
 function App() {
   return (
     <div className="page">
@@ -22,6 +24,7 @@ function App() {
         <Route path="/articles/:lang/:articleId" element={<Articles />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/author/*" element={<AccountAuthor />} />
+        <Route path="/mobile" element={<TestTree />} />
         <Route path="/admin/*" element={<AccountAdmin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
