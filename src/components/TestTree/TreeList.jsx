@@ -5,7 +5,7 @@ export default function TreeList({ list }) {
   const topics = Object.keys(list);
 
   return (
-    <ul>
+    <ul className="tree-list">
       {topics.map((item, index) =>
         <TreeItem key={index} title={item} data={list[item]} />
       )}

@@ -1,7 +1,55 @@
-ul,
-li {
-  color: white;
-  display: block;
+.tree-list {
+  display: flex;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  flex-direction: column;
+  gap: 6px;
   list-style: none;
+  color: white;
+  margin: 0;
+  padding-left: 15px;
+  padding-top: 6px;
   cursor: default;
+}
+
+.tree-list__top {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.tree-list__arrow {
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-size: 5px 8px;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+}
+
+.tree-list__arrow_visible {
+  background-image: url('../../images/tree-menu-icon.svg');
+  pointer-events: all;
+}
+
+.tree-list__arrow_visible:hover,
+.tree-list__title_id:hover {
+  background-color: var(--color-hover-tree);
+  cursor: pointer;
+}
+
+.tree-list__arrow_on {
+  transform: rotate(90deg);
+}
+
+.tree-list__title {
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.tree-list__title_id {
+  pointer-events: all;
 }
