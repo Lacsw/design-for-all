@@ -12,13 +12,13 @@
   cursor: default;
 }
 
-.tree-list__top {
+.tree-item__top {
   display: flex;
   gap: 5px;
   align-items: center;
 }
 
-.tree-list__arrow {
+.tree-item__arrow {
   min-width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -28,28 +28,23 @@
   pointer-events: none;
 }
 
-.tree-list__arrow_visible {
+.tree-item__arrow_visible {
   background-image: url('../../images/tree-menu-icon.svg');
   pointer-events: all;
 }
 
-.tree-list__arrow_visible:hover,
-.tree-list__title_id:hover {
-  background-color: var(--color-hover-tree);
-  cursor: pointer;
-}
-
-.tree-list__arrow_on {
+.tree-item__arrow_on {
   transform: rotate(90deg);
 }
 
-.tree-list__title {
+.tree-item__title {
   padding: 3px 10px;
   border-radius: 100px;
   white-space: nowrap;
-  pointer-events: none;
 }
 
-.tree-list__title_id {
-  pointer-events: all;
+.tree-item__arrow_visible:hover,
+.tree-item__title:hover {
+  background-color: var(--color-hover-tree);
+  cursor: pointer;
 }

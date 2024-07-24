@@ -7,30 +7,28 @@ export default function TreeItem({ title, data }) {
   const hasChildren = typeof data === 'object';
   const id = hasChildren ? data.id : data;
 
-  const newData = {...data};
+  const newData = { ...data };
   delete newData.id;
 
   const arrowClass =
     !hasChildren ? '' :
       !isOpen ?
-        ' tree-list__arrow_visible' :
-        ' tree-list__arrow_visible tree-list__arrow_on';
-
-  const titleClass = id ? ' tree-list__title_id' : '';
+        ' tree-item__arrow_visible' :
+        ' tree-item__arrow_visible tree-item__arrow_on';
 
   function handleOpen() {
     setIsOpen(!isOpen);
   }
 
   function handleResponse() {
-    console.log(id);
+    console.log(id || 'нет статьи');
   }
 
   return (
-    <li>
-      <div className="tree-list__top">
-        <span className={'tree-list__arrow' + arrowClass} onClick={handleOpen}></span>
-        <span className={'tree-list__title' + titleClass} onClick={handleResponse}>{title}</span>
+    <li className="tree-item">
+      <div className="tree-item__top">
+        <span className={'tree-item__arrow' + arrowClass} onClick={handleOpen}></span>
+        <span className="tree-item__title" onClick={handleResponse}>{title}</span>
       </div>
       {!isOpen || !hasChildren ? null : <TreeList list={newData} />}
     </li>

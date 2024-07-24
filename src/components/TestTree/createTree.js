@@ -19,14 +19,22 @@ function recursionTree(articles, pathIndex) {
   const uniquePaths = Array.from(new Set(currentPaths));
 
   uniquePaths.forEach(path => {
-    const filteredArticles = articles.filter(item => item.sub_category[pathIndex] === path);
-    const finalArticle = filteredArticles.find(item => pathIndex === item.sub_category.length - 1);
+
+    const filteredArticles =
+      articles.filter(item => item.sub_category[pathIndex] === path);
+
+    const finalArticle =
+      filteredArticles.find(item => pathIndex === item.sub_category.length - 1);
+
+    const otherArticles =
+      filteredArticles.filter(item => pathIndex < item.sub_category.length - 1);
+
     if (filteredArticles.length === 1 && finalArticle) {
       sections[path] = finalArticle.uuid;
     } else {
-      finalArticle ?
-        sections[path] = { ...recursionTree(filteredArticles.filter(item => pathIndex < item.sub_category.length - 1), pathIndex + 1), id: finalArticle.uuid } :
-        sections[path] = recursionTree(filteredArticles, pathIndex + 1);
+      finalArticle
+        ? sections[path] = { ...recursionTree(otherArticles, pathIndex + 1), id: finalArticle.uuid }
+        : sections[path] = recursionTree(filteredArticles, pathIndex + 1);
     }
   });
 
