@@ -8,3 +8,5 @@ export * from './userSlice';
 
 export const themeReducer = _themeReducer;
 export * from './themeSlice';
+
+export { default as articleReducer } from './articleSlice';

@@ -24,7 +24,10 @@ function App() {
         <Route path="/articles/:lang/:articleId" element={<Articles />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/author/*" element={<AccountAuthor />} />
-        <Route path="/mobile" element={<TestTree />} />
+        <Route path="/mobile" element={<TestTree />}>
+          <Route index element={<div>Пустой блок статьи</div>} />
+          <Route path="/mobile/:lang/:articleId" element={<div>Статья</div>} />
+        </Route>
         <Route path="/admin/*" element={<AccountAdmin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
