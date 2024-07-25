@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAll, fetchTree } from 'store/slices/articleSlice';
+import { selectCatalog, fetchTree } from 'store/slices/articleSlice';
 import TreeList from './TreeList';
 import './TestTree.css';
 
-export default function TestTree() {
+export default function TestTree({ path }) {
   const dispatch = useDispatch();
-  const { catalog } = useSelector(selectAll);
+  const catalog = useSelector(selectCatalog);
+  const fetchPath = `ru_${path}`;
 
   useEffect(() => {
-    dispatch(fetchTree('ru_mobile'));
-  }, [dispatch]);
+    dispatch(fetchTree(fetchPath));
+  }, [fetchPath, dispatch]);
 
   return (
-    <div>
+    <div className="tree-container">
       {catalog && <TreeList list={catalog} />}
     </div>
   );

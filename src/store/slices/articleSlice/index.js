@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getTree } from 'utils/api/tree';
 import createTree from 'components/TestTree/createTree';
+import authorApi from 'utils/api/author';
 
 export const initialState = {
   catalog: null,
+  article: null,
   loading: true,
   error: ''
 };
@@ -13,26 +15,45 @@ const articleSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    selectAll: (state) => state
+    selectCatalog: state => state.catalog,
+    selectArticle: state => state.article,
+    selectError: state => state.error,
+    selectLoading: state => state.loading
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTree.pending, (state) => {
+      .addCase(fetchTree.fulfilled, (state, action) => {
+        state.catalog = createTree(action.payload);
+      })
+      .addCase(fetchArticle.pending, (state) => {
         state.loading = true;
         state.error = '';
       })
-      .addCase(fetchTree.rejected, (state) => {
+      .addCase(fetchArticle.rejected, (state) => {
         state.loading = false;
         state.error = 'Не удалось загрузить данные';
       })
-      .addCase(fetchTree.fulfilled, (state, action) => {
-        state.catalog = createTree(action.payload);
+      .addCase(fetchArticle.fulfilled, (state, action) => {
+        state.article = action.payload;
         state.loading = false;
         state.error = '';
       });
   }
 });
 
+export const fetchTree = createAsyncThunk(
+  'tree/get', async (options) => getTree(options)
+);
+
+export const fetchArticle = createAsyncThunk(
+  'article/get', async (options) => authorApi.getArticleById(options)
+);
+
+export const {
+  selectCatalog,
+  selectArticle,
+  selectError,
+  selectLoading
+} = articleSlice.selectors;
+
 export default articleSlice.reducer;
-export const fetchTree = createAsyncThunk('tree/get', async (options) => getTree(options));
-export const { selectAll } = articleSlice.selectors;

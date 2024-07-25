@@ -1,8 +1,11 @@
 import TreeList from "./TreeList";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function TreeItem({ title, data }) {
 
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = typeof data === 'object';
   const id = hasChildren ? data.id : data;
@@ -21,7 +24,11 @@ export default function TreeItem({ title, data }) {
   }
 
   function handleResponse() {
-    console.log(id || 'нет статьи');
+    if (id) {
+      navigate(`ru/${id}`);
+    } else {
+      navigate('ru/no-article');
+    }
   }
 
   return (

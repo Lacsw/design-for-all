@@ -1,3 +1,19 @@
+.tree-container {
+  max-height: 80vh;
+  overflow: auto;
+  background-color: var(--color-bg-secondary);
+  border-radius: 12px;
+  padding: 10px 0 16px;
+}
+
+.tree-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tree-container::-webkit-scrollbar-thumb {
+	background-color: #242424;
+}
+
 .tree-list {
   display: flex;
   font-family: Inter, sans-serif;
@@ -5,7 +21,7 @@
   flex-direction: column;
   gap: 6px;
   list-style: none;
-  color: white;
+  color: var(--color-main);
   margin: 0;
   padding-left: 15px;
   padding-top: 6px;

@@ -1,8 +1,6 @@
 .sidebar {
-  width: 222px;
-  height: 100%;
   position: sticky;
-  top: 92px;
+  top: 93px;
 }
 
 .sidebar__header {
@@ -12,9 +10,9 @@
 
 .sidebar__title-container {
   display: flex;
-  gap: 10px;
   width: 100%;
   align-items: center;
+  gap: 10px;
   background-color: var(--color-bg-secondary);
   border-radius: 12px;
   margin-right: 10px;
