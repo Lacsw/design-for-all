@@ -23,23 +23,24 @@ export default function CatalogArticle() {
 
   return isBlank ?
     (<div className='blank'>Воспользуйтесь поиском по дереву <br /> или поиском по заголовкам статей</div>)
-    : loading ? (<div className='blank'><span className='preloader' /></div>) : isError ? (<NotFoundArticle />)
-      : (
-        <>
-          <div className="article">
-            <ArticleHeader
-              title={article.publication.title}
-              timeCreate={new Date(article.publication.date_create).toLocaleDateString()}
-              timeUpdate={new Date(article.publication.last_update).toLocaleDateString()}
-            />
-            <div className="article__main">
-              <img src={previewImage} alt="превью" className="article__image" />
-              <p className="article__text">
-                {article.publication.description}
-              </p>
+    : isError ? (<NotFoundArticle />)
+      : loading ? (<div className='blank'><span className='preloader' /></div>)
+        : (
+          <>
+            <div className="article">
+              <ArticleHeader
+                title={article.publication.title}
+                timeCreate={new Date(article.publication.date_create).toLocaleDateString()}
+                timeUpdate={new Date(article.publication.last_update).toLocaleDateString()}
+              />
+              <div className="article__main">
+                <img src={previewImage} alt="превью" className="article__image" />
+                <p className="article__text">
+                  {article.publication.description}
+                </p>
+              </div>
             </div>
-          </div>
-          <AuthorAndReviewers />
-        </>
-      );
+            <AuthorAndReviewers />
+          </>
+        );
 }

@@ -23,7 +23,7 @@ export default function TreeItem({ title, data }) {
     setIsOpen(!isOpen);
   }
 
-  function handleResponse() {
+  function handleNavigate() {
     if (id) {
       navigate(`ru/${id}`);
     } else {
@@ -35,7 +35,7 @@ export default function TreeItem({ title, data }) {
     <li className="tree-item">
       <div className="tree-item__top">
         <span className={'tree-item__arrow' + arrowClass} onClick={handleOpen}></span>
-        <span className="tree-item__title" onClick={handleResponse}>{title}</span>
+        <span className="tree-item__title" onClick={handleNavigate}>{title}</span>
       </div>
       {!isOpen || !hasChildren ? null : <TreeList list={newData} />}
     </li>

@@ -8,6 +8,20 @@
   padding: 20px;
 }
 
+.article::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.article::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.article::-webkit-scrollbar-thumb {
+	background-color: #242424;
+}
+
 .blank {
   border-radius: 12px;
   background-color: var(--color-bg-secondary);
