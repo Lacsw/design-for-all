@@ -8,6 +8,7 @@ import StarterKit from '@tiptap/starter-kit';
 // eslint-disable-next-line import/no-unresolved
 import { EditorContent, useEditor } from '@tiptap/react';
 // icons
+import CreateIcon from '@mui/icons-material/Create';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
@@ -158,7 +159,8 @@ export const RichTextEditor = memo(function RichTextEditor({
             name={commandsNames.italic}
             inFocusWithin={inFocusWithin}
           >
-            <FormatItalicIcon />
+            <CreateIcon />
+            {/* <FormatItalicIcon /> */}
           </RteButton>
           <RteButton
             editor={editor}

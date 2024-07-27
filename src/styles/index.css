@@ -1,6 +1,7 @@
 @import url(../vendor/fonts/fonts.css);
 @import url(./theme-default.css);
 @import url(./vars.css);
+@import url(./mui/overrides/components/index.css);
 
 .body {
   background: var(--color-bg-main);

@@ -6,14 +6,17 @@ import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
 import { CssBaseline } from '@mui/material';
+import GlobalCssPriority from 'styles/mui/GlobalCssPriority';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ReduxProvider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
-        <CssBaseline />
-        <App />
+        <GlobalCssPriority>
+          <CssBaseline />
+          <App />
+        </GlobalCssPriority>
       </BrowserRouter>
     </PersistGate>
   </ReduxProvider>
