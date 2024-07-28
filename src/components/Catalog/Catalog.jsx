@@ -1,5 +1,5 @@
-import { Header, SideBar, Footer } from 'components';
 import { Outlet } from 'react-router-dom';
+import { Header, SideBar, Footer } from 'components';
 import './Catalog.css';
 
 export default function Catalog() {

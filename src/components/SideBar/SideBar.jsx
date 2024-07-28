@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
-import './SideBar.css';
-import TestTree from 'components/TestTree/TestTree';
+import { ArticlesTree } from 'components';
 import treeIcon from 'images/tree-menu-icon.svg';
 import searchIcon from 'images/search-icon.svg';
+import './SideBar.css';
 
 export default function SideBar() {
   const { pathname } = useLocation();
@@ -21,7 +21,7 @@ export default function SideBar() {
         </div>
         <img className="sidebar__search" src={searchIcon} alt="поиск" />
       </div>
-      <TestTree path={firstPath} />
+      <ArticlesTree path={firstPath} />
     </nav>
   );
 }

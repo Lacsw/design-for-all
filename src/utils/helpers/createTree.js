@@ -6,8 +6,8 @@ function createTree(data) {
 
 function splitPaths(data) {
   const preparedData = data.map(item => {
-    const sub_category = item.sub_category.split('/');
-    return { ...item, sub_category };
+    const categories = item.sub_category.split('/');
+    return { ...item, categories };
   });
   return preparedData;
 }
@@ -15,19 +15,19 @@ function splitPaths(data) {
 function recursionTree(articles, pathIndex) {
 
   const sections = {};
-  const currentPaths = articles.map(item => item.sub_category[pathIndex]);
+  const currentPaths = articles.map(item => item.categories[pathIndex]);
   const uniquePaths = Array.from(new Set(currentPaths));
 
   uniquePaths.forEach(path => {
 
     const filteredArticles =
-      articles.filter(item => item.sub_category[pathIndex] === path);
+      articles.filter(item => item.categories[pathIndex] === path);
 
     const finalArticle =
-      filteredArticles.find(item => pathIndex === item.sub_category.length - 1);
+      filteredArticles.find(item => pathIndex === item.categories.length - 1);
 
     const otherArticles =
-      filteredArticles.filter(item => pathIndex < item.sub_category.length - 1);
+      filteredArticles.filter(item => pathIndex < item.categories.length - 1);
 
     if (filteredArticles.length === 1 && finalArticle) {
       sections[path] = finalArticle.uuid;

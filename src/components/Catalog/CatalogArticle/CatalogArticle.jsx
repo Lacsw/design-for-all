@@ -1,10 +1,10 @@
-import './CatalogArticle.css';
-import previewImage from 'images/article/preview.png';
-import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchArticle, selectArticle, selectError, selectLoading } from 'store/slices/articleSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchArticle, selectArticle, selectError, selectLoading } from 'store/slices/articleSlice';
 import { NotFoundArticle, ArticleHeader, AuthorAndReviewers } from 'components';
+import previewImage from 'images/article/preview.png';
+import './CatalogArticle.css';
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ export default function CatalogArticle() {
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
+  const createDate = new Date(article?.publication.date_create).toLocaleDateString();
+  const updateDate = new Date(article?.publication.last_update).toLocaleDateString()
 
   useEffect(() => {
     if (!needToFetch) return;
@@ -30,11 +32,11 @@ export default function CatalogArticle() {
             <div className="article">
               <ArticleHeader
                 title={article.publication.title}
-                timeCreate={new Date(article.publication.date_create).toLocaleDateString()}
-                timeUpdate={new Date(article.publication.last_update).toLocaleDateString()}
+                timeCreate={createDate}
+                timeUpdate={updateDate}
               />
               <div className="article__main">
-                <img src={previewImage} alt="превью" className="article__image" />
+                <img src={previewImage} alt="Превью статьи" className="article__image" />
                 <p className="article__text">
                   {article.publication.description}
                 </p>

@@ -10,9 +10,9 @@ import {
   AccountAuthor,
   AccountAdmin,
   NotFound,
+  Catalog,
+  CatalogArticle
 } from 'components';
-import Catalog from 'components/Catalog/Catalog';
-import CatalogArticle from 'components/Catalog/CatalogArticle';
 
 function App() {
   return (

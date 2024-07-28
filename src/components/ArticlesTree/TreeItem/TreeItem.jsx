@@ -1,10 +1,9 @@
-import TreeList from "./TreeList";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TreeList } from 'components';
+import './TreeItem.css';
 
 export default function TreeItem({ title, data }) {
-
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = typeof data === 'object';
@@ -13,14 +12,11 @@ export default function TreeItem({ title, data }) {
   const newData = { ...data };
   delete newData.id;
 
-  const arrowClass =
-    !hasChildren ? '' :
-      !isOpen ?
-        ' tree-item__arrow_visible' :
-        ' tree-item__arrow_visible tree-item__arrow_on';
+  const arrowExtraClass = hasChildren ? ' tree-item__arrow_visible' : '';
+  const liExtraClass = isOpen ? ' tree-item_opened' : '';
 
   function handleOpen() {
-    setIsOpen(!isOpen);
+    setIsOpen(prev => !prev);
   }
 
   function handleNavigate() {
@@ -32,9 +28,9 @@ export default function TreeItem({ title, data }) {
   }
 
   return (
-    <li className="tree-item">
+    <li className={'tree-item' + liExtraClass}>
       <div className="tree-item__top">
-        <span className={'tree-item__arrow' + arrowClass} onClick={handleOpen}></span>
+        <span className={'tree-item__arrow' + arrowExtraClass} onClick={handleOpen}></span>
         <span className="tree-item__title" onClick={handleNavigate}>{title}</span>
       </div>
       {!isOpen || !hasChildren ? null : <TreeList list={newData} />}

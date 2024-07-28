@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCatalog, fetchTree } from 'store/slices/articleSlice';
-import TreeList from './TreeList';
-import './TestTree.css';
+import { TreeList } from 'components';
+import './ArticlesTree.css';
 
 export default function TestTree({ path }) {
   const dispatch = useDispatch();

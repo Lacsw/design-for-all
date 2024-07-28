@@ -1,7 +1,7 @@
-import TreeItem from "./TreeItem";
+import { TreeItem } from 'components';
+import './TreeList.css';
 
 export default function TreeList({ list }) {
-
   const topics = Object.keys(list);
 
   return (

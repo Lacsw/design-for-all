@@ -1,0 +1,13 @@
+.tree-list {
+  display: flex;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  color: var(--color-main);
+  margin: 0;
+  padding-left: 15px;
+  padding-top: 6px;
+  cursor: default;
+}

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import createTree from 'utils/helpers/createTree';
 import { getTree } from 'utils/api/tree';
-import createTree from 'components/TestTree/createTree';
 import authorApi from 'utils/api/author';
 
 export const initialState = {
