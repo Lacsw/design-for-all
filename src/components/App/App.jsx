@@ -10,6 +10,8 @@ import {
   AccountAuthor,
   AccountAdmin,
   NotFound,
+  Catalog,
+  CatalogArticle,
 } from 'components';
 
 function App() {
@@ -22,6 +24,25 @@ function App() {
         <Route path="/articles/:lang/:articleId" element={<Articles />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/author/*" element={<AccountAuthor />} />
+
+        <Route path="/mobile" element={<Catalog />}>
+          <Route index element={<CatalogArticle />} />
+          <Route path="/mobile/:lang/:articleId" element={<CatalogArticle />} />
+        </Route>
+
+        <Route path="/web" element={<Catalog />}>
+          <Route index element={<CatalogArticle />} />
+          <Route path="/web/:lang/:articleId" element={<CatalogArticle />} />
+        </Route>
+
+        <Route path="/desktop" element={<Catalog />}>
+          <Route index element={<CatalogArticle />} />
+          <Route
+            path="/desktop/:lang/:articleId"
+            element={<CatalogArticle />}
+          />
+        </Route>
+
         <Route path="/admin/*" element={<AccountAdmin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,0 +1,9 @@
+.catalog__container {
+  display: grid;
+  width: 100%;
+  max-width: 1200px;
+  grid-template-columns: 222px 1fr 222px;
+  gap: 40px;
+  margin: 30px auto;
+  align-items: start;
+}

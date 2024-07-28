@@ -53,3 +53,8 @@ export { default as SearchInput } from './SearchInput/SearchInput';
 export { default as Reviewers } from './Reviewers/Reviewers';
 export { default as SideBar } from './SideBar/SideBar';
 export { default as Map } from './Map/Map';
+export { default as ArticlesTree } from './ArticlesTree/ArticlesTree';
+export { default as TreeList } from './ArticlesTree/TreeList/TreeList';
+export { default as TreeItem } from './ArticlesTree/TreeItem/TreeItem';
+export { default as Catalog } from './Catalog/Catalog';
+export { default as CatalogArticle } from './Catalog/CatalogArticle/CatalogArticle';
