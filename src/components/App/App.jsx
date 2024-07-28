@@ -11,7 +11,7 @@ import {
   AccountAdmin,
   NotFound,
   Catalog,
-  CatalogArticle
+  CatalogArticle,
 } from 'components';
 
 function App() {
@@ -37,7 +37,10 @@ function App() {
 
         <Route path="/desktop" element={<Catalog />}>
           <Route index element={<CatalogArticle />} />
-          <Route path="/desktop/:lang/:articleId" element={<CatalogArticle />} />
+          <Route
+            path="/desktop/:lang/:articleId"
+            element={<CatalogArticle />}
+          />
         </Route>
 
         <Route path="/admin/*" element={<AccountAdmin />} />

@@ -6,7 +6,7 @@ import { themeReducer, userReducer, articleReducer } from './slices';
 const rootReducer = combineReducers({
   user: userReducer,
   theme: themeReducer,
-  article: articleReducer
+  article: articleReducer,
 });
 
 const persistConfig = {

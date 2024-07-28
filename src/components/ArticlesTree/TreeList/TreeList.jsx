@@ -6,9 +6,9 @@ export default function TreeList({ list }) {
 
   return (
     <ul className="tree-list">
-      {topics.map((item, index) =>
+      {topics.map((item, index) => (
         <TreeItem key={index} title={item} data={list[item]} />
-      )}
+      ))}
     </ul>
-  )
+  );
 }

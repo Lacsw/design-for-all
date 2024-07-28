@@ -12,5 +12,5 @@ export default function Catalog() {
       </div>
       <Footer />
     </>
-  )
+  );
 }

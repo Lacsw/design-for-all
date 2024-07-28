@@ -7,7 +7,7 @@ export const initialState = {
   catalog: null,
   article: null,
   loading: true,
-  error: ''
+  error: '',
 };
 
 const articleSlice = createSlice({
@@ -15,10 +15,10 @@ const articleSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    selectCatalog: state => state.catalog,
-    selectArticle: state => state.article,
-    selectError: state => state.error,
-    selectLoading: state => state.loading
+    selectCatalog: (state) => state.catalog,
+    selectArticle: (state) => state.article,
+    selectError: (state) => state.error,
+    selectLoading: (state) => state.loading,
   },
   extraReducers: (builder) => {
     builder
@@ -38,22 +38,18 @@ const articleSlice = createSlice({
         state.loading = false;
         state.error = '';
       });
-  }
+  },
 });
 
-export const fetchTree = createAsyncThunk(
-  'tree/get', async (options) => getTree(options)
+export const fetchTree = createAsyncThunk('tree/get', async (options) =>
+  getTree(options)
 );
 
-export const fetchArticle = createAsyncThunk(
-  'article/get', async (options) => authorApi.getArticleById(options)
+export const fetchArticle = createAsyncThunk('article/get', async (options) =>
+  authorApi.getArticleById(options)
 );
 
-export const {
-  selectCatalog,
-  selectArticle,
-  selectError,
-  selectLoading
-} = articleSlice.selectors;
+export const { selectCatalog, selectArticle, selectError, selectLoading } =
+  articleSlice.selectors;
 
 export default articleSlice.reducer;

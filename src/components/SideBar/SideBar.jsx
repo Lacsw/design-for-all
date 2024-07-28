@@ -8,9 +8,11 @@ export default function SideBar() {
   const { pathname } = useLocation();
   const firstPath = pathname.split('/')[1];
   const title =
-    firstPath === 'web' ? 'Web-приложения' :
-    firstPath === 'mobile' ? 'Мобилки' :
-    'Десктопчик';
+    firstPath === 'web'
+      ? 'Web-приложения'
+      : firstPath === 'mobile'
+      ? 'Мобилки'
+      : 'Десктопчик';
 
   return (
     <nav className="sidebar">

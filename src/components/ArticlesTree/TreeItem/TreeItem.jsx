@@ -16,7 +16,7 @@ export default function TreeItem({ title, data }) {
   const liExtraClass = isOpen ? ' tree-item_opened' : '';
 
   function handleOpen() {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   }
 
   function handleNavigate() {
@@ -30,10 +30,15 @@ export default function TreeItem({ title, data }) {
   return (
     <li className={'tree-item' + liExtraClass}>
       <div className="tree-item__top">
-        <span className={'tree-item__arrow' + arrowExtraClass} onClick={handleOpen}></span>
-        <span className="tree-item__title" onClick={handleNavigate}>{title}</span>
+        <span
+          className={'tree-item__arrow' + arrowExtraClass}
+          onClick={handleOpen}
+        />
+        <span className="tree-item__title" onClick={handleNavigate}>
+          {title}
+        </span>
       </div>
       {!isOpen || !hasChildren ? null : <TreeList list={newData} />}
     </li>
-  )
+  );
 }
