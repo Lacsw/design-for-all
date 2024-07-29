@@ -1,11 +1,9 @@
-import { Header, Footer, MapList } from 'components';
+import { MapList } from 'components';
 
 export default function Map() {
   return (
     <>
-      <Header />
       <MapList />
-      <Footer />
     </>
   );
 }

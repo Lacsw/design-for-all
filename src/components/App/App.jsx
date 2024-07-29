@@ -1,7 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import { memo } from 'react';
-
-import './App.css';
 import {
   Main,
   Map,
@@ -12,11 +10,12 @@ import {
   NotFound,
   Catalog,
   CatalogArticle,
+  Layout,
 } from 'components';
 
 function App() {
   return (
-    <div className="page">
+    <Layout>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/map" element={<Map />} />
@@ -46,7 +45,7 @@ function App() {
         <Route path="/admin/*" element={<AccountAdmin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+    </Layout>
   );
 }
 

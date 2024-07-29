@@ -1,17 +1,12 @@
-.account{
-	height: 100vh;
-	box-sizing: border-box;
-}
-
 .account__container {
-	display: flex;
-	justify-content: center;
-	gap: 40px;
-	margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
 }
 
 .account__author-and-navbar {
-	position: sticky;
-	top: 92px;
-	height: 45vh;
+  position: sticky;
+  top: 92px;
+  height: 45vh;
 }

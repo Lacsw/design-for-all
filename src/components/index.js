@@ -58,3 +58,4 @@ export { default as TreeList } from './ArticlesTree/TreeList/TreeList';
 export { default as TreeItem } from './ArticlesTree/TreeItem/TreeItem';
 export { default as Catalog } from './Catalog/Catalog';
 export { default as CatalogArticle } from './Catalog/CatalogArticle/CatalogArticle';
+export { default as Layout } from './Layout/Layout';
