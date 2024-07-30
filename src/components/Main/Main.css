@@ -8,12 +8,11 @@
   border-radius: 30px;
   padding: 5px 105px;
   list-style: none;
-  margin-top: -30px;
   box-sizing: border-box;
 }
 
 .main-nav__item {
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .main-nav__item:hover {
