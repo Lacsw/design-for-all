@@ -2,11 +2,8 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 1440px;
-  padding: 0 120px;
+  padding: 103px 120px 120px;
   margin: 0 auto;
-  padding-top: 107px;
-  padding-bottom: 150px;
-
   display: flex;
   justify-content: flex-start;
   position: relative;

@@ -7,12 +7,11 @@ import mobileIcon from 'images/main/mobile-icon.svg';
 import articlesIcon from 'images/main/acticles-icon.svg';
 import contactIcon from 'images/main/contact-icon.svg';
 import slideImg from 'images/main/slide-img.png';
-import { Header, Footer, Intro } from 'components';
+import { Intro } from 'components';
 
 export default function Main() {
   return (
     <>
-      <Header />
       <Intro />
       <ul className="main-nav">
         <li className="main-nav__item">
@@ -111,7 +110,6 @@ export default function Main() {
           </p>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

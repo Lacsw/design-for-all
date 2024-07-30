@@ -3,12 +3,10 @@ import { useParams } from 'react-router-dom';
 
 import './Articles.css';
 import {
-  Header,
   SideBar,
   Article,
   AuthorAndReviewers,
   NotFoundArticle,
-  Footer,
   Loader,
   Error,
 } from 'components';
@@ -43,7 +41,6 @@ export default function Articles() {
 
   return (
     <>
-      <Header />
       <div className="articles__container">
         <SideBar />
 
@@ -59,7 +56,6 @@ export default function Articles() {
 
         <AuthorAndReviewers />
       </div>
-      <Footer />
     </>
   );
 }
