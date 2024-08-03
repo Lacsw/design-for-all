@@ -1,72 +1,72 @@
 .map {
-	background: #0b0b0b;
-	padding-top: 92px;
-	padding-bottom: 40px;
+  background: #0b0b0b;
+  padding-top: 92px;
+  padding-bottom: 40px;
 }
 
 .map__container {
-	background: #161616;
-	box-shadow: 0px 0px 5px rgba(141, 141, 141, 0.3);
-	border-radius: 12px;
-	padding: 30px 20px;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	margin: 0 auto;
-	width: 676px;
+  background-color: var(--color-bg-secondary);
+  box-shadow: 0px 0px 5px rgba(141, 141, 141, 0.3);
+  border-radius: 12px;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+  width: 676px;
 }
 .map__title {
-	margin: 0;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 35px;
-	line-height: 130%;
-	color: #fff;
+  margin: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 130%;
+  color: var(--color-main);
 }
 .map__list {
-	padding: 0;
-	margin: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	list-style: inside;
-	color: #fff;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: inside;
+  color: var(--color-main);
 }
 
 .map__list-internal {
-	list-style: inside;
-	list-style-type: '– ';
-	font-weight: 700;
+  list-style: inside;
+  list-style-type: '– ';
+  font-weight: 700;
 }
 
 .map__main-link {
-	text-decoration: none;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 20px;
-	line-height: 130%;
-	color: #fff;
-	transition: all 0.5s ease-in-out;
+  text-decoration: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 130%;
+  color: var(--color-main);
+  transition: all 0.5s ease-in-out;
 }
 
 .map__main-link:hover {
-	opacity: 0.6;
+  opacity: 0.6;
 }
 
 .map__link {
-	text-decoration: none;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 130%;
-	color: #fff;
-	transition: all 0.5s ease-in-out;
+  text-decoration: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 130%;
+  color: var(--color-main);
+  transition: all 0.5s ease-in-out;
 }
 
 .map__link:hover {
-	opacity: 0.6;
+  opacity: 0.6;
 }

@@ -1,0 +1,11 @@
+@import url(../vendor/fonts/fonts.css);
+@import url(./theme-default.css);
+@import url(./vars.css);
+
+.body {
+  background: var(--color-bg-main);
+}
+
+a {
+  color: #0b8aff;
+}

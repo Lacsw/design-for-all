@@ -1,38 +1,35 @@
 .sidebar {
-	width: 222px;
-	height: 100%;
-	position: sticky;
-	top: 92px;
+  position: sticky;
+  top: 30px;
 }
 
 .sidebar__header {
-	display: flex;
-	padding-bottom: 10px;
+  display: flex;
+  padding-bottom: 10px;
+  gap: 7px;
 }
 
 .sidebar__title-container {
-	display: flex;
-	gap: 10px;
-	width: 100%;
-	align-items: center;
-	background-color: #161616;
-	border-radius: 12px;
-	margin-right: 10px;
-	cursor: pointer;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-secondary);
+  border-radius: 12px;
+  padding: 0 10px;
+  cursor: pointer;
 }
 
 .sidebar__title {
-	margin: 0;
-	padding-left: 10px;
-
-	color: #fff;
-	font-family: Inter;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 130%;
+  margin: 0;
+  color: var(--color-main);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
 }
 
 .sidebar__search {
-	cursor: pointer;
+  cursor: pointer;
 }

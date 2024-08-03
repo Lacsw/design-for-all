@@ -1,25 +1,25 @@
 .link-button {
-	color: #fff;
-  background-color: #161616;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 7px;
+  color: var(--color-main);
+  background-color: var(--color-bg-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
   padding: 12px 0;
   border-radius: 12px;
-	margin: 15px 0;
-	box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.30);
+  margin: 15px 0;
+  box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
 
-	text-decoration: none;
-	font-family: Inter;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 130%;
-	letter-spacing: 0.28px;
+  text-decoration: none;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.28px;
 }
 
 .link-button_active {
-	color: #161616;
-	background-color: #fff;
+  color: var(--color-secondary);
+  background-color: #fff;
 }

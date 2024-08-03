@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { mainNavigationOptionsList } from '../../utils/constants';
-import { Header, Footer, Intro, MainNavigationBar } from 'components';
+import { Intro, MainNavigationBar } from 'components';
 import MainSlider from './MainSlider/MainSlider';
 
 export default function Main() {
@@ -16,7 +16,6 @@ export default function Main() {
 console.log(activeTab)
   return (
     <>
-      <Header />
       <Intro />
       <MainNavigationBar
         navLinksList={mainNavigationOptionsList}
@@ -26,7 +25,6 @@ console.log(activeTab)
       <div className="main__content">
         <MainSlider index={activeTab.index} />
       </div>
-      <Footer />
     </>
   );
 }

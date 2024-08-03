@@ -6,11 +6,10 @@ export default function Intro() {
       <div className="intro__container">
         <h1 className="intro__title">Design for all</h1>
         <p className="intro__subtitle">
-          открытый дизайн проект для всех. бла бла бла, мы делаем единную
-          документацию по дизайн-системам, круто и прекрасно
+          Единственная, самая большая, структурированная и свободная
+          энциклопедия по дизайну в IT.
         </p>
       </div>
-      <div className="intro__shadow"></div>
     </div>
   );
 }

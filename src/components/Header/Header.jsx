@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Button } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import './Header.css';
 import logo from 'images/logo.svg';
@@ -14,15 +16,63 @@ import {
   currencyList,
 } from 'utils/constants';
 import { DropdownNavigation, AuthModal } from 'components';
+import { getCurrentTheme, getCurrentUser } from 'store/selectors';
+import { setTheme } from 'store/middlewares';
 
 export default function Header() {
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const toogleModal = () => {
-    setIsAuthOpen(!isAuthOpen);
+  const theme = useSelector(getCurrentTheme);
+
+  const currentUser = useSelector(getCurrentUser);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState(false);
+
+  /* в шапке сайта при клике на иконку входа по ум. открывается
+  авторизация, а не регистрация */
+  const openAuthModal = () => {
+    setSearchParams({ 'modal-auth': 'login' });
   };
+
+  function setModalParams(mode = false) {
+    setAuthModalMode(mode);
+    if (mode) {
+      setSearchParams({'modal-auth': mode});
+    } else {
+      setSearchParams({});
+    }
+  }
+
+  useEffect(() => {
+    const authModalMode = searchParams.get('modal-auth');
+    if (authModalMode && authModalMode === 'login') {
+      setAuthModalMode(authModalMode);
+      setIsAuthModalOpen(true);
+    } else if (authModalMode && authModalMode === 'signUp') {
+      setAuthModalMode(authModalMode);
+      setIsAuthModalOpen(true);
+    } else {
+      setIsAuthModalOpen(false);
+    }
+  }, [searchParams]);
+
+  // Установка темы, сохранённой persist-ом, при загрузке сайта
+  useEffect(() => {
+    /* без этого условия, если тема и так начальная,
+      то в setTheme будет попытка удалить несуществющий тег style */
+    if (theme !== 'dark') {
+      dispatch(setTheme(theme));
+    }
+  }, [dispatch, theme]);
+
+  const toggleTheme = useCallback(() => {
+    if (theme === 'dark') {
+      dispatch(setTheme('light'));
+    } else {
+      dispatch(setTheme('dark'));
+    }
+  }, [theme, dispatch]);
 
   return (
     <header className="header">
@@ -37,6 +87,11 @@ export default function Header() {
             </button>
           </li>
           <li>
+            <Button variant="contained" onClick={toggleTheme}>
+              Смена темы. Текущая: {theme}
+            </Button>
+          </li>
+          <li>
             <DropdownNavigation
               options={navigationOptionsList}
               titleIcon={dropdownIconWhite}
@@ -45,14 +100,26 @@ export default function Header() {
             />
           </li>
           <li>
-            <DropdownNavigation options={languageList} title="Язык" />
+            <DropdownNavigation
+              options={languageList}
+              title="Язык"
+              paddingBottom="5"
+              size="m"
+            />
           </li>
           <li>
-            <DropdownNavigation options={currencyList} title="Валюта" />
+            <DropdownNavigation
+              options={currencyList}
+              title="Валюта"
+              sizeItem="s"
+            />
           </li>
           <li>
             {!currentUser ? (
-              <button className="header__icon-background" onClick={toogleModal}>
+              <button
+                className="header__icon-background"
+                onClick={openAuthModal}
+              >
                 <img src={siginInIcon} alt="войти" />
               </button>
             ) : (
@@ -66,7 +133,11 @@ export default function Header() {
           </li>
         </ul>
       </div>
-      <AuthModal isOpen={isAuthOpen} onClose={toogleModal} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onChange={setModalParams}
+        modalMode={authModalMode}
+      />
     </header>
   );
 }

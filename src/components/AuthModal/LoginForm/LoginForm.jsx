@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import authApi from 'utils/api/auth';
 import { useFormValidation } from 'utils/hooks/useFormValidation';
 import { signInStart, signInSuccess, signInFailure } from 'store/slices';

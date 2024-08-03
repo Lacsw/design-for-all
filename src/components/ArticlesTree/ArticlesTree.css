@@ -1,0 +1,21 @@
+.tree-container {
+  max-height: 80vh;
+  overflow: auto;
+  background-color: var(--color-bg-secondary);
+  border-radius: 12px;
+  padding: 10px 0 16px;
+}
+
+.tree-container::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.tree-container::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.tree-container::-webkit-scrollbar-thumb {
+  background-color: #242424;
+}

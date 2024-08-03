@@ -1,66 +1,70 @@
 .footer {
-	background: #242424;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	padding: 46px 121px 16px 121px;
+  background: var(--color-bg-low-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 46px 121px 16px 121px;
 }
 .footer__container {
-	display: flex;
-	justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .footer__list-container_socials {
-	width: 15%;
+  width: 15%;
 }
 .footer__list-container {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
 }
 .footer__title {
-	margin: 0;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 130%;
-	text-align: center;
-	letter-spacing: 0.02em;
-	color: #dadada;
+  margin: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 130%;
+  text-align: center;
+  letter-spacing: 0.02em;
+  /* в макете цвет текста в подвале берётся из противоположной темы >__< */
+  color: var(--color-main);
+  opacity: 0.85;
 }
 .footer__list {
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-	margin: 0;
-	padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 
 .footer__list_socials {
-	flex-direction: row;
-	flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .footer__link {
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 130%;
-	letter-spacing: 0.02em;
-	color: #dadada;
-	text-decoration: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: var(--color-main);
+  opacity: 0.85;
+  text-decoration: none;
 }
 .footer__copyright {
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 10px;
-	line-height: 130%;
-	text-align: center;
-	letter-spacing: 0.02em;
-	color: #dadada;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 130%;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: var(--color-main);
+  opacity: 0.85;
 }

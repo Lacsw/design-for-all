@@ -1,0 +1,31 @@
+.dropdown-navigation__hide-button {
+  animation: rotateClockWiseAni 0.3s both;
+  cursor: pointer;
+  transform: rotate(0deg);
+}
+
+.dropdown-navigation__hide-button_closed {
+  animation: rotateCounterClockWiseAni 0.3s both;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+
+@keyframes rotateClockWiseAni {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes rotateCounterClockWiseAni {
+  0% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}

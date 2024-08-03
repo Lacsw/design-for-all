@@ -1,6 +1,6 @@
 import './ArticleHeader.css';
-import flag from 'images/flag-icon.svg';
-import changeIcon from 'images/change-icon.svg';
+import { DropdownNavigation } from 'components';
+import { languageList, editList } from 'utils/constants';
 
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
   return (
@@ -9,16 +9,23 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
         <h2 className="article-header__title">{title}</h2>
         <div className="article-header__icon-container">
           <button type="button" className="article-header__button">
-            {' '}
-            <img
-              src={flag}
-              alt="Флаг"
-              className="article-header__button-image"
+            <DropdownNavigation
+              options={languageList}
+              title="Язык"
+              sizeItem="m"
+              size="s"
+              paddingBottom="2"
             />
           </button>
           <button type="button" className="article-header__button">
-            {' '}
-            <img src={changeIcon} alt="Иконка редактирования" />
+            <DropdownNavigation
+              options={editList}
+              title="Редактировать"
+              size="s"
+              paddingBottom="1"
+              gap="5"
+              type="dropdownWithTools"
+            />
           </button>
         </div>
       </div>

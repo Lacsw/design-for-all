@@ -1,0 +1,17 @@
+/* Default theme (dark variant) */
+:root {
+  /* text, icons's and svg's colors */
+  --color-main: #ffffff;
+  --color-main-disabled: #343434;
+  /* text, icons, etc on secondary background (need to be contrasting) */
+  --color-secondary: #161616;
+  --color-secondary-disabled: #bcbcbc;
+  --color-success: #45861d;
+  --color-failure: #ac3e3e;
+
+  /* color for main background */
+  --color-bg-main: #0b0b0b;
+  --color-bg-secondary: #161616;
+  --color-bg-accent: #ffffff;
+  --color-bg-low-accent: #242424;
+}
