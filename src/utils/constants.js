@@ -82,12 +82,12 @@ export const navigationOptionsList = [
 ];
 
 export const mainNavigationOptionsList = [
-	{ name: 'Обновления', src: updatesBlack, link: '/' },
-	{ name: 'Веб приложения', src: webBlack, link: '/' },
-	{ name: 'Десктоп приложения', src: desktopBlack, link: '/' },
-	{ name: 'Мобильные приложения', src: mobileBlack, link: '/' },
-	{ name: 'Статьи', src: articleBlack, link: '/articles' },
-	{ name: 'Руководства', src: manualBlack, link: '/' },
+  { name: 'Обновления', src: updatesBlack, link: '/' },
+  { name: 'Веб приложения', src: webBlack, link: '/' },
+  { name: 'Десктоп приложения', src: desktopBlack, link: '/' },
+  { name: 'Мобильные приложения', src: mobileBlack, link: '/' },
+  { name: 'Статьи', src: articleBlack, link: '/articles' },
+  { name: 'Руководства', src: manualBlack, link: '/' },
 ];
 
 export const accountNavigationList = [

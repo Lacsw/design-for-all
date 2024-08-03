@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Main.css';
-import { mainNavigationOptionsList } from '../../utils/constants';
+import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar } from 'components';
 import MainSlider from './MainSlider/MainSlider';
 
@@ -13,7 +13,7 @@ export default function Main() {
   const handleActiveTab = ({ name, index }) => {
     setActiveTab({ name, index });
   };
-console.log(activeTab)
+
   return (
     <>
       <Intro />

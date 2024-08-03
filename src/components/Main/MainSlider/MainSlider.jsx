@@ -1,6 +1,6 @@
 import React from 'react';
 import DesktopSlide from '../DesktopSlide/DesktopSlide';
-import './MainSlider.css'
+import './MainSlider.css';
 
 export default function MainSlider({ index }) {
   const slideList = [

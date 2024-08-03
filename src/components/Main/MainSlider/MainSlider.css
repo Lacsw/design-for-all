@@ -1,24 +1,20 @@
 .main-slider {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0 64px 0;
   position: relative;
 }
 
-.main-slider__prev-slide {
+.main-slider__prev-slide,
+.main-slider__next-slide {
   position: absolute;
-  top: -33%;
-  left: -51%;
-  transform: scale(0.3);
+  top: -30%;
+  transform: scale(0.4);
   filter: blur(10px);
   z-index: -1;
 }
 
+.main-slider__prev-slide {
+  left: -40%;
+}
+
 .main-slider__next-slide {
-    position: absolute;
-    top: -33%;
-    right: -51%;
-    transform: scale(0.3);
-    filter: blur(10px);
-    z-index: -1;
+  right: -40%;
 }
