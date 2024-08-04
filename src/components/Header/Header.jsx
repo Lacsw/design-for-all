@@ -1,10 +1,11 @@
 import { Button } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import './Header.css';
 import logo from 'images/logo.svg';
+import logoBlack from 'images/logo-black.svg';
 import loupe from 'images/loupe-icon.svg';
 import accountDefaultIcon from 'images/account-icon.svg';
 import siginInIcon from 'images/siginin-icon.svg';
@@ -38,7 +39,7 @@ export default function Header() {
   function setModalParams(mode = false) {
     setAuthModalMode(mode);
     if (mode) {
-      setSearchParams({'modal-auth': mode});
+      setSearchParams({ 'modal-auth': mode });
     } else {
       setSearchParams({});
     }
@@ -77,9 +78,13 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <a href="/">
-          <img src={logo} alt="Логотип" className="header__logo" />
-        </a>
+        <Link to="/" className="logo-link">
+          <img
+            src={theme === 'dark' ? logo : logoBlack}
+            alt="Логотип"
+            className="header__logo"
+          />
+        </Link>
         <ul className="header__icons-container">
           <li>
             <button className="header__icon-background">
