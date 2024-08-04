@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './Main.css';
 import { mainNavigationOptionsList } from 'utils/constants';
-import { Intro, MainNavigationBar } from 'components';
-import MainSlider from './MainSlider/MainSlider';
+import { Intro, MainNavigationBar, MainSlider } from 'components';
+import './Main.css';
 
 export default function Main() {
   const [activeTab, setActiveTab] = useState({

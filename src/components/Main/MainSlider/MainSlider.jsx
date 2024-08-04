@@ -1,5 +1,5 @@
 import React from 'react';
-import DesktopSlide from '../DesktopSlide/DesktopSlide';
+import { DesktopSlide } from 'components';
 import './MainSlider.css';
 
 export default function MainSlider({ index }) {
