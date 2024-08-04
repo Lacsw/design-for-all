@@ -17,7 +17,7 @@ export default function MainNavigationBar({
         >
           <img src={icon.src} alt={icon.name} className="main-navbar__icon" />
           <NavLink
-            href={icon.link}
+            to={icon.link}
             className={cn('main-navbar__link main-navbar__link_light', {
               current: activeTab.name === icon.name,
             })}

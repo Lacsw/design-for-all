@@ -83,9 +83,9 @@ export const navigationOptionsList = [
 
 export const mainNavigationOptionsList = [
   { name: 'Обновления', src: updatesBlack, link: '/' },
-  { name: 'Веб приложения', src: webBlack, link: '/' },
-  { name: 'Десктоп приложения', src: desktopBlack, link: '/' },
-  { name: 'Мобильные приложения', src: mobileBlack, link: '/' },
+  { name: 'Веб приложения', src: webBlack, link: 'web' },
+  { name: 'Десктоп приложения', src: desktopBlack, link: 'desktop' },
+  { name: 'Мобильные приложения', src: mobileBlack, link: 'mobile' },
   { name: 'Статьи', src: articleBlack, link: '/articles' },
   { name: 'Руководства', src: manualBlack, link: '/' },
 ];
