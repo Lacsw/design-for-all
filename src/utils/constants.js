@@ -81,6 +81,15 @@ export const navigationOptionsList = [
   { name: 'Свернуть' },
 ];
 
+export const mainNavigationOptionsList = [
+  { name: 'Обновления', src: updatesBlack, link: '/' },
+  { name: 'Веб приложения', src: webBlack, link: '/web' },
+  { name: 'Десктоп приложения', src: desktopBlack, link: '/desktop' },
+  { name: 'Мобильные приложения', src: mobileBlack, link: '/mobile' },
+  { name: 'Статьи', src: articleBlack, link: '/articles' },
+  { name: 'Руководства', src: manualBlack, link: '/' },
+];
+
 export const accountNavigationList = [
   {
     name: 'Написать статью',
