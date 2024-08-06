@@ -1,7 +1,12 @@
-.header__container {
-  padding: 13px 120px;
+.header {
+  padding: 13px 20px;
   border-radius: 0px 0px 12px 12px;
   background: var(--color-bg-secondary);
+}
+
+.header__container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,4 +35,8 @@
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.logo-link {
+  line-height: 0;
 }
