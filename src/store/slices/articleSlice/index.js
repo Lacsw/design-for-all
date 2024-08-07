@@ -4,7 +4,10 @@ import { getTree } from 'utils/api/tree';
 import authorApi from 'utils/api/author';
 
 export const initialState = {
-  catalog: null,
+  catalog: {
+    original: null,
+    tree: null,
+  },
   article: null,
   loading: true,
   error: '',
@@ -23,7 +26,8 @@ const articleSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTree.fulfilled, (state, action) => {
-        state.catalog = createTree(action.payload);
+        state.catalog.original = action.payload;
+        state.catalog.tree = createTree(action.payload);
       })
       .addCase(fetchArticle.pending, (state) => {
         state.loading = true;

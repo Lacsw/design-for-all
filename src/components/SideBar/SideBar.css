@@ -33,3 +33,21 @@
 .sidebar__search {
   cursor: pointer;
 }
+
+.sidebar__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 30px;
+}
+
+.sidebar__list {
+  margin: 0;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 350%;
+  height: 600px;
+  background: white;
+}

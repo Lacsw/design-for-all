@@ -6,7 +6,7 @@ import './ArticlesTree.css';
 
 export default function TestTree({ path }) {
   const dispatch = useDispatch();
-  const catalog = useSelector(selectCatalog);
+  const { tree } = useSelector(selectCatalog);
   const fetchPath = `ru_${path}`;
 
   useEffect(() => {
@@ -14,8 +14,6 @@ export default function TestTree({ path }) {
   }, [fetchPath, dispatch]);
 
   return (
-    <div className="tree-container">
-      {catalog && <TreeList list={catalog} />}
-    </div>
+    <div className="tree-container">{tree && <TreeList list={tree} />}</div>
   );
 }

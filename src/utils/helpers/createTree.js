@@ -4,7 +4,7 @@ function createTree(data) {
   return tree;
 }
 
-function splitPaths(data) {
+export function splitPaths(data) {
   const preparedData = data.map((item) => {
     const categories = item.sub_category.split('/');
     return { ...item, categories };
@@ -21,11 +21,9 @@ function recursionTree(articles, pathIndex) {
     const filteredArticles = articles.filter(
       (item) => item.categories[pathIndex] === path
     );
-
     const finalArticle = filteredArticles.find(
       (item) => pathIndex === item.categories.length - 1
     );
-
     const otherArticles = filteredArticles.filter(
       (item) => pathIndex < item.categories.length - 1
     );
