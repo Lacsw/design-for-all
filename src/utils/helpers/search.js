@@ -1,17 +1,17 @@
 import { splitPaths } from './createTree';
 
-export default function searchArticles(words, articles) {
+export default function searchArticles(text, articles) {
   const withSplit = splitPaths(articles);
   const withWeight = withSplit.map((item) => ({ ...item, weight: 0 }));
-  setWeights(withWeight, words);
+  setWeights(withWeight, text);
   const matchArticles = withWeight.filter((item) => item.weight > 0);
   matchArticles.sort((a, b) => b.weight - a.weight);
   return matchArticles;
 }
 
-function setWeights(articles, inputArray) {
-  const words = inputArray.map((value) => value.toLowerCase());
-  const fullString = words.join(' ');
+export function setWeights(articles, text) {
+  const fullString = text.toLowerCase();
+  const words = fullString.split(' ');
 
   articles.forEach((art) => {
     art.categories.forEach((cat) => {
@@ -37,4 +37,12 @@ function setWeights(articles, inputArray) {
       }
     });
   });
+}
+
+export function prepareValue(value) {
+  const valueWithoutSymbols = value.replace(/[^\p{L}\p{N}\-\s]/gu, '');
+  const valueWithoutExtraSpaces = valueWithoutSymbols
+    .trim()
+    .replace(/\s\s+/g, ' ');
+  return valueWithoutExtraSpaces;
 }

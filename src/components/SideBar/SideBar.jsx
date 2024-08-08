@@ -4,7 +4,7 @@ import treeIcon from 'images/tree-menu-icon.svg';
 import searchIcon from 'images/search-icon.svg';
 import './SideBar.css';
 import { useState } from 'react';
-import searchArticles from 'utils/helpers/search';
+import searchArticles, { prepareValue } from 'utils/helpers/search';
 import { useSelector } from 'react-redux';
 import { selectCatalog } from 'store/slices/articleSlice';
 import debounce from 'utils/helpers/debounce';
@@ -13,7 +13,7 @@ export default function SideBar() {
   const { pathname } = useLocation();
   const { original } = useSelector(selectCatalog);
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [results, setResults] = useState(null);
   const firstPath = pathname.split('/')[1];
   const title =
     firstPath === 'web'
@@ -23,14 +23,12 @@ export default function SideBar() {
       : 'десктоп';
 
   function handleSearch({ target }) {
-    const searchWords = target.value.split(' ').filter((item) => item);
-    const isOk = searchWords.reduce((acc, item) => (acc += item.length), 0);
-    if (isOk < 3) {
-      setValue(null);
-      return;
-    }
-    const results = searchArticles(searchWords, original);
-    setValue(results);
+    const value = prepareValue(target.value);
+    const isReady = value.replace(/\s/g, '').length >= 3;
+    if (isReady) {
+      const results = searchArticles(value, original);
+      setResults(results);
+    } else setResults(null);
   }
 
   const searchWithDelay = debounce(handleSearch, 500);
@@ -55,11 +53,13 @@ export default function SideBar() {
             onChange={searchWithDelay}
           />
         )}
-        {value && (
+        {results && (
           <ul className="sidebar__list">
-            {value.length
-              ? value.map((item) => (
-                  <li key={item.uuid}>{item.categories.join('/') + ' ' + item.weight}</li>
+            {results.length
+              ? results.map((item) => (
+                  <li key={item.uuid}>
+                    {item.categories.join('/') + ' ' + item.weight}
+                  </li>
                 ))
               : 'Ничего не найдено'}
           </ul>
