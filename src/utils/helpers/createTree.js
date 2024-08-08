@@ -1,12 +1,13 @@
 function createTree(data) {
   const preparedData = splitPaths(data);
-  const tree = recursionTree(preparedData, 1);
+  const tree = recursionTree(preparedData, 0);
   return tree;
 }
 
 export function splitPaths(data) {
   const preparedData = data.map((item) => {
     const categories = item.sub_category.split('/');
+    categories.shift();
     return { ...item, categories };
   });
   return preparedData;

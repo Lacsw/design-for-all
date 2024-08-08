@@ -59,7 +59,7 @@ export default function SideBar() {
           <ul className="sidebar__list">
             {value.length
               ? value.map((item) => (
-                  <li key={item.uuid}>{item.sub_category}</li>
+                  <li key={item.uuid}>{item.categories.join('/') + ' ' + item.weight}</li>
                 ))
               : 'Ничего не найдено'}
           </ul>
