@@ -104,10 +104,10 @@ export const accountNavigationList = [
 export const currencyList = [{ name: 'USD', src: usdIcon }];
 
 export const languageList = [
-  { name: 'RU', src: ruFlag },
-  { name: 'CH', src: chFlag },
-  { name: 'EN', src: enFlag },
-  { name: 'SPA', src: spaFlag },
+  { name: 'ru', src: ruFlag },
+  { name: 'zh', src: chFlag },
+  { name: 'en', src: enFlag },
+  { name: 'es', src: spaFlag },
 ];
 
 export const editList = [

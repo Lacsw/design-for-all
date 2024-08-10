@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentUser: null,
+  language: 'ru',
   error: null,
   loading: false,
 };
@@ -23,10 +24,14 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    changeLanguage: (state, action) => {
+      state.language = action.payload;
+    },
   },
 });
 
-export const { signInStart, signInSuccess, signInFailure } = userSlice.actions;
+export const { signInStart, signInSuccess, signInFailure, changeLanguage } =
+  userSlice.actions;
 
 // export const userReducer = userSlice.reducer;
 export default userSlice.reducer;
