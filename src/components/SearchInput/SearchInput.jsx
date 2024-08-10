@@ -31,7 +31,7 @@ export default function SearchInput() {
             className="search-input__close-btn"
             onClick={handleCloseClick}
           >
-            <img src={closeBtn} alt="Кнопа сброса" />
+            <img src={closeBtn} alt="Кнопка сброса" />
           </button>
         </div>
       ) : (

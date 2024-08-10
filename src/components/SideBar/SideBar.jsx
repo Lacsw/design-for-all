@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ArticlesTree } from 'components';
+import { selectCatalog } from 'store/slices/articleSlice';
+import searchArticles, { prepareValue } from 'utils/helpers/search';
+import debounce from 'utils/helpers/debounce';
 import treeIcon from 'images/tree-menu-icon.svg';
 import searchIcon from 'images/search-icon.svg';
 import './SideBar.css';
-import { useState } from 'react';
-import searchArticles, { prepareValue } from 'utils/helpers/search';
-import { useSelector } from 'react-redux';
-import { selectCatalog } from 'store/slices/articleSlice';
-import debounce from 'utils/helpers/debounce';
 
 export default function SideBar() {
   const { pathname } = useLocation();
@@ -58,7 +58,7 @@ export default function SideBar() {
             {results.length
               ? results.map((item) => (
                   <li key={item.uuid}>
-                    {item.categories.join('/') + ' ' + item.weight}
+                    {item.categories.join('/')}
                   </li>
                 ))
               : 'Ничего не найдено'}
