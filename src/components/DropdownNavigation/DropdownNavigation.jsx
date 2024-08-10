@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLanguage } from 'store/selectors';
+import { changeLanguage } from 'store/slices';
 import './DropdownNavigation.css';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
 
@@ -13,13 +16,15 @@ export default function DropdownNavigation({
   paddingBottom,
   gap,
 }) {
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const language = useSelector(getLanguage);
+  const langSrc = options.find((item) => item.name === language)?.src;
 
   const handleOptionClick = (option) => {
-    const currentOption = options.filter((i) => i.name === option);
-    setSelectedOption(...currentOption);
+    dispatch(changeLanguage(option));
   };
 
   const isClassNameTitleWhite = (className) => {
@@ -89,8 +94,8 @@ export default function DropdownNavigation({
           />
         ) : (
           <img
-            src={selectedOption.src}
-            alt={selectedOption.name}
+            src={langSrc || selectedOption.src}
+            alt={langSrc ? language : selectedOption.name}
             className={isClassNameNavigationImage('dropdown-navigation__image')}
           />
         )}
@@ -123,7 +128,7 @@ export default function DropdownNavigation({
               ))}
             {!type &&
               options
-                .filter((option) => option !== selectedOption)
+                .filter((option) => option.name !== language)
                 .map((option, i) => (
                   <li key={i} className="dropdown-navigation__menu-item">
                     <img
