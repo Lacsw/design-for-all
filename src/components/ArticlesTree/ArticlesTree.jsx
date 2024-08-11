@@ -1,19 +1,24 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCatalog, fetchTree } from 'store/slices/articleSlice';
+import { useDispatch } from 'react-redux';
+import { fetchTree } from 'store/slices/articleSlice';
 import { TreeList } from 'components';
 import './ArticlesTree.css';
 
-export default function TestTree({ path }) {
+export default function TestTree({ path, catalog, language }) {
   const dispatch = useDispatch();
-  const { tree } = useSelector(selectCatalog);
-  const fetchPath = `ru_${path}`;
+  const { tree } = catalog[language][path];
+  const { fetchTime } = catalog[language][path];
+  const fetchPath = `${language}_${path}`;
 
   useEffect(() => {
-    dispatch(fetchTree(fetchPath));
-  }, [fetchPath, dispatch]);
+    Date.now() - fetchTime > 630000 && dispatch(fetchTree(fetchPath));
+  }, [fetchPath, fetchTime, dispatch]);
 
   return (
-    <div className="tree-container">{tree && <TreeList list={tree} />}</div>
+    <div className="tree-container">
+      <div className="tree">
+        {tree && <TreeList list={tree} language={language} />}
+      </div>
+    </div>
   );
 }

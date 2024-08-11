@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import './Articles.css';
 import {
-  SideBar,
   Article,
   AuthorAndReviewers,
   NotFoundArticle,
@@ -42,7 +41,7 @@ export default function Articles() {
   return (
     <>
       <div className="articles__container">
-        <SideBar />
+        <div />
 
         {error ? (
           <Error message="Произошла ошибка при загрузке статьи" />

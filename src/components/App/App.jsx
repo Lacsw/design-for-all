@@ -42,6 +42,11 @@ function App() {
           />
         </Route>
 
+        <Route path="/manual" element={<Catalog />}>
+          <Route index element={<CatalogArticle />} />
+          <Route path="/manual/:lang/:articleId" element={<CatalogArticle />} />
+        </Route>
+
         <Route path="/admin/*" element={<AccountAdmin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

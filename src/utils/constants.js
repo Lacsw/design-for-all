@@ -87,7 +87,7 @@ export const mainNavigationOptionsList = [
   { name: 'Десктоп приложения', src: desktopBlack, link: '/desktop' },
   { name: 'Мобильные приложения', src: mobileBlack, link: '/mobile' },
   { name: 'Статьи', src: articleBlack, link: '/articles' },
-  { name: 'Руководства', src: manualBlack, link: '/' },
+  { name: 'Руководства', src: manualBlack, link: '/manual' },
 ];
 
 export const accountNavigationList = [
@@ -127,4 +127,99 @@ export const socialIcons = {
   vk,
   facebook,
   instagram,
+};
+
+export const catalog = {
+  ru: {
+    web: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    desktop: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    mobile: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    manual: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    titles: null,
+  },
+  en: {
+    web: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    desktop: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    mobile: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    manual: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    titles: null,
+  },
+  es: {
+    web: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    desktop: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    mobile: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    manual: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    titles: null,
+  },
+  zh: {
+    web: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    desktop: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    mobile: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    manual: {
+      original: null,
+      tree: null,
+      fetchTime: 0,
+    },
+    titles: null,
+  },
 };
