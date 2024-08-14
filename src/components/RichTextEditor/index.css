@@ -1,24 +1,45 @@
 .rte {
+  background-color: var(--color-bg-low-accent);
+  border: 2px solid var(--color-bg-low-accent);
+  border-radius: 12px;
+  padding: 10px 16px;
 }
 
 .rte__editor {
-  height: 100px;
-  transition:
-    height 2s ease,
-    background-color 2s ease;
-  background-color: rgb(140, 207, 131);
-}
-.rte__editor:active {
-  height: 20px;
-  background-color: rgb(236, 70, 58);
 }
 
 .rte__editor .tiptap {
-  /* background-color: rgb(140, 207, 131); */
-  border: 2px rgb(55, 164, 236) solid;
-  min-height: 100px;
+  min-height: 38px;
+
+  outline: 0;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+
+  p {
+    margin: 30px 0;
+  }
+  p:first-child {
+    margin: 0 0 30px;
+  }
 }
 
 .rte__menu-bar {
+  background-color: var(--color-bg-accent);
+  border-radius: 13px;
+  padding: 1px 8px;
   display: flex;
+  gap: 5px 5px;
+}
+
+.theme-light {
+  .rte__editor .tiptap {
+  }
+
+  .rte__menu-bar {
+    background-color: var(--color-bg-secondary);
+  }
 }

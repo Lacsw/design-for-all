@@ -1,32 +1,32 @@
 import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
-import { buttonsHeadings, commandsNames } from '../helpers';
+import { buttonsHeadings, COMMANDS_NAMES } from '../helpers';
 
 const tiptapCommands = {
-  [commandsNames.italic](editor) {
+  [COMMANDS_NAMES.italic](editor) {
     editor?.chain().focus().toggleItalic().run();
   },
-  [commandsNames.bold]: (editor) => editor?.chain().focus().toggleBold().run(),
-  [commandsNames.underline]: (editor) =>
+  [COMMANDS_NAMES.bold]: (editor) => editor?.chain().focus().toggleBold().run(),
+  [COMMANDS_NAMES.underline]: (editor) =>
     editor?.chain().focus().toggleUnderline().run(),
-  [commandsNames.code]: (editor) => editor?.chain().focus().toggleCode().run(),
-  [commandsNames.codeBlock]: (editor) =>
+  [COMMANDS_NAMES.code]: (editor) => editor?.chain().focus().toggleCode().run(),
+  [COMMANDS_NAMES.codeBlock]: (editor) =>
     editor?.chain().focus().toggleCodeBlock().run(),
-  [commandsNames.left]: (editor) =>
+  [COMMANDS_NAMES.left]: (editor) =>
     editor?.chain().focus().setTextAlign('left').run(),
-  [commandsNames.center]: (editor) =>
+  [COMMANDS_NAMES.center]: (editor) =>
     editor?.chain().focus().setTextAlign('center').run(),
-  [commandsNames.right]: (editor) =>
+  [COMMANDS_NAMES.right]: (editor) =>
     editor?.chain().focus().setTextAlign('right').run(),
-  [commandsNames.justify]: (editor) =>
+  [COMMANDS_NAMES.justify]: (editor) =>
     editor?.chain().focus().setTextAlign('justify').run(),
-  [commandsNames.bulletList]: (editor) =>
+  [COMMANDS_NAMES.bulletList]: (editor) =>
     editor?.chain().focus().toggleBulletList().run(),
-  [commandsNames.orderedList]: (editor) =>
+  [COMMANDS_NAMES.orderedList]: (editor) =>
     editor?.chain().focus().toggleOrderedList().run(),
-  [commandsNames.subscript]: (editor) =>
+  [COMMANDS_NAMES.subscript]: (editor) =>
     editor?.chain().focus().toggleSubscript().run(),
-  [commandsNames.superscript]: (editor) =>
+  [COMMANDS_NAMES.superscript]: (editor) =>
     editor?.chain().focus().toggleSuperscript().run(),
 };
 
@@ -51,31 +51,38 @@ const tiptapCommands = {
     });
 })(IconButton);*/
 
-export function RteButton({ children, editor, name, inFocusWithin }) {
+export function RteButton({
+  children,
+  editor,
+  name,
+  inFocusWithin,
+  className,
+}) {
   let attribute;
   switch (name) {
-    case commandsNames.left:
-    case commandsNames.center:
-    case commandsNames.right:
-    case commandsNames.justify:
+    case COMMANDS_NAMES.left:
+    case COMMANDS_NAMES.center:
+    case COMMANDS_NAMES.right:
+    case COMMANDS_NAMES.justify:
       attribute = { textAlign: name };
       break;
     default:
       attribute = name;
       break;
   }
+
   const onClick = useCallback(
     () => tiptapCommands[name](editor),
     [name, editor]
   );
+
   const isSelected = editor?.isActive(attribute);
   const isFocused = editor?.isFocused || inFocusWithin;
+  const classes = [isFocused && isSelected ? 'selected' : '', className];
+
   return (
     <Tooltip title={buttonsHeadings[name]} className="rte__button">
-      <IconButton
-        onClick={onClick}
-        className={`${isFocused && isSelected ? 'selected' : ''}`}
-      >
+      <IconButton onClick={onClick} className={classes.join(' ')} size="small">
         {children || name}
       </IconButton>
     </Tooltip>

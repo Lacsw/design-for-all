@@ -8,7 +8,6 @@ import StarterKit from '@tiptap/starter-kit';
 // eslint-disable-next-line import/no-unresolved
 import { EditorContent, useEditor } from '@tiptap/react';
 // icons
-import CreateIcon from '@mui/icons-material/Create';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
@@ -25,7 +24,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
 import { validate } from './validators';
-import { commandsNames } from './helpers';
+import { COMMANDS_NAMES } from './helpers';
 import './index.css';
 
 const defaultValidationsOptions = {
@@ -50,8 +49,9 @@ export const RichTextEditor = memo(function RichTextEditor({
   className,
   cancel,
   maxHeight = 'auto',
+  id,
+  classes,
 }) {
-  console.log('render Tiptap');
   const extensions = [
     StarterKit.configure({
       blockquote: false,
@@ -141,6 +141,7 @@ export const RichTextEditor = memo(function RichTextEditor({
   /* Имеет ли обёртка редактора псевдокласс focus-within?
       Проверка необходима, чтобы не было скачков цвета у рамок
       редактора и его кнопок */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (wrapperRef.current?.matches(':focus-within')) {
       setInFocusWithin(true);
@@ -150,35 +151,38 @@ export const RichTextEditor = memo(function RichTextEditor({
   });
 
   return (
-    <div className={`rte ${className ?? ''}`}>
+    <div ref={wrapperRef} className={`rte ${className ?? ''}`} id={id}>
       <EditorContent editor={editor} className="rte__editor" />
       {!readOnly && (
-        <MenuBar editor={editor}>
+        <MenuBar editor={editor} className={classes.menuBar}>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.italic}
+            name={COMMANDS_NAMES.italic}
             inFocusWithin={inFocusWithin}
           >
-            <CreateIcon />
-            {/* <FormatItalicIcon /> */}
+            <FormatItalicIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.bold}
+            name={COMMANDS_NAMES.bold}
             inFocusWithin={inFocusWithin}
           >
             <FormatBoldIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.code}
+            name={COMMANDS_NAMES.code}
             inFocusWithin={inFocusWithin}
           >
             <CodeIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.codeBlock}
+            name={COMMANDS_NAMES.codeBlock}
             inFocusWithin={inFocusWithin}
           >
             <DataObjectIcon />
@@ -187,44 +191,50 @@ export const RichTextEditor = memo(function RichTextEditor({
           <Divider orientation="vertical" />
 
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.left}
+            name={COMMANDS_NAMES.left}
             inFocusWithin={inFocusWithin}
           >
             <FormatAlignLeftIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.center}
+            name={COMMANDS_NAMES.center}
             inFocusWithin={inFocusWithin}
           >
             <FormatAlignCenterIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.right}
+            name={COMMANDS_NAMES.right}
             inFocusWithin={inFocusWithin}
           >
             <FormatAlignRightIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.justify}
+            name={COMMANDS_NAMES.justify}
             inFocusWithin={inFocusWithin}
           >
             <FormatAlignJustifyIcon />
           </RteButton>
 
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.bulletList}
+            name={COMMANDS_NAMES.bulletList}
             inFocusWithin={inFocusWithin}
           >
             <FormatListBulletedIcon />
           </RteButton>
           <RteButton
+            className={classes.button}
             editor={editor}
-            name={commandsNames.orderedList}
+            name={COMMANDS_NAMES.orderedList}
             inFocusWithin={inFocusWithin}
           >
             <FormatListNumberedIcon />

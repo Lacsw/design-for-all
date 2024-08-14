@@ -1,4 +1,4 @@
-export const commandsNames = {
+export const COMMANDS_NAMES = {
   italic: 'italic',
   bold: 'bold',
   underline: 'underline',

@@ -1,12 +1,16 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import { langSelectOptions, categorySelectOptions } from 'utils/constants';
 import { Dropdown, ModalRecommendation, RichTextEditor } from 'components';
+import { getIsThemeLight } from 'store/selectors';
 
 export default function NewArticle() {
   // const [value, changeValue] = useState('');
   const [isShownAddRec, setIsShownAddRec] = useState(false);
+  const isLight = useSelector(getIsThemeLight);
 
   const toggleRecommendation = () => {
     setIsShownAddRec(!isShownAddRec);
@@ -87,7 +91,16 @@ export default function NewArticle() {
             />
           </label>
 
-          <RichTextEditor />
+          <label className="new-article__label" htmlFor="article-content">
+            <span className="new-aritcle__sub-title">Контент статьи</span>
+            <RichTextEditor
+              id="article-content"
+              className="new-article__rte"
+              classes={{
+                button: !isLight ? 'inverted' : undefined,
+              }}
+            />
+          </label>
 
           <label className="new-article__label" htmlFor="recommendations">
             <span className="new-aritcle__sub-title">Рекомендации авторов</span>

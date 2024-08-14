@@ -1,6 +1,6 @@
 import { Children, memo } from 'react';
 
-export const MenuBar = memo(({ children, editor }) => {
+export const MenuBar = memo(({ children, editor, className }) => {
   if (!editor) {
     return null;
   }
@@ -8,7 +8,7 @@ export const MenuBar = memo(({ children, editor }) => {
   const childArray = Children.toArray(children);
 
   return (
-    <ul className="list rte__menu-bar">
+    <ul className={`list rte__menu-bar ${className || ''}`}>
       {childArray.map((child, index) => (
         <li key={index}>{child}</li>
       ))}
