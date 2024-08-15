@@ -10,6 +10,7 @@
 }
 
 .sidebar__title-container {
+  position: relative;
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -34,20 +35,26 @@
   cursor: pointer;
 }
 
-.sidebar__input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  font-size: 30px;
-}
-
 .sidebar__list {
+  list-style: none;
+  padding: 10px;
   margin: 0;
   position: absolute;
-  top: 50px;
+  z-index: 10;
+  font-family: Inter;
+  font-size: 14px;
+  top: 46px;
   left: 0;
-  width: 350%;
-  height: 600px;
-  background: white;
+  width: 100%;
+  border-radius: 12px;
+  color: var(--color-main);
+  border: 1px solid currentColor;
+  background-color: var(--color-bg-secondary);
+  overflow: auto;
+  white-space: nowrap;
+  max-height: 80vh;
+}
+
+.sidebar__icon_open {
+  transform: rotate(90deg);
 }

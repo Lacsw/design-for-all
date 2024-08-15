@@ -6,8 +6,7 @@ import './ArticlesTree.css';
 
 export default function TestTree({ path, catalog, language }) {
   const dispatch = useDispatch();
-  const { tree } = catalog[language][path];
-  const { fetchTime } = catalog[language][path];
+  const { tree, fetchTime } = catalog[language][path];
   const fetchPath = `${language}_${path}`;
 
   useEffect(() => {

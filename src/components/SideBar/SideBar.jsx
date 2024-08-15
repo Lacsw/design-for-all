@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { ArticlesTree } from 'components';
+import { ArticlesTree, SearchInput } from 'components';
 import { selectCatalog, fetchTitles } from 'store/slices/articleSlice';
 import { getLanguage } from 'store/selectors';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
 import treeIcon from 'images/tree-menu-icon.svg';
-import searchIcon from 'images/search-icon.svg';
 import './SideBar.css';
 
 export default function SideBar() {
@@ -15,14 +14,19 @@ export default function SideBar() {
   const dispatch = useDispatch();
   const language = useSelector(getLanguage);
   const catalog = useSelector(selectCatalog);
+  const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
   const firstPath = pathname.split('/')[1];
   const articles = catalog[language][firstPath].original;
   const { titles } = catalog[language];
+  const titlesList = titles
+    ? Object.keys(titles).filter((item) => item !== firstPath)
+    : [];
 
   useEffect(() => {
     !titles && dispatch(fetchTitles(language));
+    setResults(null);
   }, [language, titles, dispatch]);
 
   function handleSearch({ target }) {
@@ -39,28 +43,45 @@ export default function SideBar() {
   return (
     <nav className="sidebar">
       <div className="sidebar__header">
-        <div className="sidebar__title-container">
-          <h2 className="sidebar__title">{titles?.[firstPath] || ''}</h2>
-          <img src={treeIcon} alt="выбрать" />
-        </div>
-        <img
-          className="sidebar__search"
-          src={searchIcon}
-          alt="поиск"
-          onClick={() => setIsOpen(true)}
+        {!isInput && (
+          <div
+            className="sidebar__title-container"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <h2 className="sidebar__title">{titles?.[firstPath] || ''}</h2>
+            <img
+              className={isOpen && 'sidebar__icon_open'}
+              src={treeIcon}
+              alt="выбрать"
+            />
+          </div>
+        )}
+        <SearchInput
+          onChange={searchWithDelay}
+          onSearch={setIsInput}
+          onResults={setResults}
+          onOpen={setIsOpen}
         />
         {isOpen && (
-          <input
-            type="text"
-            className="sidebar__input"
-            onChange={searchWithDelay}
-          />
+          <ul className="sidebar__list">
+            {titlesList.map((path) => (
+              <li key={path}>
+                <Link to={'/' + path} onClick={() => setIsOpen(false)}>
+                  {titles[path]}
+                </Link>
+              </li>
+            ))}
+          </ul>
         )}
         {results && (
           <ul className="sidebar__list">
             {results.length
               ? results.map((item) => (
-                  <li key={item.uuid}>{item.categories.join('/')}</li>
+                  <li key={item.uuid}>
+                    <Link to={language + '/' + item.uuid}>
+                      {item.categories.join('/')}
+                    </Link>
+                  </li>
                 ))
               : 'Ничего не найдено'}
           </ul>
