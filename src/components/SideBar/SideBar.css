@@ -55,6 +55,23 @@
   max-height: 80vh;
 }
 
+.sidebar__item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.sidebar__link {
+  color: var(--color-main);
+  text-decoration: none;
+}
+
+.sidebar__link:hover {
+  opacity: 0.7;
+}
+
 .sidebar__icon_open {
   transform: rotate(90deg);
+}
+
+.sidebar__item b {
+  color: rgb(190, 47, 47);
 }

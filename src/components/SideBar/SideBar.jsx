@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ArticlesTree, SearchInput } from 'components';
+import ResultItem from './ResultItem';
 import { selectCatalog, fetchTitles } from 'store/slices/articleSlice';
 import { getLanguage } from 'store/selectors';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
@@ -65,8 +66,12 @@ export default function SideBar() {
         {isOpen && (
           <ul className="sidebar__list">
             {titlesList.map((path) => (
-              <li key={path}>
-                <Link to={'/' + path} onClick={() => setIsOpen(false)}>
+              <li className="sidebar__item" key={path}>
+                <Link
+                  to={'/' + path}
+                  onClick={() => setIsOpen(false)}
+                  className="sidebar__link"
+                >
                   {titles[path]}
                 </Link>
               </li>
@@ -77,11 +82,7 @@ export default function SideBar() {
           <ul className="sidebar__list">
             {results.length
               ? results.map((item) => (
-                  <li key={item.uuid}>
-                    <Link to={language + '/' + item.uuid}>
-                      {item.categories.join('/')}
-                    </Link>
-                  </li>
+                  <ResultItem item={item} language={language} />
                 ))
               : 'Ничего не найдено'}
           </ul>
