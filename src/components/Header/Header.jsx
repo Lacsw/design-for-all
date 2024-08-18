@@ -6,7 +6,6 @@ import { Link, useSearchParams } from 'react-router-dom';
 import './Header.css';
 import logo from 'images/logo.svg';
 import logoBlack from 'images/logo-black.svg';
-import loupe from 'images/loupe-icon.svg';
 import accountDefaultIcon from 'images/account-icon.svg';
 import siginInIcon from 'images/siginin-icon.svg';
 import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
@@ -16,7 +15,7 @@ import {
   languageList,
   currencyList,
 } from 'utils/constants';
-import { DropdownNavigation, AuthModal } from 'components';
+import { DropdownNavigation, AuthModal, SearchInput } from 'components';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
 
@@ -87,9 +86,7 @@ export default function Header() {
         </Link>
         <ul className="header__icons-container">
           <li>
-            <button className="header__icon-background">
-              <img src={loupe} alt="Иконка лупы" className="header__icon" />
-            </button>
+            <SearchInput />
           </li>
           <li>
             <Button variant="contained" onClick={toggleTheme}>

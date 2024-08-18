@@ -10,6 +10,7 @@
 }
 
 .sidebar__title-container {
+  position: relative;
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -32,4 +33,45 @@
 
 .sidebar__search {
   cursor: pointer;
+}
+
+.sidebar__list {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  z-index: 10;
+  font-family: Inter;
+  font-size: 14px;
+  top: 46px;
+  left: 0;
+  width: 100%;
+  border-radius: 12px;
+  color: var(--color-main);
+  border: 1px solid currentColor;
+  background-color: var(--color-bg-secondary);
+  overflow: auto;
+  white-space: nowrap;
+  max-height: 80vh;
+}
+
+.sidebar__item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.sidebar__link {
+  color: var(--color-main);
+  text-decoration: none;
+}
+
+.sidebar__link:hover {
+  opacity: 0.7;
+}
+
+.sidebar__icon_open {
+  transform: rotate(90deg);
+}
+
+.sidebar__item b {
+  color: rgb(190, 47, 47);
 }

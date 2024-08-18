@@ -1,12 +1,13 @@
 function createTree(data) {
   const preparedData = splitPaths(data);
-  const tree = recursionTree(preparedData, 1);
+  const tree = recursionTree(preparedData, 0);
   return tree;
 }
 
-function splitPaths(data) {
+export function splitPaths(data) {
   const preparedData = data.map((item) => {
     const categories = item.sub_category.split('/');
+    categories.shift();
     return { ...item, categories };
   });
   return preparedData;
@@ -21,11 +22,9 @@ function recursionTree(articles, pathIndex) {
     const filteredArticles = articles.filter(
       (item) => item.categories[pathIndex] === path
     );
-
     const finalArticle = filteredArticles.find(
       (item) => pathIndex === item.categories.length - 1
     );
-
     const otherArticles = filteredArticles.filter(
       (item) => pathIndex < item.categories.length - 1
     );

@@ -4,7 +4,7 @@ import './SearchInput.css';
 import closeBtn from 'images/close-btn.svg';
 import loupe from 'images/loupe-icon.svg';
 
-export default function SearchInput() {
+export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
   const [isShown, setIsShown] = useState(false);
   const inputRef = useRef();
 
@@ -16,22 +16,30 @@ export default function SearchInput() {
 
   const handleLoupeClick = () => {
     setIsShown(true);
+    onSearch(true);
+    onOpen(false);
   };
 
   const handleCloseClick = () => {
     setIsShown(false);
+    onSearch(false);
+    onResults(null);
   };
 
   return (
     <>
       {isShown ? (
         <div className="search-input">
-          <input className="search-input__field" ref={inputRef}></input>
+          <input
+            className="search-input__field"
+            ref={inputRef}
+            onChange={onChange}
+          ></input>
           <button
             className="search-input__close-btn"
             onClick={handleCloseClick}
           >
-            <img src={closeBtn} alt="Кнопа сброса" />
+            <img src={closeBtn} alt="Кнопка сброса" />
           </button>
         </div>
       ) : (

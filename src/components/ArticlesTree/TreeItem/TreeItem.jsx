@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TreeList } from 'components';
 import './TreeItem.css';
 
-export default function TreeItem({ title, data }) {
+export default function TreeItem({ title, data, language }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = typeof data === 'object';
@@ -21,9 +21,9 @@ export default function TreeItem({ title, data }) {
 
   function handleNavigate() {
     if (id) {
-      navigate(`ru/${id}`);
+      navigate(`${language}/${id}`);
     } else {
-      navigate('ru/no-article');
+      navigate(`${language}/no-article`);
     }
   }
 
@@ -38,7 +38,9 @@ export default function TreeItem({ title, data }) {
           {title}
         </span>
       </div>
-      {!isOpen || !hasChildren ? null : <TreeList list={newData} />}
+      {!isOpen || !hasChildren ? null : (
+        <TreeList list={newData} language={language} />
+      )}
     </li>
   );
 }
