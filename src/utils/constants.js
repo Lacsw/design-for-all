@@ -1,11 +1,17 @@
 import articleBlack from 'images/navigation/article-icon-black.svg';
+import articleWhite from 'images/navigation/article-icon-white.svg';
 import desktopBlack from 'images/navigation/desktop-icon-black.svg';
+import desktopWhite from 'images/navigation/desktop-icon-white.svg';
 import mainBlack from 'images/navigation/main-icon-black.svg';
 import manualBlack from 'images/navigation/manual-icon-black.svg';
+import manualWhite from 'images/navigation/manual-icon-white.svg';
 import mobileBlack from 'images/navigation/mobile-icon-black.svg';
+import mobileWhite from 'images/navigation/mobile-icon-white.svg';
 import themeBlack from 'images/navigation/theme-icon-black.svg';
 import updatesBlack from 'images/navigation/updates-icon-black.svg';
+import updatesWhite from 'images/navigation/updates-icon-white.svg';
 import webBlack from 'images/navigation/web-icon-black.svg';
+import webWhite from 'images/navigation/web-icon-white.svg';
 import exitBlack from 'images/navigation/exit-icon-black.svg';
 import newArticleBlack from 'images/navigation/new-article-icon-black.svg';
 import profileBlack from 'images/navigation/profile-icon-black.svg';
@@ -14,6 +20,7 @@ import chFlag from 'images/ch-flag-icon.svg';
 import enFlag from 'images/en-flag-icon.svg';
 import spaFlag from 'images/spa-flag-icon.svg';
 import usdIcon from 'images/dollar-icon.svg';
+import usdIconWhite from 'images/dollar-icon_white.svg';
 import changeIconBlack from 'images/change-icon-black.svg';
 import dotsIcon from 'images/dots-icon.svg';
 import giveTranslationBlack from 'images/give-translation-black.svg';
@@ -82,12 +89,32 @@ export const navigationOptionsList = [
 ];
 
 export const mainNavigationOptionsList = [
-  { name: 'Обновления', src: updatesBlack, link: '/' },
-  { name: 'Веб приложения', src: webBlack, link: '/web' },
-  { name: 'Десктоп приложения', src: desktopBlack, link: '/desktop' },
-  { name: 'Мобильные приложения', src: mobileBlack, link: '/mobile' },
-  { name: 'Статьи', src: articleBlack, link: '/articles' },
-  { name: 'Руководства', src: manualBlack, link: '/manual' },
+  { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '/' },
+  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: '/web' },
+  {
+    name: 'Десктоп приложения',
+    dark: desktopBlack,
+    light: desktopWhite,
+    link: '/desktop',
+  },
+  {
+    name: 'Мобильные приложения',
+    dark: mobileBlack,
+    light: mobileWhite,
+    link: '/mobile',
+  },
+  {
+    name: 'Статьи',
+    dark: articleBlack,
+    light: articleWhite,
+    link: '/articles',
+  },
+  {
+    name: 'Руководства',
+    dark: manualBlack,
+    light: manualWhite,
+    link: '/manual',
+  },
 ];
 
 export const accountNavigationList = [
@@ -101,7 +128,7 @@ export const accountNavigationList = [
   { name: 'Выйти', src: exitBlack, link: '/' },
 ];
 
-export const currencyList = [{ name: 'USD', src: usdIcon }];
+export const currencyList = [{ name: 'USD', dark: usdIcon, light: usdIconWhite }];
 
 export const languageList = [
   { name: 'ru', src: ruFlag },

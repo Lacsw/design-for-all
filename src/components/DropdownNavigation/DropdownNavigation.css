@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--color-main);
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -31,7 +31,7 @@
 }
 
 .dropdown-navigation__title-image {
-  background-color: #fff;
+  background-color: var(--color-main);
   border-radius: 50%;
   width: 34px;
   height: 34px;
@@ -72,7 +72,7 @@
   width: 36px;
   box-sizing: border-box;
   list-style: none;
-  background-color: #fff;
+  background-color: var(--color-main);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
   border-radius: 0 0 16px 16px;
   z-index: -1;

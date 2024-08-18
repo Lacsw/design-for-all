@@ -17,7 +17,7 @@
   height: 50px;
   position: relative;
   display: flex;
-  background: #161616;
+  background: var(--color-bg-secondary);
   border-radius: 25px;
   padding: 5px;
   transition: 0.3s;

@@ -8,7 +8,9 @@ import logo from 'images/logo.svg';
 import logoBlack from 'images/logo-black.svg';
 import accountDefaultIcon from 'images/account-icon.svg';
 import siginInIcon from 'images/siginin-icon.svg';
+import siginInIconWhite from 'images/siginin-icon_white.svg';
 import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
+import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import {
   accountNavigationList,
   navigationOptionsList,
@@ -96,7 +98,7 @@ export default function Header() {
           <li>
             <DropdownNavigation
               options={navigationOptionsList}
-              titleIcon={dropdownIconWhite}
+              titleIcon={theme === 'light' ? dropdownIconBlack : dropdownIconWhite}
               type="dropdownWithLinks"
               title="Меню"
             />
@@ -122,7 +124,7 @@ export default function Header() {
                 className="header__icon-background"
                 onClick={openAuthModal}
               >
-                <img src={siginInIcon} alt="войти" />
+                <img src={theme === 'dark' ? siginInIcon : siginInIconWhite} alt="войти" />
               </button>
             ) : (
               <DropdownNavigation
