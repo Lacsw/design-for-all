@@ -1,5 +1,5 @@
 .updates-slide {
-  max-width: 1000px;
+  width: 1000px;
   padding: 20px 44px;
   background-color: var(--color-secondary);
   border-radius: 12px;
@@ -12,6 +12,7 @@
   text-align: center;
   font-size: 30px;
   font-weight: 700;
+  margin: 0;
   margin-bottom: 20px;
 }
 
@@ -19,4 +20,15 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.preloader {
+  display: block;
+  margin: 0 auto;
+  width: 74px;
+  height: 74px;
+  border: 1px solid;
+  border-color: #d1d2d6 #9fa0a5 #626368 #1a1b22;
+  border-radius: 50%;
+  animation: spin 0.75s infinite linear;
 }

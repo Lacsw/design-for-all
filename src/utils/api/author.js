@@ -47,6 +47,16 @@ class AuthorApi {
     return this._checkResponse(response);
   }
 
+  async getUpdates() {
+    const response = await fetch(`${this._baseUrl}/get_updates/1;20`, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
+    });
+
+    return this._checkResponse(response);
+  }
+
   async profileAuthor() {
     const response = await fetch(`https://design-for-all.net/profile`, {
       method: 'GET',
