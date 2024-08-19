@@ -8,8 +8,8 @@ export default function Updates() {
   const updates = useSelector(selectUpdates);
   const dispatch = useDispatch();
   useEffect(() => {
-    !updates.cards && dispatch(fetchUpdates());
-  });
+    dispatch(fetchUpdates());
+  }, [dispatch]);
   return (
     <section className="updates-slide">
       <h2 className="updates-slide__title">Обновления</h2>
