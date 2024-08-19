@@ -4,7 +4,7 @@ import './MainSlider.css';
 
 export default function MainSlider({ index }) {
   const slideList = [
-    <DesktopSlide />,
+    <DesktopSlide updates />,
     <DesktopSlide />,
     <DesktopSlide />,
     <DesktopSlide />,

@@ -1,7 +1,10 @@
+import Updates from 'components/Updates/Updates';
 import slideImg from 'images/main/slide-img.png';
 import './DesktopSlide.css';
-export default function DesktopSlide() {
-  return (
+export default function DesktopSlide({ updates }) {
+  return updates ? (
+    <Updates />
+  ) : (
     <div className="desktop-slide">
       <h2 className="desktop-slide__title">Веб-приложения</h2>
       <p className="desktop-slide__text">

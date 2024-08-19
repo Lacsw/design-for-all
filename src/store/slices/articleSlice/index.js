@@ -6,6 +6,11 @@ import { catalog } from 'utils/constants';
 
 export const initialState = {
   catalog,
+  updates: {
+    loading: false,
+    error: '',
+    cards: null,
+  },
   article: null,
   loading: true,
   error: '',
@@ -18,6 +23,7 @@ const articleSlice = createSlice({
   selectors: {
     selectCatalog: (state) => state.catalog,
     selectArticle: (state) => state.article,
+    selectUpdates: (state) => state.updates,
     selectError: (state) => state.error,
     selectLoading: (state) => state.loading,
   },
@@ -45,6 +51,19 @@ const articleSlice = createSlice({
         state.article = action.payload;
         state.loading = false;
         state.error = '';
+      })
+      .addCase(fetchUpdates.pending, (state) => {
+        state.updates.loading = true;
+        state.updates.error = '';
+      })
+      .addCase(fetchUpdates.rejected, (state) => {
+        state.updates.loading = false;
+        state.updates.error = 'Не удалось загрузить данные';
+      })
+      .addCase(fetchUpdates.fulfilled, (state, action) => {
+        state.updates.cards = action.payload;
+        state.updates.loading = false;
+        state.updates.error = '';
       });
   },
 });
@@ -57,11 +76,20 @@ export const fetchArticle = createAsyncThunk('article/get', async (options) =>
   authorApi.getArticleById(options)
 );
 
+export const fetchUpdates = createAsyncThunk('updates/get', async () =>
+  authorApi.getUpdates()
+);
+
 export const fetchTitles = createAsyncThunk('titles/get', async (language) =>
   getTitles(language)
 );
 
-export const { selectCatalog, selectArticle, selectError, selectLoading } =
-  articleSlice.selectors;
+export const {
+  selectCatalog,
+  selectArticle,
+  selectUpdates,
+  selectError,
+  selectLoading,
+} = articleSlice.selectors;
 
 export default articleSlice.reducer;
