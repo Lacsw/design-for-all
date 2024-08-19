@@ -1,0 +1,34 @@
+.update-card {
+  padding: 20px;
+  background-color: var(--color-bg-low-accent);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.update-card__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.update-card__section-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.update-card__path {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.update-card__others {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.update-card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

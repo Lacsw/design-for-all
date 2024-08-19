@@ -9,3 +9,9 @@
 a {
   color: #0b8aff;
 }
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
