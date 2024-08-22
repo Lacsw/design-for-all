@@ -9,7 +9,7 @@ export const initialState = {
   updates: {
     loading: false,
     error: '',
-    cards: null,
+    cards: [],
   },
   article: null,
   loading: true,
@@ -52,18 +52,24 @@ const articleSlice = createSlice({
         state.loading = false;
         state.error = '';
       })
-      .addCase(fetchUpdates.pending, (state) => {
-        state.updates.loading = true;
-        state.updates.error = '';
+      .addCase(fetchUpdates.pending, (state, action) => {
+        if (action.meta.arg === 1) {
+          state.updates.loading = true;
+          state.updates.error = '';
+        }
       })
-      .addCase(fetchUpdates.rejected, (state) => {
-        state.updates.loading = false;
-        state.updates.error = 'Не удалось загрузить данные';
+      .addCase(fetchUpdates.rejected, (state, action) => {
+        if (action.meta.arg === 1) {
+          state.updates.loading = false;
+          state.updates.error = 'Не удалось загрузить данные';
+        }
       })
       .addCase(fetchUpdates.fulfilled, (state, action) => {
-        state.updates.cards = action.payload;
-        state.updates.loading = false;
-        state.updates.error = '';
+        if (action.meta.arg === 1) {
+          state.updates.cards = action.payload;
+          state.updates.loading = false;
+          state.updates.error = '';
+        } else state.updates.cards.push(...action.payload);
       });
   },
 });
@@ -76,8 +82,8 @@ export const fetchArticle = createAsyncThunk('article/get', async (options) =>
   authorApi.getArticleById(options)
 );
 
-export const fetchUpdates = createAsyncThunk('updates/get', async () =>
-  authorApi.getUpdates()
+export const fetchUpdates = createAsyncThunk('updates/get', async (page) =>
+  authorApi.getUpdates(page)
 );
 
 export const fetchTitles = createAsyncThunk('titles/get', async (language) =>

@@ -5,8 +5,8 @@ import './Main.css';
 
 export default function Main() {
   const [activeTab, setActiveTab] = useState({
-    name: 'Десктоп приложения',
-    index: 2,
+    name: 'Обновления',
+    index: 0,
   });
 
   const handleActiveTab = ({ name, index }) => {

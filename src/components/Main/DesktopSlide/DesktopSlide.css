@@ -1,5 +1,8 @@
 .desktop-slide {
   max-width: 1000px;
+  max-height: 1000px;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,4 +39,18 @@
 .desktop-slide__slide-img {
   overflow: hidden;
   border-radius: 6px;
+}
+
+.desktop-slide::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.desktop-slide::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.desktop-slide::-webkit-scrollbar-thumb {
+  background-color: #242424;
 }

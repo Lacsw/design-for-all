@@ -47,8 +47,8 @@ class AuthorApi {
     return this._checkResponse(response);
   }
 
-  async getUpdates() {
-    const response = await fetch(`${this._baseUrl}/get_updates/1;20`, {
+  async getUpdates(page) {
+    const response = await fetch(`${this._baseUrl}/get_updates/${page};20`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',

@@ -1,5 +1,7 @@
 .updates-slide {
   width: 1000px;
+  max-height: 1000px;
+  overflow: auto;
   padding: 20px 44px;
   background-color: var(--color-secondary);
   border-radius: 12px;
@@ -31,4 +33,18 @@
   border-color: #d1d2d6 #9fa0a5 #626368 #1a1b22;
   border-radius: 50%;
   animation: spin 0.75s infinite linear;
+}
+
+.updates-slide::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.updates-slide::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.updates-slide::-webkit-scrollbar-thumb {
+  background-color: #242424;
 }
