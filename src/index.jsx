@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import './styles/index.css';
@@ -11,10 +11,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ReduxProvider store={store}>
     <PersistGate persistor={persistor}>
-      <BrowserRouter>
+      <HashRouter>
         <CssBaseline />
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </PersistGate>
   </ReduxProvider>
 );
