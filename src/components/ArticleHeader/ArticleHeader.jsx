@@ -1,6 +1,7 @@
 import './ArticleHeader.css';
 import { DropdownNavigation } from 'components';
-import { languageList, editList } from 'utils/constants';
+import { editList } from 'utils/constants';
+import DropdownLanguage from 'components/DropdownLanguage/DropdownLanguage';
 
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
   return (
@@ -8,15 +9,7 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
       <div className="article-header">
         <h2 className="article-header__title">{title}</h2>
         <div className="article-header__icon-container">
-          <button type="button" className="article-header__button">
-            <DropdownNavigation
-              options={languageList}
-              title="Язык"
-              sizeItem="m"
-              size="s"
-              paddingBottom="2"
-            />
-          </button>
+          <DropdownLanguage />
           <button type="button" className="article-header__button">
             <DropdownNavigation
               options={editList}

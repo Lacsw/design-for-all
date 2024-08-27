@@ -1,0 +1,35 @@
+.article-header__lang-wrapper {
+  position: relative;
+  width: 26px;
+  height: 26px;
+}
+
+.flag-list {
+  position: absolute;
+  width: 100%;
+  padding: 3px;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--color-main);
+}
+
+.flag-list__item {
+  cursor: pointer;
+}
+
+.flag-list__item_disabled {
+  pointer-events: none;
+}
+
+.flag-list__item_disabled img {
+  filter: grayscale(1);
+}
+
+.flag {
+  display: block;
+  width: 20px;
+}
