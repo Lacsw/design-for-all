@@ -51,7 +51,7 @@ export default function SideBar() {
           >
             <h2 className="sidebar__title">{titles?.[firstPath] || ''}</h2>
             <img
-              className={isOpen && 'sidebar__icon_open'}
+              className={isOpen ? 'sidebar__icon_open' : ''}
               src={treeIcon}
               alt="выбрать"
             />

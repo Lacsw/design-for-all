@@ -1,11 +1,11 @@
 .article-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .article-header__title {
   margin: 0;
+  max-width: 80%;
   color: #fff;
   font-size: 30px;
   font-family: 'Inter';

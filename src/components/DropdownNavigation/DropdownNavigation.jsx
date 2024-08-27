@@ -95,7 +95,7 @@ export default function DropdownNavigation({
           />
         ) : (
           <img
-            src={langSrc || selectedOption[theme]}
+            src={langSrc || selectedOption[theme] || selectedOption.src}
             alt={langSrc ? language : selectedOption.name}
             className={isClassNameNavigationImage('dropdown-navigation__image')}
           />
