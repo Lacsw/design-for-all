@@ -31,8 +31,12 @@ import facebook from 'images/socials/facebook-icon.svg';
 import instagram from 'images/socials/instagram-icon.svg';
 import twitter from 'images/socials/twitter-icon.svg';
 import vk from 'images/socials/vk-icon.svg';
-import dribble from 'images/socials/dribble-icon.svg';
+import dribbble from 'images/socials/dribbble-icon.svg';
 import youtube from 'images/socials/youtube-icon.svg';
+import pinterest from 'images/socials/pinterest-icon.svg';
+import whatsapp from 'images/socials/whatsapp-icon.svg';
+import xBlack from 'images/socials/x-icon_black.svg';
+import xWhite from 'images/socials/x-icon_white.svg';
 
 export const langSelectOptions = [
   { label: 'Русский', value: 'ru' },
@@ -148,12 +152,15 @@ export const editList = [
 export const socialIcons = {
   telegram,
   behance,
-  dribble,
+  dribbble,
   youtube,
   twitter,
   vk,
   facebook,
   instagram,
+  pinterest,
+  whatsapp,
+  x: { light: xBlack, dark: xWhite },
 };
 
 export const catalog = {
