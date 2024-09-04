@@ -22,7 +22,8 @@ import spaFlag from 'images/spa-flag-icon.svg';
 import usdIcon from 'images/dollar-icon.svg';
 import usdIconWhite from 'images/dollar-icon_white.svg';
 import changeIconBlack from 'images/change-icon-black.svg';
-import dotsIcon from 'images/dots-icon.svg';
+import dotsIconB from 'images/dots-icon-white.svg';
+import dotsIconW from 'images/dots-icon.svg';
 import giveTranslationBlack from 'images/give-translation-black.svg';
 //socials
 import telegram from 'images/socials/telegram-icon.svg';
@@ -142,9 +143,9 @@ export const languageList = [
 ];
 
 export const editList = [
-  { name: 'menu', src: dotsIcon },
-  { name: 'edit', src: changeIconBlack },
-  { name: 'translation', src: giveTranslationBlack },
+  { name: 'menu', dark: dotsIconW, light: dotsIconB },
+  { name: 'edit', dark: changeIconBlack, light: changeIconBlack },
+  { name: 'translation', dark: giveTranslationBlack, light: giveTranslationBlack },
 ];
 
 // SOCIALS //

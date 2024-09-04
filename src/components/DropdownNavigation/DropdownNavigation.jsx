@@ -151,7 +151,7 @@ export default function DropdownNavigation({
                       className={isClassNameListItem(
                         'dropdown-navigation__menu-list-item'
                       )}
-                      src={option.src}
+                      src={option[theme]}
                       alt={option.name}
                       onClick={() => console.log(option.name)}
                     />

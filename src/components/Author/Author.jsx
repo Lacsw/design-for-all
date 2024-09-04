@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectArticle } from 'store/slices/articleSlice';
 import { socialIcons } from 'utils/constants';
 import { getCurrentTheme } from 'store/selectors';
+import ModalAuthor from './ModalAuthor';
 import defaultAvatar from 'images/author/avatar.svg';
 import './Author.css';
 
@@ -10,6 +11,7 @@ export default function Author() {
   const theme = useSelector(getCurrentTheme);
   const { author } = useSelector(selectArticle);
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const socialList = Object.entries(author.social_media);
   const shownList = isOpen ? socialList : socialList.slice(0, 4);
 
@@ -37,14 +39,16 @@ export default function Author() {
 
   return (
     <div className="author">
-      <img
-        src={author.avatar || defaultAvatar}
-        alt="Аватар"
-        className="author__avatar"
-      />
-      <div className="author__titles">
-        <p className="author__name">{author.fio}</p>
-        <p className="author__role">Автор</p>
+      <div className="author__wrap" onClick={() => setIsModalOpen(true)}>
+        <img
+          src={author.avatar || defaultAvatar}
+          alt="Аватар"
+          className="author__avatar"
+        />
+        <div className="author__titles">
+          <p className="author__name">{author.fio}</p>
+          <p className="author__role">Автор</p>
+        </div>
       </div>
       {author.social_media ? (
         <div className="author__socials-container">
@@ -65,6 +69,12 @@ export default function Author() {
           {isOpen ? 'Скрыть' : 'Показать все'}
         </p>
       )}
+      <ModalAuthor
+        author={author}
+        socials={renderSocialMedia(socialList)}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
