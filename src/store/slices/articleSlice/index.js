@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import createTree from 'utils/helpers/createTree';
 import { getTitles, getTree } from 'utils/api/tree';
 import authorApi from 'utils/api/author';
-import { catalog } from 'utils/constants';
+import { catalog } from './catalog';
 
 export const initialState = {
   catalog,
