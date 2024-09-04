@@ -4,15 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ArticlesTree, SearchInput } from 'components';
 import ResultItem from './ResultItem';
 import { selectCatalog, fetchTitles } from 'store/slices/articleSlice';
-import { getLanguage } from 'store/selectors';
+import { getCurrentTheme, getLanguage } from 'store/selectors';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
 import treeIcon from 'images/tree-menu-icon.svg';
+import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
 
 export default function SideBar() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const theme = useSelector(getCurrentTheme);
   const language = useSelector(getLanguage);
   const catalog = useSelector(selectCatalog);
   const [isInput, setIsInput] = useState(false);
@@ -52,7 +54,7 @@ export default function SideBar() {
             <h2 className="sidebar__title">{titles?.[firstPath] || ''}</h2>
             <img
               className={isOpen ? 'sidebar__icon_open' : ''}
-              src={treeIcon}
+              src={theme === 'dark' ? treeIcon : treeIconB}
               alt="выбрать"
             />
           </div>

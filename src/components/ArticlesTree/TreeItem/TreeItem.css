@@ -18,8 +18,13 @@
   transform: rotate(90deg);
 }
 
-.tree-item__arrow_visible {
+.tree-item__arrow_visible_dark {
   background-image: url('../../../images/tree-menu-icon.svg');
+  pointer-events: all;
+}
+
+.tree-item__arrow_visible_light {
+  background-image: url('../../../images/tree-menu-icon-black.svg');
   pointer-events: all;
 }
 
@@ -29,7 +34,8 @@
   white-space: nowrap;
 }
 
-.tree-item__arrow_visible:hover,
+.tree-item__arrow_visible_dark:hover,
+.tree-item__arrow_visible_light:hover,
 .tree-item__title:hover {
   background-color: #7b7b7b;
   cursor: pointer;

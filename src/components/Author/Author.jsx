@@ -61,8 +61,8 @@ export default function Author() {
         <p
           className={
             isOpen
-              ? 'author__see-more author__see-more_opened'
-              : 'author__see-more'
+              ? 'author__see-more author__see-more_opened ' + theme
+              : 'author__see-more ' + theme
           }
           onClick={() => setIsOpen(!isOpen)}
         >

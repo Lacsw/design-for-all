@@ -6,7 +6,7 @@
 .article-header__title {
   margin: 0;
   max-width: 80%;
-  color: #fff;
+  color: var(--color-main);
   font-size: 30px;
   font-family: 'Inter';
   font-style: normal;
@@ -39,7 +39,7 @@
 
 .article-header__timing {
   margin: 0;
-  color: #dadada;
+  color: var(--color-bg-accent);
   font-size: 12px;
   font-family: 'Inter';
   font-style: normal;

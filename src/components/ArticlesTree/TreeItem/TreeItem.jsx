@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TreeList } from 'components';
 import './TreeItem.css';
+import { useSelector } from 'react-redux';
+import { getCurrentTheme } from 'store/selectors';
 
 export default function TreeItem({ title, data, language }) {
   const navigate = useNavigate();
+  const theme = useSelector(getCurrentTheme);
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = typeof data === 'object';
   const id = hasChildren ? data.id : data;
-
   const newData = { ...data };
   delete newData.id;
 
-  const arrowExtraClass = hasChildren ? ' tree-item__arrow_visible' : '';
+  const arrowExtraClass = hasChildren ? ' tree-item__arrow_visible_' + theme : '';
   const liExtraClass = isOpen ? ' tree-item_opened' : '';
 
   function handleOpen() {
