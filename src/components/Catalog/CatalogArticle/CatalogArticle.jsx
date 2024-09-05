@@ -7,7 +7,12 @@ import {
   selectError,
   selectLoading,
 } from 'store/slices/articleSlice';
-import { NotFoundArticle, ArticleHeader, AuthorAndReviewers } from 'components';
+import {
+  NotFoundArticle,
+  ArticleHeader,
+  AuthorAndReviewers,
+  Recommendations,
+} from 'components';
 import previewImage from 'images/article/preview.png';
 import './CatalogArticle.css';
 
@@ -31,6 +36,11 @@ export default function CatalogArticle() {
     if (!needToFetch) return;
     dispatch(fetchArticle({ lang, articleId }));
   }, [lang, articleId, needToFetch, dispatch]);
+
+  useEffect(
+    () => document.querySelector('.main-wrapper').scrollTo(0, 0),
+    [articleId]
+  );
 
   return isBlank ? (
     <div className="blank">
@@ -58,6 +68,7 @@ export default function CatalogArticle() {
           />
           <p className="article__text">{article.publication.description}</p>
         </div>
+        <Recommendations list={article.recommend} />
       </div>
       <AuthorAndReviewers />
     </>

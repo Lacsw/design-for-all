@@ -1,0 +1,23 @@
+.recommendations__title {
+  margin: 0;
+  margin-bottom: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--color-main);
+}
+
+.recommendations__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.recommendations__link {
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.recommendations__link:hover {
+  opacity: 0.7;
+}
