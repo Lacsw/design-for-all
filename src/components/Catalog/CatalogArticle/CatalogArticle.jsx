@@ -37,10 +37,7 @@ export default function CatalogArticle() {
     dispatch(fetchArticle({ lang, articleId }));
   }, [lang, articleId, needToFetch, dispatch]);
 
-  useEffect(
-    () => document.querySelector('.main-wrapper').scrollTo(0, 0),
-    [articleId]
-  );
+  useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0));
 
   return isBlank ? (
     <div className="blank">
