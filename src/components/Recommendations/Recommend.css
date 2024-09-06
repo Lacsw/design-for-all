@@ -1,0 +1,25 @@
+.recommend {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 188px;
+  min-height: 165px;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: var(--color-bg-low-accent);
+}
+
+.recommend__image {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.recommend__title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 120%;
+  word-break: break-all;
+  color: var(--color-main);
+}

@@ -5,7 +5,7 @@ import './Catalog.css';
 
 export default function Catalog() {
   const catalogRef = useRef();
-  useEffect(() => catalogRef.current.scrollIntoView(false), []);
+  useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0));
   return (
     <div className="catalog__container" ref={catalogRef}>
       <SideBar />
