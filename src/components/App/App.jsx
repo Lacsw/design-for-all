@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import {
   Main,
   Map,
@@ -14,10 +14,25 @@ import {
 } from 'components';
 
 function App() {
+  const [section, setSection] = useState('');
   return (
-    <Layout>
+    <Layout resetSection={() => setSection('')}>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route
+          path="/"
+          element={
+            section ? (
+              <Catalog section={section} />
+            ) : (
+              <Main setSection={setSection} />
+            )
+          }
+        />
+        <Route
+          path="/:lang/:articleId"
+          element={<Catalog section={section} />}
+        />
+        {/* <Route path="/" element={<Main />} />
         <Route path="/map" element={<Map />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:lang/:articleId" element={<Articles />} />
@@ -48,7 +63,7 @@ function App() {
         </Route>
 
         <Route path="/admin/*" element={<AccountAdmin />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Layout>
   );

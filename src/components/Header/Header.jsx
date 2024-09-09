@@ -21,7 +21,7 @@ import { DropdownNavigation, AuthModal, SearchInput } from 'components';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
 
-export default function Header() {
+export default function Header({resetSection}) {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -79,7 +79,7 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <Link to="/" className="logo-link">
+        <Link to="/" className="logo-link" onClick={resetSection}>
           <img
             src={theme === 'dark' ? logo : logoBlack}
             alt="Логотип"

@@ -11,7 +11,7 @@ import treeIcon from 'images/tree-menu-icon.svg';
 import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
 
-export default function SideBar() {
+export default function SideBar({ section }) {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const theme = useSelector(getCurrentTheme);
@@ -51,7 +51,9 @@ export default function SideBar() {
             className="sidebar__title-container"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <h2 className="sidebar__title">{titles?.[language][firstPath] || ''}</h2>
+            <h2 className="sidebar__title">
+              {titles?.[language][firstPath] || ''}
+            </h2>
             <img
               className={isOpen ? 'sidebar__icon_open' : ''}
               src={theme === 'dark' ? treeIcon : treeIconB}

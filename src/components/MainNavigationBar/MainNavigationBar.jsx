@@ -8,6 +8,7 @@ export default function MainNavigationBar({
   navLinksList,
   onClick,
   activeTab,
+  setSection
 }) {
   const theme = useSelector(getCurrentTheme);
   return (
@@ -23,8 +24,7 @@ export default function MainNavigationBar({
             alt={icon.name}
             className="main-navbar__icon"
           />
-          <NavLink
-            to={icon.link}
+          <div
             className={cn(
               `main-navbar__link main-navbar__link_${
                 theme === 'dark' ? 'light' : 'dark'
@@ -33,9 +33,10 @@ export default function MainNavigationBar({
                 current: activeTab.name === icon.name,
               }
             )}
+            onClick={() => setSection(icon.link)}
           >
             Перейти
-          </NavLink>
+          </div>
         </li>
       ))}
     </ul>
