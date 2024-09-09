@@ -22,15 +22,15 @@ export default function SideBar() {
   const [results, setResults] = useState(null);
   const firstPath = pathname.split('/')[1];
   const articles = catalog[language][firstPath].original;
-  const { titles } = catalog[language];
+  const titles = catalog.titles;
   const titlesList = titles
-    ? Object.keys(titles).filter((item) => item !== firstPath)
+    ? Object.keys(titles[language]).filter((item) => item !== firstPath)
     : [];
 
   useEffect(() => {
-    !titles && dispatch(fetchTitles(language));
+    !titles && dispatch(fetchTitles());
     setResults(null);
-  }, [language, titles, dispatch]);
+  }, [titles, dispatch]);
 
   function handleSearch({ target }) {
     const value = prepareValue(target.value);
@@ -51,7 +51,7 @@ export default function SideBar() {
             className="sidebar__title-container"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <h2 className="sidebar__title">{titles?.[firstPath] || ''}</h2>
+            <h2 className="sidebar__title">{titles?.[language][firstPath] || ''}</h2>
             <img
               className={isOpen ? 'sidebar__icon_open' : ''}
               src={theme === 'dark' ? treeIcon : treeIconB}
@@ -74,7 +74,7 @@ export default function SideBar() {
                   onClick={() => setIsOpen(false)}
                   className="sidebar__link"
                 >
-                  {titles[path]}
+                  {titles[language][path]}
                 </Link>
               </li>
             ))}

@@ -36,8 +36,7 @@ const articleSlice = createSlice({
         state.catalog[lang][section].tree = createTree(action.payload);
       })
       .addCase(fetchTitles.fulfilled, (state, action) => {
-        const lang = action.meta.arg;
-        state.catalog[lang].titles = action.payload;
+        state.catalog.titles = action.payload;
       })
       .addCase(fetchArticle.pending, (state) => {
         state.loading = true;
@@ -86,8 +85,8 @@ export const fetchUpdates = createAsyncThunk('updates/get', async (page) =>
   authorApi.getUpdates(page)
 );
 
-export const fetchTitles = createAsyncThunk('titles/get', async (language) =>
-  getTitles(language)
+export const fetchTitles = createAsyncThunk('titles/get', async () =>
+  getTitles()
 );
 
 export const {
