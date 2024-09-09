@@ -3,7 +3,7 @@ import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
 
-export default function Main() {
+export default function Main({testClick}) {
   const [activeTab, setActiveTab] = useState({
     name: 'Обновления',
     index: 0,
@@ -23,7 +23,7 @@ export default function Main() {
         onClick={handleActiveTab}
         activeTab={activeTab}
       />
-      <div className="main__content">
+      <div className="main__content" onClick={testClick}>
         <MainSlider index={activeTab.index} />
       </div>
     </>
