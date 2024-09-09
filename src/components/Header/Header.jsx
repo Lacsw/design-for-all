@@ -86,7 +86,6 @@ export default function Header() {
             className="header__logo"
           />
         </Link>
-        <a href="/ru/9bacb1818446a0299a56d28b5c383e38">Жми</a>
         <ul className="header__icons-container">
           <li>
             <SearchInput />

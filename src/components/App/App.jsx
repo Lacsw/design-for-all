@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import {
   Main,
   Map,
@@ -14,13 +14,10 @@ import {
 } from 'components';
 
 function App() {
-  const [hello, setHello] = useState(0);
-  console.log(hello);
-  console.log(document.head.querySelector('title').textContent);
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Main testClick={() => setHello(prev => prev+1)} />} />
+        <Route path="/" element={<Main />} />
         <Route path="/map" element={<Map />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:lang/:articleId" element={<Articles />} />
