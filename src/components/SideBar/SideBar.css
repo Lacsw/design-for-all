@@ -55,6 +55,11 @@
   max-height: 80vh;
 }
 
+.sidebar__item:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
 .sidebar__item:not(:last-child) {
   margin-bottom: 10px;
 }

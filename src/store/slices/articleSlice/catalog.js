@@ -16,5 +16,4 @@ export const catalog = {
   en: { ...lang },
   es: { ...lang },
   zh: { ...lang },
-  titles: null,
 };

@@ -15,32 +15,30 @@ const DropdownLanguage = () => {
   const flagList = isOpen ? [flag, ...otherFlags] : [flag];
 
   return (
-    <div
-      className="article-header__lang-wrapper"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
-      <ul className="flag-list">
-        {flagList.map((flag) => {
-          const extraClass = !languages.includes(flag.name)
-            ? ' flag-list__item_disabled'
-            : '';
-          return (
-            <li
-              className={'flag-list__item' + extraClass}
-              key={flag.name}
-              onClick={() =>
-                navigate(`../../${flag.name}/${articleId}`, {
-                  relative: 'path',
-                })
-              }
-            >
-              <img className="flag" src={flag.src} alt={flag.name} />
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    flag && (
+      <div
+        className="article-header__lang-wrapper"
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+      >
+        <ul className="flag-list">
+          {flagList.map((flag) => {
+            const extraClass = !languages.includes(flag.name)
+              ? ' flag-list__item_disabled'
+              : '';
+            return (
+              <li
+                className={'flag-list__item' + extraClass}
+                key={flag.name}
+                onClick={() => navigate(`/${flag.name}/${articleId}`)}
+              >
+                <img className="flag" src={flag.src} alt={flag.name} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    )
   );
 };
 

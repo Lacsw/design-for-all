@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import './MainNavigationBar.css';
@@ -8,7 +7,7 @@ export default function MainNavigationBar({
   navLinksList,
   onClick,
   activeTab,
-  setSection
+  setSection,
 }) {
   const theme = useSelector(getCurrentTheme);
   return (

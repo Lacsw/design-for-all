@@ -14,7 +14,9 @@ export default function TreeItem({ title, data, language }) {
   const newData = { ...data };
   delete newData.id;
 
-  const arrowExtraClass = hasChildren ? ' tree-item__arrow_visible_' + theme : '';
+  const arrowExtraClass = hasChildren
+    ? ' tree-item__arrow_visible_' + theme
+    : '';
   const liExtraClass = isOpen ? ' tree-item_opened' : '';
 
   function handleOpen() {
@@ -23,9 +25,9 @@ export default function TreeItem({ title, data, language }) {
 
   function handleNavigate() {
     if (id) {
-      navigate(`${language}/${id}`);
+      navigate(`/${language}/${id}`);
     } else {
-      navigate(`${language}/no-article`);
+      navigate(`/${language}/no-article`);
     }
   }
 
