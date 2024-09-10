@@ -94,31 +94,31 @@ export const navigationOptionsList = [
 ];
 
 export const mainNavigationOptionsList = [
-  { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '/' },
-  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: '/web' },
+  { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '' },
+  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: 'web' },
   {
     name: 'Десктоп приложения',
     dark: desktopBlack,
     light: desktopWhite,
-    link: '/desktop',
+    link: 'desktop',
   },
   {
     name: 'Мобильные приложения',
     dark: mobileBlack,
     light: mobileWhite,
-    link: '/mobile',
+    link: 'mobile',
   },
   {
     name: 'Статьи',
     dark: articleBlack,
     light: articleWhite,
-    link: '/articles',
+    link: '',
   },
   {
     name: 'Руководства',
     dark: manualBlack,
     light: manualWhite,
-    link: '/manual',
+    link: 'manual',
   },
 ];
 

@@ -1,55 +1,39 @@
 import { Route, Routes } from 'react-router-dom';
-import { memo } from 'react';
-import {
-  Main,
-  Map,
-  Articles,
-  Guides,
-  AccountAuthor,
-  AccountAdmin,
-  NotFound,
-  Catalog,
-  CatalogArticle,
-  Layout,
-} from 'components';
+import { memo, useEffect, useState } from 'react';
+import { Main, NotFound, Catalog, Layout } from 'components';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTitles, selectTitles } from 'store/slices/articleSlice';
 
 function App() {
+  const dispatch = useDispatch();
+  const [section, setSection] = useState('');
+  const categories = useSelector(selectTitles);
+
+  useEffect(() => {
+    !categories && dispatch(fetchTitles());
+  });
+
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/articles" element={<Articles />} />
-        <Route path="/articles/:lang/:articleId" element={<Articles />} />
-        <Route path="/guides" element={<Guides />} />
-        <Route path="/author/*" element={<AccountAuthor />} />
-
-        <Route path="/mobile" element={<Catalog />}>
-          <Route index element={<CatalogArticle />} />
-          <Route path="/mobile/:lang/:articleId" element={<CatalogArticle />} />
-        </Route>
-
-        <Route path="/web" element={<Catalog />}>
-          <Route index element={<CatalogArticle />} />
-          <Route path="/web/:lang/:articleId" element={<CatalogArticle />} />
-        </Route>
-
-        <Route path="/desktop" element={<Catalog />}>
-          <Route index element={<CatalogArticle />} />
+    <Layout resetSection={() => setSection('')}>
+      {categories && (
+        <Routes>
           <Route
-            path="/desktop/:lang/:articleId"
-            element={<CatalogArticle />}
+            path="/"
+            element={
+              section ? (
+                <Catalog section={section} setSection={setSection} />
+              ) : (
+                <Main setSection={setSection} />
+              )
+            }
           />
-        </Route>
-
-        <Route path="/manual" element={<Catalog />}>
-          <Route index element={<CatalogArticle />} />
-          <Route path="/manual/:lang/:articleId" element={<CatalogArticle />} />
-        </Route>
-
-        <Route path="/admin/*" element={<AccountAdmin />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route
+            path="/:lang/:articleId"
+            element={<Catalog section={section} setSection={setSection} />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      )}
     </Layout>
   );
 }

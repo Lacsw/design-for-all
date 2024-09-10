@@ -6,6 +6,7 @@ import { catalog } from './catalog';
 
 export const initialState = {
   catalog,
+  titles: null,
   updates: {
     loading: false,
     error: '',
@@ -22,6 +23,7 @@ const articleSlice = createSlice({
   reducers: {},
   selectors: {
     selectCatalog: (state) => state.catalog,
+    selectTitles: (state) => state.titles,
     selectArticle: (state) => state.article,
     selectUpdates: (state) => state.updates,
     selectError: (state) => state.error,
@@ -36,8 +38,7 @@ const articleSlice = createSlice({
         state.catalog[lang][section].tree = createTree(action.payload);
       })
       .addCase(fetchTitles.fulfilled, (state, action) => {
-        const lang = action.meta.arg;
-        state.catalog[lang].titles = action.payload;
+        state.titles = action.payload;
       })
       .addCase(fetchArticle.pending, (state) => {
         state.loading = true;
@@ -86,12 +87,13 @@ export const fetchUpdates = createAsyncThunk('updates/get', async (page) =>
   authorApi.getUpdates(page)
 );
 
-export const fetchTitles = createAsyncThunk('titles/get', async (language) =>
-  getTitles(language)
+export const fetchTitles = createAsyncThunk('titles/get', async () =>
+  getTitles()
 );
 
 export const {
   selectCatalog,
+  selectTitles,
   selectArticle,
   selectUpdates,
   selectError,

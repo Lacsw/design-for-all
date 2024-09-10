@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ArticlesTree, SearchInput } from 'components';
 import ResultItem from './ResultItem';
-import { selectCatalog, fetchTitles } from 'store/slices/articleSlice';
+import { selectCatalog, selectTitles } from 'store/slices/articleSlice';
 import { getCurrentTheme, getLanguage } from 'store/selectors';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
@@ -11,26 +11,38 @@ import treeIcon from 'images/tree-menu-icon.svg';
 import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
 
-export default function SideBar() {
-  const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const theme = useSelector(getCurrentTheme);
+/*
+Функция срабатывает при переходе в статью по прямой ссылке, т.е. когда нет выбранного
+пользователем раздела. Пытается найти категорию статьи в html и вычислить название общего
+ключа для переключения дерева статей в нужный раздел. В случае неудачи возвращает
+название раздела `desktop`.
+*/
+function getSection(titles, lang) {
+  const category = document.head
+    .querySelector('title')
+    .getAttribute('main_category');
+  for (let key in titles[lang]) {
+    if (titles[lang][key] === category) return key;
+  }
+  return 'desktop';
+}
+
+export default function SideBar({ section, setSection }) {
+  const { lang } = useParams();
   const language = useSelector(getLanguage);
+  const theme = useSelector(getCurrentTheme);
   const catalog = useSelector(selectCatalog);
+  const titles = useSelector(selectTitles);
+
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
-  const firstPath = pathname.split('/')[1];
-  const articles = catalog[language][firstPath].original;
-  const { titles } = catalog[language];
-  const titlesList = titles
-    ? Object.keys(titles).filter((item) => item !== firstPath)
-    : [];
 
-  useEffect(() => {
-    !titles && dispatch(fetchTitles(language));
-    setResults(null);
-  }, [language, titles, dispatch]);
+  const sureSection = section ? section : getSection(titles, lang);
+  const articles = catalog[language][sureSection].original;
+  const titlesList = Object.keys(titles[language]).filter(
+    (item) => item !== sureSection
+  );
 
   function handleSearch({ target }) {
     const value = prepareValue(target.value);
@@ -39,6 +51,11 @@ export default function SideBar() {
       const results = searchArticles(value, articles);
       setResults(results);
     } else setResults(null);
+  }
+
+  function changeSection(section) {
+    setIsOpen(false);
+    setSection(section);
   }
 
   const searchWithDelay = debounce(handleSearch, 500);
@@ -51,7 +68,9 @@ export default function SideBar() {
             className="sidebar__title-container"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <h2 className="sidebar__title">{titles?.[firstPath] || ''}</h2>
+            <h2 className="sidebar__title">
+              {titles[language][sureSection] || ''}
+            </h2>
             <img
               className={isOpen ? 'sidebar__icon_open' : ''}
               src={theme === 'dark' ? treeIcon : treeIconB}
@@ -67,15 +86,13 @@ export default function SideBar() {
         />
         {isOpen && (
           <ul className="sidebar__list">
-            {titlesList.map((path) => (
-              <li className="sidebar__item" key={path}>
-                <Link
-                  to={'/' + path}
-                  onClick={() => setIsOpen(false)}
-                  className="sidebar__link"
-                >
-                  {titles[path]}
-                </Link>
+            {titlesList.map((title) => (
+              <li
+                className="sidebar__item"
+                key={title}
+                onClick={() => changeSection(title)}
+              >
+                {titles[language][title]}
               </li>
             ))}
           </ul>
@@ -90,7 +107,7 @@ export default function SideBar() {
           </ul>
         )}
       </div>
-      <ArticlesTree path={firstPath} catalog={catalog} language={language} />
+      <ArticlesTree path={sureSection} catalog={catalog} language={language} />
     </nav>
   );
 }

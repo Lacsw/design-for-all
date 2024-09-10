@@ -7,7 +7,7 @@ export async function getTree(options) {
   return sendRequest(baseUrl + endpoint);
 }
 
-export async function getTitles(language) {
-  const endpoint = `main_categories_${language}.json`;
+export async function getTitles() {
+  const endpoint = `main_categories.json`;
   return sendRequest(baseUrl + endpoint);
 }

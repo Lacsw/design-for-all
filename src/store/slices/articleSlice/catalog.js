@@ -9,7 +9,6 @@ const lang = {
   desktop: { ...section },
   mobile: { ...section },
   manual: { ...section },
-  titles: null,
 };
 
 export const catalog = {
