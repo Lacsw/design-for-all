@@ -1,10 +1,19 @@
 .update-card {
-  padding: 20px;
   background-color: var(--color-bg-low-accent);
   border-radius: 12px;
+}
+
+.update-card:hover {
+  opacity: 0.7;
+}
+
+.update-card__link {
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
+  text-decoration: none;
+  color: currentColor;
 }
 
 .update-card__titles {
