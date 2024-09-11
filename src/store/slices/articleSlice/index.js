@@ -66,11 +66,19 @@ const articleSlice = createSlice({
         }
       })
       .addCase(fetchUpdates.fulfilled, (state, action) => {
+        const dataWithLang = action.payload.map((item) => {
+          for (let key in state.titles) {
+            if (Object.values(state.titles[key]).includes(item.main_category)) {
+              return { ...item, lang: key };
+            }
+          }
+          return item;
+        });
         if (action.meta.arg === 1) {
-          state.updates.cards = action.payload;
+          state.updates.cards = dataWithLang;
           state.updates.loading = false;
           state.updates.error = '';
-        } else state.updates.cards.push(...action.payload);
+        } else state.updates.cards.push(...dataWithLang);
       });
   },
 });
