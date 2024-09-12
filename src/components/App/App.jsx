@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
-import { Main, NotFound, Catalog, Layout } from 'components';
+import { Catalog, NotFound, Layout, Fork } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTitles, selectTitles } from 'store/slices/articleSlice';
 
@@ -19,13 +19,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              section ? (
-                <Catalog section={section} setSection={setSection} />
-              ) : (
-                <Main setSection={setSection} />
-              )
-            }
+            element={<Fork section={section} setSection={setSection} />}
           />
           <Route
             path="/:lang/:articleId"

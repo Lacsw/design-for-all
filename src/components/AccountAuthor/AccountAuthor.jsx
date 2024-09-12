@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 
 import './AccountAuthor.css';
 import {
@@ -8,16 +7,21 @@ import {
   NewArticle,
   Profile,
   Account,
-  AccountAuthorNavbar,
+  NotFound,
+  NewArticleNavbar,
+  AuthorNavbar,
 } from 'components';
 
 import authorApi from 'utils/api/author';
+import { hashPaths } from 'utils/constants';
 
-export default function AccountAuthor() {
+export default function AccountAuthor({ hash }) {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pagination, setPagination] = useState('20');
   const [tab, setTab] = useState('approve');
+  const NavBar =
+    hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
   useEffect(() => {
     authorApi
@@ -30,25 +34,22 @@ export default function AccountAuthor() {
       .finally(() => setIsLoading(false));
   }, [pagination, tab]);
 
-  return (
-    <Account navBar={<AccountAuthorNavbar />}>
-      <Routes>
-        <Route
-          path="/articles"
-          element={
-            <div className="account-author__articles">
-              <AuthorArticlesNav
-                handlePagination={setPagination}
-                selected={tab}
-                onChange={setTab}
-              />
-              {!isLoading && <AuthorArticlesList articles={articles} />}
-            </div>
-          }
-        />
-        <Route path="/new-article" element={<NewArticle />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+  return Object.values(hashPaths).includes(hash) ? (
+    <Account navBar={<NavBar />}>
+      {hash === hashPaths.newArticle && <NewArticle />}
+      {hash === hashPaths.articles && (
+        <div className="account-author__articles">
+          <AuthorArticlesNav
+            handlePagination={setPagination}
+            selected={tab}
+            onChange={setTab}
+          />
+          {!isLoading && <AuthorArticlesList articles={articles} />}
+        </div>
+      )}
+      {hash === hashPaths.profile && <Profile />}
     </Account>
+  ) : (
+    <NotFound />
   );
 }

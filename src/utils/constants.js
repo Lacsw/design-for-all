@@ -133,7 +133,9 @@ export const accountNavigationList = [
   { name: 'Выйти', src: exitBlack, link: '/' },
 ];
 
-export const currencyList = [{ name: 'USD', dark: usdIcon, light: usdIconWhite }];
+export const currencyList = [
+  { name: 'USD', dark: usdIcon, light: usdIconWhite },
+];
 
 export const languageList = [
   { name: 'ru', src: ruFlag },
@@ -145,9 +147,18 @@ export const languageList = [
 export const editList = [
   { name: 'menu', dark: dotsIconW, light: dotsIconB },
   { name: 'edit', dark: changeIconBlack, light: changeIconBlack },
-  { name: 'translation', dark: giveTranslationBlack, light: giveTranslationBlack },
+  {
+    name: 'translation',
+    dark: giveTranslationBlack,
+    light: giveTranslationBlack,
+  },
 ];
 
+export const hashPaths = {
+  newArticle: '#/author/new-article',
+  articles: '#/author/articles',
+  profile: '#/author/profile',
+};
 // SOCIALS //
 
 export const socialIcons = {
