@@ -14,7 +14,8 @@ export default function Catalog({ section, setSection }) {
     if (
       lang &&
       articleId &&
-      (!langs.includes(lang) || articleId.length !== 32)
+      (!langs.includes(lang) ||
+        (articleId.length !== 32 && articleId !== 'no-article'))
     ) {
       return true;
     }

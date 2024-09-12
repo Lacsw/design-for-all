@@ -20,7 +20,7 @@
   background: var(--color-bg-secondary);
   border-radius: 25px;
   padding: 5px;
-  transition: 0.3s;
+  transition: opacity 0.3s;
 }
 
 .main-navbar__item:hover {
