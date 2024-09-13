@@ -10,16 +10,21 @@ import {
   NotFound,
   NewArticleNavbar,
   AuthorNavbar,
+  NoAccess,
 } from 'components';
 
 import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
+import { useSelector } from 'react-redux';
 
 export default function AccountAuthor({ hash }) {
+  const user = useSelector((state) => state.user.currentUser);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pagination, setPagination] = useState('20');
   const [tab, setTab] = useState('approve');
+  const isValid = Object.values(hashPaths).includes(hash);
+  const access = isValid && user;
   const NavBar =
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
@@ -34,7 +39,7 @@ export default function AccountAuthor({ hash }) {
       .finally(() => setIsLoading(false));
   }, [pagination, tab]);
 
-  return Object.values(hashPaths).includes(hash) ? (
+  return access ? (
     <Account navBar={<NavBar />}>
       {hash === hashPaths.newArticle && <NewArticle />}
       {hash === hashPaths.articles && (
@@ -49,6 +54,8 @@ export default function AccountAuthor({ hash }) {
       )}
       {hash === hashPaths.profile && <Profile />}
     </Account>
+  ) : isValid ? (
+    <NoAccess />
   ) : (
     <NotFound />
   );
