@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 
 import './AccountAuthor.css';
 import {
@@ -8,16 +7,26 @@ import {
   NewArticle,
   Profile,
   Account,
-  AccountAuthorNavbar,
+  NotFound,
+  NewArticleNavbar,
+  AuthorNavbar,
+  NoAccess,
 } from 'components';
 
 import authorApi from 'utils/api/author';
+import { hashPaths } from 'utils/constants';
+import { useSelector } from 'react-redux';
 
-export default function AccountAuthor() {
+export default function AccountAuthor({ hash, resetSection }) {
+  const user = useSelector((state) => state.user.currentUser);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pagination, setPagination] = useState('20');
   const [tab, setTab] = useState('approve');
+  const isValid = Object.values(hashPaths).includes(hash);
+  const access = isValid && user;
+  const NavBar =
+    hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
   useEffect(() => {
     authorApi
@@ -30,25 +39,24 @@ export default function AccountAuthor() {
       .finally(() => setIsLoading(false));
   }, [pagination, tab]);
 
-  return (
-    <Account navBar={<AccountAuthorNavbar />}>
-      <Routes>
-        <Route
-          path="/articles"
-          element={
-            <div className="account-author__articles">
-              <AuthorArticlesNav
-                handlePagination={setPagination}
-                selected={tab}
-                onChange={setTab}
-              />
-              {!isLoading && <AuthorArticlesList articles={articles} />}
-            </div>
-          }
-        />
-        <Route path="/new-article" element={<NewArticle />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+  return access ? (
+    <Account navBar={<NavBar />}>
+      {hash === hashPaths.newArticle && <NewArticle />}
+      {hash === hashPaths.articles && (
+        <div className="account-author__articles">
+          <AuthorArticlesNav
+            handlePagination={setPagination}
+            selected={tab}
+            onChange={setTab}
+          />
+          {!isLoading && <AuthorArticlesList articles={articles} />}
+        </div>
+      )}
+      {hash === hashPaths.profile && <Profile />}
     </Account>
+  ) : isValid ? (
+    <NoAccess />
+  ) : (
+    <NotFound resetSection={resetSection}/>
   );
 }

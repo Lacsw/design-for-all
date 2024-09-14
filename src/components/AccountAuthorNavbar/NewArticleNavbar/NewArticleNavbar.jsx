@@ -17,19 +17,19 @@ export default function NewArticleNavbar() {
     <nav className="new-article-navbar">
       <ul className="new-article-navbar__list">
         <li>
-          <LinkButton to="/" icon={publishIcon}>
+          <LinkButton to="/test" icon={publishIcon}>
             Опубликовать
           </LinkButton>
         </li>
 
         <li>
-          <LinkButton to="/" icon={saveDraftIcon}>
+          <LinkButton to="/test" icon={saveDraftIcon}>
             Сохранить в черновик
           </LinkButton>
         </li>
 
         <li>
-          <LinkButton to="/" icon={cancelIcon}>
+          <LinkButton to="/test" icon={cancelIcon}>
             Отменить
           </LinkButton>
         </li>

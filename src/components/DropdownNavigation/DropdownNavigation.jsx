@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLanguage, getCurrentTheme } from 'store/selectors';
-import { changeLanguage } from 'store/slices';
+import { changeLanguage, signInSuccess } from 'store/slices';
 import './DropdownNavigation.css';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
 
@@ -15,6 +15,7 @@ export default function DropdownNavigation({
   sizeItem,
   paddingBottom,
   gap,
+  resetSection,
 }) {
   const [selectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,6 +24,11 @@ export default function DropdownNavigation({
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
   const langSrc = options.find((item) => item.name === language)?.src;
+
+  function handleLogout() {
+    resetSection();
+    dispatch(signInSuccess(''));
+  }
 
   const handleOptionClick = (option) => {
     dispatch(changeLanguage(option));
@@ -120,6 +126,10 @@ export default function DropdownNavigation({
                     >
                       <ArrowBackIcon isOpen={isSideMenuOpen} />
                     </div>
+                  ) : option.name === 'Выйти' ? (
+                    <NavLink to={option.link} onClick={handleLogout}>
+                      <img src={option.src} alt={option.name} />
+                    </NavLink>
                   ) : (
                     <NavLink to={option.link}>
                       <img src={option.src} alt={option.name} />

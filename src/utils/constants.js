@@ -87,7 +87,7 @@ export const navigationOptionsList = [
   { name: 'Веб приложения', src: webBlack, link: '/' },
   { name: 'Десктоп приложения', src: desktopBlack, link: '/' },
   { name: 'Мобильные приложения', src: mobileBlack, link: '/' },
-  { name: 'Статьи', src: articleBlack, link: '/articles' },
+  { name: 'Статьи', src: articleBlack, link: '/' },
   { name: 'Руководства', src: manualBlack, link: '/' },
   { name: 'Светлая тема', src: themeBlack, link: '/' },
   { name: 'Свернуть' },
@@ -126,14 +126,16 @@ export const accountNavigationList = [
   {
     name: 'Написать статью',
     src: newArticleBlack,
-    link: '/author/new-article',
+    link: '/#/author/new-article',
   },
-  { name: 'Публикации', src: articleBlack, link: '/author/articles' },
-  { name: 'Профиль', src: profileBlack, link: '/author/profile' },
+  { name: 'Публикации', src: articleBlack, link: '/#/author/articles' },
+  { name: 'Профиль', src: profileBlack, link: '/#/author/profile' },
   { name: 'Выйти', src: exitBlack, link: '/' },
 ];
 
-export const currencyList = [{ name: 'USD', dark: usdIcon, light: usdIconWhite }];
+export const currencyList = [
+  { name: 'USD', dark: usdIcon, light: usdIconWhite },
+];
 
 export const languageList = [
   { name: 'ru', src: ruFlag },
@@ -145,9 +147,18 @@ export const languageList = [
 export const editList = [
   { name: 'menu', dark: dotsIconW, light: dotsIconB },
   { name: 'edit', dark: changeIconBlack, light: changeIconBlack },
-  { name: 'translation', dark: giveTranslationBlack, light: giveTranslationBlack },
+  {
+    name: 'translation',
+    dark: giveTranslationBlack,
+    light: giveTranslationBlack,
+  },
 ];
 
+export const hashPaths = {
+  newArticle: '#/author/new-article',
+  articles: '#/author/articles',
+  profile: '#/author/profile',
+};
 // SOCIALS //
 
 export const socialIcons = {

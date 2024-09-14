@@ -1,6 +1,7 @@
 import './AuthorNavbar.css';
 
-import { LinkButton } from 'components';
+import HashButton from 'components/LinkButton/HashButton';
+import { hashPaths } from 'utils/constants';
 import newArticleIcon from 'images/account/new-article-icon.svg';
 import articlesIconBlack from 'images/account/articles-black-icon.svg';
 import articlesIconWhite from 'images/account/articles-white-icon.svg';
@@ -13,35 +14,35 @@ export default function AuthorNavbar() {
     <nav className="author-navbar">
       <ul className="author-navbar__list">
         <li>
-          <LinkButton to="/author/new-article" icon={newArticleIcon}>
+          <HashButton to={hashPaths.newArticle} icon={newArticleIcon}>
             Написать статью
-          </LinkButton>
+          </HashButton>
         </li>
 
         <li className="author-navbar__item">
-          <LinkButton
-            to="/author/articles"
+          <HashButton
+            to={hashPaths.articles}
             icon={articlesIconWhite}
             activeIcon={articlesIconBlack}
           >
             Публикации
-          </LinkButton>
+          </HashButton>
         </li>
 
         <li className="author-navbar__item">
-          <LinkButton
-            to="/author/profile"
+          <HashButton
+            to={hashPaths.profile}
             icon={profileWhiteIcon}
             activeIcon={profileBlackIcon}
           >
             Профиль
-          </LinkButton>
+          </HashButton>
         </li>
 
         <li className="author-navbar__item">
-          <LinkButton to="/logout" icon={logoutIcon}>
+          <HashButton to="/" icon={logoutIcon}>
             Выйти
-          </LinkButton>
+          </HashButton>
         </li>
       </ul>
     </nav>

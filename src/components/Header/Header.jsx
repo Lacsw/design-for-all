@@ -21,7 +21,7 @@ import { DropdownNavigation, AuthModal, SearchInput } from 'components';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
 
-export default function Header({resetSection}) {
+export default function Header({ resetSection }) {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -98,7 +98,9 @@ export default function Header({resetSection}) {
           <li>
             <DropdownNavigation
               options={navigationOptionsList}
-              titleIcon={theme === 'light' ? dropdownIconBlack : dropdownIconWhite}
+              titleIcon={
+                theme === 'light' ? dropdownIconBlack : dropdownIconWhite
+              }
               type="dropdownWithLinks"
               title="Меню"
             />
@@ -124,7 +126,10 @@ export default function Header({resetSection}) {
                 className="header__icon-background"
                 onClick={openAuthModal}
               >
-                <img src={theme === 'dark' ? siginInIcon : siginInIconWhite} alt="войти" />
+                <img
+                  src={theme === 'dark' ? siginInIcon : siginInIconWhite}
+                  alt="войти"
+                />
               </button>
             ) : (
               <DropdownNavigation
@@ -132,6 +137,7 @@ export default function Header({resetSection}) {
                 titleIcon={currentUser.avatar || accountDefaultIcon}
                 type="dropdownWithLinks"
                 title="Профиль"
+                resetSection={resetSection}
               />
             )}
           </li>
