@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './NotFound.css';
 import notFound404Svg from 'images/404.svg';
 
-function NotFound() {
+function NotFound({ resetSection }) {
   return (
     <section className="not-found">
       <img src={notFound404Svg} className="not-found__status-code" alt="404" />
@@ -12,7 +12,11 @@ function NotFound() {
         <Link to={-1} className="button button_type_bright not-found__button">
           Назад
         </Link>
-        <Link to="/" className="button button_type_bright not-found__button">
+        <Link
+          to="/"
+          className="button button_type_bright not-found__button"
+          onClick={resetSection}
+        >
           На главную
         </Link>
       </div>

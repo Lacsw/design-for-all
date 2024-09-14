@@ -25,7 +25,7 @@ function App() {
             path="/:lang/:articleId"
             element={<Catalog section={section} setSection={setSection} />}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound resetSection={() => setSection('')} />} />
         </Routes>
       )}
     </Layout>

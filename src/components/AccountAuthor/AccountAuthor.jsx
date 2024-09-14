@@ -17,7 +17,7 @@ import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
 import { useSelector } from 'react-redux';
 
-export default function AccountAuthor({ hash }) {
+export default function AccountAuthor({ hash, resetSection }) {
   const user = useSelector((state) => state.user.currentUser);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +57,6 @@ export default function AccountAuthor({ hash }) {
   ) : isValid ? (
     <NoAccess />
   ) : (
-    <NotFound />
+    <NotFound resetSection={resetSection}/>
   );
 }

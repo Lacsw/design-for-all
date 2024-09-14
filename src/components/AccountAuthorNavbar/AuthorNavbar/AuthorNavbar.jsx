@@ -40,7 +40,7 @@ export default function AuthorNavbar() {
         </li>
 
         <li className="author-navbar__item">
-          <HashButton to="/logout" icon={logoutIcon}>
+          <HashButton to="/" icon={logoutIcon}>
             Выйти
           </HashButton>
         </li>

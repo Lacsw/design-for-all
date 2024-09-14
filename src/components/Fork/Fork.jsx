@@ -4,7 +4,7 @@ import { Main, Catalog, AccountAuthor } from 'components';
 const Fork = ({ section, setSection }) => {
   const location = useLocation();
   return location.hash ? (
-    <AccountAuthor hash={location.hash} />
+    <AccountAuthor hash={location.hash} resetSection={() => setSection('')} />
   ) : section ? (
     <Catalog section={section} setSection={setSection} />
   ) : (
