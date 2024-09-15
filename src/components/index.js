@@ -65,4 +65,3 @@ export { default as Layout } from './Layout/Layout';
 export { default as User } from './User/User';
 export { default as Recommendations } from './Recommendations/Recommendations';
 export { default as Fork } from './Fork/Fork';
-export { default as NoAccess } from './NoAccess/NoAccess';
