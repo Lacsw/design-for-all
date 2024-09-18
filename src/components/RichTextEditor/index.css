@@ -20,26 +20,111 @@
   letter-spacing: 0.02em;
 
   p {
-    margin: 30px 0;
+    margin: 15px 0;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    text-align: left;
   }
   p:first-child {
-    margin: 0 0 30px;
+    margin: 0 0 15px;
+  }
+  /* Заглушка текста */
+  p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: var(--color-main-disabled);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    font-weight: 500;
   }
 }
 
+.tiptap li p {
+  /* чтоб было видно мигающий курсор */
+  min-width: 5px;
+}
+
+.tiptap ul {
+  padding: 0 0 0 3px;
+}
+
+.tiptap ul li {
+  margin: 3px 0;
+  display: flex;
+  align-items: center;
+  gap: 0 14px;
+}
+
+.tiptap ul li::before {
+  content: '•';
+  padding-left: 3px;
+  margin-bottom: 15px;
+}
+
+.tiptap ol {
+  counter-reset: myCounter 0;
+  padding: 0 0 0 3px;
+}
+
+.tiptap ol li {
+  margin: 3px 0;
+  counter-increment: myCounter 1;
+  /* display: "flex" cancels default counter with name "list-item" so we need another one */
+  display: flex;
+  align-items: center;
+  gap: 0 5px;
+}
+
+.tiptap ol li::before {
+  content: counter(myCounter) '.';
+  min-width: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  /* выравнивание по-горизонтали для чисел-нумераторов пунктов списка */
+  justify-content: center;
+}
+
+.tiptap code {
+  outline: 3px solid var(--color-bg-secondary);
+  background-color: var(--color-bg-secondary);
+  padding: 0 2px; /* чтоб был виден курсор */
+  margin: 0 4px;
+}
+
+.tiptap pre {
+  padding: 8px;
+  background-color: var(--color-bg-secondary);
+  code {
+    outline: 0;
+  }
+}
+
+.theme-light .tiptap pre {
+  background-color: var(--color-bg-main);
+  code {
+    outline: 0;
+  }
+}
+
+.theme-light code {
+  outline: 3px solid var(--color-bg-main);
+  background-color: var(--color-bg-main);
+}
+
 .rte__menu-bar {
+  position: sticky;
+  bottom: 10px;
   background-color: var(--color-bg-accent);
-  border-radius: 13px;
-  padding: 1px 8px;
+  border-radius: 15px;
+  padding: 3px 10px;
   display: flex;
   gap: 5px 5px;
 }
 
-.theme-light {
-  .rte__editor .tiptap {
-  }
-
-  .rte__menu-bar {
-    background-color: var(--color-bg-secondary);
-  }
+.theme-light .rte__menu-bar {
+  background-color: var(--color-bg-secondary);
 }

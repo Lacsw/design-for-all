@@ -1,3 +1,4 @@
+/** Имена команд, назначены библиотекой Tiptap */
 export const COMMANDS_NAMES = {
   italic: 'italic',
   bold: 'bold',
@@ -14,6 +15,7 @@ export const COMMANDS_NAMES = {
   superscript: 'superscript',
 };
 
+/** Человеческие названия команд на русском языке */
 export const buttonsHeadings = {
   italic: 'Курсив',
   bold: 'Жирный',

@@ -12,14 +12,60 @@ const tiptapCommands = {
   [COMMANDS_NAMES.code]: (editor) => editor?.chain().focus().toggleCode().run(),
   [COMMANDS_NAMES.codeBlock]: (editor) =>
     editor?.chain().focus().toggleCodeBlock().run(),
-  [COMMANDS_NAMES.left]: (editor) =>
-    editor?.chain().focus().setTextAlign('left').run(),
-  [COMMANDS_NAMES.center]: (editor) =>
-    editor?.chain().focus().setTextAlign('center').run(),
-  [COMMANDS_NAMES.right]: (editor) =>
-    editor?.chain().focus().setTextAlign('right').run(),
-  [COMMANDS_NAMES.justify]: (editor) =>
-    editor?.chain().focus().setTextAlign('justify').run(),
+  [COMMANDS_NAMES.left]: (editor) => {
+    if (editor?.isActive('listItem')) {
+      return editor
+        ?.chain()
+        .focus()
+        .updateAttributes('listItem', { style: null })
+        .setTextAlign('left')
+        .run();
+    } else {
+      return editor?.chain().focus().setTextAlign('left').run();
+    }
+  },
+  [COMMANDS_NAMES.center]: (editor) => {
+    if (editor?.isActive('listItem')) {
+      return (
+        editor
+          ?.chain()
+          .focus()
+          .updateAttributes('listItem', { style: 'justify-content: center' })
+          /* установит атрибут style="text-align: ..." для дочернего тега <p>.
+            Это не влияет на выравнивание текста, т.к. ширина блока <p> выставлена по контенту,
+            но команда необходима, чтобы редактор обновил свой стейт о примененных стилях к данной ноде
+            (чтобы правильно подсветить кнопки активных команд/стилей в панели с кнопками) */
+          .setTextAlign('center')
+          .run()
+      );
+    } else {
+      return editor?.chain().focus().setTextAlign('center').run();
+    }
+  },
+  [COMMANDS_NAMES.right]: (editor) => {
+    if (editor?.isActive('listItem')) {
+      return editor
+        ?.chain()
+        .focus()
+        .updateAttributes('listItem', { style: 'justify-content: right' })
+        .setTextAlign('right')
+        .run();
+    } else {
+      return editor?.chain().focus().setTextAlign('right').run();
+    }
+  },
+  [COMMANDS_NAMES.justify]: (editor) => {
+    if (editor?.isActive('listItem')) {
+      return editor
+        ?.chain()
+        .focus()
+        .updateAttributes('listItem', { style: null })
+        .setTextAlign('justify')
+        .run();
+    } else {
+      return editor?.chain().focus().setTextAlign('justify').run();
+    }
+  },
   [COMMANDS_NAMES.bulletList]: (editor) =>
     editor?.chain().focus().toggleBulletList().run(),
   [COMMANDS_NAMES.orderedList]: (editor) =>
@@ -29,27 +75,6 @@ const tiptapCommands = {
   [COMMANDS_NAMES.superscript]: (editor) =>
     editor?.chain().focus().toggleSuperscript().run(),
 };
-
-/*const StyledIconButton = withStyles((theme) => {
-    const currentType = theme.palette.type;
-    return createStyles({
-        root: {
-            width: "24px",
-            height: "24px",
-            padding: 3,
-            "&.selected": {
-                color: theme.palette.text.primary,
-                border: `1px solid ${theme.palette.basic[currentType === ThemeStyle.dark ? 0 : 9999]}`
-            }
-        },
-        label: {
-            "& svg": {
-                width: 18,
-                height: 18
-            }
-        }
-    });
-})(IconButton);*/
 
 export function RteButton({
   children,
@@ -71,18 +96,26 @@ export function RteButton({
       break;
   }
 
-  const onClick = useCallback(
+  const handleClick = useCallback(
     () => tiptapCommands[name](editor),
     [name, editor]
   );
 
   const isSelected = editor?.isActive(attribute);
   const isFocused = editor?.isFocused || inFocusWithin;
-  const classes = [isFocused && isSelected ? 'selected' : '', className];
+  const classes = [
+    'rte__button',
+    isFocused && isSelected ? 'selected' : '',
+    className,
+  ];
 
   return (
-    <Tooltip title={buttonsHeadings[name]} className="rte__button">
-      <IconButton onClick={onClick} className={classes.join(' ')} size="small">
+    <Tooltip title={buttonsHeadings[name]}>
+      <IconButton
+        onClick={handleClick}
+        className={classes.join(' ')}
+        size="small"
+      >
         {children || name}
       </IconButton>
     </Tooltip>

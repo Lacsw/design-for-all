@@ -1,0 +1,26 @@
+.rte .rte__button {
+  background-color: transparent;
+  color: var(--color-main);
+}
+
+.rte .rte__button:focus-visible {
+  outline: 2px solid var(--color-main);
+}
+.rte .rte__button.inverted:focus-visible {
+  outline: 2px solid var(--color-secondary);
+}
+
+.rte .rte__button.inverted {
+  background-color: transparent;
+  color: var(--color-secondary);
+}
+
+.rte .rte__button.selected {
+  background-color: var(--color-main);
+  color: var(--color-secondary);
+}
+
+.rte .rte__button.inverted.selected {
+  background-color: var(--color-secondary);
+  color: var(--color-main);
+}
