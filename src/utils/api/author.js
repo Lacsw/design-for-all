@@ -13,18 +13,8 @@ class AuthorApi {
   }
 
   async getArticles({ pagination, status }) {
-    const queryParams = {
-      pagination: `[1,${pagination}]`,
-      status: status || '',
-    };
-
-    const queryString = Object.entries(queryParams)
-      .filter(([key, value]) => value !== undefined && value !== '')
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
-
     const response = await fetch(
-      `${this._baseUrl}/user_find_updates_p?${queryString}`,
+      `${this._baseUrl}/user_find_updates/${status}/1;${pagination}`,
       {
         method: 'GET',
         headers: this._headers,
