@@ -51,6 +51,7 @@
 
 .intro__subtitle {
   max-width: 593px;
+  min-height: 117px; /* бронируем место под анимированный текст*/
   margin: 0;
   font-family: 'Gotham';
   font-style: normal;

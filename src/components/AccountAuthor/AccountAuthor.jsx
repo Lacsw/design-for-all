@@ -34,11 +34,11 @@ export default function AccountAuthor({ hash, resetSection }) {
     if (isValid && !user) {
       setSearchParams({ 'modal-auth': 'login' });
     } else {
+      setIsLoading(true);
       authorApi
         .getArticles({ pagination: pagination, status: tab })
         .then((articles) => {
-          setArticles(articles.success);
-          setIsLoading(true);
+          setArticles(articles);
         })
         .catch((err) => console.log(err))
         .finally(() => setIsLoading(false));
