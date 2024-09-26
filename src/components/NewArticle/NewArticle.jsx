@@ -8,7 +8,7 @@ import { Dropdown, ModalRecommendation, RichTextEditor } from 'components';
 import { getIsThemeLight } from 'store/selectors';
 
 export default function NewArticle() {
-  // const [value, changeValue] = useState('');
+  const [value, changeValue] = useState('');
   const [isShownAddRec, setIsShownAddRec] = useState(false);
   const isLight = useSelector(getIsThemeLight);
 
@@ -48,6 +48,7 @@ export default function NewArticle() {
               name="sub-category"
               id="sub-category"
               value="component/active elements/button/"
+              onChange={() => null}
               className="new-article__input"
               size={32}
             />
@@ -59,13 +60,11 @@ export default function NewArticle() {
               type="text"
               name="ref-category"
               id="ref-category"
-              value=".../button"
-              size={8}
-              // size={Math.min(Math.max(value.length, 2), 20)}
-              // value={value}
-              // onChange={(event) => {
-              // 	changeValue(event.target.value);
-              // }}
+              size={Math.min(Math.max(value.length, 2), 20)}
+              value={value}
+              onChange={(event) => {
+                changeValue(event.target.value);
+              }}
               className="new-article__input"
             />
           </label>
@@ -77,6 +76,7 @@ export default function NewArticle() {
               name="main-image"
               id="main-image"
               className="new-article__main-image"
+              onChange={() => null}
             />
           </label>
 
@@ -88,6 +88,7 @@ export default function NewArticle() {
               id="article-title"
               className="new-article__input new-article__input_article-header"
               placeholder="Карточка товара в маркетплейсе"
+              onChange={() => null}
             />
           </label>
 

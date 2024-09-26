@@ -1,37 +1,29 @@
 .rte {
+  --list-marker-width: 20px;
   background-color: var(--color-bg-low-accent);
   border: 2px solid var(--color-bg-low-accent);
   border-radius: 12px;
   padding: 10px 16px;
 }
 
-.rte__editor {
-}
-
 .rte__editor .tiptap {
   min-height: 38px;
-
   outline: 0;
 
   font-family: Inter;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
   letter-spacing: 0.02em;
 
   p {
     margin: 15px 0;
-
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.02em;
-    text-align: left;
   }
+
   p:first-child {
     margin: 0 0 15px;
   }
+
   /* Заглушка текста */
   p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
@@ -43,50 +35,83 @@
   }
 }
 
+/* --------------------------------------------------------------------------------------------------- */
+
 .tiptap li p {
   /* чтоб было видно мигающий курсор */
   min-width: 5px;
+  overflow-wrap: anywhere;
 }
 
-.tiptap ul {
-  padding: 0 0 0 3px;
-}
-
-.tiptap ul li {
+.tiptap ul > li {
   margin: 3px 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0 14px;
 }
 
-.tiptap ul li::before {
+.tiptap ul > li.center {
+  justify-content: center;
+}
+.tiptap ul > li.right {
+  justify-content: flex-end;
+}
+.tiptap ul > li.justify > *:nth-child(1) {
+  width: calc(100% - var(--list-marker-width));
+}
+
+.tiptap ul > li::before {
   content: '•';
   padding-left: 3px;
-  margin-bottom: 15px;
+  margin-bottom: auto;
+  width: var(--list-marker-width);
 }
 
+.tiptap ul > li > *:nth-child(1) {
+  max-width: calc(100% - var(--list-marker-width));
+}
+
+/* ------------------------------------------ */
 .tiptap ol {
   counter-reset: myCounter 0;
   padding: 0 0 0 3px;
 }
 
-.tiptap ol li {
+.tiptap ol > li {
   margin: 3px 0;
   counter-increment: myCounter 1;
   /* display: "flex" cancels default counter with name "list-item" so we need another one */
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0 5px;
 }
 
-.tiptap ol li::before {
+.tiptap ol > li.center {
+  justify-content: center;
+}
+.tiptap ol > li.right {
+  justify-content: flex-end;
+}
+.tiptap ol > li.justify > *:nth-child(1) {
+  width: calc(100% - var(--list-marker-width));
+}
+
+.tiptap ol > li::before {
   content: counter(myCounter) '.';
-  min-width: 20px;
-  margin-bottom: 15px;
+  min-width: var(--list-marker-width);
+  margin-bottom: auto;
   display: flex;
+  /* display: contents; */
   /* выравнивание по-горизонтали для чисел-нумераторов пунктов списка */
   justify-content: center;
 }
+
+.tiptap ol > li > *:nth-child(1) {
+  width: fit-content;
+  max-width: calc(100% - var(--list-marker-width));
+}
+
+/* ------------------------------------------------------------------------------------------------ */
 
 .tiptap code {
   outline: 3px solid var(--color-bg-secondary);

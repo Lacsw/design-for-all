@@ -1,6 +1,7 @@
 import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { buttonsHeadings, COMMANDS_NAMES } from '../helpers';
+import { lastActiveNodes } from '../helpers/lastActive';
 
 const tiptapCommands = {
   [COMMANDS_NAMES.italic](editor) {
@@ -17,7 +18,7 @@ const tiptapCommands = {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes('listItem', { style: null })
+        .updateAttributes('listItem', { class: null })
         .setTextAlign('left')
         .run();
     } else {
@@ -25,12 +26,17 @@ const tiptapCommands = {
     }
   },
   [COMMANDS_NAMES.center]: (editor) => {
+    // editor &&
+    // console.log(lastActiveNodes(editor.state, [{ type: 'orderedList' }]));
+
     if (editor?.isActive('listItem')) {
       return (
         editor
-          ?.chain()
+          .chain()
           .focus()
-          .updateAttributes('listItem', { style: 'justify-content: center' })
+          .updateAttributes('listItem', {
+            class: 'center',
+          })
           /* установит атрибут style="text-align: ..." для дочернего тега <p>.
             Это не влияет на выравнивание текста, т.к. ширина блока <p> выставлена по контенту,
             но команда необходима, чтобы редактор обновил свой стейт о примененных стилях к данной ноде
@@ -47,7 +53,7 @@ const tiptapCommands = {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes('listItem', { style: 'justify-content: right' })
+        .updateAttributes('listItem', { class: 'right' })
         .setTextAlign('right')
         .run();
     } else {
@@ -59,7 +65,7 @@ const tiptapCommands = {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes('listItem', { style: null })
+        .updateAttributes('listItem', { class: 'justify' })
         .setTextAlign('justify')
         .run();
     } else {

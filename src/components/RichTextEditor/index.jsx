@@ -2,14 +2,9 @@
 import { ListItemCustom } from './extensions/listItem';
 
 // extensions
-// TODO разобраться, почему Еслинт не видит модули
-// eslint-disable-next-line import/no-unresolved
 import Placeholder from '@tiptap/extension-placeholder';
-// eslint-disable-next-line import/no-unresolved
 import TextAlign from '@tiptap/extension-text-align';
-// eslint-disable-next-line import/no-unresolved
 import StarterKit from '@tiptap/starter-kit';
-// eslint-disable-next-line import/no-unresolved
 import { EditorContent, useEditor } from '@tiptap/react';
 
 // icons

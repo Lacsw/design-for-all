@@ -7,7 +7,11 @@ export default function ModalRecommendation({ isOpen, onClose, title }) {
     <Modal title={title} onClose={onClose} isOpen={isOpen} twoBtns>
       <label className="modal-reccomendation__input">
         <span className="modal-reccomendation__input-span">Введите URL</span>
-        <Input type={'text'} value={'dprofile.ru/katyamorse'} />
+        <Input
+          type={'text'}
+          value={'dprofile.ru/katyamorse'}
+          onChange={() => null}
+        />
       </label>
     </Modal>
   );
