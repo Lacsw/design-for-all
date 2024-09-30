@@ -72,6 +72,10 @@
   cursor: pointer;
 }
 
+.new-article__img {
+  max-width: 100%;
+}
+
 .new-article__main-image::-webkit-file-upload-button {
   visibility: hidden;
 }

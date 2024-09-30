@@ -20,6 +20,7 @@ export default function Intro() {
       i++;
       if (i === letters.length) clearInterval(timer);
     }, 20);
+    return () => clearInterval(timer);
   }, [typeRef]);
 
   return (

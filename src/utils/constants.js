@@ -42,14 +42,15 @@ import xWhite from 'images/socials/x-icon_white.svg';
 export const langSelectOptions = [
   { label: 'Русский', value: 'ru' },
   { label: 'Английский', value: 'en' },
-  { label: 'Китайский', value: 'chs' },
-  { label: 'Испанский', value: 'esp' },
+  { label: 'Китайский', value: 'zh' },
+  { label: 'Испанский', value: 'es' },
 ];
 
 export const categorySelectOptions = [
-  { label: 'Десктоп', value: 'desktop' },
-  { label: 'Мобильные', value: 'mobile' },
-  { label: 'Веб', value: 'web' },
+  { label: 'десктоп', value: 'desktop' },
+  { label: 'телефон', value: 'mobile' },
+  { label: 'веб', value: 'веб' },
+  { label: 'руководство', value: 'manual' },
 ];
 
 export const userRoleSelectOptions = [
@@ -156,8 +157,13 @@ export const editList = [
 
 export const hashPaths = {
   newArticle: '#/author/new-article',
-  articles: '#/author/articles',
   profile: '#/author/profile',
+  articles: '#/author/articles',
+  approve: '#/author/articles/approve',
+  drafted: '#/author/articles/drafted',
+  offered: '#/author/articles/offered',
+  rejected: '#/author/articles/rejected',
+  deleted: '#/author/articles/deleted',
 };
 // SOCIALS //
 

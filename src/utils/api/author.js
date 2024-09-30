@@ -13,14 +13,23 @@ class AuthorApi {
   }
 
   async getArticles({ pagination, status }) {
-    const response = await fetch(
-      `${this._baseUrl}/user_find_updates/${status}/1;${pagination}`,
-      {
-        method: 'GET',
-        headers: this._headers,
-        credentials: 'include',
-      }
-    );
+    let path = `user_find_updates/${status}/1;${pagination}`;
+    if (status === 'drafted') path = 'user_find_drafts_p/1;' + pagination;
+    const response = await fetch(`${this._baseUrl}/${path}`, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
+    });
+    return this._checkResponse(response);
+  }
+
+  async createDraft(draft) {
+    const response = await fetch(`${this._baseUrl}/user_create_draft_p`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify(draft),
+    });
     return this._checkResponse(response);
   }
 

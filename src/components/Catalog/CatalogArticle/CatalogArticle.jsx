@@ -26,10 +26,10 @@ export default function CatalogArticle() {
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
   const createDate = new Date(
-    article?.publication.date_create
+    article?.publication.date_create * 1000
   ).toLocaleDateString();
   const updateDate = new Date(
-    article?.publication.last_update
+    article?.publication.last_update * 1000
   ).toLocaleDateString();
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import './AccountAuthor.css';
 import {
   AuthorArticlesNav,
@@ -15,9 +14,10 @@ import {
 import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 export default function AccountAuthor({ hash, resetSection }) {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
   const [, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
@@ -31,6 +31,10 @@ export default function AccountAuthor({ hash, resetSection }) {
 
   useEffect(() => {
     if (!isValid) return;
+    if (hash === hashPaths.articles) {
+      navigate(hash + '/' + tab);
+      return;
+    }
     if (isValid && !user) {
       setSearchParams({ 'modal-auth': 'login' });
     } else {
@@ -43,12 +47,15 @@ export default function AccountAuthor({ hash, resetSection }) {
         .catch((err) => console.log(err))
         .finally(() => setIsLoading(false));
     }
-  }, [pagination, tab, isValid, user, setSearchParams]);
+  }, [pagination, tab, isValid, user, setSearchParams, hash, navigate]);
 
   return access ? (
     <Account navBar={<NavBar />}>
-      {hash === hashPaths.newArticle && <NewArticle />}
-      {hash === hashPaths.articles && (
+      {hash === hashPaths.newArticle ? (
+        <NewArticle />
+      ) : hash === hashPaths.profile ? (
+        <Profile />
+      ) : (
         <div className="account-author__articles">
           <AuthorArticlesNav
             handlePagination={setPagination}
@@ -58,7 +65,6 @@ export default function AccountAuthor({ hash, resetSection }) {
           {!isLoading && <AuthorArticlesList articles={articles} />}
         </div>
       )}
-      {hash === hashPaths.profile && <Profile />}
     </Account>
   ) : isValid ? null : (
     <NotFound resetSection={resetSection} />
