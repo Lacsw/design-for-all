@@ -1,5 +1,5 @@
 .rte {
-  --list-marker-width: 20px;
+  --list-marker-width: 30px;
   background-color: var(--color-bg-low-accent);
   border: 2px solid var(--color-bg-low-accent);
   border-radius: 12px;
@@ -36,11 +36,21 @@
 }
 
 /* --------------------------------------------------------------------------------------------------- */
-
 .tiptap li p {
   /* чтоб было видно мигающий курсор */
   min-width: 5px;
   overflow-wrap: anywhere;
+}
+
+.tiptap ul {
+  padding-left: 10px;
+}
+
+.tiptap > ul ul {
+  padding-left: 30px;
+}
+.tiptap > ul ol {
+  padding-left: 30px;
 }
 
 .tiptap ul > li {
@@ -64,7 +74,7 @@
   content: '•';
   padding-left: 3px;
   margin-bottom: auto;
-  width: var(--list-marker-width);
+  width: calc(var(--list-marker-width) - 5px);
 }
 
 .tiptap ul > li > *:nth-child(1) {
@@ -74,7 +84,14 @@
 /* ------------------------------------------ */
 .tiptap ol {
   counter-reset: myCounter 0;
-  padding: 0 0 0 3px;
+  padding-left: 10px;
+}
+
+.tiptap > ol ol {
+  padding-left: 30px;
+}
+.tiptap > ol ul {
+  padding-left: 30px;
 }
 
 .tiptap ol > li {
@@ -101,7 +118,6 @@
   min-width: var(--list-marker-width);
   margin-bottom: auto;
   display: flex;
-  /* display: contents; */
   /* выравнивание по-горизонтали для чисел-нумераторов пунктов списка */
   justify-content: center;
 }
