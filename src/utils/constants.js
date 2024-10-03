@@ -47,10 +47,10 @@ export const langSelectOptions = [
 ];
 
 export const categorySelectOptions = [
-  { label: 'десктоп', value: 'desktop' },
-  { label: 'телефон', value: 'mobile' },
+  { label: 'десктоп', value: 'десктоп' },
+  { label: 'телефон', value: 'телефон' },
   { label: 'веб', value: 'веб' },
-  { label: 'руководство', value: 'manual' },
+  { label: 'руководство', value: 'руководство' },
 ];
 
 export const userRoleSelectOptions = [

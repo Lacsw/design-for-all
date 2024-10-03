@@ -6,6 +6,7 @@ import { Dropdown, ModalRecommendation } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
 import { getDraft } from 'store/selectors';
+import Recommend from 'components/Recommendations/Recommend';
 
 export default function NewArticle() {
   const draft = useSelector(getDraft);
@@ -126,6 +127,13 @@ export default function NewArticle() {
                   Добавить
                 </span>
               </button>
+              <ul className="recommendations__list">
+                {draft.recommend_from_creator.map((item) => (
+                  <li className="recommendations__item" key={item.id}>
+                    <Recommend imageUrl={item.image} title={item.title} />
+                  </li>
+                ))}
+              </ul>
             </div>
           </label>
         </form>
@@ -133,6 +141,7 @@ export default function NewArticle() {
       <ModalRecommendation
         isOpen={isShownAddRec}
         onClose={toggleRecommendation}
+        onSave={changeField}
         title={'Добавить рекомендацию'}
       />
     </section>

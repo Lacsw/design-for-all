@@ -13,6 +13,10 @@
   gap: 20px;
 }
 
+.new-article__recommendations .recommendations__list {
+  gap: 15px;
+}
+
 .recommendations__link {
   text-decoration: none;
   transition: 0.3s;

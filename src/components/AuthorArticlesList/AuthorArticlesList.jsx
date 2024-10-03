@@ -17,10 +17,8 @@ export default function AuthorArticlesList({ articles }) {
   };
 
   const dateFormatter = (dateInfo) => {
-    const date = new Date(dateInfo * 1000);
-    return `${date.getDate()}.${('0' + (date.getMonth() + 1)).slice(
-      -2
-    )}.${date.getFullYear()}`;
+    const date = new Date(dateInfo * 1000).toLocaleDateString();
+    return date;
   };
 
   return (

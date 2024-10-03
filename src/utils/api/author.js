@@ -6,7 +6,7 @@ class AuthorApi {
 
   _checkResponse(res) {
     if (res.ok) {
-      return res.json();
+      return res.statusText === 'NO CONTENT' ? '' : res.json();
     } else {
       return Promise.reject(`Ошибка ${res.status}`);
     }
@@ -23,12 +23,24 @@ class AuthorApi {
     return this._checkResponse(response);
   }
 
-  async createDraft(draft) {
-    const response = await fetch(`${this._baseUrl}/user_create_draft_p`, {
+  async checkRecommend(lang, id) {
+    const response = await fetch(
+      `${this._baseUrl}/check_recommend/${lang}/${id}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include',
+      }
+    );
+    return this._checkResponse(response);
+  }
+
+  async createNew(type, data) { 
+    const response = await fetch(`${this._baseUrl}/user_create_${type}_p`, {
       method: 'POST',
       headers: this._headers,
       credentials: 'include',
-      body: JSON.stringify(draft),
+      body: JSON.stringify(data),
     });
     return this._checkResponse(response);
   }

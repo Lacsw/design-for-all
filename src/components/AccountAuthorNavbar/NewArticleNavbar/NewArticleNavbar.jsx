@@ -21,10 +21,15 @@ export default function NewArticleNavbar() {
     setIsOpenModal(!isOpenModal);
   };
 
-  function handleSave() {
-    const withFake = { ...draft, image: 'test.jpg' };
+  function handleSave({target}) {
+    const onlyId = draft.recommend_from_creator.map((item) => item.id);
+    const modDraft = {
+      ...draft,
+      image: 'test.jpg',
+      recommend_from_creator: onlyId,
+    };
     authorApi
-      .createDraft(withFake)
+      .createNew(target.name, modDraft)
       .then(() => dispatch(resetDraft()))
       .then(() => navigate(hashPaths.articles))
       .catch((err) => console.log(err));
@@ -34,14 +39,14 @@ export default function NewArticleNavbar() {
     <nav className="new-article-navbar">
       <ul className="new-article-navbar__list">
         <li>
-          <button className="link-button">
+          <button className="link-button" name="new" onClick={handleSave}>
             <img src={publishIcon} alt="" />
             Опубликовать
           </button>
         </li>
 
         <li>
-          <button className="link-button" onClick={handleSave}>
+          <button className="link-button" name="draft" onClick={handleSave}>
             <img src={saveDraftIcon} alt="Сохранить" />
             Сохранить в черновик
           </button>

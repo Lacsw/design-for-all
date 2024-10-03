@@ -9,6 +9,10 @@
   background-color: var(--color-bg-low-accent);
 }
 
+.new-article__recommendations .recommend {
+  background-color: var(--color-main-disabled);
+}
+
 .recommend__image {
   width: 100%;
   border-radius: 12px;
