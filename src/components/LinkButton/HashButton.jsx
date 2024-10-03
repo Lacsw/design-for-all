@@ -7,7 +7,7 @@ export default function HashButton({ children, to, icon, activeIcon }) {
   return (
     <Link
       to={to}
-      className={`link-button ${to !== '/' && hash.includes(to) ? 'link-button_active' : ''}`}
+      className={`hash-button ${to !== '/' && hash.includes(to) ? 'hash-button_active' : ''}`}
     >
       <img src={hash === to ? activeIcon : icon} alt="Иконка" />
       {children}
