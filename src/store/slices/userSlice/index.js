@@ -5,6 +5,15 @@ const initialState = {
   language: 'ru',
   error: null,
   loading: false,
+  draft: {
+    lang: '',
+    main_category: '',
+    sub_category: '',
+    image: '',
+    title: '',
+    description: '',
+    recommend_from_creator: [],
+  },
 };
 
 const userSlice = createSlice({
@@ -27,11 +36,27 @@ const userSlice = createSlice({
     changeLanguage: (state, action) => {
       state.language = action.payload;
     },
+    changeDraft: (state, action) => {
+      let name = action.payload.name;
+      let value = action.payload.value;
+      if (name === 'recommend_from_creator') {
+        state.draft[name].push(value);
+      } else state.draft[name] = value;
+    },
+    resetDraft: (state) => {
+      state.draft = initialState.draft;
+    },
   },
 });
 
-export const { signInStart, signInSuccess, signInFailure, changeLanguage } =
-  userSlice.actions;
+export const {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+  changeLanguage,
+  changeDraft,
+  resetDraft,
+} = userSlice.actions;
 
 // export const userReducer = userSlice.reducer;
 export default userSlice.reducer;

@@ -70,7 +70,7 @@
 
 .author-articles-list__table-body {
   display: block;
-  height: 416px;
+  max-height: 416px;
   overflow: auto;
   margin-top: 10px;
 

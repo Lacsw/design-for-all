@@ -3,80 +3,92 @@ import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import { langSelectOptions, categorySelectOptions } from 'utils/constants';
 import { Dropdown, ModalRecommendation } from 'components';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeDraft } from 'store/slices';
+import { getDraft } from 'store/selectors';
+import Recommend from 'components/Recommendations/Recommend';
 
 export default function NewArticle() {
-  // const [value, changeValue] = useState('');
+  const draft = useSelector(getDraft);
+  const dispatch = useDispatch();
   const [isShownAddRec, setIsShownAddRec] = useState(false);
 
   const toggleRecommendation = () => {
     setIsShownAddRec(!isShownAddRec);
   };
 
+  function addFile({ target }) {
+    const reader = new FileReader();
+    if (target.files.length) {
+      reader.onload = () => changeField('image', reader.result);
+      reader.readAsDataURL(target.files[0]);
+    }
+  }
+
+  function changeField(name, value) {
+    dispatch(changeDraft({ name, value }));
+  }
+
   return (
     <section className="new-article">
       <div className="new-article__container">
         <h2 className="new-article__title">Создание новой статьи</h2>
         <form action="">
-          <label className="new-article__label" htmlFor="lang">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Язык</span>
             <Dropdown
               id={'lang'}
               name={'lang'}
               options={langSelectOptions}
-              title="Выбор"
+              title={draft.lang || 'Выбор'}
+              onChange={changeField}
             />
           </label>
 
-          <label className="new-article__label" htmlFor="category">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Основная категория</span>
             <Dropdown
-              id={'category'}
+              id={'main_category'}
               name={'category'}
               options={categorySelectOptions}
-              title="Выбор"
+              title={draft.main_category || 'Выбор'}
+              onChange={changeField}
             />
           </label>
 
-          <label className="new-article__label" htmlFor="sub-category">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Подкатегория</span>
             <input
               type="text"
-              name="sub-category"
-              id="sub-category"
-              value="component/active elements/button/"
+              name="sub_category"
+              id="sub_category"
               className="new-article__input"
               size={32}
+              value={draft.sub_category}
+              onChange={(evt) => changeField('sub_category', evt.target.value)}
             />
           </label>
 
-          <label className="new-article__label" htmlFor="ref-category">
-            <span className="new-aritcle__sub-title">Уточнение категории</span>
-            <input
-              type="text"
-              name="ref-category"
-              id="ref-category"
-              value=".../button"
-              size={8}
-              // size={Math.min(Math.max(value.length, 2), 20)}
-              // value={value}
-              // onChange={(event) => {
-              // 	changeValue(event.target.value);
-              // }}
-              className="new-article__input"
-            />
-          </label>
-
-          <label className="new-article__label" htmlFor="main-image">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Картинка статьи</span>
             <input
               type="file"
               name="main-image"
               id="main-image"
               className="new-article__main-image"
+              accept=".jpg, .png"
+              onChange={addFile}
             />
+            {draft.image && (
+              <img
+                className="new-article__img"
+                src={draft.image}
+                alt="Ваша картинка"
+              />
+            )}
           </label>
 
-          <label className="new-article__label" htmlFor="article-header">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Заголовок статьи</span>
             <input
               type="text"
@@ -84,10 +96,12 @@ export default function NewArticle() {
               id="article-title"
               className="new-article__input new-article__input_article-header"
               placeholder="Карточка товара в маркетплейсе"
+              value={draft.title}
+              onChange={(evt) => changeField('title', evt.target.value)}
             />
           </label>
 
-          <label className="new-article__label" htmlFor="article-content">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Контент статьи</span>
             <textarea
               type="text"
@@ -95,10 +109,12 @@ export default function NewArticle() {
               id="article-content"
               className="new-article__input new-article__input_article-content"
               placeholder="Введите текст статьи"
+              value={draft.description}
+              onChange={(evt) => changeField('description', evt.target.value)}
             />
           </label>
 
-          <label className="new-article__label" htmlFor="recommendations">
+          <label className="new-article__label">
             <span className="new-aritcle__sub-title">Рекомендации авторов</span>
             <div className="new-article__recommendations">
               <button
@@ -111,6 +127,13 @@ export default function NewArticle() {
                   Добавить
                 </span>
               </button>
+              <ul className="recommendations__list">
+                {draft.recommend_from_creator.map((item) => (
+                  <li className="recommendations__item" key={item.id}>
+                    <Recommend imageUrl={item.image} title={item.title} />
+                  </li>
+                ))}
+              </ul>
             </div>
           </label>
         </form>
@@ -118,6 +141,7 @@ export default function NewArticle() {
       <ModalRecommendation
         isOpen={isShownAddRec}
         onClose={toggleRecommendation}
+        onSave={changeField}
         title={'Добавить рекомендацию'}
       />
     </section>
