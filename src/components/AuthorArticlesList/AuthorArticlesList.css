@@ -82,6 +82,11 @@
   line-height: 130%;
 }
 
+.author-articles-list__table-body > p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .author-articles-list__icon-background {
   padding: 0;
   width: 36px;

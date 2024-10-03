@@ -41,10 +41,8 @@ export default function AccountAuthor({ hash, resetSection }) {
       setIsLoading(true);
       authorApi
         .getArticles({ pagination: pagination, status: tab })
-        .then((articles) => {
-          setArticles(articles);
-        })
-        .catch((err) => console.log(err))
+        .then(setArticles)
+        .catch(() => setArticles([]))
         .finally(() => setIsLoading(false));
     }
   }, [pagination, tab, isValid, user, setSearchParams, hash, navigate]);

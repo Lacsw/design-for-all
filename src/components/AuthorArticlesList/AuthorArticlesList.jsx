@@ -40,7 +40,7 @@ export default function AuthorArticlesList({ articles }) {
         </thead>
 
         <tbody className="author-articles-list__table-body">
-          {articles ? (
+          {articles.length ? (
             articles.map((article) => (
               <tr
                 key={article.uuid}
@@ -110,8 +110,7 @@ export default function AuthorArticlesList({ articles }) {
             ))
           ) : (
             <p>
-              Упс, пусто. <br />
-              Здесь скоро будут предложения.
+              Статьи в данной категории отсутствуют.
             </p>
           )}
         </tbody>
