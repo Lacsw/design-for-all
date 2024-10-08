@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import './ModalRecommendation.css';
 import { Input, Modal } from 'components';
 import authorApi from 'utils/api/author';
+import { useSelector } from 'react-redux';
+import { getDraft } from 'store/selectors';
 
 const baseRegex = /^https:\/\/design-for-all\.net/i;
 const fullRegex =
@@ -10,8 +12,15 @@ const pathRegex = /[a-z]{2}\/[a-z0-9]{32}/;
 const baseError = 'Вставьте ссылку с этого сайта';
 const fullError = 'Ссылка не является адресом статьи';
 const fetchError = 'Статья не существует';
+const doubleError = 'Статья уже добавлена';
 
-export default function ModalRecommendation({ isOpen, onClose, onSave, title }) {
+export default function ModalRecommendation({
+  isOpen,
+  onClose,
+  onSave,
+  title,
+}) {
+  const draft = useSelector(getDraft);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,13 +45,19 @@ export default function ModalRecommendation({ isOpen, onClose, onSave, title }) 
     const splitPath = articlePath[0].split('/');
     authorApi
       .checkRecommend(splitPath[0], splitPath[1])
-      .then(
-        ({ image, title }) =>
-          (recommendRef.current = { image, title, id: splitPath[1] })
-      )
+      .then(({ image, title }) => {
+        const isDouble = draft.recommend_from_creator.some(
+          (item) => item.id === splitPath[1]
+        );
+        if (isDouble) {
+          setError(doubleError);
+          return;
+        }
+        recommendRef.current = { image, title, id: splitPath[1] };
+      })
       .catch(() => setError(fetchError))
       .finally(() => setLoading(false));
-  }, [inputValue, error]);
+  }, [inputValue, error, draft]);
 
   function handleInput({ target }) {
     let error =

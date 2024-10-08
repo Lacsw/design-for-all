@@ -114,7 +114,7 @@ export default function NewArticle() {
             />
           </label>
 
-          <label className="new-article__label">
+          <div className="new-article__label">
             <span className="new-aritcle__sub-title">Рекомендации авторов</span>
             <div className="new-article__recommendations">
               <button
@@ -135,7 +135,7 @@ export default function NewArticle() {
                 ))}
               </ul>
             </div>
-          </label>
+          </div>
         </form>
       </div>
       <ModalRecommendation
