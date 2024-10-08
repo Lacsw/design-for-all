@@ -40,19 +40,19 @@ export default function ModalRecommendation({
 
   useEffect(() => {
     if (!inputValue || error) return;
-    setLoading(true);
     const articlePath = inputValue.match(pathRegex);
     const splitPath = articlePath[0].split('/');
+    const isDouble = draft.recommend_from_creator.some(
+      (item) => item.id === splitPath[1]
+    );
+    if (isDouble) {
+      setError(doubleError);
+      return;
+    }
+    setLoading(true);
     authorApi
       .checkRecommend(splitPath[0], splitPath[1])
       .then(({ image, title }) => {
-        const isDouble = draft.recommend_from_creator.some(
-          (item) => item.id === splitPath[1]
-        );
-        if (isDouble) {
-          setError(doubleError);
-          return;
-        }
         recommendRef.current = { image, title, id: splitPath[1] };
       })
       .catch(() => setError(fetchError))
