@@ -42,6 +42,7 @@ const userSlice = createSlice({
       if (name === 'recommend_from_creator') {
         state.draft[name].push(value);
       } else state.draft[name] = value;
+      if (name === 'lang') state.draft.main_category = '';
     },
     resetDraft: (state) => {
       state.draft = initialState.draft;

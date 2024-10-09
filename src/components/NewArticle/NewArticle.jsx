@@ -1,17 +1,29 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
-import { langSelectOptions, categorySelectOptions } from 'utils/constants';
+import { langSelectOptions } from 'utils/constants';
 import { Dropdown, ModalRecommendation } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
 import { getDraft } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
+import { selectTitles } from 'store/slices/articleSlice';
 
 export default function NewArticle() {
   const draft = useSelector(getDraft);
+  const categories = useSelector(selectTitles);
   const dispatch = useDispatch();
   const [isShownAddRec, setIsShownAddRec] = useState(false);
+
+  const titlesList = useMemo(() => {
+    if (!draft.lang) return [];
+    const langTitles = categories[draft.lang];
+    const titlesForDropdown = Object.values(langTitles).map((title) => ({
+      value: title,
+      label: title,
+    }));
+    return titlesForDropdown;
+  }, [draft.lang, categories]);
 
   const toggleRecommendation = () => {
     setIsShownAddRec(!isShownAddRec);
@@ -35,7 +47,7 @@ export default function NewArticle() {
         <h2 className="new-article__title">Создание новой статьи</h2>
         <form action="">
           <label className="new-article__label">
-            <span className="new-aritcle__sub-title">Язык</span>
+            <span className="new-article__sub-title">Язык</span>
             <Dropdown
               id={'lang'}
               name={'lang'}
@@ -45,32 +57,41 @@ export default function NewArticle() {
             />
           </label>
 
-          <label className="new-article__label">
-            <span className="new-aritcle__sub-title">Основная категория</span>
+          <label
+            className={`new-article__label${
+              draft.lang ? '' : ' new-article__label_disabled'
+            }`}
+          >
+            <span className="new-article__sub-title">Основная категория</span>
             <Dropdown
               id={'main_category'}
               name={'category'}
-              options={categorySelectOptions}
+              options={titlesList}
               title={draft.main_category || 'Выбор'}
               onChange={changeField}
             />
           </label>
 
-          <label className="new-article__label">
-            <span className="new-aritcle__sub-title">Подкатегория</span>
+          <label
+            className={`new-article__label${
+              draft.main_category ? '' : ' new-article__label_disabled'
+            }`}
+          >
+            <span className="new-article__sub-title">Подкатегория</span>
             <input
+              disabled={!draft.main_category}
               type="text"
               name="sub_category"
               id="sub_category"
               className="new-article__input"
               size={32}
-              value={draft.sub_category}
+              value={draft.sub_category || 'страна/город/улица/дом'}
               onChange={(evt) => changeField('sub_category', evt.target.value)}
             />
           </label>
 
           <label className="new-article__label">
-            <span className="new-aritcle__sub-title">Картинка статьи</span>
+            <span className="new-article__sub-title">Картинка статьи</span>
             <input
               type="file"
               name="main-image"
@@ -89,7 +110,7 @@ export default function NewArticle() {
           </label>
 
           <label className="new-article__label">
-            <span className="new-aritcle__sub-title">Заголовок статьи</span>
+            <span className="new-article__sub-title">Заголовок статьи</span>
             <input
               type="text"
               name="article-title"
@@ -102,7 +123,7 @@ export default function NewArticle() {
           </label>
 
           <label className="new-article__label">
-            <span className="new-aritcle__sub-title">Контент статьи</span>
+            <span className="new-article__sub-title">Контент статьи</span>
             <textarea
               type="text"
               name="article-content"
@@ -115,7 +136,7 @@ export default function NewArticle() {
           </label>
 
           <div className="new-article__label">
-            <span className="new-aritcle__sub-title">Рекомендации авторов</span>
+            <span className="new-article__sub-title">Рекомендации авторов</span>
             <div className="new-article__recommendations">
               <button
                 className="new-article__recommendations-btn"

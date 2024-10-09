@@ -18,7 +18,7 @@
   line-height: normal;
 }
 
-.new-aritcle__sub-title {
+.new-article__sub-title {
   display: block;
   margin-bottom: 5px;
 }
@@ -121,4 +121,12 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+}
+
+.new-article__label_disabled {
+  pointer-events: none;
+}
+
+.new-article__label_disabled :is(.new-article__sub-title, *) {
+  color: var(--color-main-disabled);
 }
