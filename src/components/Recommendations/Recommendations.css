@@ -13,8 +13,8 @@
   gap: 20px;
 }
 
-.new-article__recommendations .recommendations__list {
-  gap: 15px;
+.recommendations__item {
+  position: relative;
 }
 
 .recommendations__link {

@@ -19,6 +19,7 @@ export default function ModalRecommendation({
   onClose,
   onSave,
   title,
+  editId
 }) {
   const draft = useSelector(getDraft);
   const [inputValue, setInputValue] = useState('');
@@ -72,7 +73,14 @@ export default function ModalRecommendation({
   }
 
   function addRecommend() {
-    onSave('recommend_from_creator', recommendRef.current);
+    let recommends;
+    if (editId) {
+      recommends = draft.recommend_from_creator.map(item => {
+        if (item.id === editId) return recommendRef.current;
+        return item;
+      });
+    } else recommends = [...draft.recommend_from_creator, recommendRef.current];
+    onSave('recommend_from_creator', recommends);
     setInputValue('');
     recommendRef.current = null;
     onClose();

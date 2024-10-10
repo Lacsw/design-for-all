@@ -1,19 +1,25 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
+import deleteIconW from 'images/delete-icon_white.svg';
+import deleteIconB from 'images/delete-icon_black.svg';
+import editIconW from 'images/edit-icon_white.svg';
+import editIconB from 'images/edit-icon_black.svg';
 import { langSelectOptions } from 'utils/constants';
 import { Dropdown, ModalRecommendation } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
-import { getDraft } from 'store/selectors';
+import { getCurrentTheme, getDraft } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 
 export default function NewArticle() {
+  const theme = useSelector(getCurrentTheme);
   const draft = useSelector(getDraft);
   const categories = useSelector(selectTitles);
   const dispatch = useDispatch();
   const [isShownAddRec, setIsShownAddRec] = useState(false);
+  const editId = useRef('');
 
   const titlesList = useMemo(() => {
     if (!draft.lang) return [];
@@ -35,6 +41,23 @@ export default function NewArticle() {
       reader.onload = () => changeField('image', reader.result);
       reader.readAsDataURL(target.files[0]);
     }
+  }
+
+  function handleDelete(id) {
+    const recommends = draft.recommend_from_creator.filter(
+      (rec) => rec.id !== id
+    );
+    changeField('recommend_from_creator', recommends);
+  }
+
+  function handleEdit(id) {
+    editId.current = id;
+    toggleRecommendation();
+  }
+
+  function handleClose() {
+    editId.current = '';
+    toggleRecommendation();
   }
 
   function changeField(name, value) {
@@ -82,10 +105,11 @@ export default function NewArticle() {
               disabled={!draft.main_category}
               type="text"
               name="sub_category"
+              placeholder="страна/город/улица/дом"
               id="sub_category"
               className="new-article__input"
               size={32}
-              value={draft.sub_category || 'страна/город/улица/дом'}
+              value={draft.sub_category}
               onChange={(evt) => changeField('sub_category', evt.target.value)}
             />
           </label>
@@ -151,6 +175,20 @@ export default function NewArticle() {
               <ul className="recommendations__list">
                 {draft.recommend_from_creator.map((item) => (
                   <li className="recommendations__item" key={item.id}>
+                    <div className="rec-overlay">
+                      <img
+                        src={theme === 'light' ? editIconB : editIconW}
+                        alt="Изменить рекомендацию"
+                        className="rec-overlay__img"
+                        onClick={() => handleEdit(item.id)}
+                      />
+                      <img
+                        src={theme === 'light' ? deleteIconB : deleteIconW}
+                        alt="Удалить рекомендацию"
+                        className="rec-overlay__img"
+                        onClick={() => handleDelete(item.id)}
+                      />
+                    </div>
                     <Recommend imageUrl={item.image} title={item.title} />
                   </li>
                 ))}
@@ -161,9 +199,12 @@ export default function NewArticle() {
       </div>
       <ModalRecommendation
         isOpen={isShownAddRec}
-        onClose={toggleRecommendation}
+        onClose={handleClose}
         onSave={changeField}
-        title={'Добавить рекомендацию'}
+        title={
+          editId.current ? 'Заменить рекомендацию' : 'Добавить рекомендацию'
+        }
+        editId={editId.current}
       />
     </section>
   );

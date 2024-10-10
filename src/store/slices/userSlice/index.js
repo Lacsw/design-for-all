@@ -39,9 +39,7 @@ const userSlice = createSlice({
     changeDraft: (state, action) => {
       let name = action.payload.name;
       let value = action.payload.value;
-      if (name === 'recommend_from_creator') {
-        state.draft[name].push(value);
-      } else state.draft[name] = value;
+      state.draft[name] = value;
       if (name === 'lang') state.draft.main_category = '';
     },
     resetDraft: (state) => {

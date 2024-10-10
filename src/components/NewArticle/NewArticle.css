@@ -129,4 +129,42 @@
 
 .new-article__label_disabled :is(.new-article__sub-title, *) {
   color: var(--color-main-disabled);
+  user-select: none;
+}
+
+.new-article__recommendations .recommendations__list {
+  gap: 15px;
+}
+
+.rec-overlay {
+  visibility: hidden;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  background-color: rgba(230, 230, 230, 0);
+  transition: 0.3s;
+}
+
+.recommendations__item:hover .rec-overlay {
+  visibility: visible;
+  background-color: rgba(230, 230, 230, 0.8);
+}
+
+.rec-overlay__img {
+  width: 30px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.3s;
+  opacity: 0;
+}
+
+.rec-overlay:hover .rec-overlay__img {
+  opacity: 1;
+}
+
+.rec-overlay__img:hover {
+  transform: scale(1.1)
 }
