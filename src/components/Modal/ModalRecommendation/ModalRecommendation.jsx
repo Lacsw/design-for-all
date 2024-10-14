@@ -13,6 +13,7 @@ const baseError = 'Вставьте ссылку с этого сайта';
 const fullError = 'Ссылка не является адресом статьи';
 const fetchError = 'Статья не существует';
 const doubleError = 'Статья уже добавлена';
+const langError = 'Нельзя добавить статью на другом языке';
 
 export default function ModalRecommendation({
   isOpen,
@@ -50,6 +51,10 @@ export default function ModalRecommendation({
       setError(doubleError);
       return;
     }
+    if (splitPath[0] !== draft.lang) {
+      setError(langError);
+      return;
+    }
     setLoading(true);
     authorApi
       .checkRecommend(splitPath[0], splitPath[1])
@@ -81,15 +86,20 @@ export default function ModalRecommendation({
       });
     } else recommends = [...draft.recommend_from_creator, recommendRef.current];
     onSave('recommend_from_creator', recommends);
-    setInputValue('');
+    handleClose();
+  }
+
+  function handleClose() {
     recommendRef.current = null;
+    setInputValue('');
+    setError('');
     onClose();
   }
 
   return (
     <Modal
       title={title}
-      onClose={onClose}
+      onClose={handleClose}
       onConfirm={addRecommend}
       isOpen={isOpen}
       twoBtns

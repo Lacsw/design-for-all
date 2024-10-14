@@ -20,6 +20,8 @@ export default function NewArticleNavbar() {
   const handleCancelClick = () => {
     setIsOpenModal(!isOpenModal);
   };
+  const publishDisabled = Object.values(draft).some(item => !item);
+  const draftDisabled = !draft.lang;
 
   function handleSave({target}) {
     const onlyId = draft.recommend_from_creator.map((item) => item.id);
@@ -39,14 +41,14 @@ export default function NewArticleNavbar() {
     <nav className="new-article-navbar">
       <ul className="new-article-navbar__list">
         <li>
-          <button className="link-button" name="new" onClick={handleSave}>
+          <button className="link-button" name="new" onClick={handleSave} disabled={publishDisabled}>
             <img src={publishIcon} alt="" />
             Опубликовать
           </button>
         </li>
 
         <li>
-          <button className="link-button" name="draft" onClick={handleSave}>
+          <button className="link-button" name="draft" onClick={handleSave} disabled={draftDisabled}>
             <img src={saveDraftIcon} alt="Сохранить" />
             Сохранить в черновик
           </button>

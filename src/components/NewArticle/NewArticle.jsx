@@ -114,9 +114,14 @@ export default function NewArticle() {
             />
           </label>
 
-          <label className="new-article__label">
+          <label
+            className={`new-article__label${
+              draft.main_category ? '' : ' new-article__label_disabled'
+            }`}
+          >
             <span className="new-article__sub-title">Картинка статьи</span>
             <input
+              disabled={!draft.main_category}
               type="file"
               name="main-image"
               id="main-image"
@@ -133,9 +138,14 @@ export default function NewArticle() {
             )}
           </label>
 
-          <label className="new-article__label">
+          <label
+            className={`new-article__label${
+              draft.main_category ? '' : ' new-article__label_disabled'
+            }`}
+          >
             <span className="new-article__sub-title">Заголовок статьи</span>
             <input
+              disabled={!draft.main_category}
               type="text"
               name="article-title"
               id="article-title"
@@ -146,9 +156,14 @@ export default function NewArticle() {
             />
           </label>
 
-          <label className="new-article__label">
+          <label
+            className={`new-article__label${
+              draft.main_category ? '' : ' new-article__label_disabled'
+            }`}
+          >
             <span className="new-article__sub-title">Контент статьи</span>
             <textarea
+              disabled={!draft.main_category}
               type="text"
               name="article-content"
               id="article-content"
@@ -159,10 +174,15 @@ export default function NewArticle() {
             />
           </label>
 
-          <div className="new-article__label">
+          <div
+            className={`new-article__label${
+              draft.main_category ? '' : ' new-article__label_disabled'
+            }`}
+          >
             <span className="new-article__sub-title">Рекомендации авторов</span>
             <div className="new-article__recommendations">
               <button
+                disabled={!draft.main_category}
                 className="new-article__recommendations-btn"
                 type="button"
                 onClick={toggleRecommendation}
