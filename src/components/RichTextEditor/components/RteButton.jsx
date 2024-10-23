@@ -1,7 +1,6 @@
 import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { buttonsHeadings, COMMANDS_NAMES } from '../helpers';
-import { lastActiveNodes } from '../helpers/lastActive';
 
 const tiptapCommands = {
   [COMMANDS_NAMES.italic](editor) {
