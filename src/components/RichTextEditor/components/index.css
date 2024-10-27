@@ -1,3 +1,5 @@
+@import url('./selectors/index.css');
+
 .rte .rte__button {
   background-color: transparent;
   color: var(--color-main);

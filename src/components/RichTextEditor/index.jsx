@@ -30,6 +30,7 @@ import { useDebounce } from 'utils/hooks';
 import './index.css';
 import './components/index.css';
 import { sxEditorWrapper } from './styles';
+import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
 
 const defaultValidationsOptions = {
   kinds: {},
@@ -76,6 +77,9 @@ export const RichTextEditor = memo(function RichTextEditor({
       horizontalRule: false,
       strike: false,
       listItem: false, // отключаем, т.к. у нас кастомный
+      heading: {
+        levels: [1, 2, 3, 4],
+      },
       bulletList: {
         HTMLAttributes: {
           class: 'rte__node rte__node_bullet-list',
@@ -201,6 +205,12 @@ export const RichTextEditor = memo(function RichTextEditor({
     } else {
       return (
         <MenuBar editor={editor} className={classes.menuBar}>
+          <TextTypeSelector
+            editor={editor}
+            className={classes.textTypeSelector}
+            flag={flag}
+          />
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -209,6 +219,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatItalicIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -217,6 +228,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatBoldIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -225,6 +237,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <CodeIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -244,6 +257,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatAlignLeftIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -252,6 +266,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatAlignCenterIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -260,6 +275,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatAlignRightIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -277,6 +293,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatListBulletedIcon />
           </RteButton>
+
           <RteButton
             className={classes.button}
             editor={editor}
@@ -289,7 +306,15 @@ export const RichTextEditor = memo(function RichTextEditor({
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor, inFocusWithin, classes.button, classes.menuBar, readOnly, flag]);
+  }, [
+    editor,
+    inFocusWithin,
+    classes.button,
+    classes.menuBar,
+    classes.textTypeSelector,
+    readOnly,
+    flag,
+  ]);
 
   return (
     <Box
