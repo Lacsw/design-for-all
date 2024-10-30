@@ -1,19 +1,64 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import './AuthorArticlesList.css';
-import view from 'images/account/view-icon.svg';
-import draft from 'images/account/draft-icon.svg';
-import reason from 'images/account/reason-deny-icon.svg';
-import { SearchInput, ModalReasons } from 'components';
+import { SearchInput, ModalReasons, Modal } from 'components';
+import { tableButtons } from 'utils/constants';
+import { useSelector } from 'react-redux';
+import { getCurrentTheme } from 'store/selectors';
+import { useNavigate } from 'react-router-dom';
+import authorApi from 'utils/api/author';
+import { prepareValue } from 'utils/helpers/search';
+import debounce from 'utils/helpers/debounce';
 
-export default function AuthorArticlesList({ articles }) {
+export default function AuthorArticlesList({
+  articles,
+  section,
+  changeList,
+  pagination,
+}) {
+  const navigate = useNavigate();
+  const theme = useSelector(getCurrentTheme);
   const [showReason, setShowReason] = useState(false);
-  const [reasonMessage, setReasonMessage] = useState('');
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [reason, setReason] = useState({});
+  
+  function handleClick(article, name) {
+    switch (name) {
+      case 'edit':
+      case 'view':
+      case 'draft':
+        navigate('#/author/new-article', {
+          state: { name, section, draft: article.uuid, type: article.type },
+        });
+        break;
+      case 'reason':
+        toggleReason({
+          message: article.reason_rejected,
+          rejFields: article.rejected_fields,
+        });
+        break;
+      case 'delete':
+        setDeleteOpen(article.uuid);
+        break;
+      default:
+        console.log(`Wrong button's name`);
+    }
+  }
 
-  const toggleReason = (reasonMessage) => {
+  function handleDelete() {
+    authorApi
+      .deleteDraft(deleteOpen)
+      .then(() => {
+        const newList = articles.filter((item) => item.uuid !== deleteOpen);
+        changeList(newList);
+        setDeleteOpen(false);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const toggleReason = (reason) => {
     setShowReason(!showReason);
-    setReasonMessage(reasonMessage);
+    setReason(reason);
   };
 
   const dateFormatter = (dateInfo) => {
@@ -21,9 +66,22 @@ export default function AuthorArticlesList({ articles }) {
     return date;
   };
 
+  function handleSearch({ target }) {
+    const value = prepareValue(target.value);
+    const isReady = value.replace(/\s/g, '').length >= 3;
+    if (isReady) {
+      authorApi
+        .searchByTitles({ status: section, text: value, pagination })
+        .then(changeList)
+        .catch(() => changeList([]));
+    }
+  }
+
+  const searchWithDelay = debounce(handleSearch, 1000);
+
   return (
     <div className="author-articles-list">
-      <SearchInput />
+      <SearchInput onChange={searchWithDelay} />
       <table className="author-articles-list__table">
         <thead className="author-articles-list__table-head">
           <tr>
@@ -71,57 +129,60 @@ export default function AuthorArticlesList({ articles }) {
                 <td className="author-articles-list__table-cell">
                   {article.title}
                 </td>
-                <td className="author-articles-list__table-cell-buttons">
-                  <Link
-                    to={`/articles/${article.lang}/${article.uuid}`}
-                    className="author-articles-list__icon-background"
-                  >
-                    <img
-                      src={view}
-                      alt="Иконка просмотра"
-                      className="author-articles-list__icon"
-                    />
-                  </Link>
-                </td>
-                <td className="author-articles-list__table-cell-buttons">
-                  <button className="author-articles-list__icon-background">
-                    <img
-                      src={draft}
-                      alt="Иконка в черновик"
-                      className="author-articles-list__icon"
-                    />
-                  </button>
-                </td>
-                <td className="author-articles-list__table-cell-buttons">
-                  {article.reason_rejected && (
-                    <button
-                      className="author-articles-list__icon-background"
-                      onClick={() => toggleReason(article.reason_rejected)}
+
+                {tableButtons[section].map((item, i) => {
+                  if (
+                    !item ||
+                    (!article.reason_rejected && item.name === 'reason')
+                  )
+                    return (
+                      <td
+                        key={i}
+                        className="author-articles-list__table-cell-buttons"
+                      ></td>
+                    );
+                  return (
+                    <td
+                      key={item.name}
+                      className="author-articles-list__table-cell-buttons"
                     >
-                      <img
-                        src={reason}
-                        alt="Иконка причины отказа"
-                        className="author-articles-list__icon"
-                      />
-                    </button>
-                  )}
-                </td>
+                      <button
+                        className="author-articles-list__icon-background"
+                        onClick={() => handleClick(article, item.name)}
+                      >
+                        <img
+                          src={item[theme]}
+                          alt={item.name}
+                          className="author-articles-list__icon"
+                        />
+                      </button>
+                    </td>
+                  );
+                })}
               </tr>
             ))
           ) : (
-            <p>
-              Статьи в данной категории отсутствуют.
-            </p>
+            <tr>
+              <td>Статьи в данной категории отсутствуют.</td>
+            </tr>
           )}
         </tbody>
       </table>
       <ModalReasons
         title={'Причина'}
         isOpen={showReason}
-        onClose={() => toggleReason('')}
+        onClose={() => toggleReason({})}
+        rejFields={reason.rejFields}
       >
-        {reasonMessage}
+        {reason.message}
       </ModalReasons>
+      <Modal
+        title={'Точно удалить?'}
+        isOpen={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        onConfirm={handleDelete}
+        twoBtns
+      />
     </div>
   );
 }

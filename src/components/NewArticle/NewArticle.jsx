@@ -5,21 +5,33 @@ import deleteIconW from 'images/delete-icon_white.svg';
 import deleteIconB from 'images/delete-icon_black.svg';
 import editIconW from 'images/edit-icon_white.svg';
 import editIconB from 'images/edit-icon_black.svg';
-import { langSelectOptions } from 'utils/constants';
 import { Dropdown, ModalRecommendation } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
-import { getCurrentTheme, getDraft } from 'store/selectors';
+import { getCurrentTheme } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
+import { useLocation } from 'react-router-dom';
 
-export default function NewArticle() {
+function createTitle(type) {
+  if (type === 'updated') return 'Внесение правок';
+  if (type === 'created_lang') return 'Перевод статьи';
+  return 'Создание новой статьи';
+}
+
+export default function NewArticle({ langsList, rejectFields, draft }) {
+  const location = useLocation();
   const theme = useSelector(getCurrentTheme);
-  const draft = useSelector(getDraft);
   const categories = useSelector(selectTitles);
   const dispatch = useDispatch();
   const [isShownAddRec, setIsShownAddRec] = useState(false);
   const editId = useRef('');
+
+  const isUpdate =
+    location.state?.type === 'updated' ||
+    location.state?.type === 'created_lang';
+
+  const mainTitle = createTitle(location.state?.type);
 
   const titlesList = useMemo(() => {
     if (!draft.lang) return [];
@@ -66,23 +78,31 @@ export default function NewArticle() {
 
   return (
     <section className="new-article">
-      <div className="new-article__container">
-        <h2 className="new-article__title">Создание новой статьи</h2>
-        <form action="">
-          <label className="new-article__label">
-            <span className="new-article__sub-title">Язык</span>
-            <Dropdown
-              id={'lang'}
-              name={'lang'}
-              options={langSelectOptions}
-              title={draft.lang || 'Выбор'}
-              onChange={changeField}
-            />
-          </label>
+      <h2 className="new-article__title">{mainTitle}</h2>
+      <form action="">
+        <label
+          className={`new-article__label${
+            location.state?.type !== 'updated'
+              ? ''
+              : ' new-article__label_disabled'
+          }`}
+        >
+          <span className="new-article__sub-title">Язык</span>
+          <Dropdown
+            id={'lang'}
+            name={'lang'}
+            options={langsList}
+            title={draft.lang || 'Выбор'}
+            onChange={changeField}
+          />
+        </label>
 
+        {!isUpdate && (
           <label
             className={`new-article__label${
-              draft.lang ? '' : ' new-article__label_disabled'
+              draft.lang && location.state?.name !== 'edit'
+                ? ''
+                : ' new-article__label_disabled'
             }`}
           >
             <span className="new-article__sub-title">Основная категория</span>
@@ -94,129 +114,157 @@ export default function NewArticle() {
               onChange={changeField}
             />
           </label>
+        )}
 
-          <label
-            className={`new-article__label${
-              draft.main_category ? '' : ' new-article__label_disabled'
-            }`}
-          >
-            <span className="new-article__sub-title">Подкатегория</span>
-            <input
-              disabled={!draft.main_category}
-              type="text"
-              name="sub_category"
-              placeholder="страна/город/улица/дом"
-              id="sub_category"
-              className="new-article__input"
-              size={32}
-              value={draft.sub_category}
-              onChange={(evt) => changeField('sub_category', evt.target.value)}
+        <label
+          className={`${
+            rejectFields.includes('sub_category') ? 'rejected ' : ''
+          }new-article__label${
+            draft.main_category || (isUpdate && draft.lang)
+              ? ''
+              : ' new-article__label_disabled'
+          }`}
+        >
+          <span className="new-article__sub-title">Подкатегория</span>
+          <input
+            disabled={
+              draft.main_category || (isUpdate && draft.lang) ? false : true
+            }
+            type="text"
+            name="sub_category"
+            placeholder="страна/город/улица/дом"
+            id="sub_category"
+            className="new-article__input"
+            size={32}
+            value={draft.sub_category}
+            onChange={(evt) => changeField('sub_category', evt.target.value)}
+          />
+        </label>
+
+        <label
+          className={`${
+            rejectFields.includes('image') ? 'rejected ' : ''
+          }new-article__label${
+            draft.main_category || (isUpdate && draft.lang)
+              ? ''
+              : ' new-article__label_disabled'
+          }`}
+        >
+          <span className="new-article__sub-title">Картинка статьи</span>
+          <input
+            disabled={
+              draft.main_category || (isUpdate && draft.lang) ? false : true
+            }
+            type="file"
+            name="main-image"
+            id="main-image"
+            className="new-article__main-image"
+            accept=".jpg, .png"
+            onChange={addFile}
+          />
+          {draft.image && (
+            <img
+              className="new-article__img"
+              src={draft.image}
+              alt="Ваша картинка"
             />
-          </label>
+          )}
+        </label>
 
-          <label
-            className={`new-article__label${
-              draft.main_category ? '' : ' new-article__label_disabled'
-            }`}
-          >
-            <span className="new-article__sub-title">Картинка статьи</span>
-            <input
-              disabled={!draft.main_category}
-              type="file"
-              name="main-image"
-              id="main-image"
-              className="new-article__main-image"
-              accept=".jpg, .png"
-              onChange={addFile}
-            />
-            {draft.image && (
-              <img
-                className="new-article__img"
-                src={draft.image}
-                alt="Ваша картинка"
-              />
-            )}
-          </label>
+        <label
+          className={`${
+            rejectFields.includes('title') ? 'rejected ' : ''
+          }new-article__label${
+            draft.main_category || (isUpdate && draft.lang)
+              ? ''
+              : ' new-article__label_disabled'
+          }`}
+        >
+          <span className="new-article__sub-title">Заголовок статьи</span>
+          <input
+            disabled={
+              draft.main_category || (isUpdate && draft.lang) ? false : true
+            }
+            type="text"
+            name="article-title"
+            id="article-title"
+            className="new-article__input new-article__input_article-header"
+            placeholder="Карточка товара в маркетплейсе"
+            value={draft.title}
+            onChange={(evt) => changeField('title', evt.target.value)}
+          />
+        </label>
 
-          <label
-            className={`new-article__label${
-              draft.main_category ? '' : ' new-article__label_disabled'
-            }`}
-          >
-            <span className="new-article__sub-title">Заголовок статьи</span>
-            <input
-              disabled={!draft.main_category}
-              type="text"
-              name="article-title"
-              id="article-title"
-              className="new-article__input new-article__input_article-header"
-              placeholder="Карточка товара в маркетплейсе"
-              value={draft.title}
-              onChange={(evt) => changeField('title', evt.target.value)}
-            />
-          </label>
+        <label
+          className={`${
+            rejectFields.includes('description') ? 'rejected ' : ''
+          }new-article__label${
+            draft.main_category || (isUpdate && draft.lang)
+              ? ''
+              : ' new-article__label_disabled'
+          }`}
+        >
+          <span className="new-article__sub-title">Контент статьи</span>
+          <textarea
+            disabled={
+              draft.main_category || (isUpdate && draft.lang) ? false : true
+            }
+            type="text"
+            name="article-content"
+            id="article-content"
+            className="new-article__input new-article__input_article-content"
+            placeholder="Введите текст статьи"
+            value={draft.description}
+            onChange={(evt) => changeField('description', evt.target.value)}
+          />
+        </label>
 
-          <label
-            className={`new-article__label${
-              draft.main_category ? '' : ' new-article__label_disabled'
-            }`}
-          >
-            <span className="new-article__sub-title">Контент статьи</span>
-            <textarea
-              disabled={!draft.main_category}
-              type="text"
-              name="article-content"
-              id="article-content"
-              className="new-article__input new-article__input_article-content"
-              placeholder="Введите текст статьи"
-              value={draft.description}
-              onChange={(evt) => changeField('description', evt.target.value)}
-            />
-          </label>
-
-          <div
-            className={`new-article__label${
-              draft.main_category ? '' : ' new-article__label_disabled'
-            }`}
-          >
-            <span className="new-article__sub-title">Рекомендации авторов</span>
-            <div className="new-article__recommendations">
-              <button
-                disabled={!draft.main_category}
-                className="new-article__recommendations-btn"
-                type="button"
-                onClick={toggleRecommendation}
-              >
-                <img src={plus} alt="Иконка добавления рекомендации" />
-                <span className="new-article__recommendations-tip">
-                  Добавить
-                </span>
-              </button>
-              <ul className="recommendations__list">
-                {draft.recommend_from_creator.map((item) => (
-                  <li className="recommendations__item" key={item.id}>
-                    <div className="rec-overlay">
-                      <img
-                        src={theme === 'light' ? editIconB : editIconW}
-                        alt="Изменить рекомендацию"
-                        className="rec-overlay__img"
-                        onClick={() => handleEdit(item.id)}
-                      />
-                      <img
-                        src={theme === 'light' ? deleteIconB : deleteIconW}
-                        alt="Удалить рекомендацию"
-                        className="rec-overlay__img"
-                        onClick={() => handleDelete(item.id)}
-                      />
-                    </div>
-                    <Recommend imageUrl={item.image} title={item.title} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div
+          className={`${
+            rejectFields.includes('recommend_from_creator') ? 'rejected ' : ''
+          }new-article__label${
+            draft.main_category || (isUpdate && draft.lang)
+              ? ''
+              : ' new-article__label_disabled'
+          }`}
+        >
+          <span className="new-article__sub-title">Рекомендации авторов</span>
+          <div className="new-article__recommendations">
+            <button
+              disabled={
+                draft.main_category || (isUpdate && draft.lang) ? false : true
+              }
+              className="new-article__recommendations-btn"
+              type="button"
+              onClick={toggleRecommendation}
+            >
+              <img src={plus} alt="Иконка добавления рекомендации" />
+              <span className="new-article__recommendations-tip">Добавить</span>
+            </button>
+            <ul className="recommendations__list">
+              {draft.recommend_from_creator.map((item) => (
+                <li className="recommendations__item" key={item.id}>
+                  <div className="rec-overlay">
+                    <img
+                      src={theme === 'light' ? editIconB : editIconW}
+                      alt="Изменить рекомендацию"
+                      className="rec-overlay__img"
+                      onClick={() => handleEdit(item.id)}
+                    />
+                    <img
+                      src={theme === 'light' ? deleteIconB : deleteIconW}
+                      alt="Удалить рекомендацию"
+                      className="rec-overlay__img"
+                      onClick={() => handleDelete(item.id)}
+                    />
+                  </div>
+                  <Recommend imageUrl={item.image} title={item.title} />
+                </li>
+              ))}
+            </ul>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <ModalRecommendation
         isOpen={isShownAddRec}
         onClose={handleClose}

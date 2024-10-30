@@ -52,13 +52,13 @@ export default function SideBar({ section, setSection }) {
       setResults(results);
     } else setResults(null);
   }
+  
+  const searchWithDelay = debounce(handleSearch, 500);
 
   function changeSection(section) {
     setIsOpen(false);
     setSection(section);
   }
-
-  const searchWithDelay = debounce(handleSearch, 500);
 
   return (
     <nav className="sidebar">
@@ -101,7 +101,7 @@ export default function SideBar({ section, setSection }) {
           <ul className="sidebar__list">
             {results.length
               ? results.map((item) => (
-                  <ResultItem item={item} language={language} />
+                  <ResultItem item={item} language={language} key={item.uuid} />
                 ))
               : 'Ничего не найдено'}
           </ul>

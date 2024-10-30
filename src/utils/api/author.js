@@ -23,6 +23,18 @@ class AuthorApi {
     return this._checkResponse(response);
   }
 
+  async searchByTitles({ status, pagination, text }) {
+    const response = await fetch(
+      `${this._baseUrl}/user_updates_fts_p/${status}/1;${pagination}/${text}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include',
+      }
+    );
+    return this._checkResponse(response);
+  }
+
   async checkRecommend(lang, id) {
     const response = await fetch(
       `${this._baseUrl}/check_recommend/${lang}/${id}`,
@@ -35,12 +47,31 @@ class AuthorApi {
     return this._checkResponse(response);
   }
 
-  async createNew(type, data) { 
-    const response = await fetch(`${this._baseUrl}/user_create_${type}_p`, {
+  async addCreation(type, data) {
+    const response = await fetch(`${this._baseUrl}/user_${type}_p`, {
       method: 'POST',
       headers: this._headers,
       credentials: 'include',
       body: JSON.stringify(data),
+    });
+    return this._checkResponse(response);
+  }
+
+  async deleteDraft(uuid) {
+    const response = await fetch(`${this._baseUrl}/user_delete_draft_p`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify({ uuid }),
+    });
+    return this._checkResponse(response);
+  }
+
+  async getCreation(type, id) {
+    const response = await fetch(`${this._baseUrl}/user_find_${type}_p/${id}`, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }

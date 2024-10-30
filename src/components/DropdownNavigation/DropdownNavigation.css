@@ -162,6 +162,11 @@
   height: 34px;
 }
 
+.hash_link {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 @keyframes downAni {
   0% {
     transform: translateY(-1%);

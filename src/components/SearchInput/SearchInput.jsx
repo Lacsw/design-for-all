@@ -21,14 +21,14 @@ export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
 
   const handleLoupeClick = () => {
     setIsShown(true);
-    onSearch(true);
-    onOpen(false);
+    onSearch && onSearch(true);
+    onOpen && onOpen(false);
   };
 
   const handleCloseClick = () => {
     setIsShown(false);
-    onSearch(false);
-    onResults(null);
+    onSearch && onSearch(false);
+    onResults && onResults(null);
   };
 
   return (

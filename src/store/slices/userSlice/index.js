@@ -45,6 +45,9 @@ const userSlice = createSlice({
          state.draft.recommend_from_creator = [];
       }
     },
+    prepareDraft: (state, action) => {
+      Object.assign(state.draft, action.payload);
+    },
     resetDraft: (state) => {
       state.draft = initialState.draft;
     },
@@ -57,6 +60,7 @@ export const {
   signInFailure,
   changeLanguage,
   changeDraft,
+  prepareDraft,
   resetDraft,
 } = userSlice.actions;
 

@@ -1,0 +1,33 @@
+.article-header__edit-wrapper {
+  position: relative;
+  width: 26px;
+  height: 26px;
+}
+
+.edit-list {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  padding: 3px;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--color-main);
+}
+
+.edit-list__item {
+  cursor: pointer;
+}
+
+.edit-list__item_disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.edit-list__img {
+  display: block;
+  width: 20px;
+}

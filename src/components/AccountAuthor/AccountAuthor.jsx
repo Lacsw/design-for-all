@@ -3,12 +3,12 @@ import './AccountAuthor.css';
 import {
   AuthorArticlesNav,
   AuthorArticlesList,
-  NewArticle,
   Profile,
   Account,
   NotFound,
   NewArticleNavbar,
   AuthorNavbar,
+  Creation,
 } from 'components';
 
 import authorApi from 'utils/api/author';
@@ -21,7 +21,6 @@ export default function AccountAuthor({ hash, resetSection }) {
   const user = useSelector((state) => state.user.currentUser);
   const [, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [pagination, setPagination] = useState('20');
   const [tab, setTab] = useState('approve');
   const isValid = Object.values(hashPaths).includes(hash);
@@ -31,26 +30,26 @@ export default function AccountAuthor({ hash, resetSection }) {
 
   useEffect(() => {
     if (!isValid) return;
+    if (!access) {
+      setSearchParams({ 'modal-auth': 'login' });
+      return;
+    }
     if (hash === hashPaths.articles) {
       navigate(hash + '/' + tab);
       return;
     }
-    if (isValid && !user) {
-      setSearchParams({ 'modal-auth': 'login' });
-    } else {
-      setIsLoading(true);
+    if (hash !== hashPaths.newArticle && hash !== hashPaths.profile) {
       authorApi
         .getArticles({ pagination: pagination, status: tab })
         .then(setArticles)
-        .catch(() => setArticles([]))
-        .finally(() => setIsLoading(false));
+        .catch(() => setArticles([]));
     }
-  }, [pagination, tab, isValid, user, setSearchParams, hash, navigate]);
+  }, [pagination, tab, isValid, access, setSearchParams, hash, navigate]);
 
   return access ? (
     <Account navBar={<NavBar />}>
       {hash === hashPaths.newArticle ? (
-        <NewArticle />
+        <Creation />
       ) : hash === hashPaths.profile ? (
         <Profile />
       ) : (
@@ -60,7 +59,12 @@ export default function AccountAuthor({ hash, resetSection }) {
             selected={tab}
             onChange={setTab}
           />
-          {!isLoading && <AuthorArticlesList articles={articles} />}
+          <AuthorArticlesList
+            articles={articles}
+            section={tab}
+            changeList={setArticles}
+            pagination={pagination}
+          />
         </div>
       )}
     </Account>

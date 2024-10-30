@@ -21,10 +21,12 @@ import enFlag from 'images/en-flag-icon.svg';
 import spaFlag from 'images/spa-flag-icon.svg';
 import usdIcon from 'images/dollar-icon.svg';
 import usdIconWhite from 'images/dollar-icon_white.svg';
-import changeIconBlack from 'images/change-icon-black.svg';
+import changeIconB from 'images/change-icon-black.svg';
+import changeIconW from 'images/change-icon.svg';
 import dotsIconB from 'images/dots-icon-white.svg';
 import dotsIconW from 'images/dots-icon.svg';
-import giveTranslationBlack from 'images/give-translation-black.svg';
+import translateIconB from 'images/translate-icon_black.svg';
+import translateIconW from 'images/translate-icon_white.svg';
 //socials
 import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
@@ -38,6 +40,17 @@ import pinterest from 'images/socials/pinterest-icon.svg';
 import whatsapp from 'images/socials/whatsapp-icon.svg';
 import xBlack from 'images/socials/x-icon_black.svg';
 import xWhite from 'images/socials/x-icon_white.svg';
+//AuthorArticlesList buttons
+import editIconB from 'images/account/edit-icon_black.svg';
+import editIconW from 'images/account/edit-icon_white.svg';
+import viewIconB from 'images/account/view-icon_black.svg';
+import viewIconW from 'images/account/view-icon_white.svg';
+import draftIconB from 'images/account/draft-icon_black.svg';
+import draftIconW from 'images/account/draft-icon_white.svg';
+import deleteIconB from 'images/account/delete-icon_black.svg';
+import deleteIconW from 'images/account/delete-icon_white.svg';
+import reasonIconB from 'images/account/reason-icon_black.svg';
+import reasonIconW from 'images/account/reason-icon_white.svg';
 
 export const langSelectOptions = [
   { label: 'Русский', value: 'ru' },
@@ -147,11 +160,11 @@ export const languageList = [
 
 export const editList = [
   { name: 'menu', dark: dotsIconW, light: dotsIconB },
-  { name: 'edit', dark: changeIconBlack, light: changeIconBlack },
+  { name: 'correct', dark: changeIconB, light: changeIconW },
   {
-    name: 'translation',
-    dark: giveTranslationBlack,
-    light: giveTranslationBlack,
+    name: 'translate',
+    dark: translateIconB,
+    light: translateIconW,
   },
 ];
 
@@ -180,3 +193,41 @@ export const socialIcons = {
   whatsapp,
   x: { light: xBlack, dark: xWhite },
 };
+
+const editButton = {
+  name: 'edit',
+  dark: editIconB,
+  light: editIconW,
+}
+
+const viewButton = {
+  name: 'view',
+  dark: viewIconB,
+  light: viewIconW,
+}
+
+const draftButton = {
+  name: 'draft',
+  dark: draftIconB,
+  light: draftIconW,
+}
+
+const deleteButton = {
+  name: 'delete',
+  dark: deleteIconB,
+  light: deleteIconW
+}
+
+const reasonButton = {
+  name: 'reason',
+  dark: reasonIconB,
+  light: reasonIconW
+}
+
+export const tableButtons = {
+  approve: [viewButton, draftButton, reasonButton],
+  drafted: [editButton, deleteButton, null],
+  offered: [viewButton, null, null],
+  rejected: [viewButton, draftButton, reasonButton],
+  deleted: [reasonButton, null, null]
+}

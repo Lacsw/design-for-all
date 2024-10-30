@@ -11,7 +11,7 @@ export default function ResultItem({ language, item }) {
   return (
     <li className="sidebar__item">
       <Link
-        to={language + '/' + item.uuid}
+        to={'/' + language + '/' + item.uuid}
         className="sidebar__link"
         ref={textRef}
       />

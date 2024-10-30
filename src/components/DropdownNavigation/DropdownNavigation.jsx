@@ -131,7 +131,15 @@ export default function DropdownNavigation({
                       <img src={option.src} alt={option.name} />
                     </NavLink>
                   ) : (
-                    <NavLink to={option.link}>
+                    <NavLink
+                      to={option.link}
+                      className={
+                        window.location.hash === '#/author/new-article' &&
+                        option.name === 'Написать статью'
+                          ? 'hash_link'
+                          : ''
+                      }
+                    >
                       <img src={option.src} alt={option.name} />
                     </NavLink>
                   )}

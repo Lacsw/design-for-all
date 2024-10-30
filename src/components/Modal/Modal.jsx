@@ -18,17 +18,17 @@ const Modal = ({
     if (isOpen) {
       const closeByEsc = (evt) => {
         if (evt.key === 'Escape') {
-          onClose();
+          twoBtns ? onClose() : onConfirm();
         }
       };
       document.addEventListener('keydown', closeByEsc);
       return () => document.removeEventListener('keydown', closeByEsc);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, onConfirm, twoBtns]);
 
   const closeByOver = (evt) => {
     if (evt.target.classList.contains('modal')) {
-      onClose();
+      twoBtns ? onClose() : onConfirm();
     }
   };
 
