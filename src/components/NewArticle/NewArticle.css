@@ -140,7 +140,7 @@
     .new-article__main-image,
     .new-article__recommendations
   ) {
-  border: 2px solid var(--color-failure);
+  outline: 2px solid var(--color-failure);
 }
 
 .rec-overlay {

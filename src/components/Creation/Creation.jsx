@@ -9,6 +9,7 @@ import previewImage from 'images/article/preview.png';
 import { langSelectOptions } from 'utils/constants';
 import './Creation.css';
 import { getDraft } from 'store/selectors';
+import formatRecommends from 'utils/helpers/formatRecommends';
 
 const Creation = () => {
   const location = useLocation();
@@ -30,26 +31,35 @@ const Creation = () => {
       const type = location.state.name === 'edit' ? 'draft' : 'update';
       authorApi
         .getCreation(type, location.state.draft)
+        .then(formatRecommends)
         .then((data) => {
           original.current = data.what_update;
           rejectFields.current = data.offered_update?.rejected_fields || [];
           const newDraft = {
-            lang: data.offered_update?.lang,
-            sub_category: data.offered_update?.sub_category || '',
-            image: data.offered_update?.image && previewImage,
-            title: data.offered_update?.title || '',
-            description: data.offered_update?.description || '',
+            lang: data.lang || data.offered_update?.lang,
+            main_category:
+              data.main_category || data.offered_update?.main_category,
+            sub_category:
+              data.sub_category || data.offered_update?.sub_category || '',
+            image: previewImage,
+            title: data.title || data.offered_update?.title || '',
+            description:
+              data.description || data.offered_update?.description || '',
             recommend_from_creator:
-              data.offered_update?.recommend_from_creator || [],
+              data.recommend_from_creator ||
+              data.offered_update.recommend_from_creator ||
+              [],
           };
-          if (data.offered_update?.type !== 'created') {
-            newDraft.what_update = data.what_update?.uuid;
+          if (data.type !== 'created') {
+            newDraft.what_update = data.offered_update?.what_update;
+            original.current.image = previewImage;
+          }
+          if (data.offered_update?.type === 'updated') {
+            original.current.lang = data.offered_update?.lang;
           }
           if (data.offered_update?.type === 'created_lang') {
-            newDraft.what_update_lang = data.what_update?.lang;
-          }
-          if (data.offered_update?.type === 'created') {
-            newDraft.main_category = data.offered_update?.main_category;
+            original.current.lang = data.offered_update?.what_update_lang;
+            newDraft.what_update_lang = data.offered_update?.what_update_lang;
           }
           if (location.state.name === 'edit') {
             newDraft.uuid = location.state.draft;
@@ -57,7 +67,7 @@ const Creation = () => {
           dispatch(prepareDraft(newDraft));
         })
         .catch((err) => console.log(err))
-        .finally(() => setLoading(false)); // попробуй потом перенести в конец функции для проверки асинхрона
+        .finally(() => setLoading(false));
     }
     if (
       location.state.name === 'correct' ||
@@ -77,8 +87,10 @@ const Creation = () => {
       dispatch(
         prepareDraft({
           lang: location.state.lang,
+          main_category: 'ok',
           sub_category: article.publication.sub_category,
           what_update: location.state.original,
+          recommend_from_creator: article.recommend,
         })
       );
       setLoading(false);
@@ -89,6 +101,7 @@ const Creation = () => {
       );
       dispatch(
         prepareDraft({
+          main_category: 'ok',
           what_update: location.state.original,
           what_update_lang: location.state.lang,
         })
@@ -107,7 +120,9 @@ const Creation = () => {
           : 'account__draft'
       }
     >
-      {original.current && <ViewArticle original={original.current} title={'Оригинал статьи'} />}
+      {original.current && (
+        <ViewArticle original={original.current} title={'Оригинал статьи'} />
+      )}
       {location.state?.name === 'view' ? (
         <ViewArticle original={draft} rejectFields={rejectFields.current} />
       ) : (

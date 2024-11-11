@@ -71,6 +71,7 @@
 .view-article__input_article-content {
   width: 100%;
   padding: 10px 16px;
+  min-height: 100px;
   max-height: 500px;
   overflow: auto;
 }
@@ -160,5 +161,5 @@
     .view-article__img,
     .view-article__recommendations
   ) {
-  border: 2px solid var(--color-failure);
+  outline: 2px solid var(--color-failure);
 }

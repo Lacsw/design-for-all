@@ -45,7 +45,7 @@ export default function ModalRecommendation({
     const articlePath = inputValue.match(pathRegex);
     const splitPath = articlePath[0].split('/');
     const isDouble = draft.recommend_from_creator.some(
-      (item) => item.id === splitPath[1]
+      (item) => item.uuid === splitPath[1]
     );
     if (isDouble) {
       setError(doubleError);
@@ -59,7 +59,7 @@ export default function ModalRecommendation({
     authorApi
       .checkRecommend(splitPath[0], splitPath[1])
       .then(({ image, title }) => {
-        recommendRef.current = { image, title, id: splitPath[1] };
+        recommendRef.current = { image, title, uuid: splitPath[1] };
       })
       .catch(() => setError(fetchError))
       .finally(() => setLoading(false));
@@ -81,7 +81,7 @@ export default function ModalRecommendation({
     let recommends;
     if (editId) {
       recommends = draft.recommend_from_creator.map(item => {
-        if (item.id === editId) return recommendRef.current;
+        if (item.uuid === editId) return recommendRef.current;
         return item;
       });
     } else recommends = [...draft.recommend_from_creator, recommendRef.current];

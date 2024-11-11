@@ -57,7 +57,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
 
   function handleDelete(id) {
     const recommends = draft.recommend_from_creator.filter(
-      (rec) => rec.id !== id
+      (rec) => rec.uuid !== id
     );
     changeField('recommend_from_creator', recommends);
   }
@@ -82,7 +82,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
       <form action="">
         <label
           className={`new-article__label${
-            location.state?.type !== 'updated'
+            location.state?.name === 'translate' || !location.state
               ? ''
               : ' new-article__label_disabled'
           }`}
@@ -243,19 +243,19 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
             </button>
             <ul className="recommendations__list">
               {draft.recommend_from_creator.map((item) => (
-                <li className="recommendations__item" key={item.id}>
+                <li className="recommendations__item" key={item.uuid}>
                   <div className="rec-overlay">
                     <img
                       src={theme === 'light' ? editIconB : editIconW}
                       alt="Изменить рекомендацию"
                       className="rec-overlay__img"
-                      onClick={() => handleEdit(item.id)}
+                      onClick={() => handleEdit(item.uuid)}
                     />
                     <img
                       src={theme === 'light' ? deleteIconB : deleteIconW}
                       alt="Удалить рекомендацию"
                       className="rec-overlay__img"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDelete(item.uuid)}
                     />
                   </div>
                   <Recommend imageUrl={item.image} title={item.title} />

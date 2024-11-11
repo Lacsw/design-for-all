@@ -39,12 +39,13 @@ export default function NewArticleNavbar() {
   const buttonsNames = defineNames(location.state);
 
   function handleSave({ target }) {
-    const onlyId = draft.recommend_from_creator.map((item) => item.id);
+    const onlyId = draft.recommend_from_creator.map((item) => item.uuid);
     const modDraft = {
       ...draft,
       image: '',
       recommend_from_creator: onlyId,
     };
+    if (target.name !== 'update_draft') delete modDraft.uuid;
     authorApi
       .addCreation(target.name, modDraft)
       .then(() => navigate(hashPaths.articles))

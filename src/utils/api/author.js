@@ -47,6 +47,18 @@ class AuthorApi {
     return this._checkResponse(response);
   }
 
+  async getRecommends(lang, ids) {
+    const response = await fetch(
+      `${this._baseUrl}/user_get_recomm_by_uuids/${lang}/${ids};`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include',
+      }
+    );
+    return this._checkResponse(response);
+  }
+
   async addCreation(type, data) {
     const response = await fetch(`${this._baseUrl}/user_${type}_p`, {
       method: 'POST',
