@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import './AuthorArticlesList.css';
 import { SearchInput, ModalReasons, Modal } from 'components';
@@ -21,7 +21,36 @@ export default function AuthorArticlesList({
   const [showReason, setShowReason] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [reason, setReason] = useState({});
-  
+  const bodyRef = useRef(null);
+  const page = useRef(1);
+
+  useEffect(() => {
+    page.current = 1;
+    bodyRef.current.scrollTo(0, 0);
+  }, [section, pagination]);
+
+  useEffect(() => {
+    const tbody = bodyRef.current;
+    tbody.addEventListener('scroll', scrollWithDelay);
+    return () => tbody.removeEventListener('scroll', scrollWithDelay);
+  });
+
+  function handleScroll(evt) {
+    if (
+      evt.target.scrollHeight -
+        (evt.target.scrollTop + evt.target.offsetHeight) <
+      100
+    ) {
+      page.current++;
+      authorApi
+        .getArticles({ pagination, status: section, page: page.current })
+        .then((data) => changeList((prev) => [...prev, ...data]))
+        .catch((err) => console.log(err));
+    }
+  }
+
+  const scrollWithDelay = debounce(handleScroll, 200);
+
   function handleClick(article, name) {
     switch (name) {
       case 'edit':
@@ -97,7 +126,7 @@ export default function AuthorArticlesList({
           </tr>
         </thead>
 
-        <tbody className="author-articles-list__table-body">
+        <tbody className="author-articles-list__table-body" ref={bodyRef}>
           {articles.length ? (
             articles.map((article) => (
               <tr

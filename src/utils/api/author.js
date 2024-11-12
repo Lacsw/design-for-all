@@ -12,9 +12,9 @@ class AuthorApi {
     }
   }
 
-  async getArticles({ pagination, status }) {
-    let path = `user_find_updates/${status}/1;${pagination}`;
-    if (status === 'drafted') path = 'user_find_drafts_p/1;' + pagination;
+  async getArticles({ pagination, status, page = 1 }) {
+    let path = `user_find_updates/${status}/${page};${pagination}`;
+    if (status === 'drafted') path = `user_find_drafts_p/${page};${pagination}`;
     const response = await fetch(`${this._baseUrl}/${path}`, {
       method: 'GET',
       headers: this._headers,

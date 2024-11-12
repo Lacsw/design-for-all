@@ -3,11 +3,14 @@ import { useState } from 'react';
 import './NewArticleNavbar.css';
 import publishIcon from 'images/account/publish-icon.svg';
 import saveDraftIcon from 'images/account/save-draft-icon.svg';
-import cancelIcon from 'images/account/cancel-icon.svg';
+import cancelIconW from 'images/account/cancel-icon.svg';
+import cancelIconB from 'images/account/cancel-icon_black.svg';
+import backIconW from 'images/account/logout-icon.svg';
+import backIconB from 'images/account/logout-icon_black.svg';
 import { ModalAttention } from 'components';
 import authorApi from 'utils/api/author';
 import { useSelector } from 'react-redux';
-import { getDraft } from 'store/selectors';
+import { getCurrentTheme, getDraft } from 'store/selectors';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authorArticlesTabs, hashPaths } from 'utils/constants';
 
@@ -23,8 +26,20 @@ function defineNames(state) {
   return names;
 }
 
+const icons = {
+  cancel: {
+    dark: cancelIconW,
+    light: cancelIconB
+  },
+  back: {
+    dark: backIconW,
+    light: backIconB
+  }
+};
+
 export default function NewArticleNavbar() {
   const location = useLocation();
+  const theme = useSelector(getCurrentTheme);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const draft = useSelector(getDraft);
   const navigate = useNavigate();
@@ -37,6 +52,7 @@ export default function NewArticleNavbar() {
   const publishDisabled = Object.values(draft).some((item) => !item);
   const draftDisabled = location.state ? !draft.lang : !draft.lang || !draft.main_category;
   const buttonsNames = defineNames(location.state);
+  const icon = location.state?.name === 'view' ? icons.back[theme] : icons.cancel[theme];
 
   function handleSave({ target }) {
     const onlyId = draft.recommend_from_creator.map((item) => item.uuid);
@@ -91,7 +107,7 @@ export default function NewArticleNavbar() {
             className="link-button"
             onClick={() => navigate(-1)}
           >
-            <img src={cancelIcon} alt="" />
+            <img src={icon} alt="Вернуться" />
             {location.state?.name === 'view' ? 'Назад' : 'Отменить'}
           </button>
         </li>
