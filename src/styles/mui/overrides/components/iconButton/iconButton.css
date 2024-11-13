@@ -1,7 +1,15 @@
+:root {
+  --icon-btn-smallest: 22px;
+  --icon-btn-small: 24px;
+  --icon-btn-medium: 26px;
+  --icon-btn-mediumer: 36px;
+  --icon-btn-large: 44px;
+}
+
 .MuiIconButton-root {
   /* default size - medium. Class - .MuiIconButton-sizeMedium */
-  width: 26px;
-  height: 26px;
+  width: var(--icon-btn-medium);
+  height: var(--icon-btn-medium);
   padding: 0;
 
   /* Default theme is dark, so the environment is dark too, so button is bright */
@@ -78,16 +86,16 @@
 /* ----- ------ ----- */
 /* ----- SIZING ----- */
 .MuiIconButton-sizeSmallest.MuiIconButton-root {
-  width: 22px;
-  height: 22px;
+  width: var(--icon-btn-smallest);
+  height: var(--icon-btn-smallest);
 
   .MuiSvgIcon-root {
     font-size: 10px;
   }
 }
 .MuiIconButton-sizeSmall.MuiIconButton-root {
-  width: 24px;
-  height: 24px;
+  width: var(--icon-btn-small);
+  height: var(--icon-btn-small);
 
   .MuiSvgIcon-root {
     font-size: 14px;
@@ -95,16 +103,16 @@
 }
 /* mediumer > medium. medium is default */
 .MuiIconButton-sizeMediumer.MuiIconButton-root {
-  width: 36px;
-  height: 36px;
+  width: var(--icon-btn-mediumer);
+  height: var(--icon-btn-mediumer);
 
   .MuiSvgIcon-root {
     font-size: 14px;
   }
 }
 .MuiIconButton-sizeLarge.MuiIconButton-root {
-  width: 44px;
-  height: 44px;
+  width: var(--icon-btn-large);
+  height: var(--icon-btn-large);
 
   .MuiSvgIcon-root {
     font-size: 14px;

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MenuItem, Select, Icon, Tooltip } from '@mui/material';
-import TitleIcon from '@mui/icons-material/Title';
+import { MenuItem, Select, Icon } from '@mui/material';
 import clsx from 'clsx';
 import {
   COMMANDS_NAMES,
   isCommandActive,
   tiptapCommands,
 } from 'components/RichTextEditor/helpers';
+import { iconButtonSizes } from 'styles/mui/overrides/components/iconButton';
 
 const commandsForSelector = [
   COMMANDS_NAMES.paragraph,
@@ -32,38 +32,14 @@ export const TextTypeSelector = ({
   flag,
   size = 'small',
 }) => {
-  const [textKind, setTextKind] = useState(() => getCurrentTypeOfText(editor));
+  const ref = useRef(null);
 
-  const mouseFlag = useRef(false);
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [textKind, setTextKind] = useState(() => getCurrentTypeOfText(editor));
 
   const handleTextKindChange = (event) => {
     const commandName = event.target.value;
     setTextKind(commandName);
     tiptapCommands[commandName](editor);
-  };
-
-  const handleSelectorOpen = (event) => {
-    setIsSelectorOpen(true);
-  };
-  const handleSelectorClose = (event) => {
-    setIsSelectorOpen(false);
-    setIsTooltipOpen(false);
-  };
-
-  const handleSelectorMouseOver = (event) => {
-    mouseFlag.current = true;
-    setTimeout(() => {
-      if (!isSelectorOpen && mouseFlag.current) {
-        setIsTooltipOpen(true);
-      }
-    }, 1000);
-  };
-
-  const handleSelectorMouseLeave = (event) => {
-    mouseFlag.current = false;
-    setIsTooltipOpen(false);
   };
 
   useEffect(() => {
@@ -73,63 +49,56 @@ export const TextTypeSelector = ({
     }
   }, [flag, editor]);
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.style.setProperty('--size', iconButtonSizes.inPx(size));
+      ref.current.style.setProperty(
+        '--icon-size',
+        iconButtonSizes.svg.inPx(size)
+      );
+    }
+  }, [size, ref]);
+
   return (
-    <Tooltip
-      title="Тип текста"
-      open={!isSelectorOpen && isTooltipOpen}
-      enterDelay={500}
-      enterNextDelay={500}
+    <Select
+      ref={ref}
+      className={clsx(
+        'rte__selector',
+        'rte__selector_text-kind',
+        'inverted',
+        `rte__selector_size_${size}`,
+        className
+      )}
+      value={textKind}
+      onChange={handleTextKindChange}
+      MenuProps={{
+        classes: {
+          root: clsx('rte__selector-menu-root', size, menuClasses?.root),
+          paper: clsx('rte__selector-menu-paper', menuClasses?.paper),
+          list: clsx('rte__selector-menu-list', size, menuClasses?.list),
+        },
+      }}
     >
-      <Select
-        className={clsx(
-          'rte__selector',
-          'rte__selector_text-kind',
-          className,
-          'inverted',
-          `rte__selector_size_${size}`
-        )}
-        value={textKind}
-        onChange={handleTextKindChange}
-        onOpen={handleSelectorOpen}
-        onClose={handleSelectorClose}
-        onMouseOver={handleSelectorMouseOver}
-        onMouseLeave={handleSelectorMouseLeave}
-        MenuProps={{
-          classes: {
-            root: clsx('rte__selector-menu-root', menuClasses?.root),
-            paper: clsx('rte__selector-menu-paper', menuClasses?.paper),
-            list: clsx('rte__selector-menu-list', menuClasses?.list),
-          },
-        }}
-      >
-        <MenuItem value={COMMANDS_NAMES.paragraph}>
-          <TitleIcon fontSize={size} />
-        </MenuItem>
+      <MenuItem value={COMMANDS_NAMES.paragraph}>
+        {/* <TitleIcon fontSize={size} /> */}
+        <Icon fontSize={size}>T</Icon>
+      </MenuItem>
 
-        <MenuItem value={COMMANDS_NAMES.heading1}>
-          <Icon className="font-icon" fontSize={size}>
-            H1
-          </Icon>
-        </MenuItem>
+      <MenuItem value={COMMANDS_NAMES.heading1}>
+        <Icon fontSize={size}>H₁</Icon>
+      </MenuItem>
 
-        <MenuItem value={COMMANDS_NAMES.heading2}>
-          <Icon className="font-icon" fontSize={size}>
-            H2
-          </Icon>
-        </MenuItem>
+      <MenuItem value={COMMANDS_NAMES.heading2}>
+        <Icon fontSize={size}>H₂</Icon>
+      </MenuItem>
 
-        <MenuItem value={COMMANDS_NAMES.heading3}>
-          <Icon className="font-icon" fontSize={size}>
-            H3
-          </Icon>
-        </MenuItem>
+      <MenuItem value={COMMANDS_NAMES.heading3}>
+        <Icon fontSize={size}>H₃</Icon>
+      </MenuItem>
 
-        <MenuItem value={COMMANDS_NAMES.heading4}>
-          <Icon className="font-icon" fontSize={size}>
-            H4
-          </Icon>
-        </MenuItem>
-      </Select>
-    </Tooltip>
+      <MenuItem value={COMMANDS_NAMES.heading4}>
+        <Icon fontSize={size}>H₄</Icon>
+      </MenuItem>
+    </Select>
   );
 };
