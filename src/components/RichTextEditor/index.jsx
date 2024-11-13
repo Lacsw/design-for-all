@@ -2,12 +2,16 @@
 import { ListItemCustom } from './extensions/listItem';
 
 // extensions
+import Dropcursor from '@tiptap/extension-dropcursor';
+// eslint-disable-next-line import/no-unresolved
+import ImageRTE from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorContent, useEditor } from '@tiptap/react';
 
 // icons
+import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
@@ -108,6 +112,13 @@ export const RichTextEditor = memo(function RichTextEditor({
       placeholder: 'Введите текст',
     }),
     ListItemCustom,
+    ImageRTE.configure({
+      allowBase64: true,
+      HTMLAttributes: {
+        class: 'rte__node rte__node_img',
+      },
+    }),
+    Dropcursor,
   ];
 
   // Объединение заданных настроек с настройками по умолчанию
@@ -227,6 +238,15 @@ export const RichTextEditor = memo(function RichTextEditor({
             inFocusWithin={inFocusWithin}
           >
             <FormatBoldIcon />
+          </RteButton>
+
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.img}
+            inFocusWithin={inFocusWithin}
+          >
+            <AddPhotoAlternateRoundedIcon />
           </RteButton>
 
           <RteButton

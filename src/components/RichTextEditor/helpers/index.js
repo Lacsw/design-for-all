@@ -20,6 +20,7 @@ export const COMMANDS_NAMES = {
   orderedList: 'orderedList',
   subscript: 'subscript',
   superscript: 'superscript',
+  img: 'image',
 };
 
 export const tiptapCommands = {
@@ -123,30 +124,35 @@ export const tiptapCommands = {
     editor?.chain().focus().toggleSubscript().run(),
   [COMMANDS_NAMES.superscript]: (editor) =>
     editor?.chain().focus().toggleSuperscript().run(),
+  [COMMANDS_NAMES.img]: (editor) => {
+    const url = window.prompt('URL');
+    editor?.chain().focus().setImage({ src: url }).run();
+  },
 };
 
 /** Человеческие названия команд на русском языке */
 export const buttonsHeadings = {
-  paragraph: 'Обычный текст',
-  heading1: 'Заголовок 1',
-  heading2: 'Заголовок 2',
-  heading3: 'Заголовок 3',
-  heading4: 'Заголовок 4',
-  // heading5: 'Заголовок 5',
-  // heading6: 'Заголовок 6',
-  italic: 'Курсив',
-  bold: 'Жирный',
-  underline: 'Подчеркивание',
-  code: 'Код',
-  codeBlock: 'Блок кода',
-  left: 'Выровнять по левому краю',
-  center: 'Выровнять по центру',
-  right: 'Выровнять по правому краю',
-  justify: 'Выровнять по ширине',
-  bulletList: 'Маркированный список',
-  orderedList: 'Нумерованный список',
-  subscript: 'Нижний индекс',
-  superscript: 'Верхний индекс',
+  [COMMANDS_NAMES.paragraph]: 'Обычный текст',
+  [COMMANDS_NAMES.heading1]: 'Заголовок 1',
+  [COMMANDS_NAMES.heading2]: 'Заголовок 2',
+  [COMMANDS_NAMES.heading3]: 'Заголовок 3',
+  [COMMANDS_NAMES.heading4]: 'Заголовок 4',
+  // [COMMANDS_NAMES.heading5]: 'Заголовок 5',
+  // [COMMANDS_NAMES.heading6]: 'Заголовок 6',
+  [COMMANDS_NAMES.italic]: 'Курсив',
+  [COMMANDS_NAMES.bold]: 'Жирный',
+  [COMMANDS_NAMES.underline]: 'Подчеркивание',
+  [COMMANDS_NAMES.code]: 'Код',
+  [COMMANDS_NAMES.codeBlock]: 'Блок кода',
+  [COMMANDS_NAMES.left]: 'Выровнять по левому краю',
+  [COMMANDS_NAMES.center]: 'Выровнять по центру',
+  [COMMANDS_NAMES.right]: 'Выровнять по правому краю',
+  [COMMANDS_NAMES.justify]: 'Выровнять по ширине',
+  [COMMANDS_NAMES.bulletList]: 'Маркированный список',
+  [COMMANDS_NAMES.orderedList]: 'Нумерованный список',
+  [COMMANDS_NAMES.subscript]: 'Нижний индекс',
+  [COMMANDS_NAMES.superscript]: 'Верхний индекс',
+  [COMMANDS_NAMES.img]: 'Вставить изображение',
 };
 
 /**
