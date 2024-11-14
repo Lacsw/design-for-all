@@ -5,6 +5,7 @@ import { getLanguage, getCurrentTheme } from 'store/selectors';
 import { changeLanguage, signInSuccess } from 'store/slices';
 import './DropdownNavigation.css';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
+import authApi from 'utils/api/auth';
 
 export default function DropdownNavigation({
   options,
@@ -25,9 +26,14 @@ export default function DropdownNavigation({
   const theme = useSelector(getCurrentTheme);
   const langSrc = options.find((item) => item.name === language)?.src;
 
-  function handleLogout() {
-    resetSection();
-    dispatch(signInSuccess(''));
+  async function handleLogout() {
+    authApi
+      .logout()
+      .then(() => {
+        resetSection();
+        dispatch(signInSuccess(''));
+      })
+      .catch((err) => console.log(err));
   }
 
   const handleOptionClick = (option) => {
