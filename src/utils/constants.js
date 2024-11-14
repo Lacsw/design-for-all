@@ -27,6 +27,7 @@ import dotsIconB from 'images/dots-icon-white.svg';
 import dotsIconW from 'images/dots-icon.svg';
 import translateIconB from 'images/translate-icon_black.svg';
 import translateIconW from 'images/translate-icon_white.svg';
+import createUser from 'images/admin/create-user.svg';
 //socials
 import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
@@ -147,6 +148,29 @@ export const accountNavigationList = [
   { name: 'Выйти', src: exitBlack, link: '/' },
 ];
 
+export const adminNavList = [
+  {
+    name: 'Заявки',
+    src: articleBlack,
+    link: '/#/admin/requests',
+  },
+  {
+    name: 'Создать пользователя',
+    src: createUser,
+    link: '/#/admin/create-user',
+  },
+  {
+    name: 'Профиль',
+    src: profileBlack,
+    link: '/#/admin/profile',
+  },
+  {
+    name: 'Выйти',
+    src: exitBlack,
+    link: '/',
+  },
+];
+
 export const currencyList = [
   { name: 'USD', dark: usdIcon, light: usdIconWhite },
 ];
@@ -198,36 +222,36 @@ const editButton = {
   name: 'edit',
   dark: editIconB,
   light: editIconW,
-}
+};
 
 const viewButton = {
   name: 'view',
   dark: viewIconB,
   light: viewIconW,
-}
+};
 
 const draftButton = {
   name: 'draft',
   dark: draftIconB,
   light: draftIconW,
-}
+};
 
 const deleteButton = {
   name: 'delete',
   dark: deleteIconB,
-  light: deleteIconW
-}
+  light: deleteIconW,
+};
 
 const reasonButton = {
   name: 'reason',
   dark: reasonIconB,
-  light: reasonIconW
-}
+  light: reasonIconW,
+};
 
 export const tableButtons = {
   approve: [viewButton, draftButton, reasonButton],
   drafted: [editButton, deleteButton, null],
   offered: [viewButton, null, null],
   rejected: [viewButton, draftButton, reasonButton],
-  deleted: [reasonButton, null, null]
-}
+  deleted: [reasonButton, null, null],
+};

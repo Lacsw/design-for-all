@@ -31,7 +31,7 @@ export default function DropdownNavigation({
       .logout()
       .then(() => {
         resetSection();
-        dispatch(signInSuccess(''));
+        dispatch(signInSuccess(null));
       })
       .catch((err) => console.log(err));
   }

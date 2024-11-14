@@ -14,6 +14,7 @@ import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import {
   accountNavigationList,
   navigationOptionsList,
+  adminNavList,
   languageList,
   currencyList,
 } from 'utils/constants';
@@ -28,6 +29,7 @@ export default function Header({ resetSection }) {
   const theme = useSelector(getCurrentTheme);
 
   const currentUser = useSelector(getCurrentUser);
+  const isAdmin = currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState(false);
 
@@ -133,7 +135,7 @@ export default function Header({ resetSection }) {
               </button>
             ) : (
               <DropdownNavigation
-                options={accountNavigationList}
+                options={isAdmin ? adminNavList : accountNavigationList}
                 titleIcon={currentUser.avatar || accountDefaultIcon}
                 type="dropdownWithLinks"
                 title="Профиль"
