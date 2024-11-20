@@ -64,7 +64,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
           type={'text'}
           name={'old_' + name}
           value={values['old_' + name]}
-          placeholder={'example@domain.com'}
+          placeholder={'old_' + name}
           onChange={handleInput}
           errors={errors['old_' + name]}
         />
@@ -77,7 +77,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
           type={'text'}
           name={name}
           value={values[name]}
-          placeholder={'example@domain.com'}
+          placeholder={'new_' + name}
           onChange={handleInput}
           errors={errors[name]}
         />

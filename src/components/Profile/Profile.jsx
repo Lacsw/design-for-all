@@ -36,7 +36,7 @@ export default function Profile() {
   function changeForm(data) {
     setFormData((prev) => ({ ...prev, ...data }));
   }
-  console.log(formData);
+  
   return (
     <section className="profile">
       <div className="profile__container">

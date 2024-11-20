@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './ModalFIO.css';
 import { Input, Modal } from 'components';
+import { useSelector } from 'react-redux';
 
 const fioValidation = {
   regex: /^[А-Яа-яЁё\w\s-]+$/,
@@ -8,6 +9,7 @@ const fioValidation = {
   max: 64,
   check(value) {
     return (
+      value &&
       this.regex.test(value) &&
       value.length >= this.min &&
       value.length <= this.max
@@ -16,12 +18,13 @@ const fioValidation = {
 };
 
 export default function ModalFIO({ isOpen, onClose, onSave, title }) {
+  const { currentUser } = useSelector((state) => state.user);
   const [fio, setFio] = useState('');
   const [error, setError] = useState('');
 
   function handleInput({ target }) {
     let error =
-      !target.value || fioValidation.check(target.value) ? '' : 'Некорректно';
+      currentUser.fio !== target.value && fioValidation.check(target.value) ? '' : 'Некорректно';
     setError(error);
     setFio(target.value);
   }
@@ -44,7 +47,7 @@ export default function ModalFIO({ isOpen, onClose, onSave, title }) {
         <Input
           type={'text'}
           value={fio}
-          placeholder={'example@domain.com'}
+          placeholder={'Круглова Мария'}
           onChange={handleInput}
           errors={error}
         />
