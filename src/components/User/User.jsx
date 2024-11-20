@@ -8,13 +8,13 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { socialIcons } from 'utils/constants';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import defaultAvatar from 'images/author/avatar.svg';
 import './User.css';
 
 export default function User() {
   const theme = useSelector(getCurrentTheme);
-  const user = useSelector(state => state.user.currentUser);
+  const user = useSelector(getCurrentUser);
   const [isOpen, setIsOpen] = useState(false);
   const socialList = Object.entries(user.social_media);
   const shownList = isOpen ? socialList : socialList.slice(0, 4);

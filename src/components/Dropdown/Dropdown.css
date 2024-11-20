@@ -71,8 +71,13 @@
   letter-spacing: 0.24px;
 }
 
+.dropdown__item_disabled {
+  pointer-events: none;
+  color: grey;
+}
+
 .dropdown__item:hover {
-  background: rgba(207, 207, 207, 0.47);
+  background: var(--color-main-disabled);
 }
 
 .dropdown__item:last-of-type {

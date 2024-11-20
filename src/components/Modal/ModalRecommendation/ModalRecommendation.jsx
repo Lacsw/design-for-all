@@ -116,7 +116,7 @@ export default function ModalRecommendation({
             placeholder={'Ссылка на статью сайта DFA'}
             onChange={handleInput}
             errors={error}
-            loading={loading}
+            disabled={loading}
           />
         )}
       </label>

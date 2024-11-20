@@ -43,6 +43,16 @@ class AuthApi {
     });
     return response.ok ? Promise.resolve() : Promise.reject('Выход не удался.');
   }
+
+  async updateUser(data) {
+    const response = await fetch(`${this._baseUrl}/user_update`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+      credentials: 'include',
+    });
+    return response.ok ? Promise.resolve() : Promise.reject('Выход не удался.');
+  }
 }
 
 const authApi = new AuthApi({

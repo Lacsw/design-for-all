@@ -70,14 +70,14 @@ export const categorySelectOptions = [
 export const userRoleSelectOptions = [
   { label: 'Супер админ', value: 'super_admin' },
   { label: 'Админ', value: 'admin' },
-  { label: 'Ментор', value: 'mentor' },
-  { label: 'Участник', value: 'user' },
+  { label: 'Автор', value: 'mentor' },
+  { label: 'Участник', value: 'user', disabled: true },
 ];
 
 export const accessLvlSelectOptions = [
-  { label: 'T', value: '0' },
-  { label: 'F', value: '1' },
-  { label: 'O', value: '2' },
+  { label: 'T', value: 1 },
+  { label: 'F', value: 2 },
+  { label: 'O', value: 3 },
 ];
 
 export const listRangeOptions = [
@@ -201,6 +201,12 @@ export const hashPaths = {
   offered: '#/author/articles/offered',
   rejected: '#/author/articles/rejected',
   deleted: '#/author/articles/deleted',
+};
+
+export const adminHash = {
+  requests: '#/admin/requests',
+  create: '#/admin/create-user',
+  profile: '#/admin/profile',
 };
 // SOCIALS //
 

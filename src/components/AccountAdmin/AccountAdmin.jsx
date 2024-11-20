@@ -1,5 +1,3 @@
-import { Route, Routes } from 'react-router-dom';
-
 import {
   AdminApplicationsNav,
   AuthorArticlesList,
@@ -15,23 +13,9 @@ export default function AccountAdmin() {
 
   return (
     <Account navBar={navBar}>
-      <Routes>
-        <Route
-          path="/applications"
-          element={
-            <div className="account-author__articles">
-              <AdminApplicationsNav />
-              <AuthorArticlesList />
-            </div>
-          }
-        />
-        <Route
-          path="/applications/new-author"
-          element={<AdminApplicationNewAuthor />}
-        />
-        <Route path="/create-user" element={<AdminCreateUser />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+      
+        <AdminCreateUser />
+      
     </Account>
   );
 }

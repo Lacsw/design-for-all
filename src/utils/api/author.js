@@ -6,7 +6,7 @@ class AuthorApi {
 
   _checkResponse(res) {
     if (res.ok) {
-      return res.statusText === 'NO CONTENT' ? '' : res.json();
+      return res.status !== 200 ? res.statusText : res.json();
     } else {
       return Promise.reject(`Ошибка ${res.status}`);
     }

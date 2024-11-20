@@ -49,7 +49,7 @@ export default function Dropdown({
             <li
               key={option.value}
               value={option.value}
-              className="dropdown__item"
+              className={option.disabled ? 'dropdown__item dropdown__item_disabled' : 'dropdown__item'}
               onClick={() => handleOptionClick(option)}
             >
               {option.label}

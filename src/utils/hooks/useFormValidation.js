@@ -20,12 +20,12 @@ function validateEmail(value) {
 }
 
 function validateName(value) {
-  const regex = /^[a-zA-Zа-яА-ЯёЁ\s_-]{2,50}$/;
+  const regex = /^[А-Яа-яЁё\w-]{8,32}$/;
   return regex.test(value) ? '' : errorMessages.name;
 }
 
 function validatePassword(value) {
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\s-]{6,}$/;
+  const regex = /^[А-Яа-яЁё\w-]{8,32}$/;
   return regex.test(value) ? '' : errorMessages.password;
 }
 
