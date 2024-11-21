@@ -24,12 +24,12 @@ export default function AccountAuthor({ hash, resetSection }) {
   const [pagination, setPagination] = useState('20');
   const [tab, setTab] = useState('approve');
   const isValid = Object.values(hashPaths).includes(hash);
-  const access = isValid && user;
+  const access = isValid && user?.role === 'mentor';
   const NavBar =
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
   useEffect(() => {
-    if (!isValid) return;
+    if (!isValid || user && !access) return;
     if (!access) {
       setSearchParams({ 'modal-auth': 'login' });
       return;
@@ -44,7 +44,7 @@ export default function AccountAuthor({ hash, resetSection }) {
         .then(setArticles)
         .catch(() => setArticles([]));
     }
-  }, [pagination, tab, isValid, access, setSearchParams, hash, navigate]);
+  }, [pagination, tab, isValid, access, user, setSearchParams, hash, navigate]);
 
   return access ? (
     <Account navBar={<NavBar />}>
@@ -68,7 +68,9 @@ export default function AccountAuthor({ hash, resetSection }) {
         </div>
       )}
     </Account>
-  ) : isValid ? null : (
+  ) : !isValid ? (
     <NotFound resetSection={resetSection} />
-  );
+  ) : user ? (
+    <NotFound resetSection={resetSection} role={'автор'} />
+  ) : null;
 }
