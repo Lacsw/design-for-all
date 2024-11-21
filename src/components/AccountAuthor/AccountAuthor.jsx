@@ -51,7 +51,7 @@ export default function AccountAuthor({ hash, resetSection }) {
       {hash === hashPaths.newArticle ? (
         <Creation />
       ) : hash === hashPaths.profile ? (
-        <Profile />
+        <Profile resetSection={resetSection} />
       ) : (
         <div className="account-author__articles">
           <AuthorArticlesNav

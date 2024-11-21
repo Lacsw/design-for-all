@@ -177,3 +177,17 @@
 .rec-overlay__img:hover {
   transform: scale(1.1);
 }
+
+.new-article__input_article-content::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.new-article__input_article-content::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.new-article__input_article-content::-webkit-scrollbar-thumb {
+  background-color: #9c9c9c;
+}

@@ -1,10 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './Profile.css';
 import { Button, SocialsBar, InputEditable } from 'components';
 import { useState } from 'react';
 import ModalFIO from 'components/Modal/ModalFIO/ModalFIO';
 import ModalLogPass from 'components/Modal/ModalLogPass/ModalLogPass';
 import authApi from 'utils/api/auth';
+import { signInSuccess } from 'store/slices';
 
 const initialForm = {
   login: '',
@@ -16,27 +17,34 @@ const initialForm = {
   social_media: '',
 };
 
-export default function Profile() {
+export default function Profile({ resetSection }) {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialForm);
   const [modal, setModal] = useState('');
   const isFormReady = Object.values(formData).some(Boolean);
-  
+
   function handleFormSubmit(evt) {
     evt.preventDefault();
     const filledData = Object.keys(formData).reduce((acc, key) => {
       if (formData[key]) acc[key] = formData[key];
       return acc;
     }, {});
-    authApi.updateUser(filledData)
-      .then(() => console.log('OK'))
+    authApi
+      .updateUser(filledData)
+      .then(() => {
+        if (filledData.login || filledData.password) {
+          resetSection();
+          dispatch(signInSuccess(null));
+        }
+      })
       .catch((err) => console.log(err));
   }
 
   function changeForm(data) {
     setFormData((prev) => ({ ...prev, ...data }));
   }
-  
+
   return (
     <section className="profile">
       <div className="profile__container">

@@ -89,6 +89,9 @@ const Creation = () => {
           lang: location.state.lang,
           main_category: 'ok',
           sub_category: article.publication.sub_category,
+          image: previewImage,
+          title: article.publication.title,
+          description: article.publication.description,
           what_update: location.state.original,
           recommend_from_creator: article.recommend,
         })
