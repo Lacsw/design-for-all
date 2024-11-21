@@ -1,6 +1,6 @@
 import { accessLvlSelectOptions, userRoleSelectOptions } from 'utils/constants';
 import './AdminCreateUser.css';
-import { Button, Dropdown, InputEditable } from 'components';
+import { Button, Dropdown, InputEditable, Modal } from 'components';
 import { useState } from 'react';
 import ModalEmail from 'components/Modal/ModalEmail/ModalEmail';
 import { createUser } from 'utils/api/admin';
@@ -14,6 +14,7 @@ const initialForm = {
 export default function AdminCreateUser() {
   const [formData, setFormData] = useState(initialForm);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
   const isFormFilled = !Object.values(formData).some((value) => !value);
   const isFormEdited = Object.values(formData).some(Boolean);
 
@@ -28,7 +29,10 @@ export default function AdminCreateUser() {
   function handleSubmit(evt) {
     evt.preventDefault();
     createUser(formData)
-      .then((res) => console.log('Ответ: ', res))
+      .then(() => {
+        setFormData(initialForm);
+        setModalSuccess(true);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -99,6 +103,16 @@ export default function AdminCreateUser() {
         onSave={changeForm}
         title="Задать Email"
       />
+      <Modal
+        isOpen={modalSuccess}
+        title={'Готово'}
+        onConfirm={() => setModalSuccess(false)}
+      >
+        <p>
+          Новый пользователь успешно создан. На указанную почту отправлено
+          письмо с данными для авторизации.
+        </p>
+      </Modal>
     </>
   );
 }

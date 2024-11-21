@@ -6,7 +6,9 @@ const Fork = ({ section, setSection }) => {
   const location = useLocation();
 
   if (Object.values(adminHash).includes(location.hash)) {
-    return <AccountAdmin />
+    return (
+      <AccountAdmin hash={location.hash} resetSection={() => setSection('')} />
+    );
   }
 
   return location.hash ? (
