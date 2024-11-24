@@ -1,6 +1,11 @@
 import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
-import { buttonsHeadings, isCommandActive, tiptapCommands } from '../helpers';
+import {
+  buttonsHeadings,
+  checkIsCommandActive,
+  checkIsCommandDisabled,
+  tiptapCommands,
+} from '../helpers';
 import clsx from 'clsx';
 
 export function RteButton({
@@ -15,17 +20,23 @@ export function RteButton({
     [name, editor]
   );
 
-  const isSelected = isCommandActive(name, editor);
+  const isSelected = checkIsCommandActive(name, editor);
   const isFocused = editor?.isFocused || inFocusWithin;
   const classes = clsx(
     'rte__button',
     isFocused && isSelected && 'selected',
     className
   );
+  const isDisabled = checkIsCommandDisabled(name, editor);
 
   return (
     <Tooltip title={buttonsHeadings[name]}>
-      <IconButton onClick={handleClick} className={classes} size="small">
+      <IconButton
+        onClick={handleClick}
+        className={classes}
+        size="small"
+        disabled={isDisabled}
+      >
         {children || name}
       </IconButton>
     </Tooltip>

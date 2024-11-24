@@ -27,3 +27,7 @@
   background-color: var(--color-secondary);
   color: var(--color-main);
 }
+
+.rte .rte__button.Mui-disabled {
+  opacity: 0.35;
+}

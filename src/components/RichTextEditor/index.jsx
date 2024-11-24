@@ -1,10 +1,8 @@
 // custom extensions
 import { ListItemCustom } from './extensions/listItem';
+import { ImageCustom } from './extensions/image';
 
 // extensions
-import Dropcursor from '@tiptap/extension-dropcursor';
-// eslint-disable-next-line import/no-unresolved
-import ImageRTE from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
@@ -81,6 +79,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       horizontalRule: false,
       strike: false,
       listItem: false, // отключаем, т.к. у нас кастомный
+      image: false, // отключаем, т.к. у нас кастомный
       heading: {
         levels: [1, 2, 3, 4],
       },
@@ -112,13 +111,13 @@ export const RichTextEditor = memo(function RichTextEditor({
       placeholder: 'Введите текст',
     }),
     ListItemCustom,
-    ImageRTE.configure({
+    ImageCustom.configure({
       allowBase64: true,
+      // inline: true,
       HTMLAttributes: {
         class: 'rte__node rte__node_img',
       },
     }),
-    Dropcursor,
   ];
 
   // Объединение заданных настроек с настройками по умолчанию
@@ -171,6 +170,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       preserveWhitespace: false,
     },
     onUpdate,
+    enableContentCheck: true,
   });
 
   useEffect(() => {
@@ -221,7 +221,6 @@ export const RichTextEditor = memo(function RichTextEditor({
             className={classes.textTypeSelector}
             flag={flag}
           />
-
           <RteButton
             className={classes.button}
             editor={editor}
@@ -230,7 +229,6 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatItalicIcon />
           </RteButton>
-
           <RteButton
             className={classes.button}
             editor={editor}
@@ -239,72 +237,6 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatBoldIcon />
           </RteButton>
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.img}
-            inFocusWithin={inFocusWithin}
-          >
-            <AddPhotoAlternateRoundedIcon />
-          </RteButton>
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.code}
-            inFocusWithin={inFocusWithin}
-          >
-            <CodeIcon />
-          </RteButton>
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.codeBlock}
-            inFocusWithin={inFocusWithin}
-          >
-            <DataObjectIcon />
-          </RteButton>
-
-          <Divider orientation="vertical" />
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.left}
-            inFocusWithin={inFocusWithin}
-          >
-            <FormatAlignLeftIcon />
-          </RteButton>
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.center}
-            inFocusWithin={inFocusWithin}
-          >
-            <FormatAlignCenterIcon />
-          </RteButton>
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.right}
-            inFocusWithin={inFocusWithin}
-          >
-            <FormatAlignRightIcon />
-          </RteButton>
-
-          <RteButton
-            className={classes.button}
-            editor={editor}
-            name={COMMANDS_NAMES.justify}
-            inFocusWithin={inFocusWithin}
-          >
-            <FormatAlignJustifyIcon />
-          </RteButton>
-
           <RteButton
             className={classes.button}
             editor={editor}
@@ -313,7 +245,6 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatListBulletedIcon />
           </RteButton>
-
           <RteButton
             className={classes.button}
             editor={editor}
@@ -321,6 +252,64 @@ export const RichTextEditor = memo(function RichTextEditor({
             inFocusWithin={inFocusWithin}
           >
             <FormatListNumberedIcon />
+          </RteButton>
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.img}
+            inFocusWithin={inFocusWithin}
+          >
+            <AddPhotoAlternateRoundedIcon />
+          </RteButton>
+          <Divider orientation="vertical" />
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.left}
+            inFocusWithin={inFocusWithin}
+          >
+            <FormatAlignLeftIcon />
+          </RteButton>
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.center}
+            inFocusWithin={inFocusWithin}
+          >
+            <FormatAlignCenterIcon />
+          </RteButton>
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.right}
+            inFocusWithin={inFocusWithin}
+          >
+            <FormatAlignRightIcon />
+          </RteButton>
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.justify}
+            inFocusWithin={inFocusWithin}
+          >
+            <FormatAlignJustifyIcon />
+          </RteButton>
+          <Divider orientation="vertical" />
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.code}
+            inFocusWithin={inFocusWithin}
+          >
+            <CodeIcon />
+          </RteButton>
+          <RteButton
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.codeBlock}
+            inFocusWithin={inFocusWithin}
+          >
+            <DataObjectIcon />
           </RteButton>
         </MenuBar>
       );

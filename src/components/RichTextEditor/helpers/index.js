@@ -86,6 +86,12 @@ export const tiptapCommands = {
           .setTextAlign('center')
           .run()
       );
+    } else if (editor?.isActive('image')) {
+      return editor
+        ?.chain()
+        .focus()
+        .updateAttributes('image', { class: null })
+        .run();
     } else {
       return editor?.chain().focus().setTextAlign('center').run();
     }
@@ -109,6 +115,12 @@ export const tiptapCommands = {
         .focus()
         .updateAttributes('listItem', { class: 'justify' })
         .setTextAlign('justify')
+        .run();
+    } else if (editor?.isActive('image')) {
+      return editor
+        ?.chain()
+        .focus()
+        .updateAttributes('image', { class: 'justify' })
         .run();
     } else {
       return editor?.chain().focus().setTextAlign('justify').run();
@@ -156,10 +168,13 @@ export const buttonsHeadings = {
 };
 
 /**
- * @param {string} commandName - Rte command name from const COMMANDS_NAMES
+ * @param {string} commandName - Rte command name from const
+ *   {@link COMMANDS_NAMES}
  * @returns {boolean}
  */
-export function isCommandActive(commandName, editor) {
+export function checkIsCommandActive(commandName, editor) {
+  let needAnotherCheck = false;
+  let anotherCheck;
   let commandParams;
 
   switch (commandName) {
@@ -167,7 +182,24 @@ export function isCommandActive(commandName, editor) {
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
     case COMMANDS_NAMES.justify:
-      commandParams = [{ textAlign: commandName }];
+      if (editor?.isActive('image')) {
+        needAnotherCheck = true;
+        anotherCheck = (name) => {
+          if (name === COMMANDS_NAMES.justify) {
+            return editor.view.lastSelectedViewDesc.dom.classList.contains(
+              'justify'
+            );
+          } else if (name === COMMANDS_NAMES.center) {
+            return !editor.view.lastSelectedViewDesc.dom.classList.contains(
+              'justify'
+            );
+          } else {
+            return false;
+          }
+        };
+      } else {
+        commandParams = [{ textAlign: commandName }];
+      }
       break;
     case COMMANDS_NAMES.heading1:
     case COMMANDS_NAMES.heading2:
@@ -182,6 +214,83 @@ export function isCommandActive(commandName, editor) {
       break;
   }
 
-  const res = editor?.isActive(...commandParams);
+  let res;
+  if (needAnotherCheck) {
+    res = anotherCheck(commandName);
+  } else {
+    res = editor?.isActive(...commandParams);
+  }
+  return res;
+}
+
+const commandNamesForchecks = [
+  COMMANDS_NAMES.img,
+  COMMANDS_NAMES.code,
+  COMMANDS_NAMES.codeBlock,
+];
+
+/**
+ * Ключ - имя команды, которая уже применена в данный момент.\
+ * Значение - функция, принимающая имя команды и говорящая, должна ли она быть
+ * недоступна.
+ */
+const isDisabledMap = {
+  [COMMANDS_NAMES.img]: (commandName) => {
+    if (
+      commandName === COMMANDS_NAMES.center ||
+      commandName === COMMANDS_NAMES.justify ||
+      commandName === COMMANDS_NAMES.img
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  [COMMANDS_NAMES.code]: (commandName) => {
+    if (
+      commandName === COMMANDS_NAMES.italic ||
+      commandName === COMMANDS_NAMES.bold
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  [COMMANDS_NAMES.codeBlock]: (commandName) => {
+    if (
+      commandName === COMMANDS_NAMES.italic ||
+      commandName === COMMANDS_NAMES.bold ||
+      commandName === COMMANDS_NAMES.left ||
+      commandName === COMMANDS_NAMES.center ||
+      commandName === COMMANDS_NAMES.right ||
+      commandName === COMMANDS_NAMES.justify
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+};
+
+/**
+ * Проверить, должна ли команда быть недоступной для выбранной на данный момент
+ * ноды RTE.\
+ * Для корректной работы функции в редакторе должна быть активна лишь одна
+ * команда из списка {@link commandNamesForchecks}.
+ */
+export function checkIsCommandDisabled(commandName, editor) {
+  let alreadyActiveCommand;
+  // найдет лишь ПЕРВОЕ совпадение, потому в описании функции указано ограничение
+  commandNamesForchecks.find((name) => {
+    const res = checkIsCommandActive(name, editor);
+    if (res) {
+      alreadyActiveCommand = name;
+    }
+    return res;
+  });
+
+  const checkerFn = isDisabledMap[alreadyActiveCommand];
+  const res = checkerFn ? checkerFn(commandName) : false;
+
   return res;
 }

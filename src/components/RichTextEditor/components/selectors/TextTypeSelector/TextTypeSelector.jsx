@@ -3,7 +3,7 @@ import { MenuItem, Select, Icon } from '@mui/material';
 import clsx from 'clsx';
 import {
   COMMANDS_NAMES,
-  isCommandActive,
+  checkIsCommandActive,
   tiptapCommands,
 } from 'components/RichTextEditor/helpers';
 import { iconButtonSizes } from 'styles/mui/overrides/components/iconButton';
@@ -18,7 +18,7 @@ const commandsForSelector = [
 
 function getCurrentTypeOfText(editor) {
   const result = commandsForSelector.find((commandName) => {
-    return isCommandActive(commandName, editor);
+    return checkIsCommandActive(commandName, editor);
   });
 
   return result || COMMANDS_NAMES.paragraph;
@@ -35,6 +35,7 @@ export const TextTypeSelector = ({
   const ref = useRef(null);
 
   const [textKind, setTextKind] = useState(() => getCurrentTypeOfText(editor));
+  const isDisabled = editor.isActive('image');
 
   const handleTextKindChange = (event) => {
     const commandName = event.target.value;
@@ -61,6 +62,7 @@ export const TextTypeSelector = ({
 
   return (
     <Select
+      disabled={isDisabled}
       ref={ref}
       className={clsx(
         'rte__selector',
