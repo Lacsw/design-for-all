@@ -12,8 +12,8 @@ export default function Updates() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUpdates(1));
-  }, [dispatch]);
+    Date.now() - updates.fetchTime > 30000 && !updates.loading && dispatch(fetchUpdates(1));
+  }, [updates, dispatch]);
 
   useEffect(() => {
     const slide = slideRef.current;

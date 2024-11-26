@@ -10,6 +10,7 @@ export const initialState = {
   updates: {
     loading: false,
     error: '',
+    fetchTime: 0,
     cards: [],
   },
   article: null,
@@ -66,6 +67,7 @@ const articleSlice = createSlice({
         }
       })
       .addCase(fetchUpdates.fulfilled, (state, action) => {
+        state.updates.fetchTime = Date.now();
         const dataWithLang = action.payload.map((item) => {
           for (let key in state.titles) {
             if (Object.values(state.titles[key]).includes(item.main_category)) {
