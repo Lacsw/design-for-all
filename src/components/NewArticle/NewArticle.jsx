@@ -11,7 +11,7 @@ import { changeDraft } from 'store/slices';
 import { getCurrentTheme } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function createTitle(type) {
   if (type === 'updated') return 'Внесение правок';
@@ -55,14 +55,16 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
     }
   }
 
-  function handleDelete(id) {
+  function handleDelete(evt, id) {
+    evt.preventDefault();
     const recommends = draft.recommend_from_creator.filter(
       (rec) => rec.uuid !== id
     );
     changeField('recommend_from_creator', recommends);
   }
 
-  function handleEdit(id) {
+  function handleEdit(evt, id) {
+    evt.preventDefault();
     editId.current = id;
     toggleRecommendation();
   }
@@ -244,21 +246,28 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
             <ul className="recommendations__list">
               {draft.recommend_from_creator.map((item) => (
                 <li className="recommendations__item" key={item.uuid}>
+                  <Link
+                    to={`${draft.lang}/${item.uuid}`}
+                    target="_blank"
+                    className="new-article__link"
+                  >
                   <div className="rec-overlay">
                     <img
                       src={theme === 'light' ? editIconB : editIconW}
                       alt="Изменить рекомендацию"
                       className="rec-overlay__img"
-                      onClick={() => handleEdit(item.uuid)}
+                      onClick={(evt) => handleEdit(evt, item.uuid)}
                     />
                     <img
                       src={theme === 'light' ? deleteIconB : deleteIconW}
                       alt="Удалить рекомендацию"
                       className="rec-overlay__img"
-                      onClick={() => handleDelete(item.uuid)}
+                      onClick={(evt) => handleDelete(evt, item.uuid)}
                     />
                   </div>
-                  <Recommend imageUrl={item.image} title={item.title} />
+                  
+                    <Recommend imageUrl={item.image} title={item.title} />
+                  </Link>
                 </li>
               ))}
             </ul>

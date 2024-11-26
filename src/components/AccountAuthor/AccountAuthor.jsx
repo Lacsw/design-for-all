@@ -16,13 +16,19 @@ import { hashPaths } from 'utils/constants';
 import { useSelector } from 'react-redux';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
+const authorTabs = ['approve', 'drafted', 'offered', 'rejected', 'deleted'];
+
 export default function AccountAuthor({ hash, resetSection }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
   const [, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
   const [pagination, setPagination] = useState('20');
-  const [tab, setTab] = useState('approve');
+  const [tab, setTab] = useState(() => {
+    const parts = hash.split('/');
+    const end = parts[parts.length - 1];
+    return authorTabs.includes(end) ? end : 'approve';
+  });
   const isValid = Object.values(hashPaths).includes(hash);
   const access = isValid && user?.role === 'mentor';
   const NavBar =

@@ -47,7 +47,7 @@ const Creation = () => {
               data.description || data.offered_update?.description || '',
             recommend_from_creator:
               data.recommend_from_creator ||
-              data.offered_update.recommend_from_creator ||
+              data.offered_update?.recommend_from_creator ||
               [],
           };
           if (data.type !== 'created') {

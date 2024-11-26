@@ -1,6 +1,6 @@
 import './ViewArticle.css';
 import Recommend from 'components/Recommendations/Recommend';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { langSelectOptions } from 'utils/constants';
 
 function createTitle(type) {
@@ -38,16 +38,20 @@ export default function ViewArticle({ original, title, rejectFields }) {
           </div>
         )}
 
-        <div className={`${
+        <div
+          className={`${
             rejectFields?.includes('sub_category') ? 'rejected ' : ''
-          }view-article__label`}>
+          }view-article__label`}
+        >
           <span className="view-article__sub-title">Подкатегория</span>
           <span className="view-article__input">{original.sub_category}</span>
         </div>
 
-        <div className={`${
+        <div
+          className={`${
             rejectFields?.includes('image') ? 'rejected ' : ''
-          }view-article__label`}>
+          }view-article__label`}
+        >
           <span className="view-article__sub-title">Картинка статьи</span>
           {original.image && (
             <img
@@ -58,27 +62,35 @@ export default function ViewArticle({ original, title, rejectFields }) {
           )}
         </div>
 
-        <div className={`${
+        <div
+          className={`${
             rejectFields?.includes('title') ? 'rejected ' : ''
-          }view-article__label`}>
+          }view-article__label`}
+        >
           <span className="view-article__sub-title">Заголовок статьи</span>
           <span className="view-article__input view-article__input_article-header">
             {original.title}
           </span>
         </div>
 
-        <div className={`${
+        <div
+          className={`${
             rejectFields?.includes('description') ? 'rejected ' : ''
-          }view-article__label`}>
+          }view-article__label`}
+        >
           <span className="view-article__sub-title">Контент статьи</span>
           <p className="view-article__input view-article__input_article-content">
             {original.description}
           </p>
         </div>
         {original.recommend_from_creator && (
-          <div className={`${
-            rejectFields?.includes('recommend_from_creator') ? 'rejected ' : ''
-          }view-article__label`}>
+          <div
+            className={`${
+              rejectFields?.includes('recommend_from_creator')
+                ? 'rejected '
+                : ''
+            }view-article__label`}
+          >
             <span className="view-article__sub-title">
               Рекомендации авторов
             </span>
@@ -86,7 +98,13 @@ export default function ViewArticle({ original, title, rejectFields }) {
               <ul className="recommendations__list">
                 {original.recommend_from_creator.map((item) => (
                   <li className="recommendations__item" key={item.uuid}>
-                    <Recommend imageUrl={item.image} title={item.title} />
+                    <Link
+                      to={`${original.lang}/${item.uuid}`}
+                      className="recommendations__link"
+                      target="_blank"
+                    >
+                      <Recommend imageUrl={item.image} title={item.title} />
+                    </Link>
                   </li>
                 ))}
               </ul>
