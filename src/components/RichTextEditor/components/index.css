@@ -1,5 +1,5 @@
 @import url('./selectors/styles/index.css');
-@import url('./images/index.css');
+@import url('../extensions/image/index.css');
 
 .rte .rte__button {
   background-color: transparent;

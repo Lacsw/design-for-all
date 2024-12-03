@@ -1,6 +1,6 @@
 // custom extensions
 import { ListItemCustom } from './extensions/listItem';
-import { ImageCustom } from './extensions/image';
+import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
 import Placeholder from '@tiptap/extension-placeholder';
@@ -26,7 +26,7 @@ import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
 import { validate } from './validators';
-import { COMMANDS_NAMES } from './helpers';
+import { COMMANDS_NAMES } from './helpers/constants';
 import { useDebounce } from 'utils/hooks';
 
 import './index.css';
@@ -61,7 +61,7 @@ const incrementStateNumber = (setter) => (evt) => {
   setter((prev) => prev + 1);
 };
 
-/** Богатый текстовый редактор IProps */
+/** Богатый текстовый редактор */
 export const RichTextEditor = memo(function RichTextEditor({
   initialValue = null,
   validationsOptions,
@@ -79,7 +79,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       horizontalRule: false,
       strike: false,
       listItem: false, // отключаем, т.к. у нас кастомный
-      image: false, // отключаем, т.к. у нас кастомный
+      image: false, // отключаем, т.к. у нас кастомные
       heading: {
         levels: [1, 2, 3, 4],
       },
@@ -111,7 +111,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       placeholder: 'Введите текст',
     }),
     ListItemCustom,
-    ImageCustom.configure({
+    CustomImageExtension.configure({
       allowBase64: true,
       // inline: true,
       HTMLAttributes: {
@@ -139,9 +139,8 @@ export const RichTextEditor = memo(function RichTextEditor({
   }
 
   const wrapperRef = useRef(null);
-  /* Решением проблемы: если при вводе редактор показывается обводка, сигнализирующая, что редактор в фокусе,
-    то при кликах на кнопки команд на мгновения скачут цвета у рамок редактора и его кнопок.
-   */
+  /* Решением проблемы: если при вводе в редактор показывается обводка, сигнализирующая, что редактор в фокусе,
+    то при кликах на кнопки команд на мгновения скачут цвета у рамок редактора и его кнопок. */
   const [inFocusWithin, setInFocusWithin] = useState(false);
 
   // Передаём данные о вводе в родителя

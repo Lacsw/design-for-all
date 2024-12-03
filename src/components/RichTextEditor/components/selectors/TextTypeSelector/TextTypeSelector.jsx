@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MenuItem, Select, Icon } from '@mui/material';
 import clsx from 'clsx';
 import {
-  COMMANDS_NAMES,
   checkIsCommandActive,
   tiptapCommands,
 } from 'components/RichTextEditor/helpers';
+import { COMMANDS_NAMES } from 'components/RichTextEditor/helpers/constants';
 import { iconButtonSizes } from 'styles/mui/overrides/components/iconButton';
 
 const commandsForSelector = [

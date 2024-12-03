@@ -1,11 +1,11 @@
 import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
 import {
-  buttonsHeadings,
   checkIsCommandActive,
   checkIsCommandDisabled,
   tiptapCommands,
 } from '../helpers';
+import { buttonsHeadings } from '../helpers/constants';
 import clsx from 'clsx';
 
 export function RteButton({

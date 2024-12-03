@@ -1,27 +1,4 @@
-/** Имена команд, назначены библиотекой Tiptap */
-export const COMMANDS_NAMES = {
-  paragraph: 'paragraph',
-  heading1: 'heading1',
-  heading2: 'heading2',
-  heading3: 'heading3',
-  heading4: 'heading4',
-  // heading5: 'heading5',
-  // heading6: 'heading6',
-  italic: 'italic',
-  bold: 'bold',
-  underline: 'underline',
-  code: 'code',
-  codeBlock: 'codeBlock',
-  left: 'left',
-  center: 'center',
-  right: 'right',
-  justify: 'justify',
-  bulletList: 'bulletList',
-  orderedList: 'orderedList',
-  subscript: 'subscript',
-  superscript: 'superscript',
-  img: 'image',
-};
+import { COMMANDS_NAMES } from './constants';
 
 export const tiptapCommands = {
   [COMMANDS_NAMES.paragraph]: (editor) => {
@@ -137,34 +114,28 @@ export const tiptapCommands = {
   [COMMANDS_NAMES.superscript]: (editor) =>
     editor?.chain().focus().toggleSuperscript().run(),
   [COMMANDS_NAMES.img]: (editor) => {
-    const url = window.prompt('URL');
-    editor?.chain().focus().setImage({ src: url }).run();
-  },
-};
+    // const url = window.prompt('URL');
+    const urls = [
+      'https://i.pinimg.com/200x/d5/2a/01/d52a01b1eacc48b5c60ff1a0a8426e6c.jpg',
+      'https://i.pinimg.com/236x/97/76/64/9776647cac22dc41086cfa6815f62a5c--cat-face-cat-eyes.jpg?nii=t',
+      'https://www.meme-arsenal.com/memes/92c3bf3588af96e7533d85284f32c4cd.jpg',
+      'https://i.pinimg.com/236x/3b/b8/8e/3bb88e56069511c14034285c081a7d22.jpg',
+      'https://cs14.pikabu.ru/avatars/4124/x4124556-176449567.png',
+    ];
+    const idx = Math.round(Math.random() * (urls.length - 1));
+    console.log('fir', idx);
 
-/** Человеческие названия команд на русском языке */
-export const buttonsHeadings = {
-  [COMMANDS_NAMES.paragraph]: 'Обычный текст',
-  [COMMANDS_NAMES.heading1]: 'Заголовок 1',
-  [COMMANDS_NAMES.heading2]: 'Заголовок 2',
-  [COMMANDS_NAMES.heading3]: 'Заголовок 3',
-  [COMMANDS_NAMES.heading4]: 'Заголовок 4',
-  // [COMMANDS_NAMES.heading5]: 'Заголовок 5',
-  // [COMMANDS_NAMES.heading6]: 'Заголовок 6',
-  [COMMANDS_NAMES.italic]: 'Курсив',
-  [COMMANDS_NAMES.bold]: 'Жирный',
-  [COMMANDS_NAMES.underline]: 'Подчеркивание',
-  [COMMANDS_NAMES.code]: 'Код',
-  [COMMANDS_NAMES.codeBlock]: 'Блок кода',
-  [COMMANDS_NAMES.left]: 'Выровнять по левому краю',
-  [COMMANDS_NAMES.center]: 'Выровнять по центру',
-  [COMMANDS_NAMES.right]: 'Выровнять по правому краю',
-  [COMMANDS_NAMES.justify]: 'Выровнять по ширине',
-  [COMMANDS_NAMES.bulletList]: 'Маркированный список',
-  [COMMANDS_NAMES.orderedList]: 'Нумерованный список',
-  [COMMANDS_NAMES.subscript]: 'Нижний индекс',
-  [COMMANDS_NAMES.superscript]: 'Верхний индекс',
-  [COMMANDS_NAMES.img]: 'Вставить изображение',
+    editor
+      ?.chain()
+      .insertContentAt(editor.state.selection.head, {
+        type: COMMANDS_NAMES.img,
+        attrs: {
+          src: urls[idx],
+        },
+      })
+      .focus()
+      .run();
+  },
 };
 
 /**
