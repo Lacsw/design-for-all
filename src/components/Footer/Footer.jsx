@@ -155,7 +155,8 @@ export default function Footer() {
         </div>
       </div>
       <p className="footer__copyright">
-        Copyright ©2023 All rights reserved | DFA | Design for all
+        Copyright ©{new Date().getFullYear()} All rights reserved | DFA |
+        Design for all
       </p>
     </footer>
   );

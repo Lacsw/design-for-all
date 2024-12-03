@@ -1,17 +1,14 @@
 import './Account.css';
-import { Author, Header } from 'components';
+import { User } from 'components';
 
 export default function Account({ children, navBar }) {
   return (
-    <section className="account">
-      <Header />
-      <div className="account__container">
-        <div className="account__author-and-navbar">
-          <Author isAuthorAccount={true} />
-          {navBar}
-        </div>
-        {children}
+    <div className="account__container">
+      <div className="account__author-and-navbar">
+        <User />
+        {navBar}
       </div>
-    </section>
+      {children}
+    </div>
   );
 }

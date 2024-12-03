@@ -12,6 +12,7 @@ export default function Input({
   onChange,
   name,
   errors,
+  disabled,
   required = false,
 }) {
   const [visibility, setVisibility] = useState(type);
@@ -23,7 +24,7 @@ export default function Input({
   }, [value]);
 
   const validationClass = () => {
-    if (!isEmpty) {
+    if (!isEmpty && !disabled) {
       return !errors && value ? 'input_valid' : 'input_error';
     } else {
       return '';
@@ -51,6 +52,8 @@ export default function Input({
         onChange={onChange}
         onBlur={handleBlur}
         autoComplete="off"
+        disabled={disabled}
+        autoFocus
       />
       {type === 'password' && (
         <img

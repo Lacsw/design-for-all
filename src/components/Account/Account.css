@@ -1,17 +1,9 @@
-.account{
-	height: 100vh;
-	box-sizing: border-box;
-}
-
 .account__container {
-	display: flex;
-	justify-content: center;
-	gap: 40px;
-	margin-top: 30px;
-}
-
-.account__author-and-navbar {
-	position: sticky;
-	top: 92px;
-	height: 45vh;
+  display: grid;
+  width: 100%;
+  max-width: 1200px;
+  grid-template-columns: 222px 1fr 222px;
+  gap: 40px;
+  margin: 30px auto;
+  align-items: start;
 }

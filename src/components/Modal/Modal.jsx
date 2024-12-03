@@ -1,30 +1,42 @@
 import React, { useEffect } from 'react';
-
 import './Modal.css';
-import confirmBtn from 'images/modals/confirm-btn.png';
-import cancelBtn from 'images/modals/cancel-btn.png';
+import { useSelector } from 'react-redux';
+import { getCurrentTheme } from 'store/selectors';
 
-const Modal = ({ children, isOpen, onClose, title, large, twoBtns }) => {
+const Modal = ({
+  children,
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  large,
+  twoBtns,
+  isBlocked,
+}) => {
+  const theme = useSelector(getCurrentTheme);
   useEffect(() => {
     if (isOpen) {
       const closeByEsc = (evt) => {
         if (evt.key === 'Escape') {
-          onClose();
+          twoBtns ? onClose() : onConfirm();
         }
       };
       document.addEventListener('keydown', closeByEsc);
       return () => document.removeEventListener('keydown', closeByEsc);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, onConfirm, twoBtns]);
 
   const closeByOver = (evt) => {
     if (evt.target.classList.contains('modal')) {
-      onClose();
+      twoBtns ? onClose() : onConfirm();
     }
   };
 
   return (
-    <div className={`modal ${isOpen && 'modal_opened'}`} onClick={closeByOver}>
+    <div
+      className={`modal ${isOpen && 'modal_opened'} ${theme}`}
+      onMouseDown={closeByOver}
+    >
       <div
         className="modal__container"
         style={{
@@ -46,26 +58,19 @@ const Modal = ({ children, isOpen, onClose, title, large, twoBtns }) => {
 
         <div className="modal__btns">
           <button
-            onClick={onClose}
-            className="modal__confirm-btn"
+            onClick={onConfirm}
+            className="modal__btn modal__btn_confirm"
             type="button"
             aria-label="кнопка подтверждения"
-          >
-            <img
-              src={confirmBtn}
-              alt="подтвердить"
-              className="modal__btn-img"
-            />
-          </button>
+            disabled={isBlocked}
+          />
           {twoBtns && (
             <button
               onClick={onClose}
-              className="modal__confirm-btn"
+              className="modal__btn modal__btn_cancel"
               type="button"
               aria-label="кнопка закрытия"
-            >
-              <img src={cancelBtn} alt="закрыть" className="modal__btn-img" />
-            </button>
+            />
           )}
         </div>
       </div>

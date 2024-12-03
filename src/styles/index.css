@@ -5,16 +5,17 @@
 
 .body {
   background: var(--color-bg-main);
-  height: 100vh;
-  height: 100dvh;
 }
 
 a {
   color: #0b8aff;
 }
 
-#root {
-  height: 100%;
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .list {

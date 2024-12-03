@@ -1,37 +1,31 @@
-import { Route, Routes } from 'react-router-dom';
-
 import {
-  AdminApplicationsNav,
-  AuthorArticlesList,
   Profile,
   Account,
-  AdminApplicationNewAuthor,
   AdminCreateUser,
   AccountAdminNavbar,
+  NotFound,
 } from 'components';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { getCurrentUser } from 'store/selectors';
+import { adminHash } from 'utils/constants';
 
-export default function AccountAdmin() {
-  const navBar = <AccountAdminNavbar />;
+export default function AccountAdmin({ hash, resetSection }) {
+  const user = useSelector(getCurrentUser);
+  const [, setSearchParams] = useSearchParams();
+  const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
 
-  return (
-    <Account navBar={navBar}>
-      <Routes>
-        <Route
-          path="/applications"
-          element={
-            <div className="account-author__articles">
-              <AdminApplicationsNav />
-              <AuthorArticlesList />
-            </div>
-          }
-        />
-        <Route
-          path="/applications/new-author"
-          element={<AdminApplicationNewAuthor />}
-        />
-        <Route path="/create-user" element={<AdminCreateUser />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+  useEffect(() => {
+    !user && setSearchParams({ 'modal-auth': 'login' });
+  }, [user, setSearchParams]);
+
+  return isAdmin ? (
+    <Account navBar={<AccountAdminNavbar />}>
+      {hash === adminHash.create && <AdminCreateUser />}
+      {hash === adminHash.profile && <Profile resetSection={resetSection} />}
     </Account>
-  );
+  ) : user ? (
+    <NotFound resetSection={resetSection} role={'админ'} />
+  ) : null;
 }

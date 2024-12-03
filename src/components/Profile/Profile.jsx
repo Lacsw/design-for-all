@@ -1,14 +1,49 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './Profile.css';
-import { Button, SocialsBar, FieldEditable } from 'components';
+import { Button, SocialsBar, InputEditable } from 'components';
+import { useState } from 'react';
+import ModalFIO from 'components/Modal/ModalFIO/ModalFIO';
+import ModalLogPass from 'components/Modal/ModalLogPass/ModalLogPass';
+import authApi from 'utils/api/auth';
+import { signInSuccess } from 'store/slices';
 
-export default function Profile() {
+const initialForm = {
+  login: '',
+  old_login: '',
+  password: '',
+  old_password: '',
+  fio: '',
+  avatar: '',
+  social_media: '',
+};
+
+export default function Profile({ resetSection }) {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState(initialForm);
+  const [modal, setModal] = useState('');
+  const isFormReady = Object.values(formData).some(Boolean);
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    // TODO: обработать смену данных юзера
-  };
+  function handleFormSubmit(evt) {
+    evt.preventDefault();
+    const filledData = Object.keys(formData).reduce((acc, key) => {
+      if (formData[key]) acc[key] = formData[key];
+      return acc;
+    }, {});
+    authApi
+      .updateUser(filledData)
+      .then(() => {
+        if (filledData.login || filledData.password) {
+          resetSection();
+          dispatch(signInSuccess(null));
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function changeForm(data) {
+    setFormData((prev) => ({ ...prev, ...data }));
+  }
 
   return (
     <section className="profile">
@@ -19,15 +54,20 @@ export default function Profile() {
           onSubmit={handleFormSubmit}
         >
           <img
-            src={currentUser.avatar}
+            src={formData.avatar || currentUser.avatar}
             alt="Аватар"
             className="profile__avatar"
+            onClick={() => setModal('avatar')}
           />
 
           <fieldset className="profile__fieldset">
             <label className="profile__field">
               <span className="profile__sub-title">Фамилия, имя, отчество</span>
-              <FieldEditable value={currentUser.fio || 'Not your name'} />
+              <InputEditable
+                type={'text'}
+                value={formData.fio || currentUser.fio}
+                onOpen={() => setModal('fio')}
+              />
             </label>
 
             <div className="profile__field">
@@ -37,24 +77,52 @@ export default function Profile() {
 
             <label className="profile__field">
               <span className="profile__sub-title">Логин</span>
-              <FieldEditable value={currentUser.login || 'notyourlogin'} />
+              <InputEditable
+                type={'text'}
+                value="**********"
+                onOpen={() => setModal('login')}
+              />
             </label>
 
             <label className="profile__field">
               <span className="profile__sub-title">Пароль</span>
-              <FieldEditable value={'**********'} />
+              <InputEditable
+                type={'text'}
+                value="**********"
+                onOpen={() => setModal('password')}
+              />
             </label>
           </fieldset>
         </form>
         <div className="profile__buttons">
-          <Button type={'submit'} relatedForm={'profile-form'} disabled={true}>
+          <Button
+            type={'submit'}
+            relatedForm={'profile-form'}
+            disabled={!isFormReady}
+          >
             Сохранить
           </Button>
-          <Button type={'button'} disabled={true}>
+          <Button
+            type={'button'}
+            disabled={!isFormReady}
+            onClick={() => setFormData(initialForm)}
+          >
             Отменить
           </Button>
         </div>
       </div>
+      <ModalFIO
+        isOpen={modal === 'fio'}
+        onClose={() => setModal('')}
+        onSave={changeForm}
+        title="Изменить ФИО"
+      />
+      <ModalLogPass
+        isOpen={modal === 'login' || modal === 'password'}
+        onClose={() => setModal('')}
+        onSave={changeForm}
+        name={modal === 'password' ? modal : 'login'}
+      />
     </section>
   );
 }

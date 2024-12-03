@@ -1,54 +1,82 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-
 import './AccountAuthor.css';
 import {
   AuthorArticlesNav,
   AuthorArticlesList,
-  NewArticle,
   Profile,
   Account,
-  AccountAuthorNavbar,
+  NotFound,
+  NewArticleNavbar,
+  AuthorNavbar,
+  Creation,
 } from 'components';
 
 import authorApi from 'utils/api/author';
+import { hashPaths } from 'utils/constants';
+import { useSelector } from 'react-redux';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
-export default function AccountAuthor() {
+const authorTabs = ['approve', 'drafted', 'offered', 'rejected', 'deleted'];
+
+export default function AccountAuthor({ hash, resetSection }) {
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.currentUser);
+  const [, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [pagination, setPagination] = useState('20');
-  const [tab, setTab] = useState('approve');
+  const [tab, setTab] = useState(() => {
+    const parts = hash.split('/');
+    const end = parts[parts.length - 1];
+    return authorTabs.includes(end) ? end : 'approve';
+  });
+  const isValid = Object.values(hashPaths).includes(hash);
+  const access = isValid && user?.role === 'mentor';
+  const NavBar =
+    hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
   useEffect(() => {
-    authorApi
-      .getArticles({ pagination: pagination, status: tab })
-      .then((articles) => {
-        setArticles(articles.success);
-        setIsLoading(true);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
-  }, [pagination, tab]);
+    if (!isValid || user && !access) return;
+    if (!access) {
+      setSearchParams({ 'modal-auth': 'login' });
+      return;
+    }
+    if (hash === hashPaths.articles) {
+      navigate(hash + '/' + tab);
+      return;
+    }
+    if (hash !== hashPaths.newArticle && hash !== hashPaths.profile) {
+      authorApi
+        .getArticles({ pagination: pagination, status: tab })
+        .then(setArticles)
+        .catch(() => setArticles([]));
+    }
+  }, [pagination, tab, isValid, access, user, setSearchParams, hash, navigate]);
 
-  return (
-    <Account navBar={<AccountAuthorNavbar />}>
-      <Routes>
-        <Route
-          path="/articles"
-          element={
-            <div className="account-author__articles">
-              <AuthorArticlesNav
-                handlePagination={setPagination}
-                selected={tab}
-                onChange={setTab}
-              />
-              {!isLoading && <AuthorArticlesList articles={articles} />}
-            </div>
-          }
-        />
-        <Route path="/new-article" element={<NewArticle />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+  return access ? (
+    <Account navBar={<NavBar />}>
+      {hash === hashPaths.newArticle ? (
+        <Creation />
+      ) : hash === hashPaths.profile ? (
+        <Profile resetSection={resetSection} />
+      ) : (
+        <div className="account-author__articles">
+          <AuthorArticlesNav
+            handlePagination={setPagination}
+            selected={tab}
+            onChange={setTab}
+          />
+          <AuthorArticlesList
+            articles={articles}
+            section={tab}
+            changeList={setArticles}
+            pagination={pagination}
+          />
+        </div>
+      )}
     </Account>
-  );
+  ) : !isValid ? (
+    <NotFound resetSection={resetSection} />
+  ) : user ? (
+    <NotFound resetSection={resetSection} role={'автор'} />
+  ) : null;
 }

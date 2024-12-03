@@ -1,12 +1,12 @@
 .article-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .article-header__title {
   margin: 0;
-  color: #fff;
+  max-width: 80%;
+  color: var(--color-main);
   font-size: 30px;
   font-family: 'Inter';
   font-style: normal;
@@ -24,7 +24,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: var(--color-main);
   border: none;
   display: flex;
   justify-content: center;
@@ -39,7 +39,7 @@
 
 .article-header__timing {
   margin: 0;
-  color: #dadada;
+  color: var(--color-bg-accent);
   font-size: 12px;
   font-family: 'Inter';
   font-style: normal;

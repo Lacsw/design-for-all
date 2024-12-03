@@ -3,12 +3,9 @@ import { useParams } from 'react-router-dom';
 
 import './Articles.css';
 import {
-  Header,
-  SideBar,
   Article,
   AuthorAndReviewers,
   NotFoundArticle,
-  Footer,
   Loader,
   Error,
 } from 'components';
@@ -43,9 +40,8 @@ export default function Articles() {
 
   return (
     <>
-      <Header />
       <div className="articles__container">
-        <SideBar />
+        <div />
 
         {error ? (
           <Error message="Произошла ошибка при загрузке статьи" />
@@ -59,7 +55,6 @@ export default function Articles() {
 
         <AuthorAndReviewers />
       </div>
-      <Footer />
     </>
   );
 }

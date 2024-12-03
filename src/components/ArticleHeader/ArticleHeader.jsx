@@ -1,32 +1,20 @@
 import './ArticleHeader.css';
-import { DropdownNavigation } from 'components';
-import { languageList, editList } from 'utils/constants';
+import DropdownLanguage from 'components/DropdownLanguage/DropdownLanguage';
+import DropdownEdit from 'components/DropdownEdit/DropdownEdit';
+import { useSelector } from 'react-redux';
+import { getCurrentUser } from 'store/selectors';
 
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
+  const currentUser = useSelector(getCurrentUser);
+  const isAdmin = currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
+  
   return (
     <>
       <div className="article-header">
         <h2 className="article-header__title">{title}</h2>
         <div className="article-header__icon-container">
-          <button type="button" className="article-header__button">
-            <DropdownNavigation
-              options={languageList}
-              title="Язык"
-              sizeItem="m"
-              size="s"
-              paddingBottom="2"
-            />
-          </button>
-          <button type="button" className="article-header__button">
-            <DropdownNavigation
-              options={editList}
-              title="Редактировать"
-              size="s"
-              paddingBottom="1"
-              gap="5"
-              type="dropdownWithTools"
-            />
-          </button>
+          <DropdownLanguage />
+          {!isAdmin && <DropdownEdit />}
         </div>
       </div>
       <div className="article-header__timing-container">

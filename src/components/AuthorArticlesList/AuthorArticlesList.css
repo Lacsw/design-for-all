@@ -29,6 +29,7 @@
 
 .author-articles-list__table-header {
   width: 120px;
+  font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -65,16 +66,16 @@
 }
 
 .author-articles-list__table-row:hover {
-  background-color: rgba(36, 36, 36, 1);
+  background-color: var(--color-bg-low-accent);
 }
 
 .author-articles-list__table-body {
   display: block;
-  height: 416px;
+  max-height: 416px;
   overflow: auto;
   margin-top: 10px;
 
-  color: #dadada;
+  color: var(--color-bg-accent);
   font-family: Inter;
   font-size: 12px;
   font-style: normal;
@@ -82,15 +83,20 @@
   line-height: 130%;
 }
 
+.author-articles-list__table-body > p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .author-articles-list__icon-background {
   padding: 0;
-  width: 36px;
-  height: 36px;
+  width: 35px;
+  height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: var(--color-main);
   border: none;
   outline: none;
   cursor: pointer;

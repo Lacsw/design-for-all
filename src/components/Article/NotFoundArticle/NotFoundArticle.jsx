@@ -28,7 +28,7 @@ function NotFoundArcticle() {
       <h2 className="not-found-article__text">Данная статья ещё не создана.</h2>
       {currentUser ? (
         <Link
-          to="/author/new-article"
+          to="/#/author/new-article"
           className="button button_type_bright not-found-article__button"
         >
           Создать

@@ -26,13 +26,21 @@
   align-items: center;
 }
 
+.modal__container > p {
+  font-family: Inter;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
 .modal_opened {
   display: flex;
   visibility: visible;
   opacity: 1;
   transition:
     visibility 0s,
-    opacity 0.5s ease-in;
+    opacity 0.3s ease-in;
   z-index: 1;
 }
 
@@ -49,20 +57,44 @@
   gap: 30px;
 }
 
-.modal__confirm-btn {
-  all: initial;
-  display: flex;
+.modal__btn {
+  border: 3px solid var(--color-main);
+  background-color: var(--color-main);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
   margin: 0;
+  padding: 0;
   width: 44px;
   height: 44px;
   cursor: pointer;
-  transition: opacity 0.5s ease-in-out;
 }
 
-.modal__btn-img {
-  object-fit: none;
-}
-
-.modal__confirm-btn:hover {
+.modal__btn:disabled {
   opacity: 0.5;
+  pointer-events: none;
+}
+
+.modal__btn:hover {
+  background-color: transparent;
+}
+
+.dark .modal__btn_confirm,
+.light .modal__btn_confirm:hover {
+  background-image: url(../../images/modals/confirm-black.svg);
+}
+
+.light .modal__btn_confirm,
+.dark .modal__btn_confirm:hover {
+  background-image: url(../../images/modals/confirm-white.svg);
+}
+
+.dark .modal__btn_cancel,
+.light .modal__btn_cancel:hover {
+  background-image: url(../../images/modals/cancel-black.svg);
+}
+
+.light .modal__btn_cancel,
+.dark .modal__btn_cancel:hover {
+  background-image: url(../../images/modals/cancel-white.svg);
 }

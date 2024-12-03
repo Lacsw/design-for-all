@@ -1,0 +1,20 @@
+.main-slider {
+  position: relative;
+}
+
+.main-slider__prev-slide,
+.main-slider__next-slide {
+  position: absolute;
+  top: -300px;
+  transform: scale(0.4);
+  filter: blur(5px);
+  z-index: -1;
+}
+
+.main-slider__prev-slide {
+  left: -40%;
+}
+
+.main-slider__next-slide {
+  right: -40%;
+}

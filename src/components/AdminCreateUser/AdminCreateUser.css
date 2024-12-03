@@ -5,7 +5,6 @@
 
 .admin-create-user__form {
   padding: 30px 66px;
-  width: 676px;
   box-sizing: border-box;
   background-color: var(--color-bg-secondary);
   border-radius: 12px;

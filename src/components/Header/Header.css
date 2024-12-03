@@ -1,14 +1,14 @@
 .header {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 100;
+  padding: 13px 20px;
+  border-radius: 0px 0px 12px 12px;
+  background: var(--color-bg-secondary);
+  position: relative;
+  z-index: 2;
 }
 
 .header__container {
-  padding: 13px 120px;
-  border-radius: 0px 0px 12px 12px;
-  background: var(--color-bg-secondary);
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,4 +37,8 @@
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.logo-link {
+  line-height: 0;
 }

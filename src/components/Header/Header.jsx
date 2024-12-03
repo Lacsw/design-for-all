@@ -1,31 +1,35 @@
 import { Button } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import './Header.css';
 import logo from 'images/logo.svg';
-import loupe from 'images/loupe-icon.svg';
+import logoBlack from 'images/logo-black.svg';
 import accountDefaultIcon from 'images/account-icon.svg';
 import siginInIcon from 'images/siginin-icon.svg';
+import siginInIconWhite from 'images/siginin-icon_white.svg';
 import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
+import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import {
   accountNavigationList,
   navigationOptionsList,
+  adminNavList,
   languageList,
   currencyList,
 } from 'utils/constants';
-import { DropdownNavigation, AuthModal } from 'components';
+import { DropdownNavigation, AuthModal, SearchInput } from 'components';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
 
-export default function Header() {
+export default function Header({ resetSection }) {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const theme = useSelector(getCurrentTheme);
 
   const currentUser = useSelector(getCurrentUser);
+  const isAdmin = currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState(false);
 
@@ -38,7 +42,7 @@ export default function Header() {
   function setModalParams(mode = false) {
     setAuthModalMode(mode);
     if (mode) {
-      setSearchParams({'modal-auth': mode});
+      setSearchParams({ 'modal-auth': mode });
     } else {
       setSearchParams({});
     }
@@ -77,14 +81,16 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <a href="/">
-          <img src={logo} alt="Логотип" className="header__logo" />
-        </a>
+        <Link to="/" className="logo-link" onClick={resetSection}>
+          <img
+            src={theme === 'dark' ? logo : logoBlack}
+            alt="Логотип"
+            className="header__logo"
+          />
+        </Link>
         <ul className="header__icons-container">
           <li>
-            <button className="header__icon-background">
-              <img src={loupe} alt="Иконка лупы" className="header__icon" />
-            </button>
+            <SearchInput />
           </li>
           <li>
             <Button variant="contained" onClick={toggleTheme}>
@@ -94,7 +100,9 @@ export default function Header() {
           <li>
             <DropdownNavigation
               options={navigationOptionsList}
-              titleIcon={dropdownIconWhite}
+              titleIcon={
+                theme === 'light' ? dropdownIconBlack : dropdownIconWhite
+              }
               type="dropdownWithLinks"
               title="Меню"
             />
@@ -120,14 +128,18 @@ export default function Header() {
                 className="header__icon-background"
                 onClick={openAuthModal}
               >
-                <img src={siginInIcon} alt="войти" />
+                <img
+                  src={theme === 'dark' ? siginInIcon : siginInIconWhite}
+                  alt="войти"
+                />
               </button>
             ) : (
               <DropdownNavigation
-                options={accountNavigationList}
+                options={isAdmin ? adminNavList : accountNavigationList}
                 titleIcon={currentUser.avatar || accountDefaultIcon}
                 type="dropdownWithLinks"
                 title="Профиль"
+                resetSection={resetSection}
               />
             )}
           </li>

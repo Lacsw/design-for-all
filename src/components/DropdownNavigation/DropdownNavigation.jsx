@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLanguage, getCurrentTheme } from 'store/selectors';
+import { changeLanguage, signInSuccess } from 'store/slices';
 import './DropdownNavigation.css';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
+import authApi from 'utils/api/auth';
 
 export default function DropdownNavigation({
   options,
@@ -12,14 +16,28 @@ export default function DropdownNavigation({
   sizeItem,
   paddingBottom,
   gap,
+  resetSection,
 }) {
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const language = useSelector(getLanguage);
+  const theme = useSelector(getCurrentTheme);
+  const langSrc = options.find((item) => item.name === language)?.src;
+
+  async function handleLogout() {
+    authApi
+      .logout()
+      .then(() => {
+        resetSection();
+        dispatch(signInSuccess(null));
+      })
+      .catch((err) => console.log(err));
+  }
 
   const handleOptionClick = (option) => {
-    const currentOption = options.filter((i) => i.name === option);
-    setSelectedOption(...currentOption);
+    dispatch(changeLanguage(option));
   };
 
   const isClassNameTitleWhite = (className) => {
@@ -89,8 +107,8 @@ export default function DropdownNavigation({
           />
         ) : (
           <img
-            src={selectedOption.src}
-            alt={selectedOption.name}
+            src={langSrc || selectedOption[theme] || selectedOption.src}
+            alt={langSrc ? language : selectedOption.name}
             className={isClassNameNavigationImage('dropdown-navigation__image')}
           />
         )}
@@ -114,8 +132,20 @@ export default function DropdownNavigation({
                     >
                       <ArrowBackIcon isOpen={isSideMenuOpen} />
                     </div>
+                  ) : option.name === 'Выйти' ? (
+                    <NavLink to={option.link} onClick={handleLogout}>
+                      <img src={option.src} alt={option.name} />
+                    </NavLink>
                   ) : (
-                    <NavLink to={option.link}>
+                    <NavLink
+                      to={option.link}
+                      className={
+                        window.location.hash === '#/author/new-article' &&
+                        option.name === 'Написать статью'
+                          ? 'hash_link'
+                          : ''
+                      }
+                    >
                       <img src={option.src} alt={option.name} />
                     </NavLink>
                   )}
@@ -123,7 +153,7 @@ export default function DropdownNavigation({
               ))}
             {!type &&
               options
-                .filter((option) => option !== selectedOption)
+                .filter((option) => option.name !== language)
                 .map((option, i) => (
                   <li key={i} className="dropdown-navigation__menu-item">
                     <img
@@ -145,7 +175,7 @@ export default function DropdownNavigation({
                       className={isClassNameListItem(
                         'dropdown-navigation__menu-list-item'
                       )}
-                      src={option.src}
+                      src={option[theme]}
                       alt={option.name}
                       onClick={() => console.log(option.name)}
                     />
