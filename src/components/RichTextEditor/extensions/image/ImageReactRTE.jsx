@@ -5,7 +5,6 @@ export const ImageReactRTE = (props) => {
   console.log(props);
   return (
     <NodeViewWrapper className="react-component">
-      <label contentEditable={false}>React Component</label>
       <img
         src={props.node.attrs.src}
         width="100px"
@@ -13,7 +12,10 @@ export const ImageReactRTE = (props) => {
         alt="flowers"
       />
 
-      <NodeViewContent className="content is-editable" />
+      {/* TODO labels for images */}
+      {/* <NodeViewContent
+        style={{ backgroundColor: 'red' }}
+      /> */}
     </NodeViewWrapper>
   );
 };
