@@ -3,6 +3,7 @@ import createTree from 'utils/helpers/createTree';
 import { getTitles, getTree } from 'utils/api/tree';
 import authorApi from 'utils/api/author';
 import { catalog } from './catalog';
+import previewImage from 'images/article/preview.png';
 
 export const initialState = {
   catalog,
@@ -51,6 +52,7 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.article = action.payload;
+        state.article.publication.image = previewImage; // хардкод для фиктивных статей
         state.loading = false;
         state.error = '';
       })

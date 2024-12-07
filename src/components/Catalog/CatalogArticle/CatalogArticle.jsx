@@ -13,7 +13,6 @@ import {
   AuthorAndReviewers,
   Recommendations,
 } from 'components';
-import previewImage from 'images/article/preview.png';
 import './CatalogArticle.css';
 
 export default function CatalogArticle() {
@@ -59,7 +58,7 @@ export default function CatalogArticle() {
         />
         <div className="article__main">
           <img
-            src={previewImage}
+            src={article.publication.image}
             alt="Превью статьи"
             className="article__image"
           />

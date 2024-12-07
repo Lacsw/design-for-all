@@ -14,6 +14,13 @@ const initialState = {
     description: '',
     recommend_from_creator: [],
   },
+  original: {
+    sub_category: '',
+    title: '',
+    image: '',
+    description: '',
+    recommend_from_creator: [],
+  },
 };
 
 const userSlice = createSlice({
@@ -41,8 +48,8 @@ const userSlice = createSlice({
       let value = action.payload.value;
       state.draft[name] = value;
       if (name === 'lang' && !state.draft.what_update) {
-         state.draft.main_category = '';
-         state.draft.recommend_from_creator = [];
+        state.draft.main_category = '';
+        state.draft.recommend_from_creator = [];
       }
     },
     prepareDraft: (state, action) => {
@@ -50,6 +57,12 @@ const userSlice = createSlice({
     },
     resetDraft: (state) => {
       state.draft = initialState.draft;
+    },
+    addOriginal: (state, action) => {
+      action.payload &&
+        Object.keys(state.original).forEach(
+          (key) => (state.original[key] = action.payload[key]) || ''
+        );
     },
   },
 });
@@ -62,6 +75,7 @@ export const {
   changeDraft,
   prepareDraft,
   resetDraft,
+  addOriginal,
 } = userSlice.actions;
 
 // export const userReducer = userSlice.reducer;

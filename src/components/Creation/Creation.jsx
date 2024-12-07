@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { prepareDraft, resetDraft } from 'store/slices';
+import { prepareDraft, resetDraft, addOriginal } from 'store/slices';
 import authorApi from 'utils/api/author';
 import { selectArticle } from 'store/slices/articleSlice';
 import { NewArticle, ViewArticle } from 'components';
@@ -41,7 +41,7 @@ const Creation = () => {
               data.main_category || data.offered_update?.main_category,
             sub_category:
               data.sub_category || data.offered_update?.sub_category || '',
-            image: previewImage,
+            image: data.image || data.offered_update?.image ? previewImage : '',
             title: data.title || data.offered_update?.title || '',
             description:
               data.description || data.offered_update?.description || '',
@@ -56,6 +56,17 @@ const Creation = () => {
           }
           if (data.offered_update?.type === 'updated') {
             original.current.lang = data.offered_update?.lang;
+            newDraft.sub_category =
+              data.offered_update.sub_category ?? data.what_update.sub_category;
+            newDraft.image =
+              data.offered_update.image ?? data.what_update.image;
+            newDraft.title =
+              data.offered_update.title ?? data.what_update.title;
+            newDraft.description =
+              data.offered_update.description ?? data.what_update.description;
+            newDraft.recommend_from_creator =
+              data.offered_update.recommend_from_creator ??
+              data.what_update.recommend_from_creator;
           }
           if (data.offered_update?.type === 'created_lang') {
             original.current.lang = data.offered_update?.what_update_lang;
@@ -65,6 +76,11 @@ const Creation = () => {
             newDraft.uuid = location.state.draft;
           }
           dispatch(prepareDraft(newDraft));
+          dispatch(
+            addOriginal(
+              location.state.type === 'updated' ? original.current : newDraft
+            )
+          );
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
@@ -82,12 +98,13 @@ const Creation = () => {
         description: article.publication.description,
         recommend_from_creator: article.recommend,
       };
+      dispatch(addOriginal(original.current));
     }
     if (location.state.name === 'correct') {
       dispatch(
         prepareDraft({
           lang: location.state.lang,
-          main_category: 'ok',
+          main_category: 'default',
           sub_category: article.publication.sub_category,
           image: previewImage,
           title: article.publication.title,
@@ -104,7 +121,7 @@ const Creation = () => {
       );
       dispatch(
         prepareDraft({
-          main_category: 'ok',
+          main_category: 'default',
           what_update: location.state.original,
           what_update_lang: location.state.lang,
         })

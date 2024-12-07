@@ -10,9 +10,10 @@ import backIconB from 'images/account/logout-icon_black.svg';
 import { ModalAttention } from 'components';
 import authorApi from 'utils/api/author';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme, getDraft } from 'store/selectors';
+import { getCurrentTheme, getDraft, getOriginal } from 'store/selectors';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authorArticlesTabs, hashPaths } from 'utils/constants';
+import previewImage from 'images/article/preview.png';
 
 function defineNames(state) {
   if (!state) return ['create_new', 'create_draft'];
@@ -26,20 +27,49 @@ function defineNames(state) {
   return names;
 }
 
+function canSave(state, draft, original) {
+  if (state?.type === 'updated' || state?.name === 'edit') {
+    if (
+      original.recommend_from_creator.length !==
+      draft.recommend_from_creator.length
+    )
+      return true;
+    return Object.keys(original).some(
+      (key) => key !== 'recommend_from_creator' && original[key] !== draft[key]
+    );
+  }
+  return draft.lang && draft.main_category;
+}
+
+function canPublish(state, draft, original) {
+  if (state?.type === 'updated') {
+    if (
+      original.recommend_from_creator.length !==
+      draft.recommend_from_creator.length
+    )
+      return true;
+    return Object.keys(original).some(
+      (key) => key !== 'recommend_from_creator' && original[key] !== draft[key]
+    );
+  }
+  return !Object.values(draft).some((item) => !item);
+}
+
 const icons = {
   cancel: {
     dark: cancelIconW,
-    light: cancelIconB
+    light: cancelIconB,
   },
   back: {
     dark: backIconW,
-    light: backIconB
-  }
+    light: backIconB,
+  },
 };
 
-export default function NewArticleNavbar() {
+export default function NewArticleNavbar({ onChange }) {
   const location = useLocation();
   const theme = useSelector(getCurrentTheme);
+  const original = useSelector(getOriginal);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const draft = useSelector(getDraft);
   const navigate = useNavigate();
@@ -49,22 +79,56 @@ export default function NewArticleNavbar() {
   const status = authorArticlesTabs.find(
     (item) => item.value === location.state?.section
   )?.name;
-  const publishDisabled = Object.values(draft).some((item) => !item);
-  const draftDisabled = location.state ? !draft.lang : !draft.lang || !draft.main_category;
+  const publishDisabled = !canPublish(location.state, draft, original);
+  const draftDisabled = !canSave(location.state, draft, original);
   const buttonsNames = defineNames(location.state);
-  const icon = location.state?.name === 'view' ? icons.back[theme] : icons.cancel[theme];
-
+  const icon =
+    location.state?.name === 'view' ? icons.back[theme] : icons.cancel[theme];
   function handleSave({ target }) {
     const onlyId = draft.recommend_from_creator.map((item) => item.uuid);
     const modDraft = {
       ...draft,
-      image: '',
       recommend_from_creator: onlyId,
     };
-    if (target.name !== 'update_draft') delete modDraft.uuid;
+
+    if (
+      (location.state && location.state.type !== 'created') ||
+      target.name === 'update_draft'
+    )
+      delete modDraft.main_category;
+
+    if (target.name === 'update_draft') {
+      delete modDraft.lang;
+      delete modDraft.what_update;
+      delete modDraft.what_update_lang;
+    } else delete modDraft.uuid;
+
+    if (location.state?.type === 'updated' || target.name === 'update_draft') {
+      Object.keys(original).forEach((key) => {
+        if (original[key] === modDraft[key]) delete modDraft[key];
+      });
+      original.recommend_from_creator.length ===
+        modDraft.recommend_from_creator.length &&
+        delete modDraft.recommend_from_creator;
+    } else {
+      Object.keys(modDraft).forEach(
+        (key) => !modDraft[key] && delete modDraft[key]
+      );
+      target.name === 'create_draft' &&
+        !modDraft.recommend_from_creator.length &&
+        delete modDraft.recommend_from_creator;
+    }
+
+    if (modDraft.image) modDraft.image = previewImage;
+
     authorApi
       .addCreation(target.name, modDraft)
-      .then(() => navigate(hashPaths.articles))
+      .then(() => {
+        target.name.includes('draft')
+          ? onChange('drafted')
+          : onChange('offered');
+        navigate(hashPaths.articles);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -103,10 +167,7 @@ export default function NewArticleNavbar() {
           </>
         )}
         <li>
-          <button
-            className="link-button"
-            onClick={() => navigate(-1)}
-          >
+          <button className="link-button" onClick={() => navigate(-1)}>
             <img src={icon} alt="Вернуться" />
             {location.state?.name === 'view' ? 'Назад' : 'Отменить'}
           </button>

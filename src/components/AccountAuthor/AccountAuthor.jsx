@@ -53,7 +53,7 @@ export default function AccountAuthor({ hash, resetSection }) {
   }, [pagination, tab, isValid, access, user, setSearchParams, hash, navigate]);
 
   return access ? (
-    <Account navBar={<NavBar />}>
+    <Account navBar={<NavBar onChange={setTab} />}>
       {hash === hashPaths.newArticle ? (
         <Creation />
       ) : hash === hashPaths.profile ? (

@@ -132,16 +132,14 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           className={`${
             rejectFields.includes('sub_category') ? 'rejected ' : ''
           }new-article__label${
-            draft.main_category || (isUpdate && draft.lang)
+            draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
           }`}
         >
           <span className="new-article__sub-title">Подкатегория</span>
           <input
-            disabled={
-              draft.main_category || (isUpdate && draft.lang) ? false : true
-            }
+            disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="sub_category"
             placeholder="страна/город/улица/дом"
@@ -157,16 +155,14 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           className={`${
             rejectFields.includes('image') ? 'rejected ' : ''
           }new-article__label${
-            draft.main_category || (isUpdate && draft.lang)
+            draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
           }`}
         >
           <span className="new-article__sub-title">Картинка статьи</span>
           <input
-            disabled={
-              draft.main_category || (isUpdate && draft.lang) ? false : true
-            }
+            disabled={draft.main_category && draft.lang ? false : true}
             type="file"
             name="main-image"
             id="main-image"
@@ -187,16 +183,14 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           className={`${
             rejectFields.includes('title') ? 'rejected ' : ''
           }new-article__label${
-            draft.main_category || (isUpdate && draft.lang)
+            draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
           }`}
         >
           <span className="new-article__sub-title">Заголовок статьи</span>
           <input
-            disabled={
-              draft.main_category || (isUpdate && draft.lang) ? false : true
-            }
+            disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="article-title"
             id="article-title"
@@ -211,7 +205,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           className={`${
             rejectFields.includes('description') ? 'rejected ' : ''
           }new-article__label${
-            draft.main_category || (isUpdate && draft.lang)
+            draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
           }`}
@@ -222,9 +216,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
             id="article-content"
             classes={classes}
             initialValue={draft.description}
-            readOnly={
-              draft.main_category || (isUpdate && draft.lang) ? false : true
-            }
+            readOnly={draft.main_category && draft.lang ? false : true}
           />
         </label>
 
@@ -232,7 +224,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           className={`${
             rejectFields.includes('recommend_from_creator') ? 'rejected ' : ''
           }new-article__label${
-            draft.main_category || (isUpdate && draft.lang)
+            draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
           }`}
@@ -240,9 +232,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           <span className="new-article__sub-title">Рекомендации авторов</span>
           <div className="new-article__recommendations">
             <button
-              disabled={
-                draft.main_category || (isUpdate && draft.lang) ? false : true
-              }
+              disabled={draft.main_category && draft.lang ? false : true}
               className="new-article__recommendations-btn"
               type="button"
               onClick={toggleRecommendation}
