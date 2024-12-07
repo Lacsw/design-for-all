@@ -180,6 +180,10 @@ export const RichTextEditor = memo(function RichTextEditor({
     }
   }, [readOnly, initialValue, editor]);
 
+  useEffect(() => {
+    editor?.setOptions({ editable: !readOnly });
+  }, [editor, readOnly]);
+
   if (cancel) {
     editor?.commands.setContent(initialValue);
   }
