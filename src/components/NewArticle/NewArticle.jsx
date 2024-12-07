@@ -8,7 +8,7 @@ import editIconB from 'images/edit-icon_black.svg';
 import { Dropdown, ModalRecommendation, RichTextEditor } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';
@@ -20,10 +20,13 @@ function createTitle(type) {
 }
 
 export default function NewArticle({ langsList, rejectFields, draft }) {
-  const location = useLocation();
-  const theme = useSelector(getCurrentTheme);
-  const categories = useSelector(selectTitles);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const theme = useSelector(getCurrentTheme);
+  const isLight = useSelector(getIsThemeLight);
+
+  const categories = useSelector(selectTitles);
   const [isShownAddRec, setIsShownAddRec] = useState(false);
   const editId = useRef('');
 
@@ -77,6 +80,13 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
   function changeField(name, value) {
     dispatch(changeDraft({ name, value }));
   }
+
+  const classes = useMemo(
+    () => ({
+      button: !isLight ? 'inverted' : undefined,
+    }),
+    [isLight]
+  );
 
   return (
     <section className="new-article">
@@ -208,14 +218,12 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
         >
           <span className="new-article__sub-title">Контент статьи</span>
           <RichTextEditor
-            className="new-article__input new-article__input_article-content"
+            className="new-article__input new-article__input_article-content new-article__rte"
             id="article-content"
+            classes={classes}
             initialValue={draft.description}
             readOnly={
               draft.main_category || (isUpdate && draft.lang) ? false : true
-            }
-            onInput={({ validity, content }) =>
-              changeField('description', content)
             }
           />
         </label>

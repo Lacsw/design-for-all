@@ -61,6 +61,8 @@ const incrementStateNumber = (setter) => (evt) => {
   setter((prev) => prev + 1);
 };
 
+const defaultClasses = {};
+
 /** Богатый текстовый редактор */
 export const RichTextEditor = memo(function RichTextEditor({
   initialValue = null,
@@ -68,7 +70,7 @@ export const RichTextEditor = memo(function RichTextEditor({
   onInput,
   readOnly = false,
   className,
-  classes,
+  classes = defaultClasses,
   cancel,
   maxHeight = 'initial',
   id,

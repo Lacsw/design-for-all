@@ -16,7 +16,9 @@ export function RteButton({
   className,
 }) {
   const handleClick = useCallback(
-    () => tiptapCommands[name](editor),
+    (evt) => {
+      tiptapCommands[name](editor);
+    },
     [name, editor]
   );
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { MenuItem, Select, Icon } from '@mui/material';
 import clsx from 'clsx';
 import {
@@ -25,13 +25,13 @@ function getCurrentTypeOfText(editor) {
 }
 
 /** Selector for choosing type of text: simple text or headings. */
-export const TextTypeSelector = ({
+export const TextTypeSelector = memo(function TextTypeSelector({
   editor,
   className,
   menuClasses,
   flag,
   size = 'small',
-}) => {
+}) {
   const ref = useRef(null);
 
   const [textKind, setTextKind] = useState(() => getCurrentTypeOfText(editor));
@@ -39,8 +39,10 @@ export const TextTypeSelector = ({
 
   const handleTextKindChange = (event) => {
     const commandName = event.target.value;
+    if (commandName !== textKind) {
+      tiptapCommands[commandName](editor);
+    }
     setTextKind(commandName);
-    tiptapCommands[commandName](editor);
   };
 
   useEffect(() => {
@@ -103,4 +105,4 @@ export const TextTypeSelector = ({
       </MenuItem>
     </Select>
   );
-};
+});
