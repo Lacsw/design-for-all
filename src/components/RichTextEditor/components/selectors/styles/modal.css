@@ -1,0 +1,119 @@
+.rte__selector-menu-root {
+  --border-w: 2px;
+
+  .MuiIcon-root {
+    font-weight: 600;
+  }
+}
+
+.rte__selector-menu-root .MuiMenuItem-root {
+  padding: 0;
+  justify-content: center;
+  background-color: var(--color-bg-accent);
+}
+
+.rte__selector-menu-root .MuiMenuItem-root:nth-of-type(1) {
+  /* скругление фона */
+  border-radius: calc(var(--size) / 2) calc(var(--size) / 2) 0 0;
+}
+
+.rte__selector-menu-paper {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.rte__selector-menu-list {
+  background-color: var(--color-bg-accent);
+  border: 2px solid var(--color-secondary);
+  overflow: hidden;
+
+  .MuiMenuItem-root {
+    min-height: auto;
+    background-color: var(--color-bg-accent);
+  }
+
+  .MuiMenuItem-root:hover {
+    background-color: var(--color-bg-hover);
+    /* color: var(--color-main); */
+  }
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
+/* ----------------SIZING---------------------------- */
+.rte__selector-menu-root.smallest {
+  .MuiIcon-root {
+    width: 12px;
+    height: 16px;
+  }
+
+  .rte__selector-menu-list {
+    border-radius: 11px;
+  }
+}
+
+.rte__selector-menu-root.small {
+  .MuiIcon-root {
+    /* width: 16px; */
+    /* height: 22px; */
+    width: calc(var(--icon-btn-small) - 2 * var(--border-w));
+    height: calc(var(--icon-btn-small) - 2 * var(--border-w));
+    font-size: calc(var(--icon-btn-small) / 2);
+    line-height: calc(var(--icon-btn-small) - 2px);
+  }
+
+  .rte__selector-menu-list {
+    border-radius: calc(var(--icon-btn-small) / 2);
+  }
+}
+
+.rte__selector-menu-root.medium {
+  .MuiIcon-root {
+    width: 16px;
+    height: 18px;
+  }
+
+  .rte__selector-menu-list {
+    border-radius: 13px;
+  }
+}
+
+.rte__selector-menu-root.mediumer {
+  .MuiIcon-root {
+    width: 16px;
+    height: 20px;
+  }
+
+  .rte__selector-menu-list {
+    border-radius: 18px;
+  }
+}
+
+.rte__selector-menu-root.large {
+  .MuiIcon-root {
+    width: 16px;
+    height: 22px;
+  }
+
+  .rte__selector-menu-list {
+    border-radius: 22px;
+  }
+}
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
+/* ----------------THEME LIGHT---------------------------- */
+.theme-light {
+  .rte__selector-menu-list {
+    background-color: var(--color-bg-main);
+    border: 2px solid var(--color-main);
+  }
+
+  .rte__selector-menu-root .MuiMenuItem-root {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .MuiMenuItem-root:hover {
+    background-color: var(--color-bg-hover);
+  }
+}
+/* ----------------------------------------------------------------------------------------------------------------------------------- */

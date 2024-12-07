@@ -54,12 +54,8 @@
   letter-spacing: 0.48px;
 }
 
-.new-article__input_article-content {
-  width: 100%;
-  padding: 10px 16px;
-  resize: vertical;
-  overflow: auto;
-  min-height: 200px;
+.new-article__rte_disabled {
+  color: var(--color-main-disabled);
 }
 
 .new-article__main-image {

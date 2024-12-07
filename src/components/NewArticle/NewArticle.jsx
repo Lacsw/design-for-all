@@ -1,17 +1,18 @@
-import { useMemo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import deleteIconW from 'images/delete-icon_white.svg';
 import deleteIconB from 'images/delete-icon_black.svg';
 import editIconW from 'images/edit-icon_white.svg';
 import editIconB from 'images/edit-icon_black.svg';
-import { Dropdown, ModalRecommendation } from 'components';
+import { Dropdown, ModalRecommendation, RichTextEditor } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 
 function createTitle(type) {
   if (type === 'updated') return 'Внесение правок';
@@ -19,11 +20,18 @@ function createTitle(type) {
   return 'Создание новой статьи';
 }
 
-export default function NewArticle({ langsList, rejectFields, draft }) {
-  const location = useLocation();
-  const theme = useSelector(getCurrentTheme);
-  const categories = useSelector(selectTitles);
+export const NewArticle = memo(function NewArticle({
+  langsList,
+  rejectFields,
+  draft,
+}) {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const theme = useSelector(getCurrentTheme);
+  const isLight = useSelector(getIsThemeLight);
+
+  const categories = useSelector(selectTitles);
   const [isShownAddRec, setIsShownAddRec] = useState(false);
   const editId = useRef('');
 
@@ -78,6 +86,13 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
     dispatch(changeDraft({ name, value }));
   }
 
+  const classes = useMemo(
+    () => ({
+      button: !isLight ? 'inverted' : undefined,
+    }),
+    [isLight]
+  );
+
   return (
     <section className="new-article">
       <h2 className="new-article__title">{mainTitle}</h2>
@@ -129,9 +144,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
         >
           <span className="new-article__sub-title">Подкатегория</span>
           <input
-            disabled={
-              draft.main_category && draft.lang ? false : true
-            }
+            disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="sub_category"
             placeholder="страна/город/улица/дом"
@@ -154,9 +167,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
         >
           <span className="new-article__sub-title">Картинка статьи</span>
           <input
-            disabled={
-              draft.main_category && draft.lang ? false : true
-            }
+            disabled={draft.main_category && draft.lang ? false : true}
             type="file"
             name="main-image"
             id="main-image"
@@ -184,9 +195,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
         >
           <span className="new-article__sub-title">Заголовок статьи</span>
           <input
-            disabled={
-              draft.main_category && draft.lang ? false : true
-            }
+            disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="article-title"
             id="article-title"
@@ -207,19 +216,18 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           }`}
         >
           <span className="new-article__sub-title">Контент статьи</span>
-          <textarea
-            disabled={
-              draft.main_category && draft.lang ? false : true
-            }
-            type="text"
-            name="article-content"
-            id="article-content"
-            className="new-article__input new-article__input_article-content"
-            placeholder="Введите текст статьи"
-            value={draft.description}
-            onChange={(evt) => changeField('description', evt.target.value)}
-          />
         </label>
+        <RichTextEditor
+          className={clsx(
+            'new-article__rte',
+            rejectFields.includes('description') && 'rejected',
+            draft.main_category && draft.lang ? '' : 'new-article__rte_disabled'
+          )}
+          id="article-content"
+          classes={classes}
+          initialValue={draft.description}
+          readOnly={draft.main_category && draft.lang ? false : true}
+        />
 
         <div
           className={`${
@@ -233,9 +241,7 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           <span className="new-article__sub-title">Рекомендации авторов</span>
           <div className="new-article__recommendations">
             <button
-              disabled={
-                draft.main_category && draft.lang ? false : true
-              }
+              disabled={draft.main_category && draft.lang ? false : true}
               className="new-article__recommendations-btn"
               type="button"
               onClick={toggleRecommendation}
@@ -251,21 +257,21 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
                     target="_blank"
                     className="new-article__link"
                   >
-                  <div className="rec-overlay">
-                    <img
-                      src={theme === 'light' ? editIconB : editIconW}
-                      alt="Изменить рекомендацию"
-                      className="rec-overlay__img"
-                      onClick={(evt) => handleEdit(evt, item.uuid)}
-                    />
-                    <img
-                      src={theme === 'light' ? deleteIconB : deleteIconW}
-                      alt="Удалить рекомендацию"
-                      className="rec-overlay__img"
-                      onClick={(evt) => handleDelete(evt, item.uuid)}
-                    />
-                  </div>
-                  
+                    <div className="rec-overlay">
+                      <img
+                        src={theme === 'light' ? editIconB : editIconW}
+                        alt="Изменить рекомендацию"
+                        className="rec-overlay__img"
+                        onClick={(evt) => handleEdit(evt, item.uuid)}
+                      />
+                      <img
+                        src={theme === 'light' ? deleteIconB : deleteIconW}
+                        alt="Удалить рекомендацию"
+                        className="rec-overlay__img"
+                        onClick={(evt) => handleDelete(evt, item.uuid)}
+                      />
+                    </div>
+
                     <Recommend imageUrl={item.image} title={item.title} />
                   </Link>
                 </li>
@@ -285,4 +291,4 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
       />
     </section>
   );
-}
+});

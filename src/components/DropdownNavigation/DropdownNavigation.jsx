@@ -33,7 +33,7 @@ export default function DropdownNavigation({
         resetSection();
         dispatch(signInSuccess(null));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   }
 
   const handleOptionClick = (option) => {
@@ -177,7 +177,7 @@ export default function DropdownNavigation({
                       )}
                       src={option[theme]}
                       alt={option.name}
-                      onClick={() => console.log(option.name)}
+                      onClick={() => console.warn(option.name)}
                     />
                   </li>
                 ))}

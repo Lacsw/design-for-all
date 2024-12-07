@@ -20,6 +20,7 @@ export const setTheme = createAsyncThunk('theme/set', (payload) => {
         style.onerror = () => {
           reject(new Error('Error: failed to load theme css-file!'));
         };
+        document.body.classList.add('theme-light');
       } else {
         resolve(payload);
       }
@@ -27,6 +28,7 @@ export const setTheme = createAsyncThunk('theme/set', (payload) => {
       const ElOfNotDefaultTheme = document.getElementById('theme-overidden');
       if (ElOfNotDefaultTheme) {
         ElOfNotDefaultTheme.remove();
+        document.body.classList.remove('theme-light');
         resolve(payload);
       } else {
         reject(

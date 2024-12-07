@@ -45,7 +45,7 @@ export default function AuthorArticlesList({
       authorApi
         .getArticles({ pagination, status: section, page: page.current })
         .then((data) => changeList((prev) => [...prev, ...data]))
-        .catch((err) => console.log(err));
+        .catch((err) => console.warn(err));
     }
   }
 
@@ -70,7 +70,7 @@ export default function AuthorArticlesList({
         setDeleteOpen(article.uuid);
         break;
       default:
-        console.log(`Wrong button's name`);
+        console.warn(`Wrong button's name`);
     }
   }
 
@@ -82,7 +82,7 @@ export default function AuthorArticlesList({
         changeList(newList);
         setDeleteOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   }
 
   const toggleReason = (reason) => {

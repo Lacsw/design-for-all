@@ -1,0 +1,120 @@
+:root {
+  --icon-btn-smallest: 22px;
+  --icon-btn-small: 24px;
+  --icon-btn-medium: 26px;
+  --icon-btn-mediumer: 36px;
+  --icon-btn-large: 44px;
+}
+
+.MuiIconButton-root {
+  /* default size - medium. Class - .MuiIconButton-sizeMedium */
+  width: var(--icon-btn-medium);
+  height: var(--icon-btn-medium);
+  padding: 0;
+
+  /* Default theme is dark, so the environment is dark too, so button is bright */
+  color: var(--color-secondary);
+  background-color: var(--color-bg-accent);
+  border: 2px solid var(--color-bg-accent);
+  box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
+
+  transition:
+    color var(--tran-dur-m) var(--tran-kind-0),
+    background-color var(--tran-dur-m) var(--tran-kind-0),
+    box-shadow var(--tran-dur-m) var(--tran-kind-0);
+
+  .MuiSvgIcon-root {
+    font-size: 14px;
+  }
+
+  .MuiTouchRipple-root * {
+    background-color: transparent; /* disable ripple animation, effect */
+  }
+}
+
+.MuiIconButton-root:hover {
+  color: var(--color-secondary);
+  background-color: var(--color-bg-hover);
+  border: 2px solid var(--color-bg-hover);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+}
+.MuiIconButton-root:active {
+  color: var(--color-main);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-accent);
+  box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
+}
+
+/* OVERRIDES for LIGHT THEME */
+.theme-light {
+  .MuiIconButton-root {
+    color: var(--color-secondary);
+    background-color: var(--color-main);
+    border: 2px solid var(--color-main);
+  }
+
+  .MuiIconButton-root:hover {
+    color: var(--color-secondary);
+    background-color: var(--color-bg-accent);
+    border: 2px solid var(--color-bg-accent);
+  }
+  .MuiIconButton-root:active {
+    color: var(--color-main);
+    background-color: transparent;
+    border: 2px solid var(--color-main);
+  }
+}
+
+/* INVERTED, совпадают имена переменных цветов для обоих тем */
+.MuiIconButton-root.inverted {
+  color: var(--color-main);
+  background-color: var(--color-bg-secondary);
+  border: 2px solid var(--color-bg-secondary);
+}
+
+.MuiIconButton-root.inverted:hover {
+  color: var(--color-main);
+  background-color: var(--color-bg-low-accent);
+  border: 2px solid var(--color-bg-low-accent);
+}
+.MuiIconButton-root.inverted:active {
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-secondary);
+}
+
+/* ----- ------ ----- */
+/* ----- SIZING ----- */
+.MuiIconButton-sizeSmallest.MuiIconButton-root {
+  width: var(--icon-btn-smallest);
+  height: var(--icon-btn-smallest);
+
+  .MuiSvgIcon-root {
+    font-size: 10px;
+  }
+}
+.MuiIconButton-sizeSmall.MuiIconButton-root {
+  width: var(--icon-btn-small);
+  height: var(--icon-btn-small);
+
+  .MuiSvgIcon-root {
+    font-size: 14px;
+  }
+}
+/* mediumer > medium. medium is default */
+.MuiIconButton-sizeMediumer.MuiIconButton-root {
+  width: var(--icon-btn-mediumer);
+  height: var(--icon-btn-mediumer);
+
+  .MuiSvgIcon-root {
+    font-size: 14px;
+  }
+}
+.MuiIconButton-sizeLarge.MuiIconButton-root {
+  width: var(--icon-btn-large);
+  height: var(--icon-btn-large);
+
+  .MuiSvgIcon-root {
+    font-size: 14px;
+  }
+}

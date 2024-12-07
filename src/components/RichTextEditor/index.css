@@ -1,0 +1,176 @@
+.rte {
+  --list-marker-width: 30px;
+  background-color: var(--color-bg-low-accent);
+  border: 2px solid var(--color-bg-low-accent);
+  border-radius: 12px;
+  padding: 10px 16px;
+}
+
+.rte__editor .tiptap {
+  min-height: 38px;
+  outline: 0;
+
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+
+  p {
+    margin: 15px 0;
+  }
+
+  p:first-child {
+    margin: 0 0 15px;
+  }
+
+  /* Заглушка текста */
+  p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: var(--color-main-disabled);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    font-weight: 500;
+  }
+}
+
+/* --------------------------------------------------------------------------------------------------- */
+.tiptap ul {
+  padding-left: 20px;
+}
+
+.tiptap li p {
+  /* чтоб было видно мигающий курсор */
+  min-width: 5px;
+  overflow-wrap: anywhere;
+}
+
+.tiptap ul {
+  padding-left: 20px;
+}
+
+.tiptap > ul ul {
+  padding-left: 40px;
+}
+.tiptap > ul ol {
+  padding-left: 40px;
+}
+
+.tiptap ul > li {
+  margin: 3px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tiptap ul > li.center {
+  justify-content: center;
+}
+.tiptap ul > li.right {
+  justify-content: flex-end;
+}
+.tiptap ul > li.justify > *:nth-child(1) {
+  width: calc(100% - var(--list-marker-width));
+}
+
+.tiptap ul > li::before {
+  content: '•';
+  padding-left: 3px;
+  margin-bottom: auto;
+  width: calc(var(--list-marker-width) - 5px);
+}
+
+.tiptap ul > li > *:nth-child(1) {
+  max-width: calc(100% - var(--list-marker-width));
+}
+
+/* ------------------------------------------ */
+.tiptap ol {
+  counter-reset: myCounter 0;
+  padding-left: 20px;
+}
+
+.tiptap > ol ol {
+  padding-left: 40px;
+}
+.tiptap > ol ul {
+  padding-left: 40px;
+}
+
+.tiptap ol > li {
+  margin: 3px 0;
+  counter-increment: myCounter 1;
+  /* display: "flex" cancels default counter with name "list-item" so we need another one */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tiptap ol > li.center {
+  justify-content: center;
+}
+.tiptap ol > li.right {
+  justify-content: flex-end;
+}
+.tiptap ol > li.justify > *:nth-child(1) {
+  width: calc(100% - var(--list-marker-width));
+}
+
+.tiptap ol > li::before {
+  content: counter(myCounter) '.';
+  min-width: var(--list-marker-width);
+  margin-bottom: auto;
+  display: flex;
+  /* выравнивание по-горизонтали для чисел-нумераторов пунктов списка */
+  justify-content: center;
+}
+
+.tiptap ol > li > *:nth-child(1) {
+  width: fit-content;
+  max-width: calc(100% - var(--list-marker-width));
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+
+.tiptap code {
+  outline: 3px solid var(--color-bg-secondary);
+  background-color: var(--color-bg-secondary);
+  padding: 0 2px; /* чтоб был виден курсор */
+  margin: 0 4px;
+}
+
+.tiptap pre {
+  padding: 8px;
+  background-color: var(--color-bg-secondary);
+  code {
+    outline: 0;
+  }
+}
+
+.theme-light .tiptap pre {
+  background-color: var(--color-bg-main);
+  code {
+    outline: 0;
+  }
+}
+
+.theme-light code {
+  outline: 3px solid var(--color-bg-main);
+  background-color: var(--color-bg-main);
+}
+
+.rte__menu-bar {
+  position: sticky;
+  bottom: 10px;
+  background-color: var(--color-bg-accent);
+  /* background-color: var(--color-bg-main); */
+  border-radius: 15px;
+  padding: 3px 10px;
+  display: flex;
+  gap: 5px 5px;
+}
+
+.theme-light .rte__menu-bar {
+  background-color: var(--color-bg-secondary);
+}
