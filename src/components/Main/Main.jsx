@@ -3,7 +3,7 @@ import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
 
-export default function Main({setSection}) {
+export default function Main({ setSection }) {
   const [activeTab, setActiveTab] = useState({
     name: 'Обновления',
     index: 0,

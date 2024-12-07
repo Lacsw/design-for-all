@@ -2,7 +2,6 @@ import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import React from 'react';
 
 export const ImageReactRTE = (props) => {
-  console.log(props);
   return (
     <NodeViewWrapper className="react-component">
       <img

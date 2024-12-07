@@ -14,7 +14,7 @@ export { default as Articles } from './Articles/Articles';
 export { default as Article } from './Article/Article';
 export { default as NotFoundArticle } from './Article/NotFoundArticle/NotFoundArticle';
 export { default as ArticleHeader } from './ArticleHeader/ArticleHeader';
-export { default as NewArticle } from './NewArticle/NewArticle';
+export { NewArticle } from './NewArticle/NewArticle';
 export { default as AuthorNavbar } from './AccountAuthorNavbar/AuthorNavbar/AuthorNavbar';
 export { default as NewArticleNavbar } from './AccountAuthorNavbar/NewArticleNavbar/NewArticleNavbar';
 export { default as Profile } from './Profile/Profile';

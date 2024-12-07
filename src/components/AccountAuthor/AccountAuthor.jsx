@@ -35,7 +35,7 @@ export default function AccountAuthor({ hash, resetSection }) {
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
   useEffect(() => {
-    if (!isValid || user && !access) return;
+    if (!isValid || (user && !access)) return;
     if (!access) {
       setSearchParams({ 'modal-auth': 'login' });
       return;

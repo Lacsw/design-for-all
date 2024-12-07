@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import deleteIconW from 'images/delete-icon_white.svg';
@@ -12,6 +12,7 @@ import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 
 function createTitle(type) {
   if (type === 'updated') return 'Внесение правок';
@@ -19,7 +20,11 @@ function createTitle(type) {
   return 'Создание новой статьи';
 }
 
-export default function NewArticle({ langsList, rejectFields, draft }) {
+export const NewArticle = memo(function NewArticle({
+  langsList,
+  rejectFields,
+  draft,
+}) {
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -211,14 +216,18 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
           }`}
         >
           <span className="new-article__sub-title">Контент статьи</span>
-          <RichTextEditor
-            className="new-article__input new-article__input_article-content new-article__rte"
-            id="article-content"
-            classes={classes}
-            initialValue={draft.description}
-            readOnly={draft.main_category && draft.lang ? false : true}
-          />
         </label>
+        <RichTextEditor
+          className={clsx(
+            'new-article__rte',
+            rejectFields.includes('description') && 'rejected',
+            draft.main_category && draft.lang ? '' : 'new-article__rte_disabled'
+          )}
+          id="article-content"
+          classes={classes}
+          initialValue={draft.description}
+          readOnly={draft.main_category && draft.lang ? false : true}
+        />
 
         <div
           className={`${
@@ -282,4 +291,4 @@ export default function NewArticle({ langsList, rejectFields, draft }) {
       />
     </section>
   );
-}
+});

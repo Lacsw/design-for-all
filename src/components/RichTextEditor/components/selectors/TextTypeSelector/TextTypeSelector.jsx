@@ -35,7 +35,7 @@ export const TextTypeSelector = memo(function TextTypeSelector({
   const ref = useRef(null);
 
   const [textKind, setTextKind] = useState(() => getCurrentTypeOfText(editor));
-  const isDisabled = editor.isActive('image');
+  const isDisabled = editor.isActive(COMMANDS_NAMES.img);
 
   const handleTextKindChange = (event) => {
     const commandName = event.target.value;
@@ -83,24 +83,24 @@ export const TextTypeSelector = memo(function TextTypeSelector({
         },
       }}
     >
-      <MenuItem value={COMMANDS_NAMES.paragraph}>
+      <MenuItem key="mip" value={COMMANDS_NAMES.paragraph}>
         {/* <TitleIcon fontSize={size} /> */}
         <Icon fontSize={size}>T</Icon>
       </MenuItem>
 
-      <MenuItem value={COMMANDS_NAMES.heading1}>
+      <MenuItem key="mih1" value={COMMANDS_NAMES.heading1}>
         <Icon fontSize={size}>H₁</Icon>
       </MenuItem>
 
-      <MenuItem value={COMMANDS_NAMES.heading2}>
+      <MenuItem key="mih2" value={COMMANDS_NAMES.heading2}>
         <Icon fontSize={size}>H₂</Icon>
       </MenuItem>
 
-      <MenuItem value={COMMANDS_NAMES.heading3}>
+      <MenuItem key="mih3" value={COMMANDS_NAMES.heading3}>
         <Icon fontSize={size}>H₃</Icon>
       </MenuItem>
 
-      <MenuItem value={COMMANDS_NAMES.heading4}>
+      <MenuItem key="mih4" value={COMMANDS_NAMES.heading4}>
         <Icon fontSize={size}>H₄</Icon>
       </MenuItem>
     </Select>

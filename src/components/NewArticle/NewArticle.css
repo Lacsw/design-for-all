@@ -54,9 +54,9 @@
   letter-spacing: 0.48px;
 }
 
-/* .new-article__input_article-content {
-
-} */
+.new-article__rte_disabled {
+  color: var(--color-main-disabled);
+}
 
 .new-article__main-image {
   color: transparent;

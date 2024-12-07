@@ -161,6 +161,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     }
   }
 
+  // при вызовах данного хука он возвращ-т одну и ту же ссылку похоже
   const editor = useEditor({
     extensions,
     // content: mockContent,
@@ -171,12 +172,12 @@ export const RichTextEditor = memo(function RichTextEditor({
       preserveWhitespace: false,
     },
     onUpdate,
-    enableContentCheck: true,
+    enableContentCheck: true, // не работает?
   });
 
   useEffect(() => {
     if (readOnly && (!initialValue || initialValue === '<p></p>')) {
-      editor?.commands.setContent('<p>Отсутствует</p>');
+      // editor?.commands.setContent('<p>Отсутствует</p>');
     }
   }, [readOnly, initialValue, editor]);
 
@@ -227,6 +228,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             flag={flag}
           />
           <RteButton
+            key={COMMANDS_NAMES.italic}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.italic}
@@ -235,6 +237,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatItalicIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.bold}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.bold}
@@ -243,6 +246,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatBoldIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.bulletList}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.bulletList}
@@ -251,6 +255,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatListBulletedIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.orderedList}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.orderedList}
@@ -259,6 +264,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatListNumberedIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.img}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.img}
@@ -268,6 +274,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           </RteButton>
           <Divider orientation="vertical" />
           <RteButton
+            key={COMMANDS_NAMES.left}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.left}
@@ -276,6 +283,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatAlignLeftIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.center}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.center}
@@ -284,6 +292,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatAlignCenterIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.right}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.right}
@@ -292,6 +301,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <FormatAlignRightIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.justify}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.justify}
@@ -301,6 +311,7 @@ export const RichTextEditor = memo(function RichTextEditor({
           </RteButton>
           <Divider orientation="vertical" />
           <RteButton
+            key={COMMANDS_NAMES.code}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.code}
@@ -309,6 +320,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             <CodeIcon />
           </RteButton>
           <RteButton
+            key={COMMANDS_NAMES.codeBlock}
             className={classes.button}
             editor={editor}
             name={COMMANDS_NAMES.codeBlock}
@@ -319,7 +331,6 @@ export const RichTextEditor = memo(function RichTextEditor({
         </MenuBar>
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     editor,
     inFocusWithin,

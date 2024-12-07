@@ -33,7 +33,7 @@ export default function AdminCreateUser() {
         setFormData(initialForm);
         setModalSuccess(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   }
 
   return (

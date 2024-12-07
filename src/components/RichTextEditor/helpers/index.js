@@ -123,7 +123,6 @@ export const tiptapCommands = {
       'https://cs14.pikabu.ru/avatars/4124/x4124556-176449567.png',
     ];
     const idx = Math.round(Math.random() * (urls.length - 1));
-    console.log('fir', idx);
 
     editor
       ?.chain()
