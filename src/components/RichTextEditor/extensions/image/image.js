@@ -7,7 +7,7 @@ export const CustomImageExtension = Node.create({
   draggable: true,
   name: COMMANDS_NAMES.img,
   group: 'block',
-  content: 'inline*',
+
   addAttributes() {
     return {
       class: {
@@ -18,6 +18,7 @@ export const CustomImageExtension = Node.create({
       },
     };
   },
+
   parseHTML() {
     return [
       {
@@ -25,9 +26,12 @@ export const CustomImageExtension = Node.create({
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
-    return [COMMANDS_NAMES.img, mergeAttributes(HTMLAttributes), 0];
+
+  renderHTML(params) {
+    // console.log('renderHTML', params);
+    return [COMMANDS_NAMES.img, mergeAttributes(params)];
   },
+
   addNodeView() {
     return ReactNodeViewRenderer(ImageReactRTE, {
       as: 'figure',

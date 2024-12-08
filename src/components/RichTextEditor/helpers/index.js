@@ -63,11 +63,11 @@ export const tiptapCommands = {
           .setTextAlign('center')
           .run()
       );
-    } else if (editor?.isActive('image')) {
+    } else if (editor?.isActive(COMMANDS_NAMES.img)) {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes('image', { class: null })
+        .updateAttributes(COMMANDS_NAMES.img, { class: null })
         .run();
     } else {
       return editor?.chain().focus().setTextAlign('center').run();
@@ -93,11 +93,11 @@ export const tiptapCommands = {
         .updateAttributes('listItem', { class: 'justify' })
         .setTextAlign('justify')
         .run();
-    } else if (editor?.isActive('image')) {
+    } else if (editor?.isActive(COMMANDS_NAMES.img)) {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes('image', { class: 'justify' })
+        .updateAttributes(COMMANDS_NAMES.img, { class: 'justify' })
         .run();
     } else {
       return editor?.chain().focus().setTextAlign('justify').run();
@@ -152,17 +152,17 @@ export function checkIsCommandActive(commandName, editor) {
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
     case COMMANDS_NAMES.justify:
-      if (editor?.isActive('image')) {
+      if (editor?.isActive(COMMANDS_NAMES.img)) {
         needAnotherCheck = true;
         anotherCheck = (name) => {
           if (name === COMMANDS_NAMES.justify) {
-            return editor.view.lastSelectedViewDesc.dom.classList.contains(
-              'justify'
-            );
+            return editor.view.lastSelectedViewDesc.dom
+              .querySelector('div')
+              .classList.contains('justify');
           } else if (name === COMMANDS_NAMES.center) {
-            return !editor.view.lastSelectedViewDesc.dom.classList.contains(
-              'justify'
-            );
+            return !editor.view.lastSelectedViewDesc.dom
+              .querySelector('div')
+              .classList.contains('justify');
           } else {
             return false;
           }

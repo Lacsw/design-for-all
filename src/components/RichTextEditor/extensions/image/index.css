@@ -4,9 +4,23 @@
 }
 
 .rte__node_img img {
+  display: block;
   border-radius: 15px;
   aspect-ratio: auto;
   box-shadow: 0px 0px 10px 0px #00000040;
+}
+
+figure.node-imageCustom {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ProseMirror-focused
+  figure.node-imageCustom.ProseMirror-selectednode
+  div.rte__node_img
+  img {
+  outline: 1px solid black;
+  box-shadow: 0px 0px 15px 6px rgba(255, 255, 255, 0.1);
 }
 
 /* Вариант 1 fit ---------------------------------------------------------------
@@ -36,3 +50,12 @@
   width: 100%;
 }
 /* ------------------------------------------------------------------------------ */
+
+body.theme-light
+  .ProseMirror-focused
+  figure.node-imageCustom.ProseMirror-selectednode
+  div.rte__node_img
+  img {
+  outline: 1px solid black;
+  box-shadow: 0px 0px 15px 6px rgba(0, 0, 0, 0.6);
+}
