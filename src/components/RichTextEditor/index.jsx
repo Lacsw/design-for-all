@@ -4,6 +4,7 @@ import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
 import Placeholder from '@tiptap/extension-placeholder';
+import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -113,9 +114,9 @@ export const RichTextEditor = memo(function RichTextEditor({
       placeholder: 'Введите текст',
     }),
     ListItemCustom,
+    ImgTiptap,
     CustomImageExtension.configure({
-      allowBase64: true,
-      // inline: true,
+      // allowBase64: true,
       HTMLAttributes: {
         class: 'rte__node rte__node_img',
       },
@@ -161,7 +162,9 @@ export const RichTextEditor = memo(function RichTextEditor({
     }
   }
 
-  // при вызовах данного хука он возвращ-т одну и ту же ссылку похоже
+  /* при вызовах данного хука он возвращ-т одну и ту же ссылку похоже
+      и вроде как реальный вызов происходит только один раз
+   */
   const editor = useEditor({
     extensions,
     // content: mockContent,

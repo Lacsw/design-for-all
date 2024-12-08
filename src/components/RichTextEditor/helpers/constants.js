@@ -20,7 +20,7 @@ export const COMMANDS_NAMES = {
   orderedList: 'orderedList',
   subscript: 'subscript',
   superscript: 'superscript',
-  img: 'image-custom', // custom command
+  img: 'imageCustom', // custom command
 };
 
 /** Человеческие названия команд на русском языке */

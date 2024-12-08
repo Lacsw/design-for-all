@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import deleteIconW from 'images/delete-icon_white.svg';
@@ -55,6 +55,13 @@ export const NewArticle = memo(function NewArticle({
     setIsShownAddRec(!isShownAddRec);
   };
 
+  const changeField = useCallback(
+    (name, value) => {
+      dispatch(changeDraft({ name, value }));
+    },
+    [dispatch]
+  );
+
   function addFile({ target }) {
     const reader = new FileReader();
     if (target.files.length) {
@@ -82,9 +89,12 @@ export const NewArticle = memo(function NewArticle({
     toggleRecommendation();
   }
 
-  function changeField(name, value) {
-    dispatch(changeDraft({ name, value }));
-  }
+  const handleArticleContentChange = useCallback(
+    ({ content, validity }) => {
+      changeField('description', content);
+    },
+    [changeField]
+  );
 
   const classes = useMemo(
     () => ({
@@ -218,14 +228,15 @@ export const NewArticle = memo(function NewArticle({
           <span className="new-article__sub-title">Контент статьи</span>
         </label>
         <RichTextEditor
+          id="article-content"
           className={clsx(
             'new-article__rte',
             rejectFields.includes('description') && 'rejected',
             draft.main_category && draft.lang ? '' : 'new-article__rte_disabled'
           )}
-          id="article-content"
           classes={classes}
           initialValue={draft.description}
+          onInput={handleArticleContentChange}
           readOnly={draft.main_category && draft.lang ? false : true}
         />
 
