@@ -28,7 +28,7 @@ export const CustomImageExtension = Node.create({
   },
 
   renderHTML(params) {
-    console.log('renderHTML', params);
+    // console.log('renderHTML', params);
     return [COMMANDS_NAMES.img, mergeAttributes(params)];
   },
 
