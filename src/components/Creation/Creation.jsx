@@ -82,7 +82,7 @@ const Creation = () => {
             )
           );
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.warn(err))
         .finally(() => setLoading(false));
     }
     if (

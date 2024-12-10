@@ -129,7 +129,7 @@ export default function NewArticleNavbar({ onChange }) {
           : onChange('offered');
         navigate(hashPaths.articles);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   }
 
   return (

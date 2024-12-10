@@ -1,0 +1,61 @@
+/* Общие стили */
+.rte__node_img {
+  margin: 0 auto;
+}
+
+.rte__node_img img {
+  display: block;
+  border-radius: 15px;
+  aspect-ratio: auto;
+  box-shadow: 0px 0px 10px 0px #00000040;
+}
+
+figure.node-imageCustom {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ProseMirror-focused
+  figure.node-imageCustom.ProseMirror-selectednode
+  div.rte__node_img
+  img {
+  outline: 1px solid black;
+  box-shadow: 0px 0px 15px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Вариант 1 fit ---------------------------------------------------------------
+  Без доп. класса, но не по умолчанию.
+  Изображение принимает свой оригинальный размер, но не более ширины редактора.
+*/
+.rte__node_img {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.rte__node_img img {
+  width: auto;
+  max-width: 100%;
+}
+/* ------------------------------------------------------------------------------ */
+
+/* Вариант 2 justify ---------------------------------------------------------------
+  С доп. классом, вариант по умолчанию.
+  Изображение принимает ширину редактора.
+*/
+.rte__node_img.justify {
+  width: 100%;
+}
+
+.rte__node_img.justify img {
+  width: 100%;
+}
+/* ------------------------------------------------------------------------------ */
+
+body.theme-light
+  .ProseMirror-focused
+  figure.node-imageCustom.ProseMirror-selectednode
+  div.rte__node_img
+  img {
+  outline: 1px solid black;
+  box-shadow: 0px 0px 15px 6px rgba(0, 0, 0, 0.6);
+}

@@ -13,7 +13,8 @@ export default function AuthorArticlesNav({
       <ul className="author-articles-nav__list">
         {authorArticlesTabs.map((tab) => (
           <li key={tab.value}>
-            <Link to={`/#/author/articles/${tab.value}`}
+            <Link
+              to={`/#/author/articles/${tab.value}`}
               className={`author-articles-nav__item ${
                 selected === tab.value ? 'author-articles-nav__item_active' : ''
               }`}

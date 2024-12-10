@@ -12,6 +12,15 @@
   /* color for main background */
   --color-bg-main: #0b0b0b;
   --color-bg-secondary: #161616;
-  --color-bg-accent: #dadada;
+  --color-bg-accent: #ffffff;
+  --color-bg-hover: #dadada;
   --color-bg-low-accent: #242424;
+
+  /* transition duration */
+  --tran-dur-s: 150ms;
+  --tran-dur-m: 300ms;
+  --tran-dur-l: 500ms;
+
+  /* transition kind */
+  --tran-kind-0: cubic-bezier(0.4, 0, 0.2, 1);
 }

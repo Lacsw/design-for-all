@@ -33,7 +33,7 @@ export default function Articles() {
       .catch((err) => {
         setArticle({});
         setError(err.message);
-        console.log('err', err);
+        console.warn('err', err);
       })
       .finally(() => setIsLoading(false));
   }, [lang, articleId]);

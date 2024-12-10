@@ -39,7 +39,7 @@ export default function Profile({ resetSection }) {
           dispatch(signInSuccess(null));
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   }
 
   function changeForm(data) {

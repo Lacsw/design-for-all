@@ -1,0 +1,160 @@
+.rte__selector {
+  --size: var(--icon-btn-small);
+  font-size: calc(var(--size) / 2.1);
+  line-height: 1;
+  padding: 0;
+}
+
+.rte__selector .MuiSelect-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-accent);
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
+
+  transition:
+    color var(--tran-dur-m) var(--tran-kind-0),
+    background-color var(--tran-dur-m) var(--tran-kind-0),
+    box-shadow var(--tran-dur-m) var(--tran-kind-0);
+}
+
+.rte__selector:hover .MuiSelect-select {
+  color: var(--color-secondary);
+  /* background-color: var(--color-bg-hover); */
+  border: 2px solid var(--color-bg-hover);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.rte__selector:active .MuiSelect-select {
+  color: var(--color-main);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-accent);
+  box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
+}
+
+.rte__selector .MuiSelect-icon {
+  display: none;
+}
+
+.rte__selector .MuiSelect-select.MuiInputBase-input {
+  padding: 0;
+}
+
+.rte__selector-menu-list {
+  padding: 0;
+}
+
+.rte__selector .MuiOutlinedInput-notchedOutline {
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.rte__selector .MuiIcon-root {
+  font-weight: 600;
+}
+
+/* TODO check styles if NOT inverted */
+/* --- IF INVERTED ↓↓↓ ------------------------------------------------------------------------------------------------------------------------*/
+.rte__selector.inverted .MuiSelect-select {
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-secondary);
+}
+
+.rte__selector.inverted:hover .MuiSelect-select {
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-low-accent);
+}
+.rte__selector.inverted:active .MuiSelect-select {
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 2px solid var(--color-bg-secondary);
+}
+
+.theme-light {
+  .rte__selector.inverted .MuiSelect-select {
+    color: var(--color-main);
+    background-color: transparent;
+    border: 2px solid var(--color-main);
+  }
+
+  .rte__selector.inverted:hover .MuiSelect-select {
+    color: var(--color-secondary);
+    background-color: var(--color-main);
+    border: 2px solid var(--color-main);
+  }
+  .rte__selector.inverted:active .MuiSelect-select {
+    color: var(--color-main);
+    background-color: transparent;
+    border: 2px solid var(--color-main);
+  }
+}
+/* --- IF INVERTED ↑↑↑ ------------------------------------------------------------------------------------------------------------------------*/
+
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
+/* ----- SIZING ----- */
+.rte__selector .MuiSelect-select {
+  width: var(--size);
+  height: var(--size);
+}
+
+.rte__selector .MuiSvgIcon-root {
+  font-size: calc(var(--size) / 2);
+}
+.rte__selector .MuiIcon-root {
+  font-size: calc(var(--size) / 2);
+}
+
+.rte__selector .MuiSvgIcon-root {
+  /* font-size: 10px; */
+}
+
+/* ---- иконки из символов текста ---- */
+.rte__selector_size_smallest .MuiIcon-root {
+  /* font-size: 10px; */
+}
+.rte__selector_size_small .MuiIcon-root {
+  /* font-size: 14px; */
+}
+
+.rte__selector_size_medium .MuiIcon-root {
+  /* font-size: 14px; */
+}
+
+/* mediumer > medium. medium is default */
+.rte__selector_size_mediumer .MuiIcon-root {
+  /* font-size: 14px; */
+}
+.rte__selector_size_large .MuiIcon-root {
+  /* font-size: 14px; */
+}
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
+/* LIGHT THEME */
+.theme-light {
+  .rte__selector .MuiSelect-select {
+    color: var(--color-secondary);
+    background-color: transparent;
+    border: 2px solid var(--color-main);
+  }
+
+  .rte__selector:hover .MuiSelect-select {
+    color: var(--color-secondary);
+    background-color: var(--color-bg-accent);
+    border: 2px solid var(--color-bg-accent);
+  }
+  .rte__selector:active .MuiSelect-select {
+    color: var(--color-main);
+    background-color: transparent;
+    border: 2px solid var(--color-main);
+  }
+}
+/* ----------------------------------------------------------------------------------------------------------------------------------- */
