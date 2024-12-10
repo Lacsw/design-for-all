@@ -18,3 +18,21 @@ export async function createUser(data) {
     }
   });
 }
+
+export async function getRequests(endPoint, pagination) {
+  const options = {
+    method: 'GET',
+    headers,
+    credentials: 'include',
+  };
+  return fetch(
+    baseUrl + '/admin_find_' + endPoint + '/' + pagination,
+    options
+  ).then((res) => {
+    if (res.ok) {
+      return res.status !== 200 ? res.statusText : res.json();
+    } else {
+      return Promise.reject(`Ошибка ${res.status}`);
+    }
+  });
+}

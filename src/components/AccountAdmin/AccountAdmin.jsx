@@ -5,6 +5,7 @@ import {
   AccountAdminNavbar,
   NotFound,
 } from 'components';
+import AdminRequests from 'components/AdminRequests/AdminRequests';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -22,8 +23,9 @@ export default function AccountAdmin({ hash, resetSection }) {
 
   return isAdmin ? (
     <Account navBar={<AccountAdminNavbar />}>
-      {hash === adminHash.create && <AdminCreateUser />}
+      {hash === adminHash.user && <AdminCreateUser />}
       {hash === adminHash.profile && <Profile resetSection={resetSection} />}
+      {adminHash.requests.includes(hash) && <AdminRequests hash={hash} />}
     </Account>
   ) : user ? (
     <NotFound resetSection={resetSection} role={'админ'} />

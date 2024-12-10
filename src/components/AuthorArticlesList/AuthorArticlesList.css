@@ -71,7 +71,7 @@
 
 .author-articles-list__table-body {
   display: block;
-  max-height: 416px;
+  height: 416px;
   overflow: auto;
   margin-top: 10px;
 
@@ -157,7 +157,7 @@ tbody::-webkit-scrollbar {
 
 tbody::-webkit-scrollbar-thumb {
   margin-left: 20px;
-  background-color: #fff;
+  background-color: #3f3f3f;
   border: 1px solid transparent;
   border-radius: 20px;
   background-clip: padding-box;

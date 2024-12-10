@@ -6,7 +6,7 @@ class AuthApi {
 
   _checkResponse(res) {
     if (res.ok) {
-      return res.json();
+      return res.status !== 200 ? res.statusText : res.json();
     } else {
       return Promise.reject(`Ошибка ${res.status}`);
     }
@@ -22,9 +22,9 @@ class AuthApi {
 
   // login: 'test_account',
   // password: '00xMgxOASRdsz0RZ'
-	
-	// login: super_admin,
-	// password: IgEWMWuh33L5LpOK
+
+  // login: super_admin,
+  // password: IgEWMWuh33L5LpOK
 
   async loginAuthor(data) {
     const response = await fetch(`${this._baseUrl}/login`, {
@@ -44,6 +44,19 @@ class AuthApi {
     return response.ok ? Promise.resolve() : Promise.reject('Выход не удался.');
   }
 
+  async regUser(data) {
+    const response = await fetch(`${this._baseUrl}/author_create`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+      credentials: 'include',
+    });
+
+    if (response.ok) return response.statusText;
+    const message = await response.json();
+    return Promise.reject(message);
+  }
+
   async updateUser(data) {
     const response = await fetch(`${this._baseUrl}/user_update`, {
       method: 'POST',
@@ -52,6 +65,12 @@ class AuthApi {
       credentials: 'include',
     });
     return response.ok ? Promise.resolve() : Promise.reject('Выход не удался.');
+  }
+
+  async getCaptcha(theme) {
+    return fetch('https://design-for-all.net/api/v1/get_captcha/' + theme).then(
+      (res) => res.blob()
+    );
   }
 }
 
