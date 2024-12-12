@@ -8,8 +8,10 @@ import editIconW from '../../images/account/edit-icon_white.svg';
 import './AdminTable.css';
 import '../AuthorArticlesList/AuthorArticlesList.css';
 import { getRequests } from 'utils/api/admin';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminTable({ hash, pagination }) {
+  const navigate = useNavigate();
   const theme = useSelector(getCurrentTheme);
   const bodyRef = useRef(null);
   const page = useRef(1);
@@ -36,6 +38,12 @@ export default function AdminTable({ hash, pagination }) {
   }
 
   const scrollWithDelay = debounce(handleScroll, 200);
+
+  function handleClick(item) {
+    navigate(hash + '/decision', {
+      state: { type: item.type, uuid: item.uuid },
+    });
+  }
 
   useEffect(() => {
     page.current = 1;
@@ -108,7 +116,7 @@ export default function AdminTable({ hash, pagination }) {
                 <td className="admin-table__button">
                   <button
                     className="author-articles-list__icon-background"
-                    onClick={() => console.log('Клик по кнопке в таблице админа')}
+                    onClick={() => handleClick(item)}
                   >
                     <img
                       src={theme === 'dark' ? editIconB : editIconW}

@@ -10,6 +10,7 @@ import logoutIconB from 'images/account/logout-icon_black.svg';
 import HashButton from 'components/LinkButton/HashButton';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
+import { adminHash } from 'utils/constants';
 
 export default function AdminNavbar() {
   const theme = useSelector(getCurrentTheme);
@@ -19,6 +20,7 @@ export default function AdminNavbar() {
         <li>
           <HashButton
             to="#/admin/creates"
+            kit={adminHash.requests}
             icon={theme === 'dark' ? articlesIconWhite : articlesIconBlack}
             activeIcon={
               theme === 'dark' ? articlesIconBlack : articlesIconWhite
