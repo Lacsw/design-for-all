@@ -15,11 +15,21 @@ const AccountsDecision = ({ info, uuid }) => {
       <h2 className="decision-account__title">Заявка регистрации автора</h2>
       <h3 className="decision-account__subtitle">Ссылки на проекты</h3>
       <div className="decision-account__links-group">
-        {info.link_projects.map((link) => (
-          <a href={link} key={link} className="decision-account__link" target="_blank" rel="noreferrer">
-            {link}
-          </a>
-        ))}
+        {info.link_projects.map((link) => {
+          let url = link;
+          if (!link.startsWith('http')) url = '//' + link;
+          return (
+            <a
+              href={url}
+              key={link}
+              className="decision-account__link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {link}
+            </a>
+          );
+        })}
       </div>
       <h2 className="decision-account__title">
         Инструкция по проверке квалификации автора
