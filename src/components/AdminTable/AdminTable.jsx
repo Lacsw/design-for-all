@@ -22,7 +22,9 @@ export default function AdminTable({ hash, pagination }) {
       ? 'statements_author_account'
       : hash === adminHash.creates
       ? 'creates_p'
-      : 'updates_p';
+      : hash === adminHash.updates
+      ? 'updates_p'
+      : 'closed_p';
 
   function handleScroll(evt) {
     if (
@@ -98,7 +100,7 @@ export default function AdminTable({ hash, pagination }) {
                   {item.main_category || '-'}
                 </td>
                 <td className="author-articles-list__table-cell">
-                  {item.status}
+                  {item.who_admin === 'none' ? 'Открыто' : 'В работе'}
                 </td>
                 <td className="author-articles-list__table-cell">
                   {item.lang}
@@ -110,7 +112,7 @@ export default function AdminTable({ hash, pagination }) {
                   {dateFormatter(item.date_closed) || '-'}
                 </td>
                 <td className="author-articles-list__table-cell">
-                  {item.status}
+                  {item.result || '-'}
                 </td>
 
                 <td className="admin-table__button">

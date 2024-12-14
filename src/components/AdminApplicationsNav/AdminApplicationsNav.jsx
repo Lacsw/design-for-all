@@ -43,6 +43,18 @@ export default function AdminApplicationsNav({ hash, setPagination }) {
             Аккаунты
           </Link>
         </li>
+        <li>
+          <Link
+            to={adminHash.closed}
+            className={`admin-applications-nav__item${
+              hash === adminHash.closed
+                ? ' admin-applications-nav__item_active'
+                : ''
+            }`}
+          >
+            Закрытые
+          </Link>
+        </li>
       </ul>
       <DropdownAmount
         className="author-articles-nav__more"

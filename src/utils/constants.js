@@ -204,7 +204,7 @@ export const hashPaths = {
 };
 
 export const adminHash = {
-  requests: ['#/admin/creates', '#/admin/updates', '#/admin/accounts'],
+  requests: ['#/admin/creates', '#/admin/updates', '#/admin/accounts', '#/admin/closed'],
   decisions: ['#/admin/creates/decision', '#/admin/updates/decision', '#/admin/accounts/decision'],
   user: '#/admin/create-user',
   profile: '#/admin/profile',
@@ -214,6 +214,7 @@ export const adminHash = {
   updatesD: '#/admin/updates/decision',
   accounts: '#/admin/accounts',
   accountsD: '#/admin/accounts/decision',
+  closed: '#/admin/closed',
 };
 // SOCIALS //
 
