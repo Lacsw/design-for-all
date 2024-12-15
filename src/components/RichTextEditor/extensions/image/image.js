@@ -19,7 +19,8 @@ export const CustomImageExtension = Node.create({
     };
   },
 
-  parseHTML() {
+  parseHTML(a, b, c) {
+    console.log('CustomImageExtension parseHTML', { a, b, c });
     return [
       {
         tag: COMMANDS_NAMES.img,
@@ -27,8 +28,8 @@ export const CustomImageExtension = Node.create({
     ];
   },
 
-  renderHTML(params) {
-    // console.log('renderHTML', params);
+  renderHTML(params, p2, p3) {
+    console.log('renderHTML', params, p2, p3);
     return [COMMANDS_NAMES.img, mergeAttributes(params)];
   },
 
