@@ -114,22 +114,23 @@ export const tiptapCommands = {
   [COMMANDS_NAMES.superscript]: (editor) =>
     editor?.chain().focus().toggleSuperscript().run(),
   [COMMANDS_NAMES.img]: (editor) => {
-    // const url = window.prompt('URL');
-    const urls = [
+    const url = window.prompt('URL');
+    /*const urls = [
       'https://i.pinimg.com/200x/d5/2a/01/d52a01b1eacc48b5c60ff1a0a8426e6c.jpg',
       'https://i.pinimg.com/236x/97/76/64/9776647cac22dc41086cfa6815f62a5c--cat-face-cat-eyes.jpg?nii=t',
       'https://www.meme-arsenal.com/memes/92c3bf3588af96e7533d85284f32c4cd.jpg',
       'https://i.pinimg.com/236x/3b/b8/8e/3bb88e56069511c14034285c081a7d22.jpg',
       'https://cs14.pikabu.ru/avatars/4124/x4124556-176449567.png',
     ];
-    const idx = Math.round(Math.random() * (urls.length - 1));
+    const idx = Math.round(Math.random() * (urls.length - 1));*/
 
     editor
       ?.chain()
       .insertContentAt(editor.state.selection.head, {
         type: COMMANDS_NAMES.img,
         attrs: {
-          src: urls[idx],
+          // src: urls[idx],
+          src: url,
         },
       })
       .focus()
