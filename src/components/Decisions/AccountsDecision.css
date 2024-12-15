@@ -1,0 +1,57 @@
+.decision-account {
+  font-family: Inter;
+  color: var(--color-main);
+}
+
+.decision-account__title {
+  margin: 0;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.decision-account__subtitle {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 0.24px;
+}
+
+.decision-account__links-group {
+  width: 289px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.decision-account__instruction {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.32px;
+  padding: 0 0 0 20px;
+}
+
+.decision-account__instruction > li {
+  list-style: decimal;
+}
+
+.decision-account__link {
+  padding: 14px 10px;
+  margin: 0;
+  font-size: 12px;
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--color-bg-low-accent);
+  border-radius: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

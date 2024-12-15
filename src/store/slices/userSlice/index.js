@@ -21,6 +21,7 @@ const initialState = {
     description: '',
     recommend_from_creator: [],
   },
+  decision: {},
 };
 
 const userSlice = createSlice({
@@ -64,6 +65,9 @@ const userSlice = createSlice({
           (key) => (state.original[key] = action.payload[key]) || ''
         );
     },
+    setDecision: (state, action) => {
+      state.decision = action.payload;
+    },
   },
 });
 
@@ -76,6 +80,7 @@ export const {
   prepareDraft,
   resetDraft,
   addOriginal,
+  setDecision,
 } = userSlice.actions;
 
 // export const userReducer = userSlice.reducer;

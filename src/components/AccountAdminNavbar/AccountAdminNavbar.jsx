@@ -1,13 +1,10 @@
-import { useLocation } from 'react-router-dom';
-
 import { AdminNavbar, AdminAppNewAuthorNavbar } from 'components';
+import { adminHash } from 'utils/constants';
 
-export default function AccountAdminNavbar() {
-  const location = useLocation();
-
+export default function AccountAdminNavbar({ hash }) {
   return (
     <>
-      {location.pathname === '/admin/applications/new-author' ? (
+      {adminHash.decisions.includes(hash) ? (
         <AdminAppNewAuthorNavbar />
       ) : (
         <AdminNavbar />

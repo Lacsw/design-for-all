@@ -2,14 +2,15 @@ import { Link, useLocation } from 'react-router-dom';
 
 import './LinkButton.css';
 
-export default function HashButton({ children, to, icon, activeIcon }) {
+export default function HashButton({ children, to, icon, activeIcon, kit }) {
   const { hash } = useLocation();
+  const isMatch = kit?.includes(hash);
   return (
     <Link
       to={to}
-      className={`hash-button ${to !== '/' && hash.includes(to) ? 'hash-button_active' : ''}`}
+      className={`hash-button ${isMatch || to !== '/' && hash.includes(to) ? 'hash-button_active' : ''}`}
     >
-      <img src={hash === to ? activeIcon : icon} alt="Иконка" />
+      <img src={hash === to || isMatch ? activeIcon : icon} alt="Иконка" />
       {children}
     </Link>
   );

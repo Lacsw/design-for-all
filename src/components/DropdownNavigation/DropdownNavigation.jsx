@@ -5,6 +5,7 @@ import { getLanguage, getCurrentTheme } from 'store/selectors';
 import { changeLanguage, signInSuccess } from 'store/slices';
 import './DropdownNavigation.css';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
+import defaultAvatar from '../../images/admin/avatar_default.svg';
 import authApi from 'utils/api/auth';
 
 export default function DropdownNavigation({
@@ -104,6 +105,7 @@ export default function DropdownNavigation({
             src={titleIcon}
             alt={title}
             className="dropdown-navigation__title-image"
+            onError={evt => evt.target.src = defaultAvatar}
           />
         ) : (
           <img

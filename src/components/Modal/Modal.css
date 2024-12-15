@@ -34,6 +34,11 @@
   text-align: center;
 }
 
+.modal__container > .small-text {
+  font-size: 12px;
+  max-width: 410px;
+}
+
 .modal_opened {
   display: flex;
   visibility: visible;

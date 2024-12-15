@@ -152,7 +152,7 @@ export const adminNavList = [
   {
     name: 'Заявки',
     src: articleBlack,
-    link: '/#/admin/requests',
+    link: '/#/admin/creates',
   },
   {
     name: 'Создать пользователя',
@@ -204,9 +204,16 @@ export const hashPaths = {
 };
 
 export const adminHash = {
-  requests: '#/admin/requests',
-  create: '#/admin/create-user',
+  requests: ['#/admin/creates', '#/admin/updates', '#/admin/accounts'],
+  decisions: ['#/admin/creates/decision', '#/admin/updates/decision', '#/admin/accounts/decision'],
+  user: '#/admin/create-user',
   profile: '#/admin/profile',
+  creates: '#/admin/creates',
+  createsD: '#/admin/creates/decision',
+  updates: '#/admin/updates',
+  updatesD: '#/admin/updates/decision',
+  accounts: '#/admin/accounts',
+  accountsD: '#/admin/accounts/decision',
 };
 // SOCIALS //
 
