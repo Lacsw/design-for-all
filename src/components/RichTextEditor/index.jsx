@@ -50,6 +50,9 @@ const defaultValidationsOptions = {
 
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
+  // console.log('htmlString', htmlString);
+  // const json = editor.getJSON();
+  // console.log('json', json);
   if (_validationsOptions) {
     const result = validate(_validationsOptions, editor);
     onInput(result);

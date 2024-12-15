@@ -1,4 +1,4 @@
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
+import { NodeViewWrapper } from '@tiptap/react';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -11,7 +11,7 @@ export const ImageReactRTE = (props) => {
         props.node.attrs.class
       )}
     >
-      <img src={props.node.attrs.src} alt="flowers" />
+      <img src={props.node.attrs.src} alt="kittens" />
 
       {/* TODO labels for images */}
       {/* <NodeViewContent
