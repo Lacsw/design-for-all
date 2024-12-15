@@ -28,9 +28,9 @@ export const CustomImageExtension = Node.create({
     ];
   },
 
-  renderHTML(params, p2, p3) {
-    console.log('renderHTML', params, p2, p3);
-    return [COMMANDS_NAMES.img, mergeAttributes(params)];
+  renderHTML(params) {
+    console.log('renderHTML', params);
+    return [COMMANDS_NAMES.img, mergeAttributes(params.HTMLAttributes)];
   },
 
   addNodeView() {
