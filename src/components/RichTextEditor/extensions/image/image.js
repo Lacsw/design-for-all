@@ -8,6 +8,7 @@ export const CustomImageExtension = Node.create({
   name: COMMANDS_NAMES.img,
   group: 'block',
 
+  // no params
   addAttributes() {
     return {
       class: {
@@ -19,8 +20,8 @@ export const CustomImageExtension = Node.create({
     };
   },
 
-  parseHTML(a, b, c) {
-    console.log('CustomImageExtension parseHTML', { a, b, c });
+  // no params
+  parseHTML() {
     return [
       {
         tag: COMMANDS_NAMES.img,
@@ -28,9 +29,8 @@ export const CustomImageExtension = Node.create({
     ];
   },
 
-  renderHTML(params) {
-    console.log('renderHTML', params);
-    return [COMMANDS_NAMES.img, mergeAttributes(params.HTMLAttributes)];
+  renderHTML({ HTMLAttributes, node }) {
+    return [COMMANDS_NAMES.img, mergeAttributes(HTMLAttributes)];
   },
 
   addNodeView() {
