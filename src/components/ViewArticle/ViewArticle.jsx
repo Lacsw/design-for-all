@@ -1,3 +1,4 @@
+import { RichTextEditor } from 'components';
 import './ViewArticle.css';
 import Recommend from 'components/Recommendations/Recommend';
 import { Link, useLocation } from 'react-router-dom';
@@ -79,9 +80,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
           }view-article__label`}
         >
           <span className="view-article__sub-title">Контент статьи</span>
-          <p className="view-article__input view-article__input_article-content">
-            {original.description}
-          </p>
+          <RichTextEditor initialValue={original.description} readOnly={true} />
         </div>
         {original.recommend_from_creator && (
           <div
