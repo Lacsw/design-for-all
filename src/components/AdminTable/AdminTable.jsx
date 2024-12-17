@@ -41,6 +41,12 @@ export default function AdminTable({ hash, pagination }) {
   const scrollWithDelay = debounce(handleScroll, 200);
 
   function handleClick(item) {
+    if (item.date_closed) {
+      window.alert(
+        'Только достигший истинного просветления может пройти дальше. Медитируй 33 дня и возвращайся.'
+      );
+      return;
+    }
     navigate(hash + '/decision', {
       state: { type: item.type, uuid: item.uuid },
     });

@@ -84,6 +84,7 @@ export default function NewArticleNavbar({ onChange }) {
   const buttonsNames = defineNames(location.state);
   const icon =
     location.state?.name === 'view' ? icons.back[theme] : icons.cancel[theme];
+
   function handleSave({ target }) {
     const onlyId = draft.recommend_from_creator.map((item) => item.uuid);
     const modDraft = {
@@ -120,6 +121,11 @@ export default function NewArticleNavbar({ onChange }) {
     }
 
     if (modDraft.image) modDraft.image = previewImage;
+    if (modDraft.sub_category) {
+      let correct = modDraft.sub_category.trim();
+      !correct.startsWith('/') && (correct = '/' + correct);
+      modDraft.sub_category = correct;
+    }
 
     authorApi
       .addCreation(target.name, modDraft)
