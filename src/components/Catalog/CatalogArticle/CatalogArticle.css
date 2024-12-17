@@ -56,6 +56,17 @@
   letter-spacing: 0.32px;
 }
 
+.rte__article {
+  color: var(--color-main);
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
 .article__subtitle {
   margin: 0;
   color: var(--color-main);
