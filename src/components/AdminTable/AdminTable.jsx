@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { adminHash } from 'utils/constants';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import debounce from 'utils/helpers/debounce';
-import editIconB from '../../images/account/edit-icon_black.svg';
-import editIconW from '../../images/account/edit-icon_white.svg';
 import './AdminTable.css';
 import '../AuthorArticlesList/AuthorArticlesList.css';
 import { getRequests } from 'utils/api/admin';
 import { useNavigate } from 'react-router-dom';
+import { editButton, viewButton, adminHash } from 'utils/constants';
 
 export default function AdminTable({ hash, pagination }) {
   const navigate = useNavigate();
@@ -17,6 +15,7 @@ export default function AdminTable({ hash, pagination }) {
   const page = useRef(1);
   const [requestList, setRequestList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const button = hash === adminHash.closed ? viewButton : editButton;
   const endPoint =
     hash === adminHash.accounts
       ? 'statements_author_account'
@@ -100,7 +99,11 @@ export default function AdminTable({ hash, pagination }) {
                   {item.main_category || '-'}
                 </td>
                 <td className="author-articles-list__table-cell">
-                  {item.who_admin === 'none' ? 'Открыто' : 'В работе'}
+                  {item.date_closed
+                    ? 'Закрыто'
+                    : item.who_admin === 'none'
+                    ? 'Открыто'
+                    : 'В работе'}
                 </td>
                 <td className="author-articles-list__table-cell">
                   {item.lang}
@@ -112,7 +115,7 @@ export default function AdminTable({ hash, pagination }) {
                   {dateFormatter(item.date_closed) || '-'}
                 </td>
                 <td className="author-articles-list__table-cell">
-                  {item.result || '-'}
+                  {item.date_closed ? item.status : '-'}
                 </td>
 
                 <td className="admin-table__button">
@@ -121,7 +124,7 @@ export default function AdminTable({ hash, pagination }) {
                     onClick={() => handleClick(item)}
                   >
                     <img
-                      src={theme === 'dark' ? editIconB : editIconW}
+                      src={button[theme]}
                       alt={'button'}
                       className="author-articles-list__icon"
                     />

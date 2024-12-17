@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { langSelectOptions } from 'utils/constants';
 
 function createTitle(type) {
-  if (type === 'updated') return 'Внесение правок';
+  if (type === 'updated') return 'Обновление статьи';
   if (type === 'created_lang') return 'Перевод статьи';
   return 'Создание новой статьи';
 }

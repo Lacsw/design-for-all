@@ -232,13 +232,13 @@ export const socialIcons = {
   x: { light: xBlack, dark: xWhite },
 };
 
-const editButton = {
+export const editButton = {
   name: 'edit',
   dark: editIconB,
   light: editIconW,
 };
 
-const viewButton = {
+export const viewButton = {
   name: 'view',
   dark: viewIconB,
   light: viewIconW,
