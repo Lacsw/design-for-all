@@ -42,6 +42,7 @@ export default function AdminAppNewAuthorNavbar() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
+  const [decisionModal, setDecisionModal] = useState('');
 
   function handleInput({ target }) {
     if (confirm && target.value.length < 5) setConfirm(false);
@@ -50,14 +51,18 @@ export default function AdminAppNewAuthorNavbar() {
 
   function handlePost(action) {
     let fullData =
-      action === 'reject'
+      action === 'reject' && state.type !== 'created_account'
         ? { ...postData, reason_rejected: inputRef.current.value }
         : postData;
     const endPoint = action + requestPaths[state.type];
     sendDecision(endPoint, fullData)
       .then((link) => {
-        link?.url_link && console.log(link.url_link);
-        navigate(-1);
+        if (state.type === 'created_account') {
+          navigate(-1);
+          return;
+        }
+        const modalArg = link?.url_link || 'reject';
+        setDecisionModal(modalArg);
       })
       .catch((err) => console.warn(err));
   }
@@ -81,7 +86,11 @@ export default function AdminAppNewAuthorNavbar() {
           <button
             className="link-button"
             name="reject"
-            onClick={() => setIsOpenModal(true)}
+            onClick={
+              state.type === 'created_account'
+                ? () => handlePost('reject')
+                : () => setIsOpenModal(true)
+            }
             disabled={!state || state.type === 'updated'}
           >
             <img src={icons.reject[theme]} alt="Крестик" />
@@ -111,6 +120,34 @@ export default function AdminAppNewAuthorNavbar() {
           ref={inputRef}
           onChange={handleInput}
         />
+      </Modal>
+      <Modal
+        title={
+          decisionModal === 'reject'
+            ? 'Заявка отклонена'
+            : 'Заявка подтверждена'
+        }
+        onConfirm={() => navigate(-1)}
+        isOpen={decisionModal}
+        large
+      >
+        <p className="small-text">
+          Вы {decisionModal === 'reject' ? 'отклонили' : 'подтвердили'}{' '}
+          предложение {state.type} статьи.
+        </p>
+        {decisionModal === 'reject' ? (
+          <p className="small-text">
+            Автор увидит следующую причину:
+            <br />
+            {inputRef.current?.value || 'ERROR'}
+          </p>
+        ) : (
+          <p className="small-text">
+            Статья доступна по ссылке:
+            <br />
+            {'https://design-for-all.net/' + decisionModal}
+          </p>
+        )}
       </Modal>
     </nav>
   );
