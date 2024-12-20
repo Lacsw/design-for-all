@@ -2,12 +2,13 @@
   padding: 20px;
   border-radius: 12px;
   background-color: var(--color-bg-secondary);
+  overflow-wrap: break-word;
 }
 
 .decision-box_two {
   grid-column: span 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 429px 429px;
   gap: 40px;
 }
 
