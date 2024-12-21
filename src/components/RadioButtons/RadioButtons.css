@@ -1,0 +1,48 @@
+.radio-box {
+  display: flex;
+  gap: 5px;
+}
+
+.radio-label {
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--color-main);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.radio-label:has(.radio:checked) {
+  background-color: var(--color-main);
+}
+
+.radio-label:has(.radio_approve) {
+  background-size: 75%;
+  background-position: center 55%;
+}
+
+.light .radio-label:has(.radio_approve),
+.dark .radio-label:has(.radio_approve:checked) {
+  background-image: url(../../images/modals/confirm-black.svg);
+}
+
+.dark .radio-label:has(.radio_approve),
+.light .radio-label:has(.radio_approve:checked) {
+  background-image: url(../../images/modals/confirm-white.svg);
+}
+
+.light .radio-label:has(.radio_reject),
+.dark .radio-label:has(.radio_reject:checked) {
+  background-image: url(../../images/modals/cancel-black.svg);
+}
+
+.dark .radio-label:has(.radio_reject),
+.light .radio-label:has(.radio_reject:checked) {
+  background-image: url(../../images/modals/cancel-white.svg);
+}
+
+.radio {
+  cursor: pointer;
+  opacity: 0;
+}

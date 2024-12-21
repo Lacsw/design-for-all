@@ -68,7 +68,9 @@
 }
 
 .new-article__img {
+  margin-top: 10px;
   max-width: 100%;
+  border-radius: 12px;
 }
 
 .new-article__link {

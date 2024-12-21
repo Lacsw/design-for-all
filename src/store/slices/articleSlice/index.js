@@ -52,7 +52,10 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.article = action.payload;
-        state.article.publication.image = previewImage; // хардкод для фиктивных статей
+        // условие для фиктивных статей
+        if (!action.payload.image || action.payload.image.includes('test_')) {
+          state.article.publication.image = previewImage;
+        }
         state.loading = false;
         state.error = '';
       })

@@ -135,7 +135,7 @@ export default function AuthorArticlesList({
               >
                 <td className="author-articles-list__table-cell">
                   {article.type}
-                  {article.reason_rejected && (
+                  {article.rejected_fields && (
                     <div className="author-articles-list__warning">
                       <span className="author-articles-list__warning-text">
                         Частично отклонено

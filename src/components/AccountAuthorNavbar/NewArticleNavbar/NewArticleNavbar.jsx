@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme, getDraft, getOriginal } from 'store/selectors';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authorArticlesTabs, hashPaths } from 'utils/constants';
-import previewImage from 'images/article/preview.png';
 
 function defineNames(state) {
   if (!state) return ['create_new', 'create_draft'];
@@ -120,7 +119,6 @@ export default function NewArticleNavbar({ onChange }) {
         delete modDraft.recommend_from_creator;
     }
 
-    if (modDraft.image) modDraft.image = previewImage;
     if (modDraft.sub_category) {
       let correct = modDraft.sub_category.trim();
       !correct.startsWith('/') && (correct = '/' + correct);

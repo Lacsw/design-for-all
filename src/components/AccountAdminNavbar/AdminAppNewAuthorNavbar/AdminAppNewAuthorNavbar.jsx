@@ -11,6 +11,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { sendDecision } from 'utils/api/admin';
 import { Modal } from 'components';
 import './AdminAppNewAuthorNavbar.css';
+import ReasonFields from './ReasonFields';
 
 const requestPaths = {
   created_account: '_statement_author_account',
@@ -34,26 +35,46 @@ const icons = {
   },
 };
 
+function canApprove(state, fields) {
+  if (!state) return false;
+  if (state.type !== 'updated') return true;
+  if (!fields) return false;
+  return Object.values(fields).some((value) => value === 'approve');
+}
+
 export default function AdminAppNewAuthorNavbar() {
   const { state } = useLocation();
   const inputRef = useRef(null);
   const theme = useSelector(getCurrentTheme);
   const postData = useSelector(getDecision);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [reasonModal, setReasonModal] = useState('');
+  const [decisionModal, setDecisionModal] = useState('');
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
-  const [decisionModal, setDecisionModal] = useState('');
-
+  const approveDisabled = !canApprove(state, postData.fields);
+  
   function handleInput({ target }) {
     if (confirm && target.value.length < 5) setConfirm(false);
     if (!confirm && target.value.length >= 5) setConfirm(true);
   }
 
   function handlePost(action) {
-    let fullData =
-      action === 'reject' && state.type !== 'created_account'
-        ? { ...postData, reason_rejected: inputRef.current.value }
-        : postData;
+    const fullData = { ...postData };
+    if (state.type === 'updated' && action === 'approve') {
+      const rejectedFields = Object.keys(fullData.fields).filter(
+        (key) => fullData.fields[key] === 'reject'
+      );
+      if (rejectedFields.length !== 0) {
+        fullData.rejected_fields = rejectedFields;
+        fullData.reason_rejected = inputRef.current.value;
+      }
+    }
+
+    delete fullData.fields;
+
+    if (action === 'reject' && state.type !== 'created_account') {
+      fullData.reason_rejected = inputRef.current.value;
+    }
     const endPoint = action + requestPaths[state.type];
     sendDecision(endPoint, fullData)
       .then((link) => {
@@ -67,6 +88,12 @@ export default function AdminAppNewAuthorNavbar() {
       .catch((err) => console.warn(err));
   }
 
+  function approveUpdate() {
+    if (Object.values(postData.fields).some((value) => value === 'reject')) {
+      setReasonModal('approve');
+    } else handlePost('approve');
+  }
+
   return (
     <nav className="new-article-navbar">
       <ul className="new-article-navbar__list">
@@ -74,8 +101,12 @@ export default function AdminAppNewAuthorNavbar() {
           <button
             className="link-button"
             name="approve"
-            onClick={() => handlePost('approve')}
-            disabled={!state || state.type === 'updated'}
+            onClick={
+              state.type === 'updated'
+                ? approveUpdate
+                : () => handlePost('approve')
+            }
+            disabled={approveDisabled}
           >
             <img src={icons.approve[theme]} alt="Галочка" />
             Подтвердить
@@ -89,9 +120,9 @@ export default function AdminAppNewAuthorNavbar() {
             onClick={
               state.type === 'created_account'
                 ? () => handlePost('reject')
-                : () => setIsOpenModal(true)
+                : () => setReasonModal('reject')
             }
-            disabled={!state || state.type === 'updated'}
+            disabled={!state}
           >
             <img src={icons.reject[theme]} alt="Крестик" />
             Отклонить
@@ -105,22 +136,30 @@ export default function AdminAppNewAuthorNavbar() {
           </button>
         </li>
       </ul>
+
       <Modal
-        title="Укажите причину"
-        isOpen={isOpenModal}
+        title={reasonModal === 'approve' ? 'Причина' : 'Укажите причину'}
+        isOpen={reasonModal}
         twoBtns
-        onConfirm={() => handlePost('reject')}
-        onClose={() => setIsOpenModal(false)}
+        onConfirm={
+          reasonModal === 'approve'
+            ? () => handlePost('approve')
+            : () => handlePost('reject')
+        }
+        onClose={() => setReasonModal('')}
         isBlocked={!confirm}
+        large
       >
+        {reasonModal === 'approve' && <ReasonFields fields={postData.fields} />}
         <input
           type="text"
-          placeholder="Введите текст"
+          placeholder="Причина отклонения"
           className="input-reason"
           ref={inputRef}
           onChange={handleInput}
         />
       </Modal>
+
       <Modal
         title={
           decisionModal === 'reject'

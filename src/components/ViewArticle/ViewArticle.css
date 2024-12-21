@@ -84,6 +84,7 @@
 
 .view-article__img {
   width: 100%;
+  border-radius: 12px;
 }
 
 .view-article__main-image::-webkit-file-upload-button {

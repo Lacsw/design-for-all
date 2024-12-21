@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setDecision } from 'store/slices';
 import { ViewArticle } from 'components';
 import previewImage from 'images/article/preview.png';
+import CheckFields from 'components/CheckFields/CheckFields';
 
 function correctData(info) {
   const whatUpdate = { ...info.what_update };
@@ -27,7 +28,7 @@ const ArticlesDecision = ({ info }) => {
       {info.offered_update.type === 'created_lang' ? (
         <ViewArticle original={info.offered_update} />
       ) : (
-        <p style={{ color: 'green' }}>В разработке</p>
+        <CheckFields offer={info.offered_update} title="Обновление статьи" />
       )}
     </>
   );
