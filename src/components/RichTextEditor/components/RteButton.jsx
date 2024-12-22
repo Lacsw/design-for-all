@@ -33,14 +33,16 @@ export function RteButton({
 
   return (
     <Tooltip title={buttonsHeadings[name]}>
-      <IconButton
-        onClick={handleClick}
-        className={classes}
-        size="small"
-        disabled={isDisabled}
-      >
-        {children || name}
-      </IconButton>
+      <span>
+        <IconButton
+          onClick={handleClick}
+          className={classes}
+          size="small"
+          disabled={isDisabled}
+        >
+          {children || name}
+        </IconButton>
+      </span>
     </Tooltip>
   );
 }

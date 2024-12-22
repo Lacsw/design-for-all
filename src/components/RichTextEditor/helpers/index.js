@@ -67,7 +67,7 @@ export const tiptapCommands = {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes(COMMANDS_NAMES.img, { class: null })
+        .updateAttributes(COMMANDS_NAMES.img, { class: 'center' })
         .run();
     } else {
       return editor?.chain().focus().setTextAlign('center').run();
@@ -124,6 +124,10 @@ export const tiptapCommands = {
     ];
     const idx = Math.round(Math.random() * (urls.length - 1));*/
 
+    if (!url) {
+      return;
+    }
+
     editor
       ?.chain()
       .insertContentAt(editor.state.selection.head, {
@@ -157,13 +161,17 @@ export function checkIsCommandActive(commandName, editor) {
         needAnotherCheck = true;
         anotherCheck = (name) => {
           if (name === COMMANDS_NAMES.justify) {
-            return editor.view.lastSelectedViewDesc.dom
-              .querySelector('div')
-              .classList.contains('justify');
+            return Boolean(
+              editor.view.lastSelectedViewDesc.dom
+                .querySelector('div')
+                ?.classList.contains('justify')
+            );
           } else if (name === COMMANDS_NAMES.center) {
-            return !editor.view.lastSelectedViewDesc.dom
-              .querySelector('div')
-              .classList.contains('justify');
+            return Boolean(
+              editor.view.lastSelectedViewDesc.dom
+                .querySelector('div')
+                ?.classList.contains('center')
+            );
           } else {
             return false;
           }
