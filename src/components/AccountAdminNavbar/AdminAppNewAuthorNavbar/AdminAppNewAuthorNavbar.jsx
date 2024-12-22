@@ -52,7 +52,7 @@ export default function AdminAppNewAuthorNavbar() {
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
   const approveDisabled = !canApprove(state, postData.fields);
-  
+
   function handleInput({ target }) {
     if (confirm && target.value.length < 5) setConfirm(false);
     if (!confirm && target.value.length >= 5) setConfirm(true);
@@ -97,38 +97,48 @@ export default function AdminAppNewAuthorNavbar() {
   return (
     <nav className="new-article-navbar">
       <ul className="new-article-navbar__list">
-        <li>
-          <button
-            className="link-button"
-            name="approve"
-            onClick={
-              state.type === 'updated'
-                ? approveUpdate
-                : () => handlePost('approve')
-            }
-            disabled={approveDisabled}
-          >
-            <img src={icons.approve[theme]} alt="Галочка" />
-            Подтвердить
-          </button>
-        </li>
+        {state?.status ? (
+          <li>
+            <p className="new-article-navbar__status">
+              Статус:{' '}
+              {state.status === 'approve' ? 'Подтверждено' : 'Отклонено'}
+            </p>
+          </li>
+        ) : (
+          <>
+            <li>
+              <button
+                className="link-button"
+                name="approve"
+                onClick={
+                  state.type === 'updated'
+                    ? approveUpdate
+                    : () => handlePost('approve')
+                }
+                disabled={approveDisabled}
+              >
+                <img src={icons.approve[theme]} alt="Галочка" />
+                Подтвердить
+              </button>
+            </li>
 
-        <li>
-          <button
-            className="link-button"
-            name="reject"
-            onClick={
-              state.type === 'created_account'
-                ? () => handlePost('reject')
-                : () => setReasonModal('reject')
-            }
-            disabled={!state}
-          >
-            <img src={icons.reject[theme]} alt="Крестик" />
-            Отклонить
-          </button>
-        </li>
-
+            <li>
+              <button
+                className="link-button"
+                name="reject"
+                onClick={
+                  state.type === 'created_account'
+                    ? () => handlePost('reject')
+                    : () => setReasonModal('reject')
+                }
+                disabled={!state}
+              >
+                <img src={icons.reject[theme]} alt="Крестик" />
+                Отклонить
+              </button>
+            </li>
+          </>
+        )}
         <li>
           <button className="link-button" onClick={() => navigate(-1)}>
             <img src={icons.back[theme]} alt="Стрелка назад" />
