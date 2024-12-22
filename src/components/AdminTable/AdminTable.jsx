@@ -42,9 +42,9 @@ export default function AdminTable({ hash, pagination }) {
 
   function handleClick(item) {
     if (item.date_closed) {
-      window.alert(
-        'Только достигший истинного просветления может пройти дальше. Медитируй 33 дня и возвращайся.'
-      );
+      navigate(hash + '/view', {
+        state: { type: item.type, uuid: item.uuid, status: item.status },
+      });
       return;
     }
     navigate(hash + '/decision', {

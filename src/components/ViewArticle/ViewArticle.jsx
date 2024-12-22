@@ -38,50 +38,56 @@ export default function ViewArticle({ original, title, rejectFields }) {
             </div>
           </div>
         )}
-
-        <div
-          className={`${
-            rejectFields?.includes('sub_category') ? 'rejected ' : ''
-          }view-article__label`}
-        >
-          <span className="view-article__sub-title">Подкатегория</span>
-          <span className="view-article__input">{original.sub_category}</span>
-        </div>
-
-        <div
-          className={`${
-            rejectFields?.includes('image') ? 'rejected ' : ''
-          }view-article__label`}
-        >
-          <span className="view-article__sub-title">Картинка статьи</span>
-          {original.image && (
+        {original.sub_category && (
+          <div
+            className={`${
+              rejectFields?.includes('sub_category') ? 'rejected ' : ''
+            }view-article__label`}
+          >
+            <span className="view-article__sub-title">Подкатегория</span>
+            <span className="view-article__input">{original.sub_category}</span>
+          </div>
+        )}
+        {original.image && (
+          <div
+            className={`${
+              rejectFields?.includes('image') ? 'rejected ' : ''
+            }view-article__label`}
+          >
+            <span className="view-article__sub-title">Картинка статьи</span>
             <img
               className="view-article__img"
               src={original.image}
               alt="Картинка статьи"
             />
-          )}
-        </div>
+          </div>
+        )}
+        {original.title && (
+          <div
+            className={`${
+              rejectFields?.includes('title') ? 'rejected ' : ''
+            }view-article__label`}
+          >
+            <span className="view-article__sub-title">Заголовок статьи</span>
+            <span className="view-article__input view-article__input_article-header">
+              {original.title}
+            </span>
+          </div>
+        )}
+        {original.description && (
+          <div
+            className={`${
+              rejectFields?.includes('description') ? 'rejected ' : ''
+            }view-article__label`}
+          >
+            <span className="view-article__sub-title">Контент статьи</span>
+            <RichTextEditor
+              initialValue={original.description}
+              readOnly={true}
+            />
+          </div>
+        )}
 
-        <div
-          className={`${
-            rejectFields?.includes('title') ? 'rejected ' : ''
-          }view-article__label`}
-        >
-          <span className="view-article__sub-title">Заголовок статьи</span>
-          <span className="view-article__input view-article__input_article-header">
-            {original.title}
-          </span>
-        </div>
-
-        <div
-          className={`${
-            rejectFields?.includes('description') ? 'rejected ' : ''
-          }view-article__label`}
-        >
-          <span className="view-article__sub-title">Контент статьи</span>
-          <RichTextEditor initialValue={original.description} readOnly={true} />
-        </div>
         {original.recommend_from_creator && (
           <div
             className={`${
@@ -94,6 +100,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
               Рекомендации авторов
             </span>
             <div className="view-article__recommendations">
+              {original.recommend_from_creator.length === 0 ? 'Отсутствуют' :
               <ul className="recommendations__list">
                 {original.recommend_from_creator.map((item) => (
                   <li className="recommendations__item" key={item.uuid}>
@@ -106,7 +113,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
                     </Link>
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </div>
           </div>
         )}

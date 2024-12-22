@@ -17,7 +17,9 @@ const Decisions = () => {
       ? 'statement_author_account'
       : hash === adminHash.createsD
       ? 'create_p'
-      : 'update_p';
+      : hash === adminHash.updatesD
+      ? 'update_p'
+      : 'close_p';
 
   useEffect(() => {
     if (!state) {
@@ -41,7 +43,7 @@ const Decisions = () => {
       {state.type === 'created_account' ? (
         <AccountsDecision info={resData} uuid={state.uuid} />
       ) : (
-        <ArticlesDecision info={resData} />
+        <ArticlesDecision info={resData} state={state} />
       )}
     </div>
   ) : (

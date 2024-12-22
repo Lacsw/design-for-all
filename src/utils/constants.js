@@ -204,8 +204,18 @@ export const hashPaths = {
 };
 
 export const adminHash = {
-  requests: ['#/admin/creates', '#/admin/updates', '#/admin/accounts', '#/admin/closed'],
-  decisions: ['#/admin/creates/decision', '#/admin/updates/decision', '#/admin/accounts/decision'],
+  requests: [
+    '#/admin/creates',
+    '#/admin/updates',
+    '#/admin/accounts',
+    '#/admin/closed',
+  ],
+  decisions: [
+    '#/admin/creates/decision',
+    '#/admin/updates/decision',
+    '#/admin/accounts/decision',
+    '#/admin/closed/view',
+  ],
   user: '#/admin/create-user',
   profile: '#/admin/profile',
   creates: '#/admin/creates',
@@ -215,6 +225,7 @@ export const adminHash = {
   accounts: '#/admin/accounts',
   accountsD: '#/admin/accounts/decision',
   closed: '#/admin/closed',
+  closedV: '#/admin/closed/view',
 };
 // SOCIALS //
 

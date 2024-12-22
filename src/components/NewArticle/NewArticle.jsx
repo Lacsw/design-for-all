@@ -71,9 +71,8 @@ export const NewArticle = memo(function NewArticle({
   );
 
   function handleInput({ target }) {
-    if (/^https:\/\/\S+\.\S+$/.test(target.value)) {
-      setCanAdd(true);
-    } else setCanAdd(false);
+    if (/^https:\/\/\S+\.\S+$/.test(target.value) && !canAdd) setCanAdd(true);
+    if (!/^https:\/\/\S+\.\S+$/.test(target.value) && canAdd) setCanAdd(false);
   }
 
   /* function addFile({ target }) {
