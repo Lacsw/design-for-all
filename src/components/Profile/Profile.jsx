@@ -6,7 +6,6 @@ import ModalFIO from 'components/Modal/ModalFIO/ModalFIO';
 import ModalLogPass from 'components/Modal/ModalLogPass/ModalLogPass';
 import authApi from 'utils/api/auth';
 import { signInSuccess } from 'store/slices';
-import defaultAvatar from '../../images/admin/avatar_default.svg';
 
 const initialForm = {
   login: '',
@@ -59,7 +58,6 @@ export default function Profile({ resetSection }) {
             alt="Аватар"
             className="profile__avatar"
             onClick={() => setModal('avatar')}
-            onError={(evt) => evt.target.src = defaultAvatar}
           />
 
           <fieldset className="profile__fieldset">
