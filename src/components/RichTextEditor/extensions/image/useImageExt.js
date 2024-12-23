@@ -1,15 +1,19 @@
 import { useCallback, useState } from 'react';
 
-export const useImageExt = () => {
+export const useImageExt = (editor) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
+  const [directCb, setDirectCb] = useState(() => undefined);
 
   function handleImgModalClose() {
     setImgModalOpen(false);
   }
 
-  function handleImgInserting() {}
+  function handleImgInserting(payload) {
+    directCb(editor, payload);
+  }
 
-  const handleAddImgBtnClick = useCallback((evt) => {
+  const handleAddImgBtnClick = useCallback((evt, directCb, editor) => {
+    setDirectCb(directCb);
     setImgModalOpen(true);
   }, []);
 

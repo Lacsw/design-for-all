@@ -5,23 +5,37 @@ import {
   checkIsCommandDisabled,
   tiptapCommands,
 } from '../helpers';
-import { buttonsHeadings } from '../helpers/constants';
+import { buttonsHeadings, COMMANDS_NAMES } from '../helpers/constants';
 import clsx from 'clsx';
+import { Editor } from '@tiptap/react';
+
+/**
+ * @callback TDRteButtonOnClickProp
+ * @param {MouseEvent} evt
+ * @param {import('../helpers').TDRteCommand} directCb Прямая команда редактора
+ *   для текущего имени команды
+ * @param {Editor} editor
+ */
 
 /**
  * @typedef TDRteButtonProps
  * @type {object}
- * @property {'direct' | 'cb'} [mode=direct] - In `direct` mode click on button
- *   calls the corresponding command from {@link tiptapCommands}
+ * @property {'direct' | 'cb'} [mode] - In `direct` mode click on button calls
+ *   the corresponding command from {@link tiptapCommands}
  *
- *   - In `cb` mode click on button only runs your cb. Default is `direct`
+ *   - In `cb` mode click on button only runs your cb.
+ *
+ * @property {string} name RTE command name(object key name) from const
+ *   {@link COMMANDS_NAMES}
+ * @property {TDRteButtonOnClickProp} [onClick]
+ * @property {Editor} editor
  */
 
 /** @param {TDRteButtonProps} props */
 export function RteButton({
   children,
   editor,
-  name, // rte command name from const COMMANDS_NAMES
+  name,
   inFocusWithin,
   className,
   onClick,
@@ -29,12 +43,15 @@ export function RteButton({
 }) {
   const handleClick = useCallback(
     (evt) => {
-      onClick?.(evt);
+      const directCb = tiptapCommands[name];
+
       if (mode === 'direct') {
-        tiptapCommands[name](editor);
+        directCb(editor);
+      } else {
+        onClick?.(evt, directCb, editor);
       }
     },
-    [name, editor, onClick]
+    [onClick, mode, name, editor]
   );
 
   const isSelected = checkIsCommandActive(name, editor);
