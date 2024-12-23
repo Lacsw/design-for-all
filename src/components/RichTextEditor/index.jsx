@@ -29,6 +29,8 @@ import { MenuBar, RteButton } from './components';
 import { validate } from './validators';
 import { COMMANDS_NAMES } from './helpers/constants';
 import { useDebounce } from 'utils/hooks';
+import { ImageModal } from './extensions/image/ImageModal';
+import { useImageExt } from './extensions/image/useImageExt';
 
 import './index.css';
 import './components/index.css';
@@ -221,6 +223,14 @@ export const RichTextEditor = memo(function RichTextEditor({
     };
   }, [onClick, onKeydown, wrapperRef]);
 
+  const {
+    imgModalOpen,
+    setImgModalOpen,
+    handleAddImgBtnClick,
+    handleImgInserting,
+    handleImgModalClose,
+  } = useImageExt();
+
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */
   const Bar = useMemo(() => {
     if (readOnly) {
@@ -275,6 +285,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             editor={editor}
             name={COMMANDS_NAMES.img}
             inFocusWithin={inFocusWithin}
+            onClick={handleAddImgBtnClick}
           >
             <AddPhotoAlternateRoundedIcon />
           </RteButton>
@@ -345,6 +356,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     classes.textTypeSelector,
     readOnly,
     flag,
+    handleAddImgBtnClick,
   ]);
 
   return (
@@ -356,7 +368,14 @@ export const RichTextEditor = memo(function RichTextEditor({
       onBlur={handleBlurOnWrapper}
     >
       <EditorContent editor={editor} className="rte__editor" />
+
       {Bar}
+
+      <ImageModal
+        open={imgModalOpen}
+        onClose={handleImgModalClose}
+        onConfirm={handleImgInserting}
+      />
     </Box>
   );
 });
