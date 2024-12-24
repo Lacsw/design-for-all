@@ -286,6 +286,7 @@ export const RichTextEditor = memo(function RichTextEditor({
             name={COMMANDS_NAMES.img}
             inFocusWithin={inFocusWithin}
             onClick={handleAddImgBtnClick}
+            mode="cb"
           >
             <AddPhotoAlternateRoundedIcon />
           </RteButton>

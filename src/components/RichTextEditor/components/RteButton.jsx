@@ -44,6 +44,7 @@ export function RteButton({
   const handleClick = useCallback(
     (evt) => {
       const directCb = tiptapCommands[name];
+      console.log('handleClick', directCb);
 
       if (mode === 'direct') {
         directCb(editor);
