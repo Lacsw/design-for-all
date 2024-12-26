@@ -22,7 +22,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, IconButton } from '@mui/material';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
@@ -229,7 +229,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     handleAddImgBtnClick,
     handleImgInserting,
     handleImgModalClose,
-  } = useImageExt();
+  } = useImageExt(editor);
 
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */
   const Bar = useMemo(() => {
@@ -279,6 +279,11 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatListNumberedIcon />
           </RteButton>
+          {/* ----------------------- */}
+          {/* ----------------------- */}
+          {/* ----------------------- */}
+          {/* ----------------------- */}
+          {/* ----------------------- */}
           <RteButton
             key={COMMANDS_NAMES.img}
             className={classes.button}
