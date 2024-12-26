@@ -1,0 +1,61 @@
+.dropdown-icons {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.dropdown-icons_wide {
+  width: 36px;
+  height: 36px;
+}
+
+.dropdown-icons .svg-box {
+  width: 13px;
+  height: 13px;
+}
+
+.dropdown-icons_wide .svg-box {
+  width: 17px;
+  height: 17px;
+}
+
+.dropdown-icons__list {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  padding: 1px;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--color-main);
+}
+
+.dropdown-icons__item {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.dropdown-icons__item:first-child .svg-box {
+  background-color: var(--color-bg-secondary);
+}
+
+.dropdown-icons__item_bg {
+  background-color: var(--color-bg-secondary);
+  border: 2px solid var(--color-bg-secondary);
+}
+
+.dropdown-icons__item_bg:hover {
+  background-color: transparent;
+}
+
+.dropdown-icons__item_bg:hover .svg-box {
+  background-color: var(--color-bg-secondary);
+}

@@ -1,8 +1,7 @@
-const Svg = ({ icon, size, color }) => {
+import './Svg.css';
+
+const Svg = ({ icon }) => {
   const maskStyle = {
-    width: size,
-    height: size,
-    backgroundColor: color,
     mask: `url(${icon}) no-repeat center`,
     maskSize: '100%',
   };
