@@ -14,7 +14,7 @@ import { Editor } from '@tiptap/react';
  * @param {MouseEvent} evt
  * @param {import('../helpers').TDRteCommand} directCb Прямая команда редактора
  *   для текущего имени команды
- * @param {Editor} editor
+ * @param {Editor | null} editor
  */
 
 /**
@@ -28,7 +28,7 @@ import { Editor } from '@tiptap/react';
  * @property {string} name RTE command name(object key name) from const
  *   {@link COMMANDS_NAMES}
  * @property {TDRteButtonOnClickProp} [onClick]
- * @property {Editor} editor
+ * @property {Editor | null} editor
  */
 
 /** @param {TDRteButtonProps} props */

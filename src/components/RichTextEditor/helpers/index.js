@@ -3,7 +3,7 @@ import { Editor } from '@tiptap/react';
 
 /**
  * @callback TDRteCommand
- * @param {Editor} editor
+ * @param {Editor | null} editor
  * @param {any} otherParams
  * @returns {boolean}
  */
@@ -138,12 +138,12 @@ export const tiptapCommands = {
     ];
     const idx = Math.round(Math.random() * (urls.length - 1));*/
 
-    if (!url) {
+    if (!editor || !url || editor?.isActive(COMMANDS_NAMES.img)) {
       return;
     }
 
     editor
-      ?.chain()
+      .chain()
       .insertContentAt(editor.state.selection.head, {
         type: COMMANDS_NAMES.img,
         attrs: {
@@ -151,7 +151,7 @@ export const tiptapCommands = {
           src: url,
         },
       })
-      .focus()
+      .focus(editor.state.selection.head + 1)
       .run();
   },
 };
