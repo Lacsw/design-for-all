@@ -19,6 +19,11 @@ export const fileTypesImage = [
   //'application/pdf', // +
 ];
 
+/**
+ * @param {File} file
+ * @param {string[]} types
+ * @returns {boolean}
+ */
 export function checkFileType(file, types) {
   return types.includes(file.type);
 }

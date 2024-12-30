@@ -1,3 +1,4 @@
+import { Editor } from '@tiptap/react';
 import { checkEmptiness } from './empty';
 import { checkEmptySymbols } from './emptySybmols';
 
@@ -26,6 +27,19 @@ import { checkEmptySymbols } from './emptySybmols';
 // // Get the cursor position before changes are made by validation
 // const { from, to } = editor.state.selection;
 
+/**
+ * @typedef TJDValidateResult
+ * @type {object}
+ * @property {object} validity
+ * @property {boolean} validity.isValid
+ * @property {string} content
+ */
+
+/**
+ * @param {any} options
+ * @param {Editor} editor
+ * @returns {TJDValidateResult}
+ */
 export const validate = (options, editor) => {
   const kinds = options.kinds;
   const disturbedRules = [];

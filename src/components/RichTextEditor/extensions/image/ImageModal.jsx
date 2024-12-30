@@ -9,6 +9,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     'https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg'
   );
 
+  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleChange = (evt) => {
     setValue(evt.target.value);
   };
@@ -19,6 +20,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
 
   const ref = useRef(null);
 
+  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleChange2 = (evt) => {
     console.log('handleChange2', evt);
     setValue(evt.target.value);

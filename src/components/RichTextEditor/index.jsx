@@ -22,7 +22,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
-import { Box, Divider, IconButton } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
@@ -69,17 +69,52 @@ const incrementStateNumber = (setter) => (evt) => {
 
 const defaultClasses = {};
 
-/** Богатый текстовый редактор */
+/**
+ * @callback RichTextEditorOnInputProp
+ * @param {import('./validators').TJDValidateResult} data
+ * @returns {void}
+ */
+
+/**
+ * @typedef RichTextEditorProps
+ * @type {object}
+ * @property {string | null} [initialValue] - Html-string for INITIAL view
+ * @property {any} [validationsOptions]
+ * @property {RichTextEditorOnInputProp} [onInput] - Cb fires with debounce when
+ *   content changes ib RTE
+ * @property {boolean} [readOnly] - Isn't RTE editable
+ * @property {string} [className]
+ * @property {object} [classes]
+ * @property {string} [classes.menuBar]
+ * @property {string} [classes.textTypeSelector]
+ * @property {string} [classes.button]
+ * @property {boolean} [cancel] - If `true` the editor will return to the
+ *   `initialValue`. Until the parameter `true` the editor will not apply new
+ *   changes, so after reset **return this prop** to `false`
+ * @property {string} [maxHeight]
+ * @property {string | number} [id]
+ */
+
+/**
+ * @callback TJDRichTextEditor
+ * @param {RichTextEditorProps} props
+ */
+
+/**
+ * Богатый текстовый редактор
+ *
+ * @type {TJDRichTextEditor}
+ */
 export const RichTextEditor = memo(function RichTextEditor({
   initialValue = null,
-  validationsOptions,
-  onInput,
   readOnly = false,
-  className,
-  classes = defaultClasses,
   cancel,
+  onInput,
+  validationsOptions,
   maxHeight = 'initial',
   id,
+  className,
+  classes = defaultClasses,
 }) {
   const extensions = [
     StarterKit.configure({
