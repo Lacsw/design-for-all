@@ -3,6 +3,7 @@ import './Modal.css';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { Box } from '@mui/material';
+import clsx from 'clsx';
 
 const Modal = ({
   children,
@@ -36,7 +37,7 @@ const Modal = ({
 
   return (
     <Box
-      className={`modal ${isOpen && 'modal_opened'} ${theme}`}
+      className={clsx('modal', isOpen && 'modal_opened', theme)}
       onMouseDown={closeByOver}
       sx={sx}
     >

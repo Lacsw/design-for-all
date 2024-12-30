@@ -36,6 +36,7 @@ import './index.css';
 import './components/index.css';
 import { sxEditorWrapper } from './styles';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
+import clsx from 'clsx';
 
 const defaultValidationsOptions = {
   kinds: {},
@@ -67,43 +68,13 @@ const incrementStateNumber = (setter) => (evt) => {
   setter((prev) => prev + 1);
 };
 
+/** @type {import('./types').TJDRteClassesProp} */
 const defaultClasses = {};
-
-/**
- * @callback RichTextEditorOnInputProp
- * @param {import('./validators').TJDValidateResult} data
- * @returns {void}
- */
-
-/**
- * @typedef RichTextEditorProps
- * @type {object}
- * @property {string | null} [initialValue] - Html-string for INITIAL view
- * @property {any} [validationsOptions]
- * @property {RichTextEditorOnInputProp} [onInput] - Cb fires with debounce when
- *   content changes ib RTE
- * @property {boolean} [readOnly] - Isn't RTE editable
- * @property {string} [className]
- * @property {object} [classes]
- * @property {string} [classes.menuBar]
- * @property {string} [classes.textTypeSelector]
- * @property {string} [classes.button]
- * @property {boolean} [cancel] - If `true` the editor will return to the
- *   `initialValue`. Until the parameter `true` the editor will not apply new
- *   changes, so after reset **return this prop** to `false`
- * @property {string} [maxHeight]
- * @property {string | number} [id]
- */
-
-/**
- * @callback TJDRichTextEditor
- * @param {RichTextEditorProps} props
- */
 
 /**
  * Богатый текстовый редактор
  *
- * @type {TJDRichTextEditor}
+ * @type {import('./types').TJDRichTextEditor}
  */
 export const RichTextEditor = memo(function RichTextEditor({
   initialValue = null,
@@ -314,11 +285,6 @@ export const RichTextEditor = memo(function RichTextEditor({
           >
             <FormatListNumberedIcon />
           </RteButton>
-          {/* ----------------------- */}
-          {/* ----------------------- */}
-          {/* ----------------------- */}
-          {/* ----------------------- */}
-          {/* ----------------------- */}
           <RteButton
             key={COMMANDS_NAMES.img}
             className={classes.button}
@@ -403,7 +369,7 @@ export const RichTextEditor = memo(function RichTextEditor({
   return (
     <Box
       ref={wrapperRef}
-      className={`rte ${className ?? ''}`}
+      className={clsx('rte', className)}
       sx={sxEditorWrapper({ maxHeight })}
       id={id}
       onBlur={handleBlurOnWrapper}
