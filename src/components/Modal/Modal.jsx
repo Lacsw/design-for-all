@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './Modal.css';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
+import { Box } from '@mui/material';
 
 const Modal = ({
   children,
@@ -12,6 +13,7 @@ const Modal = ({
   large,
   twoBtns,
   isBlocked,
+  sx,
 }) => {
   const theme = useSelector(getCurrentTheme);
   useEffect(() => {
@@ -33,9 +35,10 @@ const Modal = ({
   };
 
   return (
-    <div
+    <Box
       className={`modal ${isOpen && 'modal_opened'} ${theme}`}
       onMouseDown={closeByOver}
+      sx={sx}
     >
       <div
         className="modal__container"
@@ -74,7 +77,7 @@ const Modal = ({
           )}
         </div>
       </div>
-    </div>
+    </Box>
   );
 };
 

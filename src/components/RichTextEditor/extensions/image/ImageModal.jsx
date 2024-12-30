@@ -1,5 +1,8 @@
+import { IconButton, InputBase } from '@mui/material';
 import { Input, Modal } from 'components';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { sxImageModalRoot } from './styles';
+import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [value, setValue] = useState(
@@ -14,6 +17,13 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     onConfirm(value);
   };
 
+  const ref = useRef(null);
+
+  const handleChange2 = (evt) => {
+    console.log('handleChange2', evt);
+    setValue(evt.target.value);
+  };
+
   return (
     <Modal
       isOpen={open}
@@ -22,6 +32,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       twoBtns
       isBlocked={true}
       title="Добавить изображение"
+      sx={sxImageModalRoot}
     >
       <p>https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg</p>
       <p>
@@ -30,7 +41,19 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       <p>
         https://png.pngtree.com/background/20230612/original/pngtree-free-desktop-wallpaper-beautiful-green-fields-picture-image_3188257.jpg
       </p>
+
+      <InputBase
+        className="file-input"
+        type="file"
+        inputRef={ref}
+        onChange={handleChange2}
+      />
       <Input value={value} onChange={handleChange} />
+      <IconButton
+        onClick={() => ref.current?.dispatchEvent(new MouseEvent('click'))}
+      >
+        <FolderRoundedIcon />
+      </IconButton>
     </Modal>
   );
 };

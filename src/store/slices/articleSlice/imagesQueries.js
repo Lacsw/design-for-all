@@ -2,9 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkResponse } from 'utils/api/utils';
 import { fileTypesImage, checkFileType } from 'utils/filesTypes';
 
-// TODO rework for base image
-export const uploadMainImage = createAsyncThunk(
-  'author/newArticle/mainImage/post',
+export const uploadImgBinary = createAsyncThunk(
+  'author/imgBinary/post',
   ({ evt, context }) => {
     return new Promise((resolve, reject) => {
       if (!evt.target.value) {
