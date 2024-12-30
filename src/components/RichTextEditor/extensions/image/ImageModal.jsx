@@ -20,6 +20,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       onClose={onClose}
       onConfirm={handleSubmit}
       twoBtns
+      isBlocked={true}
       title="Добавить изображение"
     >
       <p>https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg</p>

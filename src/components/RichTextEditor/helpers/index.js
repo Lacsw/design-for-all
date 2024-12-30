@@ -159,9 +159,14 @@ export const tiptapCommands = {
 /**
  * @param {string} commandName - RTE command name(key name) from const
  *   {@link COMMANDS_NAMES}
+ * @param {Editor | null} editor
  * @returns {boolean}
  */
 export function checkIsCommandActive(commandName, editor) {
+  if (!editor) {
+    return;
+  }
+
   let needAnotherCheck = false;
   let anotherCheck;
   let commandParams;
@@ -171,7 +176,7 @@ export function checkIsCommandActive(commandName, editor) {
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
     case COMMANDS_NAMES.justify:
-      if (editor?.isActive(COMMANDS_NAMES.img)) {
+      if (editor.isActive(COMMANDS_NAMES.img)) {
         needAnotherCheck = true;
 
         anotherCheck = (name) => {
@@ -212,7 +217,7 @@ export function checkIsCommandActive(commandName, editor) {
   if (needAnotherCheck) {
     res = anotherCheck(commandName);
   } else {
-    res = editor?.isActive(...commandParams);
+    res = editor.isActive(...commandParams);
   }
   return res;
 }
