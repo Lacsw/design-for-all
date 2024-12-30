@@ -205,7 +205,11 @@ export const hashPaths = {
 
 export const adminHash = {
   requests: ['#/admin/creates', '#/admin/updates', '#/admin/accounts'],
-  decisions: ['#/admin/creates/decision', '#/admin/updates/decision', '#/admin/accounts/decision'],
+  decisions: [
+    '#/admin/creates/decision',
+    '#/admin/updates/decision',
+    '#/admin/accounts/decision',
+  ],
   user: '#/admin/create-user',
   profile: '#/admin/profile',
   creates: '#/admin/creates',
