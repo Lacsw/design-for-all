@@ -54,6 +54,8 @@ export default function AdminAppNewAuthorNavbar() {
   const approveDisabled = !canApprove(state, postData.fields);
 
   function handleInput({ target }) {
+    target.style.height = 0;
+    target.style.height = target.scrollHeight + 'px';
     if (confirm && target.value.length < 5) setConfirm(false);
     if (!confirm && target.value.length >= 5) setConfirm(true);
   }
@@ -161,8 +163,8 @@ export default function AdminAppNewAuthorNavbar() {
         large
       >
         {reasonModal === 'approve' && <ReasonFields fields={postData.fields} />}
-        <input
-          type="text"
+        <textarea
+          rows="1"
           placeholder="Причина отклонения"
           className="input-reason"
           ref={inputRef}
@@ -185,11 +187,16 @@ export default function AdminAppNewAuthorNavbar() {
           предложение {state.type} статьи.
         </p>
         {decisionModal === 'reject' ? (
-          <p className="small-text">
-            Автор увидит следующую причину:
-            <br />
-            {inputRef.current?.value || 'ERROR'}
-          </p>
+          <div className="reject-textbox">
+            <p className="reject-text reject-text_center">
+              Автор увидит следующую причину:
+            </p>
+            {inputRef.current.value.split('\n').map((text, i) => (
+              <p key={i} className="reject-text">
+                {text}
+              </p>
+            ))}
+          </div>
         ) : (
           <p className="small-text">
             Статья доступна по ссылке:

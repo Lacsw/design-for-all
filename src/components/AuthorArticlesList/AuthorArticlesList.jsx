@@ -203,7 +203,13 @@ export default function AuthorArticlesList({
         onClose={() => toggleReason({})}
         rejFields={reason.rejFields}
       >
-        {reason.message}
+        <div className="reject-textbox">
+          {reason.message && reason.message.split('\n').map((text, i) => (
+            <p key={i} className="reject-text reject-text_14">
+              {text}
+            </p>
+          ))}
+        </div>
       </ModalReasons>
       <Modal
         title={'Точно удалить?'}
