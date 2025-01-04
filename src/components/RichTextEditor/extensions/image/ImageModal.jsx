@@ -1,6 +1,6 @@
 import { Box, IconButton, InputBase } from '@mui/material';
 import { Input, Modal } from 'components';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { sxImageModalRoot } from './styles';
 import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
 
@@ -8,33 +8,89 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [value, setValue] = useState(
     'https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg'
   );
+  const [isDragging, setIsDragging] = useState(false);
+  const [isDragHover, setIsDragHover] = useState(false);
+
+  /** @type {import('react').RefObject<HTMLInputElement>} */
+  const fileInputRef = useRef(null);
+
+  /** @type {import('react').RefObject<HTMLElement>} */
+  const modalRef = useRef(null);
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
-  const handleChange = (evt) => {
+  const handleTextInputChange = (evt) => {
     setValue(evt.target.value);
+  };
+
+  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  const handleFileInputChange = (evt) => {
+    setValue(evt.target.value);
+    setIsDragging(false);
+    setIsDragHover(false);
   };
 
   const handleSubmit = () => {
     onConfirm(value);
   };
 
-  const ref = useRef(null);
+  useEffect(() => {
+    /** @type {HTMLElement | null} */
+    const modalEl = modalRef.current;
+    /** @type {HTMLElement | null} */
+    const modalContainerEl =
+      modalRef.current?.querySelector('.modal__container');
 
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
-  const handleChange2 = (evt) => {
-    console.log('handleChange2', evt);
-    setValue(evt.target.value);
-  };
+    const turnOfDraggingState = (evt) => {
+      console.log('turnOfDraggingState', evt);
+      setIsDragging(false);
+    };
+
+    const handleDragEnter = (evt) => {
+      console.log('handleDragEnter');
+      setIsDragging(true);
+      window.addEventListener('mouseup', turnOfDraggingState, { once: true });
+      window.addEventListener('blur', turnOfDraggingState, { once: true });
+    };
+
+    modalContainerEl?.addEventListener('dragenter', handleDragEnter);
+    // modalContainerEl?.addEventListener('dragleave', turnOfDraggingState);
+    return () => {
+      modalContainerEl?.removeEventListener('dragenter', handleDragEnter);
+      // modalContainerEl?.removeEventListener('dragleave', turnOfDraggingState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fileInputEl = fileInputRef.current;
+
+    const handleDragEnter = () => {
+      setIsDragHover(true);
+    };
+
+    const turnOffDragHoverState = () => {
+      setIsDragHover(false);
+    };
+
+    fileInputEl?.addEventListener('dragenter', handleDragEnter);
+    fileInputEl?.addEventListener('dragleave', turnOffDragHoverState);
+    fileInputEl?.addEventListener('drop', turnOffDragHoverState);
+    return () => {
+      fileInputEl?.removeEventListener('dragenter', handleDragEnter);
+      fileInputEl?.removeEventListener('dragleave', turnOffDragHoverState);
+      fileInputEl?.removeEventListener('drop', turnOffDragHoverState);
+    };
+  }, []);
 
   return (
     <Modal
+      ref={modalRef}
       isOpen={open}
       onClose={onClose}
       onConfirm={handleSubmit}
       twoBtns
       // isBlocked={true}
       title="Добавить изображение"
-      sx={sxImageModalRoot}
+      sx={sxImageModalRoot({ isDragging, isDragHover })}
     >
       <p>https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg</p>
       <p>
@@ -44,21 +100,33 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         https://png.pngtree.com/background/20230612/original/pngtree-free-desktop-wallpaper-beautiful-green-fields-picture-image_3188257.jpg
       </p>
 
-      <Box className="input-container">
-        <InputBase
-          className="file-input"
-          type="file"
-          inputRef={ref}
-          onChange={handleChange2}
-        />
-        <Input className="text-input" value={value} onChange={handleChange} />
-      </Box>
+      <Box className="container">
+        <Box className="inputs-container">
+          <InputBase
+            className="file-input"
+            type="file"
+            inputRef={fileInputRef}
+            onChange={handleFileInputChange}
+            inputProps={{
+              accept: '.bmp, .gif, .jpg, .jpeg, .png, .tiff, .webp, .avif',
+            }}
+          />
 
-      <IconButton
-        onClick={() => ref.current?.dispatchEvent(new MouseEvent('click'))}
-      >
-        <FolderRoundedIcon />
-      </IconButton>
+          <Input
+            className="text-input"
+            value={value}
+            onChange={handleTextInputChange}
+          />
+        </Box>
+
+        <IconButton
+          onClick={() =>
+            fileInputRef.current?.dispatchEvent(new MouseEvent('click'))
+          }
+        >
+          <FolderRoundedIcon />
+        </IconButton>
+      </Box>
     </Modal>
   );
 };

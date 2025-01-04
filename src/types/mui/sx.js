@@ -6,6 +6,12 @@
  */
 
 /**
+ * @callback SxPropCbWithData
+ * @param {any} data
+ * @returns {SxPropCb}
+ */
+
+/**
  * @typedef SxPropObj
  * @type {import('@mui/material').SxProps}
  */

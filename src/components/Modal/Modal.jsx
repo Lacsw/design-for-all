@@ -1,21 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import './Modal.css';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 
-const Modal = ({
-  children,
-  isOpen,
-  onClose,
-  onConfirm,
-  title,
-  large,
-  twoBtns,
-  isBlocked,
-  sx,
-}) => {
+const Modal = forwardRef(function Modal(
+  {
+    children,
+    isOpen,
+    onClose,
+    onConfirm,
+    title,
+    large,
+    twoBtns,
+    isBlocked,
+    sx,
+  },
+  ref
+) {
   const theme = useSelector(getCurrentTheme);
   useEffect(() => {
     if (isOpen) {
@@ -40,6 +43,7 @@ const Modal = ({
       className={clsx('modal', isOpen && 'modal_opened', theme)}
       onMouseDown={closeByOver}
       sx={sx}
+      ref={ref}
     >
       <div
         className="modal__container"
@@ -80,6 +84,6 @@ const Modal = ({
       </div>
     </Box>
   );
-};
+});
 
 export default Modal;
