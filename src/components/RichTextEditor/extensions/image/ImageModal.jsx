@@ -1,4 +1,4 @@
-import { IconButton, InputBase } from '@mui/material';
+import { Box, IconButton, InputBase } from '@mui/material';
 import { Input, Modal } from 'components';
 import React, { useRef, useState } from 'react';
 import { sxImageModalRoot } from './styles';
@@ -32,7 +32,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       onClose={onClose}
       onConfirm={handleSubmit}
       twoBtns
-      isBlocked={true}
+      // isBlocked={true}
       title="Добавить изображение"
       sx={sxImageModalRoot}
     >
@@ -44,13 +44,16 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         https://png.pngtree.com/background/20230612/original/pngtree-free-desktop-wallpaper-beautiful-green-fields-picture-image_3188257.jpg
       </p>
 
-      <InputBase
-        className="file-input"
-        type="file"
-        inputRef={ref}
-        onChange={handleChange2}
-      />
-      <Input value={value} onChange={handleChange} />
+      <Box className="input-container">
+        <InputBase
+          className="file-input"
+          type="file"
+          inputRef={ref}
+          onChange={handleChange2}
+        />
+        <Input className="text-input" value={value} onChange={handleChange} />
+      </Box>
+
       <IconButton
         onClick={() => ref.current?.dispatchEvent(new MouseEvent('click'))}
       >

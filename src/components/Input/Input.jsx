@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import './Input.css';
 import hideIcon from 'images/pass-hide.svg';
 import showIcon from 'images/pass-show.svg';
+import clsx from 'clsx';
 
 export default function Input({
   children,
@@ -14,6 +15,7 @@ export default function Input({
   errors,
   disabled,
   required = false,
+  className,
 }) {
   const [visibility, setVisibility] = useState(type);
   const [isEmpty, setIsEmpty] = useState(true);
@@ -41,7 +43,7 @@ export default function Input({
   }
 
   return (
-    <div className={`input ${validationClass()}`}>
+    <div className={clsx(className, 'input', validationClass())}>
       <input
         name={name}
         className="input__field"
