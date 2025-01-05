@@ -1,16 +1,18 @@
-import { useRef } from 'react';
 import './Svg.css';
 
+function correctUrl(dataUrl) {
+  const url = dataUrl.split(',');
+  url[1] = url[1]
+    .replace(/'/g, '%22')
+    .replace(/=/g, '%3D')
+    .replace(/:/g, '%3A')
+    .replace(/\//g, '%2F');
+  return url.join(',');
+}
+
 const Svg = ({ icon }) => {
-  console.log(icon);
-  const svgRef = useRef(null);
-  const img = new Image();
-  img.src = icon;
-  img.onload = () => {
-    svgRef.current.style.maskImage = `url(${img.src})`;
-    console.log(img.src);
-  };
-  return <div ref={svgRef} className="svg-box" />;
+  const url = icon.includes('data:') ? correctUrl(icon) : icon;
+  return <div className="svg-box" style={{ maskImage: `url(${url})` }} />;
 };
 
 export default Svg;
