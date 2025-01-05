@@ -36,27 +36,38 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   useEffect(() => {
     /** @type {HTMLElement | null} */
     const modalEl = modalRef.current;
+
     /** @type {HTMLElement | null} */
     const modalContainerEl =
       modalRef.current?.querySelector('.modal__container');
 
     const turnOfDraggingState = (evt) => {
-      console.log('turnOfDraggingState', evt);
       setIsDragging(false);
     };
 
     const handleDragEnter = (evt) => {
-      console.log('handleDragEnter');
       setIsDragging(true);
       window.addEventListener('mouseup', turnOfDraggingState, { once: true });
       window.addEventListener('blur', turnOfDraggingState, { once: true });
     };
 
+    const handleDragEnterForModalRoot = (evt) => {
+      /* If we will move out of div.modal__container - event "dragenter" will be emitted on div.modal,
+        so we can disable dashed borders around input.
+
+        Other events (due to bubbling) will be ignored because their targets
+        may be elements inside div.modal__container, which would cause unwanted border hiding.
+      */
+      if (evt.target.classList.contains('modal')) {
+        turnOfDraggingState(evt);
+      }
+    };
+
     modalContainerEl?.addEventListener('dragenter', handleDragEnter);
-    // modalContainerEl?.addEventListener('dragleave', turnOfDraggingState);
+    modalEl?.addEventListener('dragenter', handleDragEnterForModalRoot);
     return () => {
       modalContainerEl?.removeEventListener('dragenter', handleDragEnter);
-      // modalContainerEl?.removeEventListener('dragleave', turnOfDraggingState);
+      modalEl?.removeEventListener('dragenter', handleDragEnterForModalRoot);
     };
   }, []);
 
