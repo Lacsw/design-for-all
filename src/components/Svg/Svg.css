@@ -1,3 +1,5 @@
 .svg-box {
   background-color: var(--color-main);
+  mask-repeat: no-repeat;
+  mask-size: 100%;
 }
