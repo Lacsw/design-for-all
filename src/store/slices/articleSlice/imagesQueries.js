@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkResponse } from 'utils/api/utils';
-import { fileTypesImage, checkFileType } from 'utils/filesTypes';
+import { validFileTypesImg, checkFileType } from 'utils/filesTypes';
 
 export const uploadImgBinary = createAsyncThunk(
   'author/imgBinary/post',
@@ -12,7 +12,7 @@ export const uploadImgBinary = createAsyncThunk(
 
       const file = evt.target.files[0];
 
-      if (!checkFileType(file, fileTypesImage)) {
+      if (!checkFileType(file, validFileTypesImg)) {
         reject(new Error('Invalid file type!'));
       }
 

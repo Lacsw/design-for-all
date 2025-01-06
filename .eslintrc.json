@@ -43,6 +43,10 @@
     "import/no-unresolved": [
       2,
       {
+        /**
+          For smart Vite imports, e.g.
+          import lightThemeCssString from 'styles/theme-light.css?inline';
+        */
         "ignore": ["\\?.+$"]
       }
     ]

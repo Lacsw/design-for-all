@@ -3,14 +3,15 @@
  *
  * `+` значит, что хостинг картинок `imgbb` поддерживает данный формат
  */
-export const fileTypesImage = [
-  //'image/apng',
+export const validFileTypesImg = [
+  //'image/apng', //
   //'image/bmp', // +
   'image/gif', // +
   'image/jpeg', // +
-  //'image/pjpeg',
+  'image/jpg', // +
+  //'image/pjpeg', //
   'image/png', // +
-  //'image/svg+xml',
+  //'image/svg+xml', //
   //'image/tiff', // +
   'image/webp', // +
   //'image/x-icon', //
@@ -21,9 +22,10 @@ export const fileTypesImage = [
 
 /**
  * @param {File} file
- * @param {string[]} types
+ * @param {string[]} validTypes - Types names, e.g. ["image/png",
+ *   "application/pdf"]
  * @returns {boolean}
  */
-export function checkFileType(file, types) {
-  return types.includes(file.type);
+export function checkFileType(file, validTypes) {
+  return validTypes.includes(file.type);
 }

@@ -1,13 +1,15 @@
-import { Box, IconButton, InputBase } from '@mui/material';
-import { Input, Modal } from 'components';
 import React, { useEffect, useRef, useState } from 'react';
-import { sxImageModalRoot } from './styles';
+import { Box, IconButton, InputBase, Typography } from '@mui/material';
 import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import { Input, Modal } from 'components';
+import { sxImageModalRoot } from './styles';
+import { checkFileType, validFileTypesImg } from 'utils/filesTypes';
+import { MAX_SIZE_IMG_B64_BYTES } from './constants';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
-  const [value, setValue] = useState(
-    'https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg'
-  );
+  // 'https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg'
+  const [value, setValue] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isDragHover, setIsDragHover] = useState(false);
 
@@ -24,6 +26,16 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleFileInputChange = (evt) => {
+    const file = evt.target.files[0];
+    console.log(
+      '🚀 ~ handleFileInputChange ~ evt.target.files[0]:',
+      evt.target.files[0]
+    );
+    const isTypeValid = checkFileType(file, validFileTypesImg);
+    console.log('🚀 ~ handleFileInputChange ~ isTypeValid:', isTypeValid);
+    const isSizeValid = file.size <= MAX_SIZE_IMG_B64_BYTES;
+    console.log('🚀 ~ handleFileInputChange ~ isSizeValid:', isSizeValid);
+
     setValue(evt.target.value);
     setIsDragging(false);
     setIsDragHover(false);
@@ -33,6 +45,11 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     onConfirm(value);
   };
 
+  const handleClearInputBtnClick = (evt) => {
+    setValue('');
+  };
+
+  // handle "is dragging" state
   useEffect(() => {
     /** @type {HTMLElement | null} */
     const modalEl = modalRef.current;
@@ -71,6 +88,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     };
   }, []);
 
+  // handle "drag hover" state
   useEffect(() => {
     const fileInputEl = fileInputRef.current;
 
@@ -103,13 +121,17 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       title="Добавить изображение"
       sx={sxImageModalRoot({ isDragging, isDragHover })}
     >
-      <p>https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg</p>
+      {/* <p>https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg</p>
       <p>
         https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?t=st=1735490873~exp=1735494473~hmac=fbab72f21400732c1537bfc70180bcb6434d381415f8bc9cf96349f6312a2be6&w=1380
       </p>
       <p>
         https://png.pngtree.com/background/20230612/original/pngtree-free-desktop-wallpaper-beautiful-green-fields-picture-image_3188257.jpg
-      </p>
+      </p> */}
+
+      <Typography className="tip">
+        Укажите ссылку или выберите/перетащите файл
+      </Typography>
 
       <Box className="container">
         <Box className="inputs-container">
@@ -119,15 +141,22 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
             inputRef={fileInputRef}
             onChange={handleFileInputChange}
             inputProps={{
-              accept: '.bmp, .gif, .jpg, .jpeg, .png, .tiff, .webp, .avif',
+              accept: '.jpg, .jpeg, .png, .webp, .gif',
             }}
           />
 
           <Input
             className="text-input"
+            placeholder="Адрес изображения"
             value={value}
             onChange={handleTextInputChange}
-          />
+          >
+            {value && (
+              <IconButton onClick={handleClearInputBtnClick}>
+                <BackspaceIcon />
+              </IconButton>
+            )}
+          </Input>
         </Box>
 
         <IconButton

@@ -45,22 +45,23 @@ const Modal = forwardRef(function Modal(
       sx={sx}
       ref={ref}
     >
-      <div
+      <Box
         className="modal__container"
-        style={{
+        sx={{
           padding: large ? '30px' : '20px',
           gap: large ? '20px' : '15px',
         }}
       >
-        <h2
+        <Box
+          component="h2"
           className="modal__title"
-          style={{
+          sx={{
             fontSize: large ? '28px' : '18px',
             fontWeight: large ? '700' : '400',
           }}
         >
           {title}
-        </h2>
+        </Box>
 
         {children}
 
@@ -81,7 +82,7 @@ const Modal = forwardRef(function Modal(
             />
           )}
         </div>
-      </div>
+      </Box>
     </Box>
   );
 });
