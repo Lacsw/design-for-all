@@ -37,15 +37,17 @@ export default function AuthorArticlesList({
 
   function handleScroll(evt) {
     if (
+      evt.target.scrollTop > 0 &&
       evt.target.scrollHeight -
         (evt.target.scrollTop + evt.target.offsetHeight) <
-      100
+        100 &&
+      page.current !== 0
     ) {
       page.current++;
       authorApi
         .getArticles({ pagination, status: section, page: page.current })
         .then((data) => changeList((prev) => [...prev, ...data]))
-        .catch((err) => console.warn(err));
+        .catch(() => (page.current = 0));
     }
   }
 
@@ -204,11 +206,12 @@ export default function AuthorArticlesList({
         rejFields={reason.rejFields}
       >
         <div className="reject-textbox">
-          {reason.message && reason.message.split('\n').map((text, i) => (
-            <p key={i} className="reject-text reject-text_14">
-              {text}
-            </p>
-          ))}
+          {reason.message &&
+            reason.message.split('\n').map((text, i) => (
+              <p key={i} className="reject-text reject-text_14">
+                {text}
+              </p>
+            ))}
         </div>
       </ModalReasons>
       <Modal

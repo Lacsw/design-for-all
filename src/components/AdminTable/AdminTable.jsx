@@ -27,14 +27,16 @@ export default function AdminTable({ hash, pagination }) {
 
   function handleScroll(evt) {
     if (
+      evt.target.scrollTop > 0 &&
       evt.target.scrollHeight -
         (evt.target.scrollTop + evt.target.offsetHeight) <
-      100
+        100 &&
+      page.current !== 0
     ) {
       page.current++;
       getRequests(endPoint, page.current + ';' + pagination)
         .then((data) => setRequestList((prev) => [...prev, ...data]))
-        .catch((err) => console.log(err));
+        .catch(() => (page.current = 0));
     }
   }
 
