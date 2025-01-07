@@ -31,14 +31,19 @@ export default function Profile({ resetSection }) {
   const [modal, setModal] = useState('');
   const [canAdd, setCanAdd] = useState(false);
   const inputRef = useRef(null);
-  const isFormReady = Object.values(formData).some(
-    (item) => item && item !== currentUser.avatar
+  const isFormReady = Object.keys(formData).some(
+    (key) =>
+      (key === 'avatar' && formData[key] !== currentUser.avatar) ||
+      (key !== 'avatar' && formData[key])
   );
 
   function handleFormSubmit(evt) {
     evt.preventDefault();
     const filledData = Object.keys(formData).reduce((acc, key) => {
-      if (formData[key] && formData[key] !== currentUser.avatar)
+      if (
+        (key === 'avatar' && formData[key] !== currentUser.avatar) ||
+        (key !== 'avatar' && formData[key])
+      )
         acc[key] = formData[key];
       return acc;
     }, {});
@@ -52,7 +57,7 @@ export default function Profile({ resetSection }) {
           dispatch(signInSuccess({ ...currentUser, ...filledData }));
           setFormData({
             ...initialForm,
-            avatar: filledData.avatar || currentUser.avatar,
+            avatar: formData.avatar,
           });
         }
       })
@@ -70,7 +75,7 @@ export default function Profile({ resetSection }) {
 
   function changeAvatar(action) {
     if (action === 'remove') {
-      changeForm({ avatar: defaultAvatar });
+      changeForm({ avatar: '' });
     }
     if (action === 'replace') {
       setModal('avatar');
@@ -93,7 +98,7 @@ export default function Profile({ resetSection }) {
             />
           </div>
           <img
-            src={formData.avatar || currentUser.avatar}
+            src={formData.avatar || defaultAvatar}
             alt="Аватар"
             className="profile__avatar"
           />

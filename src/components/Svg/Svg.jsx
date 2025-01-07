@@ -12,7 +12,12 @@ function correctUrl(dataUrl) {
 
 const Svg = ({ icon }) => {
   const url = icon.includes('data:') ? correctUrl(icon) : icon;
-  return <div className="svg-box" style={{ maskImage: `url(${url})` }} />;
+  return (
+    <div
+      className="svg-box"
+      style={{ maskImage: `url(${url})`, WebkitMaskImage: `url(${url})` }}
+    />
+  );
 };
 
 export default Svg;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectArticle } from 'store/slices/articleSlice';
-import avatar from 'images/reviewers/avatar.svg';
+import avatar from 'images/admin/avatar_default.svg';
 import './Reviewers.css';
 
 export default function Reviewers() {

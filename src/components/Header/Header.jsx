@@ -6,7 +6,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import './Header.css';
 import logo from 'images/logo.svg';
 import logoBlack from 'images/logo-black.svg';
-import accountDefaultIcon from 'images/account-icon.svg';
+import accountDefaultIcon from 'images/admin/avatar_default.svg';
 import siginInIcon from 'images/siginin-icon.svg';
 import siginInIconWhite from 'images/siginin-icon_white.svg';
 import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
