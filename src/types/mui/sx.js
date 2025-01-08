@@ -1,20 +1,8 @@
 /**
- * @callback SxPropCb
- * @param {import('@mui/material').Theme} theme
- * @returns {import('@mui/material').SxProps}
- * @see https://mui.com/system/getting-started/the-sx-prop/
- */
-
-/**
  * @template T
- * @callback SxPropCbWithData
+ * @callback TJDSxPropCbWithData
  * @param {T} data
- * @returns {SxPropCb}
- */
-
-/**
- * @typedef SxPropObj
- * @type {import('@mui/material').SxProps}
+ * @returns {import('@mui/material').SxProps}
  */
 
 export const Types = {};

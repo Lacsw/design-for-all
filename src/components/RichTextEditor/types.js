@@ -23,7 +23,8 @@
  * @property {boolean} [cancel] - If `true` the editor will return to the
  *   `initialValue`. Until the parameter `true` the editor will not apply new
  *   changes, so after reset **return this prop** to `false`
- * @property {string} [maxHeight]
+ * @property {import('csstype').Property.MaxHeight | undefined} [maxHeight="auto"]
+ *   Default is `"auto"`
  * @property {string | number} [id]
  */
 

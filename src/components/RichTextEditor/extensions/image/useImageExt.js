@@ -1,11 +1,11 @@
-import { Editor } from '@tiptap/react';
+// @ts-check
 import { COMMANDS_NAMES } from 'components/RichTextEditor/helpers/constants';
 import { useCallback, useState } from 'react';
 
-/** @param {Editor} editor */
+/** @param {import('@tiptap/react').Editor} editor */
 export const useImageExt = (editor) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
-  const [directCb, setDirectCb] = useState();
+  const [directCb, setDirectCb] = useState(() => null);
 
   function handleImgModalClose() {
     setImgModalOpen(false);

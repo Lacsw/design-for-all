@@ -8,6 +8,7 @@ import { Input, Modal } from 'components';
 import { sxImageModalRoot } from './styles';
 import { checkFileType, validFileTypesImg } from 'utils/filesTypes';
 import { MAX_SIZE_IMG_B64_BYTES } from './constants';
+import { getErrorText } from './helpers';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,14 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [value, setValue] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isDragHover, setIsDragHover] = useState(false);
+
+  /**
+   * @type {[
+   *   import('./helpers').TJDImgErrors,
+   *   React.Dispatch<React.SetStateAction<import('./helpers').TJDImgErrors>>,
+   * ]}
+   */
+  const [error, setError] = useState('');
 
   /** @type {import('react').RefObject<HTMLInputElement>} */
   const fileInputRef = useRef(null);
@@ -34,8 +43,16 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleFileInputChange = (evt) => {
     const file = evt.target.files[0];
+
     const isTypeValid = checkFileType(file, validFileTypesImg);
-    const isSizeValid = file.size <= MAX_SIZE_IMG_B64_BYTES;
+    if (isTypeValid) {
+      const isSizeValid = file.size <= MAX_SIZE_IMG_B64_BYTES;
+      if (!isSizeValid) {
+        setError('fileSize');
+      }
+    } else {
+      setError('fileType');
+    }
 
     setValue(evt.target.value);
     setIsDragging(false);
@@ -48,6 +65,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
 
   const handleClearInputBtnClick = (evt) => {
     setValue('');
+    setError('');
   };
 
   // handle "is dragging" state
@@ -120,7 +138,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       onClose={onClose}
       onConfirm={handleSubmit}
       twoBtns
-      // isBlocked={true}
+      isBlocked={!value || error}
       title="Добавить изображение"
       sx={sxImageModalRoot({ isDragging, isDragHover })}
     >
@@ -145,6 +163,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
             className="text-input"
             placeholder="Адрес изображения"
             value={value}
+            errors={error}
             onChange={handleTextInputChange}
           >
             {value && (
@@ -163,6 +182,8 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           <FolderRoundedIcon />
         </IconButton>
       </Box>
+
+      <Typography color="error">{error && getErrorText(error)}</Typography>
     </Modal>
   );
   // #endregion Render
