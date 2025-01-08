@@ -8,9 +8,7 @@ import GlobalCssPriority from 'styles/mui/GlobalCssPriority';
 import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
-import Snowfall from 'utils/snow/Snowfall';
 
-new Snowfall();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

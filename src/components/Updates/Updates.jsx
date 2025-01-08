@@ -41,7 +41,7 @@ export default function Updates() {
       {updates.error && updates.error}
       <ul className="updates-slide__list">
         {updates.cards.map((item) => (
-          <UpdateCard update={item} key={item.uuid} />
+          <UpdateCard update={item} key={(item.what_update || item.what_create) + item.lang} />
         ))}
       </ul>
     </section>

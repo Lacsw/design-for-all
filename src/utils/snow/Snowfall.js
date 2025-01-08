@@ -19,8 +19,8 @@ class Snowfall {
   }
   defineFps(time) {
     this.fps.push(time);
-    if (this.fps.length === 5) {
-      this.fps = 1000 / (this.fps[4] - this.fps[3]);
+    if (this.fps.length === 15) {
+      this.fps = 1000 / (this.fps[14] - this.fps[13]);
       this.speedCf = 60 / this.fps;
       this.start();
       return;

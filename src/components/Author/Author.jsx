@@ -4,7 +4,7 @@ import { selectArticle } from 'store/slices/articleSlice';
 import { socialIcons } from 'utils/constants';
 import { getCurrentTheme } from 'store/selectors';
 import ModalAuthor from './ModalAuthor';
-import defaultAvatar from 'images/author/avatar.svg';
+import defaultAvatar from 'images/admin/avatar_default.svg';
 import './Author.css';
 
 export default function Author() {
