@@ -1,3 +1,4 @@
+// @ts-check
 // custom extensions
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
@@ -26,30 +27,18 @@ import { Box, Divider } from '@mui/material';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
-import { validate } from './validators';
+import { validate } from './validation';
 import { COMMANDS_NAMES } from './helpers/constants';
 import { useDebounce } from 'utils/hooks';
 import { ImageModal } from './extensions/image/ImageModal';
 import { useImageExt } from './extensions/image/useImageExt';
 
+import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
 import { sxEditorWrapper } from './styles';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
-import clsx from 'clsx';
-
-const defaultValidationsOptions = {
-  kinds: {},
-  mode: 'check',
-};
-
-// Для тестов
-// let mockContent = "";
-// const mockArr: string[] = [];
-// for (let i = 0; i < 1010; i++) {
-//     mockArr.push(`<p>Item ${i}.</p>`);
-// }
-// mockContent = mockArr.join("");
+import { useValidation } from './validation/useValidation';
 
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
@@ -71,6 +60,7 @@ const incrementStateNumber = (setter) => (evt) => {
 /** @type {import('./types').TJDRteClassesProp} */
 const defaultClasses = {};
 
+// #region FC
 /**
  * Богатый текстовый редактор
  *
@@ -87,13 +77,14 @@ export const RichTextEditor = memo(function RichTextEditor({
   className,
   classes = defaultClasses,
 }) {
+  // #region extensions
   const extensions = [
     StarterKit.configure({
       blockquote: false,
       horizontalRule: false,
       strike: false,
       listItem: false, // отключаем, т.к. у нас кастомный
-      image: false, // отключаем, т.к. у нас кастомные
+      // image: false, // отключаем, т.к. у нас кастомные
       heading: {
         levels: [1, 2, 3, 4],
       },
@@ -133,25 +124,11 @@ export const RichTextEditor = memo(function RichTextEditor({
       },
     }),
   ];
+  // #endregion extensions
 
-  // Объединение заданных настроек с настройками по умолчанию
-  // TODO найти или реализовать deep-merge
-  let _validationsOptions = {};
-  if (validationsOptions) {
-    Object.assign(
-      _validationsOptions,
-      defaultValidationsOptions,
-      validationsOptions
-    );
-    _validationsOptions.kinds = Object.assign(
-      {},
-      defaultValidationsOptions.kinds,
-      validationsOptions.kinds
-    );
-  } else {
-    _validationsOptions = undefined;
-  }
+  const _validationsOptions = useValidation(validationsOptions);
 
+  /** @type {React.RefObject<HTMLElement>} */
   const wrapperRef = useRef(null);
   /* Решением проблемы: если при вводе в редактор показывается обводка, сигнализирующая, что редактор в фокусе,
     то при кликах на кнопки команд на мгновения скачут цвета у рамок редактора и его кнопок. */
@@ -173,6 +150,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     }
   }
 
+  // #region useEditor
   /* при вызовах данного хука он возвращ-т одну и ту же ссылку похоже
       и вроде как реальный вызов происходит только один раз
    */
@@ -188,6 +166,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     onUpdate,
     enableContentCheck: true, // не работает?
   });
+  // #endregion useEditor
 
   useEffect(() => {
     if (readOnly && (!initialValue || initialValue === '<p></p>')) {
@@ -203,6 +182,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     editor?.commands.setContent(initialValue);
   }
 
+  // #region Handle focus
   /* Имеет ли обёртка редактора псевдокласс focus-within?
       Проверка необходима, чтобы не было скачков цвета у рамок
       редактора и его кнопок */
@@ -228,23 +208,27 @@ export const RichTextEditor = memo(function RichTextEditor({
       wrapperEl?.removeEventListener('click', onClick);
     };
   }, [onClick, onKeydown, wrapperRef]);
+  // #endregion Handle focus
 
   const {
     imgModalOpen,
-    setImgModalOpen,
+    // setImgModalOpen,
     handleAddImgBtnClick,
     handleImgInserting,
     handleImgModalClose,
   } = useImageExt(editor);
 
+  // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */
   const Bar = useMemo(() => {
     if (readOnly) {
       return null;
     } else {
       return (
+        // @ts-ignore
         <MenuBar editor={editor} className={classes.menuBar}>
           <TextTypeSelector
+            // @ts-ignore
             editor={editor}
             className={classes.textTypeSelector}
             flag={flag}
@@ -365,13 +349,15 @@ export const RichTextEditor = memo(function RichTextEditor({
     flag,
     handleAddImgBtnClick,
   ]);
+  // #endregion Bar
 
+  // #region Render
   return (
     <Box
       ref={wrapperRef}
       className={clsx('rte', className)}
       sx={sxEditorWrapper({ maxHeight })}
-      id={id}
+      id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
       <EditorContent editor={editor} className="rte__editor" />
@@ -385,4 +371,6 @@ export const RichTextEditor = memo(function RichTextEditor({
       />
     </Box>
   );
+  // #endregion Render
 });
+// #endregion FC

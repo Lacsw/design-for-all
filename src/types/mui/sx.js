@@ -6,8 +6,9 @@
  */
 
 /**
+ * @template T
  * @callback SxPropCbWithData
- * @param {any} data
+ * @param {T} data
  * @returns {SxPropCb}
  */
 
@@ -16,4 +17,4 @@
  * @type {import('@mui/material').SxProps}
  */
 
-export {};
+export const Types = {};

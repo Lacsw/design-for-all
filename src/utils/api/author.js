@@ -1,9 +1,18 @@
-class AuthorApi {
+// @ts-check
+import { uploadImgB64 } from 'store/slices/articleSlice/imagesQueries';
+
+export class AuthorApi {
+  /** @type {string} */
+  _baseUrl = '';
+  /** @type {HeadersInit} */
+  _headers = {};
+
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
 
+  /** @param {Response} res */
   _checkResponse(res) {
     if (res.ok) {
       return res.status !== 200 ? res.statusText : res.json();
@@ -119,6 +128,15 @@ class AuthorApi {
     });
 
     return this._checkResponse(response);
+  }
+
+  /**
+   * @param {import('store/slices/articleSlice/types').TJDUploadImgB64Arg['evt']} evt
+   * @param {import('@reduxjs/toolkit').Dispatch} dispatch
+   */
+  async uploadImage(evt, dispatch) {
+    // @ts-ignore
+    dispatch(uploadImgB64({ evt, context: this }));
   }
 }
 

@@ -1,4 +1,10 @@
-/** @type {import('types/mui/sx').SxPropCbWithData} */
+// @ts-check
+/**
+ * @type {import('types/mui/sx').SxPropCbWithData<{
+ *   isDragging: boolean;
+ *   isDragHover: boolean;
+ * }>}
+ */
 export const sxImageModalRoot =
   ({ isDragging, isDragHover }) =>
   (theme) => {

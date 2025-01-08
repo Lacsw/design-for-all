@@ -2,9 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkResponse } from 'utils/api/utils';
 import { validFileTypesImg, checkFileType } from 'utils/filesTypes';
 
-export const uploadImgBinary = createAsyncThunk(
-  'author/imgBinary/post',
-  ({ evt, context }) => {
+export const uploadImgB64 = createAsyncThunk(
+  'article/imgB64/post',
+  /** @param {import('./types').TJDUploadImgB64Arg} arg */
+  (arg, thunkAPI) => {
+    const { evt, context } = arg;
+
     return new Promise((resolve, reject) => {
       if (!evt.target.value) {
         reject(new Error('No file selected!'));

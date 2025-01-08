@@ -1,12 +1,11 @@
 /**
  * @callback TJDRteOnInputProp
- * @param {import('./validators').TJDValidateResult} data
+ * @param {import('./validation').TJDValidateResult} data
  * @returns {void}
  */
 
 /**
  * @typedef TJDRteClassesProp
- * @type {object}
  * @property {string} [menuBar]
  * @property {string} [textTypeSelector]
  * @property {string} [button]
@@ -14,9 +13,8 @@
 
 /**
  * @typedef RichTextEditorProps
- * @type {object}
  * @property {string | null} [initialValue] - Html-string for INITIAL view
- * @property {any} [validationsOptions]
+ * @property {Partial<import('./validation/types').TJDValidationOptions>} [validationsOptions]
  * @property {TJDRteOnInputProp} [onInput] - Cb fires with debounce when content
  *   changes ib RTE
  * @property {boolean} [readOnly] - Isn't RTE editable

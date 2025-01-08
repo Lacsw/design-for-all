@@ -16,7 +16,7 @@
     "prettier"
   ],
   "rules": {
-    // --- --- --- --- jsdoc --- --- --- ---
+    // #region js-doc
     "jsdoc/require-description": 0,
     "jsdoc/require-description-complete-sentence": 0,
     "jsdoc/require-example": 0,
@@ -39,7 +39,19 @@
     "jsdoc/require-yields-check": 0,
     "jsdoc/tag-lines": 0,
     "jsdoc/multiline-blocks": 0,
-    // --- --- --- --- import --- --- --- ---
+    "jsdoc/no-undefined-types": [
+      // Отключил, т.к. при использовании @ts-check тип тоже проверяется на определенность
+      0,
+      /* 
+        Здесь можно заглушить предупреждения о неопределенных типах
+        https://stackoverflow.com/questions/66210633/expose-typescripts-type-definitions-to-jsdoc
+      */
+      {
+        "definedTypes": ["ReadonlyArray"]
+      }
+    ],
+    // #endregion js-doc
+    // #region imports
     "import/no-unresolved": [
       2,
       {
@@ -50,11 +62,14 @@
         "ignore": ["\\?.+$"]
       }
     ]
+    // #endregion imports
   },
   "settings": {
     "import/resolver": {
       "alias": {
         "extensions": [".js", ".jsx", ".json"],
+        /* При изменениях map не забудьте соответствующе обновить:
+          plugins → alias → entries в vite.config.js */
         "map": [
           ["utils", "./src/utils"],
           ["contexts", "./src/contexts"],
@@ -62,6 +77,8 @@
           ["components", "./src/components"],
           ["images", "./src/images"],
           ["styles", "./src/styles"],
+          ["types", "./src/types"],
+          ["node_modules", "/node_modules"],
           ["", "./public"] // for imports from "public" folder, e.g. "import favicon from "/favicon.ico"
         ]
       }
