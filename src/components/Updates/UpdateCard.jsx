@@ -17,7 +17,9 @@ export default function UpdateCard({ update }) {
           <span className="update-card__others">
             {update.what_update ? 'Перевод статьи' : 'Новая статья'}
           </span>
-          <span className="update-card__others">09.01.2025</span>
+          <span className="update-card__others">
+            {update.time_action.split(' ')[0].split('-').reverse().join('.')}
+          </span>
         </div>
       </Link>
     </li>
