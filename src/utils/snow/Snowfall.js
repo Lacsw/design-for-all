@@ -22,7 +22,7 @@ class Snowfall {
     if (this.fps.length === 15) {
       this.fps = 1000 / (this.fps[14] - this.fps[13]);
       this.speedCf = 60 / this.fps;
-      console.log(this.fps)
+      console.log(`Частота обновления экрана: ${Math.round(this.fps)} Гц.`);
       return;
     }
     requestAnimationFrame((t) => this.defineFps(t));
