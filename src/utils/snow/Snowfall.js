@@ -15,14 +15,14 @@ class Snowfall {
       }
     });
     this.fps = [];
-    this.defineFps();
+    setTimeout(() => this.defineFps(), 500);
   }
   defineFps(time) {
     this.fps.push(time);
     if (this.fps.length === 15) {
       this.fps = 1000 / (this.fps[14] - this.fps[13]);
       this.speedCf = 60 / this.fps;
-      this.start();
+      console.log(this.fps)
       return;
     }
     requestAnimationFrame((t) => this.defineFps(t));
