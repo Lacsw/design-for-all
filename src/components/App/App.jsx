@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
-import { Catalog, NotFound, Layout, Fork } from 'components';
+import { NotFound, Layout, Fork } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTitles, selectTitles } from 'store/slices/articleSlice';
 
@@ -23,7 +23,7 @@ function App() {
           />
           <Route
             path="/:lang/:articleId"
-            element={<Catalog section={section} setSection={setSection} />}
+            element={<Fork section={section} setSection={setSection} />}
           />
           <Route path="*" element={<NotFound resetSection={() => setSection('')} />} />
         </Routes>
