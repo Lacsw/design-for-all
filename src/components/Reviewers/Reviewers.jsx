@@ -1,30 +1,31 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectArticle } from 'store/slices/articleSlice';
 import avatar from 'images/admin/avatar_default.svg';
 import './Reviewers.css';
+import ModalAuthor from 'components/Author/ModalAuthor';
 
 export default function Reviewers() {
+  const { lang, articleId } = useParams();
   const { reviews } = useSelector(selectArticle);
   const [isOpen, setIsOpen] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+  const [reviewer, setReviewer] = useState({});
   const shownList = isOpen ? reviews : reviews.slice(0, 5);
 
   const renderReviews = (shownList) => {
     return shownList.map((item) => (
-      <a
+      <img
         key={item.uuid}
-        href="/"
-        target="_blank"
-        rel="noreferrer"
-        className="reviewers__link"
-      >
-        <img
-          src={item.avatar || avatar}
-          alt="Аватар рецензента"
-          className="reviewers__avatar"
-        />
-      </a>
+        src={item.avatar || avatar}
+        alt="Аватар рецензента"
+        className="reviewers__avatar"
+        onClick={() => {
+          setIsModal(true);
+          setReviewer(item);
+        }}
+      />
     ));
   };
 
@@ -51,9 +52,25 @@ export default function Reviewers() {
         </>
       ) : (
         <p className="reviewers__text">
-          <Link to="#">Предложите правки</Link>, чтобы стать рецензентом
+          <Link
+            to="/#/author/new-article"
+            state={{
+              name: 'correct',
+              original: articleId,
+              type: 'updated',
+              lang,
+            }}
+          >
+            Предложите правки
+          </Link>
+          , чтобы стать рецензентом
         </p>
       )}
+      <ModalAuthor
+        author={reviewer}
+        isOpen={isModal}
+        onClose={() => setIsModal(false)}
+      />
     </div>
   );
 }

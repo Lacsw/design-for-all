@@ -57,7 +57,7 @@ export default function User() {
           {renderSocialMedia(shownList)}
         </div>
       ) : (
-        <p className="author__socials-text">(здесь будут контакты автора)</p>
+        <p className="author__socials-text">Контакты отсутствуют</p>
       )}
       {socialList.length > 4 && (
         <p

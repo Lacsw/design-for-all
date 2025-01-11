@@ -103,6 +103,7 @@
   font-weight: 500;
   line-height: 130%; /* 13px */
   letter-spacing: 0.2px;
+  text-align: center;
 }
 
 .social-link {
