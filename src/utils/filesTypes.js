@@ -79,11 +79,11 @@ export const imageMimes = [
 
 /**
  * @param {Uint8Array} bytes
- * @param {TJDMime} mime
+ * @param {(number | undefined)[]} pattern
  * @returns {boolean}
  */
-export function isMime(bytes, mime) {
-  return mime.pattern.every(
+export function checkBytesPattern(bytes, pattern) {
+  return pattern.every(
     (magicNumber, idx) => !magicNumber || bytes[idx] === magicNumber
   );
 }
@@ -122,7 +122,9 @@ export function validateImageMimeType(file, callback) {
 
     /** @type {Uint8Array<ArrayBuffer>} */
     const bytes = new Uint8Array(result);
-    const valid = imageMimes.some((mime) => isMime(bytes, mime));
+    const valid = imageMimes.some((mime) =>
+      checkBytesPattern(bytes, mime.pattern)
+    );
     callback(valid, valid ? 'done' : 'type');
   };
 
