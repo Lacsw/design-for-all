@@ -6,7 +6,11 @@ import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { Input, Modal } from 'components';
 import { sxImageModalRoot } from './styles';
-import { checkFileType, validFileTypesImg } from 'utils/filesTypes';
+import {
+  checkFileType,
+  validateImageMimeType,
+  validFileTypesImg,
+} from 'utils/filesTypes';
 import { MAX_SIZE_IMG_B64_BYTES } from './constants';
 import { getErrorText } from './helpers';
 
@@ -20,6 +24,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [value, setValue] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isDragHover, setIsDragHover] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * @type {[
@@ -42,12 +47,27 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleFileInputChange = (evt) => {
+    setIsLoading(true);
     const file = evt.target.files[0];
+    console.log('🚀 ~ handleFileInputChange ~ file:', file);
 
-    const isTypeValid = checkFileType(file, validFileTypesImg);
-    if (isTypeValid) {
-      const isSizeValid = file.size <= MAX_SIZE_IMG_B64_BYTES;
-      if (!isSizeValid) {
+    /** @type {import('utils/filesTypes').TJDOnImgValidating} */
+    function handleCheckEnding(isValid, reason) {
+      setIsLoading(false);
+
+      if (!isValid) {
+        setError('fileType');
+        console.log('handleCheckEnding ERROR isValid', isValid);
+        return;
+      }
+
+      console.log('handleCheckEnding isValid', isValid);
+    }
+
+    if (checkFileType(file, validFileTypesImg)) {
+      if (file.size <= MAX_SIZE_IMG_B64_BYTES) {
+        validateImageMimeType(file, handleCheckEnding);
+      } else {
         setError('fileSize');
       }
     } else {
@@ -63,7 +83,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     onConfirm(value);
   };
 
-  const handleClearInputBtnClick = (evt) => {
+  const handleClearInputBtnClick = (/** @type {any} */ evt) => {
     setValue('');
     setError('');
   };
@@ -77,17 +97,23 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     const modalContainerEl =
       modalRef.current?.querySelector('.modal__container');
 
-    const turnOfDraggingState = (evt) => {
+    const turnOfDraggingState = (
+      /** @type {DragEvent & { target: EventTarget & HTMLElement }} */ evt
+    ) => {
       setIsDragging(false);
     };
 
-    const handleDragEnter = (evt) => {
+    const handleDragEnter = (
+      /** @type {DragEvent & { target: EventTarget & HTMLElement }} */ evt
+    ) => {
       setIsDragging(true);
       window.addEventListener('mouseup', turnOfDraggingState, { once: true });
       window.addEventListener('blur', turnOfDraggingState, { once: true });
     };
 
-    const handleDragEnterForModalRoot = (evt) => {
+    const handleDragEnterForModalRoot = (
+      /** @type {DragEvent & { target: EventTarget & HTMLElement }} */ evt
+    ) => {
       /* If we will move out of div.modal__container - event "dragenter" will be emitted on div.modal,
         so we can disable dashed borders around input.
 
