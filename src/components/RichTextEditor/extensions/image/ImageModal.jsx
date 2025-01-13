@@ -1,6 +1,5 @@
 // @ts-check
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Box, IconButton, InputBase, Typography } from '@mui/material';
 import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
 import BackspaceIcon from '@mui/icons-material/Backspace';
@@ -12,20 +11,23 @@ import {
   validFileTypesImg,
 } from 'utils/filesTypes';
 import { MAX_SIZE_IMG_B64_BYTES } from './constants';
-import { getErrorText } from './helpers';
+import { getErrorText, getImgByURL } from './helpers';
 import authorApi from 'utils/api/author';
+import { useDebounce } from 'utils/hooks';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
-  const dispatch = useDispatch();
-
-  // 'https://99px.ru/sstorage/53/2023/01/mid_348279_833663.jpg'
-  // https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?t=st=1735490873~exp=1735494473~hmac=fbab72f21400732c1537bfc70180bcb6434d381415f8bc9cf96349f6312a2be6&w=1380
-  // https://png.pngtree.com/background/20230612/original/pngtree-free-desktop-wallpaper-beautiful-green-fields-picture-image_3188257.jpg
-
   const [value, setValue] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isDragHover, setIsDragHover] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDebouncing, setIsDebouncing] = useState(false);
+  /**
+   * @type {[
+   *   'text' | 'file',
+   *   React.Dispatch<React.SetStateAction<'text' | 'file'>>,
+   * ]}
+   */
+  const [mode, setMode] = useState('text');
 
   /** @type {React.MutableRefObject<null | File>} */
   const fileRef = useRef(null);
@@ -44,15 +46,54 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   /** @type {import('react').RefObject<HTMLElement>} */
   const modalRef = useRef(null);
 
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
-  const handleTextInputChange = (evt) => {
-    setValue(evt.target.value);
+  // #region text input change
+  const checkURLPattern = (/** @type {string} */ value) => {
+    if (!value) {
+      setError('');
+      setIsDebouncing(false);
+      return;
+    }
+
+    if (/^https?:\/\/.+\..+$/.test(value)) {
+      setError('');
+    } else {
+      setError('brokenUrl');
+    }
+    setIsDebouncing(false);
   };
+  const checkURLPatternDbnc = useDebounce(checkURLPattern, 1000, true);
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  const handleTextInputChange = (evt) => {
+    fileRef.current = null;
+    if (fileInputRef.current) {
+      fileInputRef.current.files = null;
+    }
+
+    setValue(evt.target.value);
+    setIsDebouncing(true);
+    checkURLPatternDbnc(evt.target.value);
+  };
+  // #endregion text input change
+
+  // #region file input change
+  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleFileInputChange = (evt) => {
-    setIsLoading(true);
     const file = evt.target.files[0];
+    if (!file) {
+      setError('');
+      setMode('text');
+      setValue('');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+    setMode('file');
+    setValue(evt.target.value.replace('fakepath', '...'));
+    setIsDragging(false);
+    setIsDragHover(false);
+    fileRef.current = file;
 
     /** @type {import('utils/filesTypes').TJDOnImgValidating} */
     function handleCheckEnding(isValid, reason) {
@@ -67,7 +108,6 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         return;
       } else {
         setError('');
-        fileRef.current = file;
         // теперь ждём нажатия на галку - сабмита. Тогда конвертим в base64 и отправляем запрос на хостинг для получения URL-ки
       }
     }
@@ -81,37 +121,47 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     } else {
       setError('fileType');
     }
-
-    setValue(evt.target.value);
-    setIsDragging(false);
-    setIsDragHover(false);
   };
+  // #endregion file input change
 
+  // #region submit
   const handleSubmit = () => {
     setIsLoading(true);
-    authorApi
-      .uploadImage(fileRef.current)
-      .then((res) => {
-        onConfirm(res.original_size);
-        setValue('');
-        setError('');
-        fileRef.current = null;
-      })
-      .catch((err) => {
-        setError('onLoading');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
 
+    if (fileRef.current) {
+      authorApi
+        .uploadImage(fileRef.current)
+        .then((res) => {
+          onConfirm(res.original_size);
+          setValue('');
+          setError('');
+          fileRef.current = null;
+        })
+        .catch((err) => {
+          setError('onHostingLoading');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      getImgByURL({ value, setValue, setIsLoading, setError, onConfirm });
+    }
+  };
+  // #endregion submit
+
+  // #region clear btn
   const handleClearInputBtnClick = (/** @type {any} */ evt) => {
     setValue('');
     setError('');
+    setMode('text');
     fileRef.current = null;
+    if (fileInputRef.current) {
+      fileInputRef.current.files = null;
+    }
   };
+  // #endregion clear btn
 
-  // handle "is dragging" state
+  // #region "is dragging" state
   useEffect(() => {
     /** @type {HTMLElement | null} */
     const modalEl = modalRef.current;
@@ -155,8 +205,9 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       modalEl?.removeEventListener('dragenter', handleDragEnterForModalRoot);
     };
   }, []);
+  // #endregion "is dragging" state
 
-  // handle "drag hover" state
+  // #region "drag hover" state
   useEffect(() => {
     const fileInputEl = fileInputRef.current;
 
@@ -177,6 +228,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       fileInputEl?.removeEventListener('drop', turnOffDragHoverState);
     };
   }, []);
+  // #endregion "drag hover" state
 
   // #region Render
   return (
@@ -187,7 +239,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       onClose={onClose}
       onConfirm={handleSubmit}
       twoBtns
-      isBlocked={!value || error || isLoading}
+      isBlocked={!value || error || isLoading || isDebouncing}
       title="Добавить изображение"
       sx={sxImageModalRoot({ isDragging, isDragHover })}
     >
@@ -200,9 +252,12 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           <InputBase
             className="file-input"
             type="file"
-            disabled={isLoading}
+            disabled={isLoading || isDebouncing}
             inputRef={fileInputRef}
             onChange={handleFileInputChange}
+            onInvalid={(e) => {
+              console.log('onInvalid', e);
+            }}
             inputProps={{
               accept: '.jpg, .jpeg, .png, .webp, .gif',
             }}
@@ -212,14 +267,15 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           <Input
             className="text-input"
             placeholder="Адрес изображения"
-            disabled={isLoading}
+            // @ts-ignore
+            disabled={isLoading || mode === 'file'}
             value={value}
             errors={error}
             onChange={handleTextInputChange}
           >
             {value && (
               <IconButton
-                disabled={isLoading}
+                disabled={isLoading || isDebouncing}
                 onClick={handleClearInputBtnClick}
               >
                 <BackspaceIcon />
@@ -229,7 +285,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         </Box>
 
         <IconButton
-          disabled={isLoading}
+          disabled={isLoading || isDebouncing}
           onClick={() =>
             fileInputRef.current?.dispatchEvent(new MouseEvent('click'))
           }
