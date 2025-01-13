@@ -91,10 +91,10 @@ export function checkBytesPattern(bytes, pattern) {
 /**
  * @callback TJDOnImgValidating
  * @param {boolean} isValid
- * @param {'done' | 'type' | 'error'} reason
+ * @param {'done' | 'typeError' | 'error'} reason
  *
  *   - `"done"` - everything is fine
- *   - `"type"` - file type is not valid
+ *   - `"typeError"` - file type is not valid
  *   - `"error"` - an error occurred while reading the file
  *
  * @returns {void}
@@ -125,7 +125,7 @@ export function validateImageMimeType(file, callback) {
     const valid = imageMimes.some((mime) =>
       checkBytesPattern(bytes, mime.pattern)
     );
-    callback(valid, valid ? 'done' : 'type');
+    callback(valid, valid ? 'done' : 'typeError');
   };
 
   // async operation

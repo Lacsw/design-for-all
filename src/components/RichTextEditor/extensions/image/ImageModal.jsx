@@ -13,6 +13,7 @@ import {
 } from 'utils/filesTypes';
 import { MAX_SIZE_IMG_B64_BYTES } from './constants';
 import { getErrorText } from './helpers';
+import authorApi from 'utils/api/author';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,9 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isDragHover, setIsDragHover] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  /** @type {React.MutableRefObject<null | File>} */
+  const fileRef = useRef(null);
 
   /**
    * @type {[
@@ -49,19 +53,23 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const handleFileInputChange = (evt) => {
     setIsLoading(true);
     const file = evt.target.files[0];
-    console.log('🚀 ~ handleFileInputChange ~ file:', file);
 
     /** @type {import('utils/filesTypes').TJDOnImgValidating} */
     function handleCheckEnding(isValid, reason) {
       setIsLoading(false);
 
       if (!isValid) {
-        setError('fileType');
-        console.log('handleCheckEnding ERROR isValid', isValid);
+        if (reason === 'typeError') {
+          setError('fileType');
+        } else {
+          setError('fileReading');
+        }
         return;
+      } else {
+        setError('');
+        fileRef.current = file;
+        // теперь ждём нажатия на галку - сабмита. Тогда конвертим в base64 и отправляем запрос на хостинг для получения URL-ки
       }
-
-      console.log('handleCheckEnding isValid', isValid);
     }
 
     if (checkFileType(file, validFileTypesImg)) {
@@ -80,12 +88,27 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   };
 
   const handleSubmit = () => {
-    onConfirm(value);
+    setIsLoading(true);
+    authorApi
+      .uploadImage(fileRef.current)
+      .then((res) => {
+        onConfirm(res.original_size);
+        setValue('');
+        setError('');
+        fileRef.current = null;
+      })
+      .catch((err) => {
+        setError('onLoading');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleClearInputBtnClick = (/** @type {any} */ evt) => {
     setValue('');
     setError('');
+    fileRef.current = null;
   };
 
   // handle "is dragging" state
@@ -164,7 +187,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       onClose={onClose}
       onConfirm={handleSubmit}
       twoBtns
-      isBlocked={!value || error}
+      isBlocked={!value || error || isLoading}
       title="Добавить изображение"
       sx={sxImageModalRoot({ isDragging, isDragHover })}
     >
@@ -177,6 +200,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           <InputBase
             className="file-input"
             type="file"
+            disabled={isLoading}
             inputRef={fileInputRef}
             onChange={handleFileInputChange}
             inputProps={{
@@ -188,12 +212,16 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           <Input
             className="text-input"
             placeholder="Адрес изображения"
+            disabled={isLoading}
             value={value}
             errors={error}
             onChange={handleTextInputChange}
           >
             {value && (
-              <IconButton onClick={handleClearInputBtnClick}>
+              <IconButton
+                disabled={isLoading}
+                onClick={handleClearInputBtnClick}
+              >
                 <BackspaceIcon />
               </IconButton>
             )}
@@ -201,6 +229,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         </Box>
 
         <IconButton
+          disabled={isLoading}
           onClick={() =>
             fileInputRef.current?.dispatchEvent(new MouseEvent('click'))
           }

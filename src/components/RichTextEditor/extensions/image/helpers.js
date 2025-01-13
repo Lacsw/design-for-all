@@ -1,6 +1,12 @@
 /**
  * @typedef TJDImgErrors
- * @type {'' | 'fileType' | 'fileSize' | 'brokenUrl' | 'noImgOnUrl'}
+ * @type {''
+ *   | 'fileType'
+ *   | 'fileSize'
+ *   | 'brokenUrl'
+ *   | 'noImgOnUrl'
+ *   | 'fileReading'
+ *   | 'onLoading'}
  */
 
 /** @param {TJDImgErrors} errorKind */
@@ -14,6 +20,10 @@ export const getErrorText = (errorKind) => {
       return 'Не удалось получить изображение по указанной ссылке';
     case 'brokenUrl':
       return '';
+    case 'fileReading':
+      return 'Ошибка при чтении файла';
+    case 'onLoading':
+      return 'Не удалось загрузить файл на хостинг';
     default:
       return null;
   }

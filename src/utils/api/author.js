@@ -1,5 +1,4 @@
 // @ts-check
-import { uploadImgB64 } from 'store/slices/articleSlice/imagesQueries';
 
 export class AuthorApi {
   /** @type {string} */
@@ -7,6 +6,7 @@ export class AuthorApi {
   /** @type {HeadersInit} */
   _headers = {};
 
+  /** @param {{ baseUrl: string; headers: HeadersInit }} options */
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -131,12 +131,44 @@ export class AuthorApi {
   }
 
   /**
-   * @param {import('store/slices/articleSlice/types').TJDUploadImgB64Arg['evt']} evt
-   * @param {import('@reduxjs/toolkit').Dispatch} dispatch
+   * @param {File} file
+   * @returns {Promise}
    */
-  async uploadImage(evt, dispatch) {
-    // @ts-ignore
-    dispatch(uploadImgB64({ evt, context: this }));
+  async uploadImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onerror = (e) => {
+        reject(new Error(`Error on reading binary file: ${e.type}`));
+      };
+
+      reader.onload = (onloadEvt) => {
+        /** @type {string} */
+        // @ts-ignore
+        let result = onloadEvt.target.result;
+
+        const indexOfStart = result.indexOf('base64');
+        // cut off the metadata indicating that the data is encoded in base-64
+        result = result.slice(indexOfStart + 7);
+
+        fetch(`${this._baseUrl}/user_upload_image_p`, {
+          method: 'POST',
+          headers: this._headers,
+          body: result,
+          credentials: 'include',
+        })
+          .then(this._checkResponse)
+          .then(resolve)
+          .catch((err) =>
+            reject(
+              new Error(`Error on POST user_upload_image_p: ${{ error: err }}`)
+            )
+          );
+      };
+
+      // encode to base-64
+      reader.readAsDataURL(file);
+    });
   }
 }
 
