@@ -117,9 +117,11 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         validateImageMimeType(file, handleCheckEnding);
       } else {
         setError('fileSize');
+        setIsLoading(false);
       }
     } else {
       setError('fileType');
+      setIsLoading(false);
     }
   };
   // #endregion file input change
@@ -135,6 +137,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           onConfirm(res.original_size);
           setValue('');
           setError('');
+          setMode('text');
           fileRef.current = null;
         })
         .catch((err) => {
@@ -255,9 +258,6 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
             disabled={isLoading || isDebouncing}
             inputRef={fileInputRef}
             onChange={handleFileInputChange}
-            onInvalid={(e) => {
-              console.log('onInvalid', e);
-            }}
             inputProps={{
               accept: '.jpg, .jpeg, .png, .webp, .gif',
             }}
