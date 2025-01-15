@@ -34,40 +34,35 @@ export const getErrorText = (errorKind) => {
 };
 
 export const getImgByURL = ({
-  value,
+  value, // URL
   setValue,
   setError,
   onConfirm,
   setIsLoading,
 }) => {
-  fetch(value)
-    .then(async (res) => {
-      return await res
-        .blob()
-        .then(async (imgData) => {
-          const src = URL.createObjectURL(imgData);
-          let testImage = new Image();
-          testImage.src = src;
+  let testImage = new Image();
+  testImage.src = value; // #1
 
-          return await new Promise((resolve, reject) => {
-            setTimeout(() => {
-              if (testImage.width && testImage.height) {
-                testImage = null;
-                resolve(value);
-              } else {
-                reject('fromLinkLoading');
-                setError('fromLinkLoading');
-              }
-            }, 200);
-          });
-        })
-        .then((value) => {
-          onConfirm(value);
-          setValue('');
-        })
-        .catch((err) => setError('fromLinkLoading'));
+  const promise = new Promise((resolve, reject) => {
+    // при установке значения в src(#1) расчёт размеров картинки не происходит сразу, даже если положить в src предварительно скачанный файл, конвертированный в Blob(см. 2e63e13eb602240e714ad9b8da1b89e539118265). Потому нужна асинхронность
+    setTimeout(() => {
+      if (testImage.width && testImage.height) {
+        testImage = null;
+        resolve(value);
+      } else {
+        reject('fromLinkLoading');
+      }
+    }, 200);
+  });
+
+  promise
+    .then((res) => {
+      onConfirm(res);
+      setValue('');
     })
-    .catch((err) => setError('fromLinkLoading'))
+    .catch((err) => {
+      setError(err.message);
+    })
     .finally(() => {
       setIsLoading(false);
     });
