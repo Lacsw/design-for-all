@@ -5,7 +5,12 @@ import deleteIconW from 'images/delete-icon_white.svg';
 import deleteIconB from 'images/delete-icon_black.svg';
 import editIconW from 'images/edit-icon_white.svg';
 import editIconB from 'images/edit-icon_black.svg';
-import { Dropdown, ModalRecommendation, RichTextEditor } from 'components';
+import {
+  Dropdown,
+  ModalRecommendation,
+  RichTextEditor,
+  Modal,
+} from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
 import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
@@ -33,6 +38,9 @@ export const NewArticle = memo(function NewArticle({
 
   const categories = useSelector(selectTitles);
   const [isShownAddRec, setIsShownAddRec] = useState(false);
+  const [imgModal, setImgModal] = useState(false);
+  const [canAdd, setCanAdd] = useState(false);
+  const inputRef = useRef(null);
   const editId = useRef('');
 
   const isUpdate =
@@ -62,13 +70,18 @@ export const NewArticle = memo(function NewArticle({
     [dispatch]
   );
 
-  function addFile({ target }) {
+  function handleInput({ target }) {
+    if (/^https:\/\/\S+\.\S+$/.test(target.value) && !canAdd) setCanAdd(true);
+    if (!/^https:\/\/\S+\.\S+$/.test(target.value) && canAdd) setCanAdd(false);
+  }
+
+  /* function addFile({ target }) {
     const reader = new FileReader();
     if (target.files.length) {
       reader.onload = () => changeField('image', reader.result);
       reader.readAsDataURL(target.files[0]);
     }
-  }
+  } */
 
   function handleDelete(evt, id) {
     evt.preventDefault();
@@ -177,7 +190,7 @@ export const NewArticle = memo(function NewArticle({
           }`}
         >
           <span className="new-article__sub-title">Картинка статьи</span>
-          <input
+          {/*<input
             disabled={draft.main_category && draft.lang ? false : true}
             type="file"
             name="main-image"
@@ -185,6 +198,12 @@ export const NewArticle = memo(function NewArticle({
             className="new-article__main-image"
             accept=".jpg, .png"
             onChange={addFile}
+          />*/}
+          <div
+            className="new-article__main-image"
+            onClick={
+              draft.main_category && draft.lang ? () => setImgModal(true) : null
+            }
           />
           {draft.image && (
             <img
@@ -301,6 +320,22 @@ export const NewArticle = memo(function NewArticle({
         }
         editId={editId.current}
       />
+      <Modal
+        title="Ссылка на картинку"
+        isOpen={imgModal}
+        twoBtns
+        onConfirm={() => {changeField('image', inputRef.current.value); setImgModal(false)}}
+        onClose={() => setImgModal(false)}
+        isBlocked={!canAdd}
+      >
+        <input
+          type="text"
+          placeholder="https://site.com/image.jpg"
+          className="input-reason"
+          ref={inputRef}
+          onChange={handleInput}
+        />
+      </Modal>
     </section>
   );
 });

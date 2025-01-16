@@ -73,6 +73,7 @@
   height: 24px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .reviewers__icon-container::-webkit-scrollbar {

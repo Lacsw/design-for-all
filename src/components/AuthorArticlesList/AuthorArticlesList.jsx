@@ -37,15 +37,17 @@ export default function AuthorArticlesList({
 
   function handleScroll(evt) {
     if (
+      evt.target.scrollTop > 0 &&
       evt.target.scrollHeight -
         (evt.target.scrollTop + evt.target.offsetHeight) <
-      100
+        100 &&
+      page.current !== 0
     ) {
       page.current++;
       authorApi
         .getArticles({ pagination, status: section, page: page.current })
         .then((data) => changeList((prev) => [...prev, ...data]))
-        .catch((err) => console.warn(err));
+        .catch(() => (page.current = 0));
     }
   }
 
@@ -135,7 +137,7 @@ export default function AuthorArticlesList({
               >
                 <td className="author-articles-list__table-cell">
                   {article.type}
-                  {article.reason_rejected && (
+                  {article.rejected_fields && (
                     <div className="author-articles-list__warning">
                       <span className="author-articles-list__warning-text">
                         Частично отклонено
@@ -203,7 +205,14 @@ export default function AuthorArticlesList({
         onClose={() => toggleReason({})}
         rejFields={reason.rejFields}
       >
-        {reason.message}
+        <div className="reject-textbox">
+          {reason.message &&
+            reason.message.split('\n').map((text, i) => (
+              <p key={i} className="reject-text reject-text_14">
+                {text}
+              </p>
+            ))}
+        </div>
       </ModalReasons>
       <Modal
         title={'Точно удалить?'}

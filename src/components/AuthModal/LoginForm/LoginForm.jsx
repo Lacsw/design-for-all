@@ -4,6 +4,7 @@ import authApi from 'utils/api/auth';
 import { useFormValidation } from 'utils/hooks/useFormValidation';
 import { signInStart, signInSuccess, signInFailure } from 'store/slices';
 import Input from 'components/Input/Input';
+import defaultAvatar from '../../../images/admin/avatar_default.svg';
 
 function LoginForm({ onClose }) {
   // TODO: обработать загрузгу и ошибки валидации/сервера
@@ -30,7 +31,9 @@ function LoginForm({ onClose }) {
         login: values.login,
         password: values.password,
       });
-
+      if (!userData.avatar || userData.avatar.includes('some-site')) {
+        userData.avatar = defaultAvatar;
+      }
       dispatch(signInSuccess(userData));
       onClose();
     } catch (error) {

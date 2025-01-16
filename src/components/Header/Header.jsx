@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -6,11 +6,13 @@ import { Link, useSearchParams } from 'react-router-dom';
 import './Header.css';
 import logo from 'images/logo.svg';
 import logoBlack from 'images/logo-black.svg';
-import accountDefaultIcon from 'images/account-icon.svg';
+import accountDefaultIcon from 'images/admin/avatar_default.svg';
 import siginInIcon from 'images/siginin-icon.svg';
 import siginInIconWhite from 'images/siginin-icon_white.svg';
 import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
 import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
+import santaBlack from 'images/santa_dark.svg';
+import santaWhite from 'images/santa_light.svg';
 import {
   accountNavigationList,
   navigationOptionsList,
@@ -29,7 +31,8 @@ export default function Header({ resetSection }) {
   const theme = useSelector(getCurrentTheme);
 
   const currentUser = useSelector(getCurrentUser);
-  const isAdmin = currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
+  const isAdmin =
+    currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState(false);
 
@@ -78,10 +81,23 @@ export default function Header({ resetSection }) {
     }
   }, [theme, dispatch]);
 
+  // Новогодний носок (onMouseOver у логотипа)
+  function rotateSock(evt) {
+    const sock = evt.target;
+    if (sock.classList.contains('sock')) return;
+    sock.classList.add('sock');
+    setTimeout(() => sock.classList.remove('sock'), 4000);
+  }
+
   return (
     <header className="header">
       <div className="header__container">
-        <Link to="/" className="logo-link" onClick={resetSection}>
+        <Link
+          to="/"
+          className="logo-link"
+          onClick={resetSection}
+          onMouseOver={rotateSock}
+        >
           <img
             src={theme === 'dark' ? logo : logoBlack}
             alt="Логотип"
@@ -93,9 +109,17 @@ export default function Header({ resetSection }) {
             <SearchInput />
           </li>
           <li>
+            {/* 
             <Button variant="contained" onClick={toggleTheme}>
               Смена темы. Текущая: {theme}
             </Button>
+            */}
+            <img
+              className="santa"
+              src={theme === 'dark' ? santaBlack : santaWhite}
+              alt="Санта"
+              onClick={toggleTheme}
+            />
           </li>
           <li>
             <DropdownNavigation

@@ -68,3 +68,4 @@ export { default as Recommendations } from './Recommendations/Recommendations';
 export { default as Fork } from './Fork/Fork';
 export { default as Creation } from './Creation/Creation';
 export { default as ViewArticle } from './ViewArticle/ViewArticle';
+export { default as Svg } from './Svg/Svg';

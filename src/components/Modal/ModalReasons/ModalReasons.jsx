@@ -80,7 +80,7 @@ export default function ModalReasons({
           </li>
         </ul>
       )}
-      <p className="modal__reason-text">{children}</p>
+      {children}
     </Modal>
   );
 }

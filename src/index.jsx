@@ -9,6 +9,7 @@ import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ReduxProvider store={store}>

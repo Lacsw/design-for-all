@@ -10,6 +10,7 @@
 .update-card__link {
   padding: 20px;
   display: flex;
+  gap: 10px;
   justify-content: space-between;
   align-items: stretch;
   text-decoration: none;
@@ -42,4 +43,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: end;
+  white-space: nowrap;
 }

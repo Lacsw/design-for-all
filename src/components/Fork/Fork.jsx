@@ -1,9 +1,10 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Main, Catalog, AccountAuthor, AccountAdmin } from 'components';
 import { adminHash } from 'utils/constants';
 
 const Fork = ({ section, setSection }) => {
   const location = useLocation();
+  const { lang } = useParams();
 
   if (Object.values(adminHash).includes(location.hash)) {
     return (
@@ -13,7 +14,7 @@ const Fork = ({ section, setSection }) => {
 
   return location.hash ? (
     <AccountAuthor hash={location.hash} resetSection={() => setSection('')} />
-  ) : section ? (
+  ) : section || lang ? (
     <Catalog section={section} setSection={setSection} />
   ) : (
     <Main setSection={setSection} />

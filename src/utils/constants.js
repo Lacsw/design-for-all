@@ -204,11 +204,17 @@ export const hashPaths = {
 };
 
 export const adminHash = {
-  requests: ['#/admin/creates', '#/admin/updates', '#/admin/accounts'],
+  requests: [
+    '#/admin/creates',
+    '#/admin/updates',
+    '#/admin/accounts',
+    '#/admin/closed',
+  ],
   decisions: [
     '#/admin/creates/decision',
     '#/admin/updates/decision',
     '#/admin/accounts/decision',
+    '#/admin/closed/view',
   ],
   user: '#/admin/create-user',
   profile: '#/admin/profile',
@@ -218,6 +224,8 @@ export const adminHash = {
   updatesD: '#/admin/updates/decision',
   accounts: '#/admin/accounts',
   accountsD: '#/admin/accounts/decision',
+  closed: '#/admin/closed',
+  closedV: '#/admin/closed/view',
 };
 // SOCIALS //
 
@@ -235,13 +243,13 @@ export const socialIcons = {
   x: { light: xBlack, dark: xWhite },
 };
 
-const editButton = {
+export const editButton = {
   name: 'edit',
   dark: editIconB,
   light: editIconW,
 };
 
-const viewButton = {
+export const viewButton = {
   name: 'view',
   dark: viewIconB,
   light: viewIconW,

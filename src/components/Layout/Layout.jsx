@@ -1,5 +1,8 @@
 import { Header, Footer } from 'components';
 import './Layout.css';
+import Snowfall from 'utils/snow/Snowfall';
+
+new Snowfall();
 
 export default function Layout({ resetSection, children }) {
   return (

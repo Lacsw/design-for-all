@@ -162,3 +162,7 @@ tbody::-webkit-scrollbar-thumb {
   border-radius: 20px;
   background-clip: padding-box;
 }
+
+.reject-text_14 {
+  font-size: 14px;
+}

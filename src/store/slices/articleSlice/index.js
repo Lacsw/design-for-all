@@ -52,7 +52,13 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.article = action.payload;
-        state.article.publication.image = previewImage; // хардкод для фиктивных статей
+        // условие для фиктивных статей
+        if (
+          !action.payload.publication?.image ||
+          action.payload.publication?.image.includes('test_')
+        ) {
+          state.article.publication.image = previewImage;
+        }
         state.loading = false;
         state.error = '';
       })
@@ -70,19 +76,11 @@ const articleSlice = createSlice({
       })
       .addCase(fetchUpdates.fulfilled, (state, action) => {
         state.updates.fetchTime = Date.now();
-        const dataWithLang = action.payload.map((item) => {
-          for (let key in state.titles) {
-            if (Object.values(state.titles[key]).includes(item.main_category)) {
-              return { ...item, lang: key };
-            }
-          }
-          return item;
-        });
+        state.updates.loading = false;
+        state.updates.error = '';
         if (action.meta.arg === 1) {
-          state.updates.cards = dataWithLang;
-          state.updates.loading = false;
-          state.updates.error = '';
-        } else state.updates.cards.push(...dataWithLang);
+          state.updates.cards = action.payload;
+        } else state.updates.cards.push(...action.payload);
       });
   },
 });

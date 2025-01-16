@@ -9,8 +9,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { socialIcons } from 'utils/constants';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
-import defaultAvatar from 'images/author/avatar.svg';
-import defaultAvatar2 from '../../images/admin/avatar_default.svg';
+import defaultAvatar from 'images/admin/avatar_default.svg';
 import './User.css';
 
 export default function User() {
@@ -48,7 +47,6 @@ export default function User() {
         src={user.avatar || defaultAvatar}
         alt="Аватар"
         className="author__avatar"
-        onError={(evt) => evt.target.src = defaultAvatar2}
       />
       <div className="author__titles">
         <p className="author__name">{user.fio}</p>
@@ -59,7 +57,7 @@ export default function User() {
           {renderSocialMedia(shownList)}
         </div>
       ) : (
-        <p className="author__socials-text">(здесь будут контакты автора)</p>
+        <p className="author__socials-text">Контакты отсутствуют</p>
       )}
       {socialList.length > 4 && (
         <p

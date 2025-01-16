@@ -170,6 +170,18 @@ export class AuthorApi {
       reader.readAsDataURL(file);
     });
   }
+
+  async getReviewer(uuid) {
+    const response = await fetch(
+      `${this._baseUrl}/get_user_info_profile/${uuid}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include',
+      }
+    );
+    return this._checkResponse(response);
+  }
 }
 
 const authorApi = new AuthorApi({

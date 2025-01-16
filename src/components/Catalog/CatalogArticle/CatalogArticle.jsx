@@ -12,6 +12,7 @@ import {
   ArticleHeader,
   AuthorAndReviewers,
   Recommendations,
+  RichTextEditor,
 } from 'components';
 import './CatalogArticle.css';
 
@@ -62,7 +63,11 @@ export default function CatalogArticle() {
             alt="Превью статьи"
             className="article__image"
           />
-          <p className="article__text">{article.publication.description}</p>
+          <RichTextEditor
+            className="rte__article"
+            initialValue={article.publication.description}
+            readOnly={true}
+          />
         </div>
         <Recommendations list={article.recommend} />
       </div>

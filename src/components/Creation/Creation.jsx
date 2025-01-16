@@ -41,7 +41,7 @@ const Creation = () => {
               data.main_category || data.offered_update?.main_category,
             sub_category:
               data.sub_category || data.offered_update?.sub_category || '',
-            image: data.image || data.offered_update?.image ? previewImage : '',
+            image: data.image || data.offered_update?.image || '',
             title: data.title || data.offered_update?.title || '',
             description:
               data.description || data.offered_update?.description || '',
@@ -93,7 +93,7 @@ const Creation = () => {
         languages: article.languages,
         lang: location.state.lang,
         sub_category: article.publication.sub_category,
-        image: previewImage,
+        image: article.publication.image,
         title: article.publication.title,
         description: article.publication.description,
         recommend_from_creator: article.recommend,
@@ -106,7 +106,7 @@ const Creation = () => {
           lang: location.state.lang,
           main_category: 'default',
           sub_category: article.publication.sub_category,
-          image: previewImage,
+          image: article.publication.image,
           title: article.publication.title,
           description: article.publication.description,
           what_update: location.state.original,
