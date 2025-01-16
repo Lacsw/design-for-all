@@ -1,5 +1,6 @@
 // @ts-check
 // custom extensions
+import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
 
@@ -27,18 +28,18 @@ import { Box, Divider } from '@mui/material';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
-import { validate } from './validation';
-import { COMMANDS_NAMES } from './helpers/constants';
-import { useDebounce } from 'utils/hooks';
+import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
 import { ImageModal } from './extensions/image/ImageModal';
+import { allowedHeadingLevels, COMMANDS_NAMES } from './helpers/constants';
+import { validate } from './validation';
+import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
+import { useValidation } from './validation/useValidation';
 
 import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
 import { sxEditorWrapper } from './styles';
-import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
-import { useValidation } from './validation/useValidation';
 
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
@@ -86,7 +87,8 @@ export const RichTextEditor = memo(function RichTextEditor({
       listItem: false, // отключаем, т.к. у нас кастомный
       // image: false, // отключаем, т.к. у нас кастомные
       heading: {
-        levels: [1, 2, 3, 4],
+        // @ts-ignore
+        levels: allowedHeadingLevels,
       },
       bulletList: {
         HTMLAttributes: {
@@ -115,12 +117,17 @@ export const RichTextEditor = memo(function RichTextEditor({
     Placeholder.configure({
       placeholder: 'Введите текст',
     }),
-    ListItemCustom,
     ImgTiptap,
+    ListItemCustom,
     CustomImageExtension.configure({
       // allowBase64: true,
       HTMLAttributes: {
         class: 'rte__node rte__node_img',
+      },
+    }),
+    CustomHeadingExtension.configure({
+      HTMLAttributes: {
+        class: 'rte__node rte__node_heading',
       },
     }),
   ];
