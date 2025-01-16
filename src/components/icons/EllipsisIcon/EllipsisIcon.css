@@ -1,0 +1,6 @@
+.ellipsis-icon {
+  padding: 6px 7.5px;
+  border-radius: 50%;
+  background-color: var(--color-bg-accent);
+  fill: var(--color-secondary);
+}

@@ -1,5 +1,6 @@
-import { checkEmptiness } from './empty';
-import { checkEmptySymbols } from './emptySybmols';
+// @ts-check
+import { checkEmptiness } from './validators/empty';
+import { checkEmptySymbols } from './validators/emptySymbols';
 
 // if (validationsOptions?.kinds?.trim) {
 //     const result = trim({ editor: editor as Editor, from, to, htmlString });
@@ -15,7 +16,6 @@ import { checkEmptySymbols } from './emptySybmols';
 //     }
 // }
 
-// // TODO вынести в хелпер
 // // Restore cursor position (#1)
 // // !!!Восстановление позиции курсора нужно только при вызовах editor.commands.setContent
 // const newFrom = Math.min(from, editor.state.doc.content.size);
@@ -26,21 +26,27 @@ import { checkEmptySymbols } from './emptySybmols';
 // // Get the cursor position before changes are made by validation
 // const { from, to } = editor.state.selection;
 
+/**
+ * @param {import('./types').TJDValidationOptions} options
+ * @param {import('@tiptap/react').Editor} editor
+ * @returns {import('./types').TJDValidateResult}
+ */
 export const validate = (options, editor) => {
   const kinds = options.kinds;
+  /** @type {import('./types').TJDValidationKinds[]} */
   const disturbedRules = [];
 
-  if (kinds.required) {
+  if (kinds.empty) {
     const result = checkEmptiness(editor);
     if (!result.isValid) {
-      disturbedRules.push('required');
+      disturbedRules.push('empty');
     }
   }
 
-  if (kinds.onlySpaces) {
+  if (kinds.emptySymbols) {
     const result = checkEmptySymbols(editor);
     if (!result.isValid) {
-      disturbedRules.push('onlySpaces');
+      disturbedRules.push('emptySymbols');
     }
   }
 

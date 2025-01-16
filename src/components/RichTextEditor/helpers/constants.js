@@ -47,3 +47,11 @@ export const buttonsHeadings = {
   [COMMANDS_NAMES.superscript]: 'Верхний индекс',
   [COMMANDS_NAMES.img]: 'Вставить изображение',
 };
+
+/**
+ * @typedef TJDAllowedHeadingLevels
+ * @type {1 | 2 | 3 | 4}
+ */
+
+/** @type {TJDAllowedHeadingLevels} */
+export const allowedHeadingLevels = [1, 2, 3, 4];

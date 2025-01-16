@@ -1,9 +1,18 @@
-class AuthorApi {
+// @ts-check
+
+export class AuthorApi {
+  /** @type {string} */
+  _baseUrl = '';
+  /** @type {HeadersInit} */
+  _headers = {};
+
+  /** @param {{ baseUrl: string; headers: HeadersInit }} options */
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
 
+  /** @param {Response} res */
   _checkResponse(res) {
     if (res.ok) {
       return res.status !== 200 ? res.statusText : res.json();
@@ -119,6 +128,47 @@ class AuthorApi {
     });
 
     return this._checkResponse(response);
+  }
+
+  /**
+   * @param {File} file
+   * @returns {Promise}
+   */
+  async uploadImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onerror = (e) => {
+        reject(new Error(`Error on reading binary file: ${e.type}`));
+      };
+
+      reader.onload = (onloadEvt) => {
+        /** @type {string} */
+        // @ts-ignore
+        let result = onloadEvt.target.result;
+
+        const indexOfStart = result.indexOf('base64');
+        // cut off the metadata indicating that the data is encoded in base-64
+        result = result.slice(indexOfStart + 7);
+
+        fetch(`${this._baseUrl}/user_upload_image_p`, {
+          method: 'POST',
+          headers: this._headers,
+          body: result,
+          credentials: 'include',
+        })
+          .then(this._checkResponse)
+          .then(resolve)
+          .catch((err) =>
+            reject(
+              new Error(`Error on POST user_upload_image_p: ${{ error: err }}`)
+            )
+          );
+      };
+
+      // encode to base-64
+      reader.readAsDataURL(file);
+    });
   }
 
   async getReviewer(uuid) {

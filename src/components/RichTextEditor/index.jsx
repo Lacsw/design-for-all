@@ -1,4 +1,6 @@
+// @ts-check
 // custom extensions
+import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
 
@@ -26,27 +28,18 @@ import { Box, Divider } from '@mui/material';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MenuBar, RteButton } from './components';
-import { validate } from './validators';
-import { COMMANDS_NAMES } from './helpers/constants';
+import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
+import { ImageModal } from './extensions/image/ImageModal';
+import { allowedHeadingLevels, COMMANDS_NAMES } from './helpers/constants';
+import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
+import { useImageExt } from './extensions/image/useImageExt';
+import { useValidation } from './validation/useValidation';
 
+import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
 import { sxEditorWrapper } from './styles';
-import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
-
-const defaultValidationsOptions = {
-  kinds: {},
-  mode: 'check',
-};
-
-// Для тестов
-// let mockContent = "";
-// const mockArr: string[] = [];
-// for (let i = 0; i < 1010; i++) {
-//     mockArr.push(`<p>Item ${i}.</p>`);
-// }
-// mockContent = mockArr.join("");
 
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
@@ -65,29 +58,37 @@ const incrementStateNumber = (setter) => (evt) => {
   setter((prev) => prev + 1);
 };
 
+/** @type {import('./types').TJDRteClassesProp} */
 const defaultClasses = {};
 
-/** Богатый текстовый редактор */
+// #region FC
+/**
+ * Богатый текстовый редактор
+ *
+ * @type {import('./types').TJDRichTextEditor}
+ */
 export const RichTextEditor = memo(function RichTextEditor({
   initialValue = null,
-  validationsOptions,
-  onInput,
   readOnly = false,
-  className,
-  classes = defaultClasses,
   cancel,
+  onInput,
+  validationsOptions,
   maxHeight = 'initial',
   id,
+  className,
+  classes = defaultClasses,
 }) {
+  // #region extensions
   const extensions = [
     StarterKit.configure({
       blockquote: false,
       horizontalRule: false,
       strike: false,
       listItem: false, // отключаем, т.к. у нас кастомный
-      image: false, // отключаем, т.к. у нас кастомные
+      // image: false, // отключаем, т.к. у нас кастомные
       heading: {
-        levels: [1, 2, 3, 4],
+        // @ts-ignore
+        levels: allowedHeadingLevels,
       },
       bulletList: {
         HTMLAttributes: {
@@ -116,34 +117,25 @@ export const RichTextEditor = memo(function RichTextEditor({
     Placeholder.configure({
       placeholder: 'Введите текст',
     }),
-    ListItemCustom,
     ImgTiptap,
+    ListItemCustom,
     CustomImageExtension.configure({
       // allowBase64: true,
       HTMLAttributes: {
         class: 'rte__node rte__node_img',
       },
     }),
+    CustomHeadingExtension.configure({
+      HTMLAttributes: {
+        class: 'rte__node rte__node_heading',
+      },
+    }),
   ];
+  // #endregion extensions
 
-  // Объединение заданных настроек с настройками по умолчанию
-  // TODO найти или реализовать deep-merge
-  let _validationsOptions = {};
-  if (validationsOptions) {
-    Object.assign(
-      _validationsOptions,
-      defaultValidationsOptions,
-      validationsOptions
-    );
-    _validationsOptions.kinds = Object.assign(
-      {},
-      defaultValidationsOptions.kinds,
-      validationsOptions.kinds
-    );
-  } else {
-    _validationsOptions = undefined;
-  }
+  const _validationsOptions = useValidation(validationsOptions);
 
+  /** @type {React.RefObject<HTMLElement>} */
   const wrapperRef = useRef(null);
   /* Решением проблемы: если при вводе в редактор показывается обводка, сигнализирующая, что редактор в фокусе,
     то при кликах на кнопки команд на мгновения скачут цвета у рамок редактора и его кнопок. */
@@ -165,6 +157,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     }
   }
 
+  // #region useEditor
   /* при вызовах данного хука он возвращ-т одну и ту же ссылку похоже
       и вроде как реальный вызов происходит только один раз
    */
@@ -180,6 +173,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     onUpdate,
     enableContentCheck: true, // не работает?
   });
+  // #endregion useEditor
 
   useEffect(() => {
     if (readOnly && (!initialValue || initialValue === '<p></p>')) {
@@ -195,6 +189,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     editor?.commands.setContent(initialValue);
   }
 
+  // #region Handle focus
   /* Имеет ли обёртка редактора псевдокласс focus-within?
       Проверка необходима, чтобы не было скачков цвета у рамок
       редактора и его кнопок */
@@ -220,15 +215,27 @@ export const RichTextEditor = memo(function RichTextEditor({
       wrapperEl?.removeEventListener('click', onClick);
     };
   }, [onClick, onKeydown, wrapperRef]);
+  // #endregion Handle focus
 
+  const {
+    imgModalOpen,
+    // setImgModalOpen,
+    handleAddImgBtnClick,
+    handleImgInserting,
+    handleImgModalClose,
+  } = useImageExt(editor);
+
+  // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */
   const Bar = useMemo(() => {
     if (readOnly) {
       return null;
     } else {
       return (
+        // @ts-ignore
         <MenuBar editor={editor} className={classes.menuBar}>
           <TextTypeSelector
+            // @ts-ignore
             editor={editor}
             className={classes.textTypeSelector}
             flag={flag}
@@ -275,6 +282,8 @@ export const RichTextEditor = memo(function RichTextEditor({
             editor={editor}
             name={COMMANDS_NAMES.img}
             inFocusWithin={inFocusWithin}
+            onClick={handleAddImgBtnClick}
+            mode="cb"
           >
             <AddPhotoAlternateRoundedIcon />
           </RteButton>
@@ -345,18 +354,30 @@ export const RichTextEditor = memo(function RichTextEditor({
     classes.textTypeSelector,
     readOnly,
     flag,
+    handleAddImgBtnClick,
   ]);
+  // #endregion Bar
 
+  // #region Render
   return (
     <Box
       ref={wrapperRef}
-      className={`rte ${className ?? ''}`}
+      className={clsx('rte', className)}
       sx={sxEditorWrapper({ maxHeight })}
-      id={id}
+      id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
       <EditorContent editor={editor} className="rte__editor" />
+
       {Bar}
+
+      <ImageModal
+        open={imgModalOpen}
+        onClose={handleImgModalClose}
+        onConfirm={handleImgInserting}
+      />
     </Box>
   );
+  // #endregion Render
 });
+// #endregion FC

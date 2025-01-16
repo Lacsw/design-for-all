@@ -32,6 +32,10 @@
   }
 }
 
+.MuiIconButton-root.Mui-disabled {
+  opacity: 0.5;
+}
+
 .MuiIconButton-root:hover {
   color: var(--color-secondary);
   background-color: var(--color-bg-hover);

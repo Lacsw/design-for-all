@@ -1,12 +1,32 @@
+// @ts-check
 import { COMMANDS_NAMES } from './constants';
+// eslint-disable-next-line no-unused-vars
+import { Editor } from '@tiptap/react';
 
+/**
+ * @callback TDRteCommand
+ * @param {Editor | null} editor
+ * @param {any} otherParams
+ * @returns {boolean}
+ */
+
+/**
+ * @typedef TDTiptapCommands
+ * @type {{ [key: string]: TDRteCommand }}
+ */
+
+// #region tiptapCommands
+/** @type {TDTiptapCommands} */
+// @ts-ignore
 export const tiptapCommands = {
   [COMMANDS_NAMES.paragraph]: (editor) => {
     editor?.chain().focus().setParagraph().run();
   },
 
+  // #region headings
   [COMMANDS_NAMES.heading1]: (editor) => {
     editor?.chain().focus().toggleHeading({ level: 1 }).run();
+    // editor?.chain().focus().command().setNode;
   },
   [COMMANDS_NAMES.heading2]: (editor) => {
     editor?.chain().focus().toggleHeading({ level: 2 }).run();
@@ -23,18 +43,21 @@ export const tiptapCommands = {
   // [COMMANDS_NAMES.heading6]: (editor) => {
   //   editor?.chain().focus().toggleHeading({ level: 6 }).run();
   // },
+  // #endregion headings
 
   [COMMANDS_NAMES.italic]: (editor) => {
     editor?.chain().focus().toggleItalic().run();
   },
   [COMMANDS_NAMES.bold]: (editor) => editor?.chain().focus().toggleBold().run(),
   [COMMANDS_NAMES.underline]: (editor) =>
+    // @ts-ignore
     editor?.chain().focus().toggleUnderline().run(),
 
   [COMMANDS_NAMES.code]: (editor) => editor?.chain().focus().toggleCode().run(),
   [COMMANDS_NAMES.codeBlock]: (editor) =>
     editor?.chain().focus().toggleCodeBlock().run(),
 
+  // #region text aligning
   [COMMANDS_NAMES.left]: (editor) => {
     if (editor?.isActive('listItem')) {
       return editor
@@ -67,7 +90,7 @@ export const tiptapCommands = {
       return editor
         ?.chain()
         .focus()
-        .updateAttributes(COMMANDS_NAMES.img, { class: null })
+        .updateAttributes(COMMANDS_NAMES.img, { class: 'center' })
         .run();
     } else {
       return editor?.chain().focus().setTextAlign('center').run();
@@ -103,47 +126,55 @@ export const tiptapCommands = {
       return editor?.chain().focus().setTextAlign('justify').run();
     }
   },
+  // #endregion text aligning
 
+  // #region ETC
   [COMMANDS_NAMES.bulletList]: (editor) =>
     editor?.chain().focus().toggleBulletList().run(),
   [COMMANDS_NAMES.orderedList]: (editor) =>
     editor?.chain().focus().toggleOrderedList().run(),
 
   [COMMANDS_NAMES.subscript]: (editor) =>
+    // @ts-ignore
     editor?.chain().focus().toggleSubscript().run(),
   [COMMANDS_NAMES.superscript]: (editor) =>
+    // @ts-ignore
     editor?.chain().focus().toggleSuperscript().run(),
-  [COMMANDS_NAMES.img]: (editor) => {
-    const url = window.prompt('URL');
-    /*const urls = [
-      'https://i.pinimg.com/200x/d5/2a/01/d52a01b1eacc48b5c60ff1a0a8426e6c.jpg',
-      'https://i.pinimg.com/236x/97/76/64/9776647cac22dc41086cfa6815f62a5c--cat-face-cat-eyes.jpg?nii=t',
-      'https://www.meme-arsenal.com/memes/92c3bf3588af96e7533d85284f32c4cd.jpg',
-      'https://i.pinimg.com/236x/3b/b8/8e/3bb88e56069511c14034285c081a7d22.jpg',
-      'https://cs14.pikabu.ru/avatars/4124/x4124556-176449567.png',
-    ];
-    const idx = Math.round(Math.random() * (urls.length - 1));*/
+  // #endregion ETC
+
+  // #region insert img
+  [COMMANDS_NAMES.img]: (editor, url) => {
+    if (!editor || !url || editor?.isActive(COMMANDS_NAMES.img)) {
+      return;
+    }
 
     editor
-      ?.chain()
+      .chain()
       .insertContentAt(editor.state.selection.head, {
         type: COMMANDS_NAMES.img,
         attrs: {
-          // src: urls[idx],
           src: url,
         },
       })
-      .focus()
+      .focus(editor.state.selection.head + 1)
       .run();
   },
+  // #endregion insert img
 };
+// #endregion tiptapCommands
 
+// #region checkIsCommandActive
 /**
- * @param {string} commandName - Rte command name from const
+ * @param {string} commandName - RTE command name(key name) from const
  *   {@link COMMANDS_NAMES}
+ * @param {Editor | null} editor
  * @returns {boolean}
  */
 export function checkIsCommandActive(commandName, editor) {
+  if (!editor) {
+    return;
+  }
+
   let needAnotherCheck = false;
   let anotherCheck;
   let commandParams;
@@ -153,17 +184,24 @@ export function checkIsCommandActive(commandName, editor) {
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
     case COMMANDS_NAMES.justify:
-      if (editor?.isActive(COMMANDS_NAMES.img)) {
+      if (editor.isActive(COMMANDS_NAMES.img)) {
         needAnotherCheck = true;
+
         anotherCheck = (name) => {
           if (name === COMMANDS_NAMES.justify) {
-            return editor.view.lastSelectedViewDesc.dom
-              .querySelector('div')
-              .classList.contains('justify');
+            return Boolean(
+              // @ts-ignore
+              editor.view.lastSelectedViewDesc.dom
+                .querySelector('div')
+                ?.classList.contains('justify')
+            );
           } else if (name === COMMANDS_NAMES.center) {
-            return !editor.view.lastSelectedViewDesc.dom
-              .querySelector('div')
-              .classList.contains('justify');
+            return Boolean(
+              // @ts-ignore
+              editor.view.lastSelectedViewDesc.dom
+                .querySelector('div')
+                ?.classList.contains('center')
+            );
           } else {
             return false;
           }
@@ -189,7 +227,8 @@ export function checkIsCommandActive(commandName, editor) {
   if (needAnotherCheck) {
     res = anotherCheck(commandName);
   } else {
-    res = editor?.isActive(...commandParams);
+    // @ts-ignore
+    res = editor.isActive(...commandParams);
   }
   return res;
 }
@@ -199,7 +238,9 @@ const commandNamesForchecks = [
   COMMANDS_NAMES.code,
   COMMANDS_NAMES.codeBlock,
 ];
+// #endregion checkIsCommandActive
 
+// #region isDisabledMap
 /**
  * Ключ - имя команды, которая уже применена в данный момент.\
  * Значение - функция, принимающая имя команды и говорящая, должна ли она быть
@@ -242,7 +283,9 @@ const isDisabledMap = {
     }
   },
 };
+// #endregion isDisabledMap
 
+// #region checkIsCommandDisabled
 /**
  * Проверить, должна ли команда быть недоступной для выбранной на данный момент
  * ноды RTE.\
@@ -265,3 +308,4 @@ export function checkIsCommandDisabled(commandName, editor) {
 
   return res;
 }
+// #endregion checkIsCommandDisabled
