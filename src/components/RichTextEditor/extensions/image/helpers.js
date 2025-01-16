@@ -61,7 +61,7 @@ export const getImgByURL = ({
       setValue('');
     })
     .catch((err) => {
-      setError(err.message);
+      setError(err);
     })
     .finally(() => {
       setIsLoading(false);

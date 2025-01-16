@@ -53,5 +53,10 @@ export const sxImageModalRoot =
         // width: '300px',
         // maxWidth: '85%',
       },
+
+      '.text-error': {
+        width: '100%',
+        marginBottom: '5px',
+      },
     };
   };

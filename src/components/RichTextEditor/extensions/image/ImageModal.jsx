@@ -294,7 +294,9 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
         </IconButton>
       </Box>
 
-      <Typography color="error">{error && getErrorText(error)}</Typography>
+      <Typography className="text-error" color="error">
+        {error ? getErrorText(error) : '\u00a0'}
+      </Typography>
     </Modal>
   );
   // #endregion Render
