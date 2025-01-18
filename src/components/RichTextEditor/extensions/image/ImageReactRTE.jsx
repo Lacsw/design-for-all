@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import React from 'react';
 
 export const ImageReactRTE = (props) => {
-  // console.log('ImageReactRTE props', props);
+  console.log('ImageReactRTE props', props);
   return (
     <NodeViewWrapper
       className={clsx(

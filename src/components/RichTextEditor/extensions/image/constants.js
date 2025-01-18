@@ -12,3 +12,5 @@ export const MAX_SIZE_IMG_BYTES = 32 * 1024 * 1024;
  * inserted line breaks).
  */
 export const MAX_SIZE_IMG_B64_BYTES = Math.floor(MAX_SIZE_IMG_BYTES / 1.37);
+
+export const defaultAligningClass = 'center';

@@ -11,6 +11,8 @@
  *   | 'fromLinkLoading'}
  */
 
+import { defaultAligningClass } from './constants';
+
 /** @param {TJDImgErrors} errorKind */
 export const getErrorText = (errorKind) => {
   switch (errorKind) {
@@ -66,4 +68,13 @@ export const getImgByURL = ({
     .finally(() => {
       setIsLoading(false);
     });
+};
+
+/** @param {DOMTokenList} classList */
+export const getAligningClass = (classList) => {
+  return classList.contains('justify')
+    ? 'justify'
+    : classList.contains('center')
+    ? 'center'
+    : defaultAligningClass;
 };

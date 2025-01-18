@@ -6,7 +6,7 @@ import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
 import Placeholder from '@tiptap/extension-placeholder';
-import ImgTiptap from '@tiptap/extension-image';
+// import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -113,7 +113,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     Placeholder.configure({
       placeholder: 'Введите текст',
     }),
-    ImgTiptap,
+    // ImgTiptap,
     ListItemCustom,
     CustomImageExtension.configure({
       // allowBase64: true,
