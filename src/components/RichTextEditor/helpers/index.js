@@ -1,4 +1,5 @@
 // @ts-check
+import { headingCustomNodeName } from '../extensions/heading/constants';
 import { COMMANDS_NAMES } from './constants';
 // eslint-disable-next-line no-unused-vars
 import { Editor } from '@tiptap/react';
@@ -25,17 +26,21 @@ export const tiptapCommands = {
 
   // #region headings
   [COMMANDS_NAMES.heading1]: (editor) => {
-    editor?.chain().focus().toggleHeading({ level: 1 }).run();
+    // @ts-ignore
+    editor?.chain().focus().toggleCustomHeading({ level: 1 }).run();
     // editor?.chain().focus().command().setNode;
   },
   [COMMANDS_NAMES.heading2]: (editor) => {
-    editor?.chain().focus().toggleHeading({ level: 2 }).run();
+    // @ts-ignore
+    editor?.chain().focus().toggleCustomHeading({ level: 2 }).run();
   },
   [COMMANDS_NAMES.heading3]: (editor) => {
-    editor?.chain().focus().toggleHeading({ level: 3 }).run();
+    // @ts-ignore
+    editor?.chain().focus().toggleCustomHeading({ level: 3 }).run();
   },
   [COMMANDS_NAMES.heading4]: (editor) => {
-    editor?.chain().focus().toggleHeading({ level: 4 }).run();
+    // @ts-ignore
+    editor?.chain().focus().toggleCustomHeading({ level: 4 }).run();
   },
   // [COMMANDS_NAMES.heading5]: (editor) => {
   //   editor?.chain().focus().toggleHeading({ level: 5 }).run();
@@ -216,7 +221,10 @@ export function checkIsCommandActive(commandName, editor) {
     case COMMANDS_NAMES.heading4:
       // case COMMANDS_NAMES.heading5:
       // case COMMANDS_NAMES.heading6:
-      commandParams = ['heading', { level: Number(commandName.at(-1)) }];
+      commandParams = [
+        headingCustomNodeName,
+        { level: Number(commandName.at(-1)) },
+      ];
       break;
     default:
       commandParams = [commandName];

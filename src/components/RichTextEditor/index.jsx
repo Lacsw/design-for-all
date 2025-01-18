@@ -85,11 +85,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       horizontalRule: false,
       strike: false,
       listItem: false, // отключаем, т.к. у нас кастомный
-      // image: false, // отключаем, т.к. у нас кастомные
-      heading: {
-        // @ts-ignore
-        levels: allowedHeadingLevels,
-      },
+      heading: false, // кастомные
       bulletList: {
         HTMLAttributes: {
           class: 'rte__node rte__node_bullet-list',
@@ -129,6 +125,8 @@ export const RichTextEditor = memo(function RichTextEditor({
       HTMLAttributes: {
         class: 'rte__node rte__node_heading',
       },
+      // @ts-ignore
+      levels: allowedHeadingLevels,
     }),
   ];
   // #endregion extensions
