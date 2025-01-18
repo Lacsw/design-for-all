@@ -8,19 +8,18 @@ import {
 import clsx from 'clsx';
 // import HeadingExtension from '@tiptap/extension-heading';
 
-console.log('CLASSES', clsx('aboba', 'aboba', 'help'));
-
 export const CustomHeadingExtension = Node.create({
   name: headingCustomNodeName,
   group: 'block',
   content: 'inline*',
   draggable: false,
   defining: true,
+  // marks: '',
 
   addAttributes() {
     return {
       level: {
-        default: this.options.levels[0],
+        default: this.options.levels?.[0] || 1,
       },
       class: {
         default: headingCustomNodeClassName,
@@ -58,16 +57,21 @@ export const CustomHeadingExtension = Node.create({
     const maxLevel = levels.at(-1);
     /** @type {number} */
     let level = node.attrs.level;
+    /* ограничение может не сработать, но это не из-за ошибки в коде, а из-за того,
+    что при выделении контента в постороннем источнике было не полностью захвачена нода заголовка */
     while (level > maxLevel) {
-      level--;
+      level = level - 1;
     }
     const hTag = `h${level}`;
 
     return [
       'div',
       {
-        class: clsx(this.options.class, headingCustomNodeClassName),
-        dataKey: this.options.dataKey,
+        class: clsx(
+          this.options.HTMLAttributes.class,
+          headingCustomNodeClassName
+        ),
+        'data-key': node.attrs.dataKey,
       },
       [hTag, 0],
     ];

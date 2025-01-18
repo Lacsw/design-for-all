@@ -125,7 +125,6 @@ export const RichTextEditor = memo(function RichTextEditor({
       HTMLAttributes: {
         class: 'rte__node rte__node_heading',
       },
-      // @ts-ignore
       levels: allowedHeadingLevels,
     }),
   ];

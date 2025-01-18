@@ -43,10 +43,12 @@ export const tiptapCommands = {
     editor?.chain().focus().toggleCustomHeading({ level: 4 }).run();
   },
   // [COMMANDS_NAMES.heading5]: (editor) => {
-  //   editor?.chain().focus().toggleHeading({ level: 5 }).run();
+  //   // @ts-ignore
+  //   editor?.chain().focus().toggleCustomHeading({ level: 5 }).run();
   // },
   // [COMMANDS_NAMES.heading6]: (editor) => {
-  //   editor?.chain().focus().toggleHeading({ level: 6 }).run();
+  //   // @ts-ignore
+  //   editor?.chain().focus().toggleCustomHeading({ level: 6 }).run();
   // },
   // #endregion headings
 
