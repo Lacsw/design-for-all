@@ -27,6 +27,8 @@ export default defineConfig(() => {
           components: '/src/components',
           images: '/src/images',
           styles: '/src/styles',
+          types: '/src/types',
+          node_modules: '/node_modules',
         },
       }),
       checker({
