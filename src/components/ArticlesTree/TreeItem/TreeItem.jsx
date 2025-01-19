@@ -16,6 +16,7 @@ export default function TreeItem({ title, data, language, status }) {
   });
   const hasChildren = typeof data === 'object';
   const id = hasChildren ? data.id : data;
+  const isActive = articleId ? articleId === id : false;
   const newData = { ...data };
   delete newData.id;
 
@@ -43,7 +44,12 @@ export default function TreeItem({ title, data, language, status }) {
           className={'tree-item__arrow' + arrowExtraClass}
           onClick={handleOpen}
         />
-        <span className="tree-item__title" onClick={handleNavigate}>
+        <span
+          className={`tree-item__title${
+            isActive ? ' tree-item__title_active' : ''
+          }`}
+          onClick={handleNavigate}
+        >
           {title}
         </span>
       </div>
