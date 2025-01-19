@@ -14,6 +14,7 @@ const fullError = 'Ссылка не является адресом стать�
 const fetchError = 'Статья не существует';
 const doubleError = 'Статья уже добавлена';
 const langError = 'Нельзя добавить статью на другом языке';
+const selfError = 'Вы не можете ссылаться на эту статью';
 
 export default function ModalRecommendation({
   isOpen,
@@ -53,6 +54,10 @@ export default function ModalRecommendation({
     }
     if (splitPath[0] !== draft.lang) {
       setError(langError);
+      return;
+    }
+    if (splitPath[1] === draft.what_update) {
+      setError(selfError);
       return;
     }
     setLoading(true);
