@@ -187,7 +187,17 @@ export function checkIsCommandActive(commandName, editor) {
   let commandParams;
 
   switch (commandName) {
-    case COMMANDS_NAMES.left:
+    case COMMANDS_NAMES.left: {
+      const textAlign =
+        // @ts-ignore
+        editor.view?.domObserver?.currentSelection?.focusNode?.parentNode?.style
+          .textAlign;
+
+      if (textAlign === 'start' || !textAlign) {
+        return true;
+      }
+      return false;
+    }
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
     case COMMANDS_NAMES.justify:
