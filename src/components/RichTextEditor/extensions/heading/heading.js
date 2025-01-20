@@ -1,15 +1,14 @@
 // @ts-check
 import { Node } from '@tiptap/core';
 import {
-  DATA_KEY,
-  headingCustomNodeClassName,
-  headingCustomNodeName,
+  customHeadingNodeClass,
+  customHeadingNodeName,
+  hMeta,
 } from './constants';
 import clsx from 'clsx';
-// import HeadingExtension from '@tiptap/extension-heading';
 
 export const CustomHeadingExtension = Node.create({
-  name: headingCustomNodeName,
+  name: customHeadingNodeName,
   group: 'block',
   content: 'inline*',
   draggable: false,
@@ -18,23 +17,22 @@ export const CustomHeadingExtension = Node.create({
 
   addAttributes() {
     return {
-      level: {
-        default: this.options.levels?.[0] || 1,
-      },
       class: {
-        default: headingCustomNodeClassName,
+        default: customHeadingNodeClass,
       },
-      dataKey: {
-        default: DATA_KEY,
+      level: {
+        default: 0,
       },
     };
   },
 
   parseHTML() {
+    console.log('heading parseHTML', { this: this });
     return [
       {
-        tag: `div.${headingCustomNodeClassName}`,
+        tag: `div.${customHeadingNodeClass}`,
         getAttrs(node) {
+          console.log('getAttrs doc|section/h', { node });
           const level = Number(
             node.querySelector('h1,h2,h3,h4,h5,h6').tagName.charAt(1)
           );
@@ -43,7 +41,9 @@ export const CustomHeadingExtension = Node.create({
       },
       {
         tag: `h1,h2,h3,h4,h5,h6`,
+        context: 'doc|section/',
         getAttrs(node) {
+          console.log('getAttrs doc|section/h', { node });
           const level = Number(node.tagName.charAt(1));
           return { level };
         },
@@ -52,52 +52,48 @@ export const CustomHeadingExtension = Node.create({
   },
 
   renderHTML({ HTMLAttributes, node }) {
-    /** @type {number[]} */
-    const levels = this.options.levels;
-    const maxLevel = levels.at(-1);
-    /** @type {number} */
-    let level = node.attrs.level;
-    /* ограничение может не сработать, но это не из-за ошибки в коде, а из-за того,
-    что при выделении контента в постороннем источнике было не полностью захвачена нода заголовка */
-    while (level > maxLevel) {
-      level = level - 1;
-    }
-    const hTag = `h${level}`;
-
+    console.log('CustomHeadingExtension renderHTML', { HTMLAttributes, node });
+    const level = HTMLAttributes.level;
     return [
       'div',
       {
-        class: clsx(
-          this.options.HTMLAttributes.class,
-          headingCustomNodeClassName
-        ),
-        'data-key': node.attrs.dataKey,
+        class: clsx(this.options.HTMLAttributes?.class, customHeadingNodeClass),
       },
-      [hTag, 0],
+      // level ? [`h${level}`, [hMeta.tag, 0]] : 0,
+      [`h${level}`, [hMeta.tag, 0]],
     ];
   },
 
-  // @ts-ignore
+  /** @type {import('@tiptap/core').NodeConfig['addCommands']} */
   addCommands() {
     return {
-      setCustomHeading:
-        (attributes) =>
-        ({ commands }) => {
-          if (!this.options.levels.includes(attributes.level)) {
+      // @ts-ignore
+      insertCustomHeading:
+        (/** @type {import('./types').TJDHeadingCommand} */ options) =>
+        (/** @type {import('@tiptap/core').CommandProps} */ props) => {
+          console.log('insertCustomHeading', {
+            attributes: options,
+            props,
+            this: this,
+          });
+          if (!this.options.levels.includes(options.level)) {
             return false;
           }
 
-          return commands.setNode(this.name, attributes);
+          return props.commands.insertContent({
+            type: customHeadingNodeName,
+            attrs: options,
+          });
         },
-      toggleCustomHeading:
-        (attributes) =>
-        ({ commands }) => {
-          if (!this.options.levels.includes(attributes.level)) {
-            return false;
-          }
+      // toggleCustomHeading:
+      //   (attributes) =>
+      //   ({ commands }) => {
+      //     if (!this.options.levels.includes(attributes.level)) {
+      //       return false;
+      //     }
 
-          return commands.toggleNode(this.name, 'paragraph', attributes);
-        },
+      //     return commands.toggleNode(this.name, 'paragraph', attributes);
+      //   },
     };
   },
 });

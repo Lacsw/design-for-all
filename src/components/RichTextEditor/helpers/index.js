@@ -1,5 +1,5 @@
 // @ts-check
-import { headingCustomNodeName } from '../extensions/heading/constants';
+import { customHeadingNodeName } from '../extensions/heading/constants';
 import { COMMANDS_NAMES } from './constants';
 // eslint-disable-next-line no-unused-vars
 import { Editor } from '@tiptap/react';
@@ -27,28 +27,28 @@ export const tiptapCommands = {
   // #region headings
   [COMMANDS_NAMES.heading1]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().toggleCustomHeading({ level: 1 }).run();
+    editor?.chain().focus().insertCustomHeading({ level: 1 }).run();
     // editor?.chain().focus().command().setNode;
   },
   [COMMANDS_NAMES.heading2]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().toggleCustomHeading({ level: 2 }).run();
+    editor?.chain().focus().insertCustomHeading({ level: 2 }).run();
   },
   [COMMANDS_NAMES.heading3]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().toggleCustomHeading({ level: 3 }).run();
+    editor?.chain().focus().insertCustomHeading({ level: 3 }).run();
   },
   [COMMANDS_NAMES.heading4]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().toggleCustomHeading({ level: 4 }).run();
+    editor?.chain().focus().insertCustomHeading({ level: 4 }).run();
   },
   // [COMMANDS_NAMES.heading5]: (editor) => {
   //   // @ts-ignore
-  //   editor?.chain().focus().toggleCustomHeading({ level: 5 }).run();
+  //   editor?.chain().focus().insertCustomHeading({ level: 5 }).run();
   // },
   // [COMMANDS_NAMES.heading6]: (editor) => {
   //   // @ts-ignore
-  //   editor?.chain().focus().toggleCustomHeading({ level: 6 }).run();
+  //   editor?.chain().focus().insertCustomHeading({ level: 6 }).run();
   // },
   // #endregion headings
 
@@ -234,7 +234,7 @@ export function checkIsCommandActive(commandName, editor) {
       // case COMMANDS_NAMES.heading5:
       // case COMMANDS_NAMES.heading6:
       commandParams = [
-        headingCustomNodeName,
+        customHeadingNodeName,
         { level: Number(commandName.at(-1)) },
       ];
       break;

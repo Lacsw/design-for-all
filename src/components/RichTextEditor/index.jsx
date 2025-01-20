@@ -1,6 +1,6 @@
 // @ts-check
 // custom extensions
-import { CustomHeadingExtension } from './extensions/heading/heading';
+import { CustomHeadingExtension as CustomHeading } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
 
@@ -39,7 +39,10 @@ import { useValidation } from './validation/useValidation';
 import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
+import './extensions/heading/index.css';
 import { sxEditorWrapper } from './styles';
+import { HeadingMetaTagExtension as HeadingMetaTag } from './extensions/heading/headingMetaTag';
+import { VanillaHeadingExtension as Heading } from './extensions/heading/headingNative';
 
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
@@ -121,7 +124,9 @@ export const RichTextEditor = memo(function RichTextEditor({
         class: 'rte__node rte__node_img',
       },
     }),
-    CustomHeadingExtension.configure({
+    Heading,
+    HeadingMetaTag,
+    CustomHeading.configure({
       HTMLAttributes: {
         class: 'rte__node rte__node_heading',
       },
@@ -160,8 +165,9 @@ export const RichTextEditor = memo(function RichTextEditor({
    */
   const editor = useEditor({
     extensions,
-    // content: mockContent,
-    content: initialValue,
+    content:
+      '<div class="node-headingCustom"><h1><h-metachm>Ahah</h-metachm></h1></div> <h2>Я h2</h2>',
+    // content: initialValue,
     editable: !readOnly,
     parseOptions: {
       // сохранять множественные пробелы? по ум. HTML схлопывает их
