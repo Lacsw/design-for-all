@@ -12,3 +12,9 @@ export const defaultValidationOptions = {
   },
   mode: 'check',
 };
+
+/** @type {import('@tiptap/pm/model').ParseOptions} */
+export const parseOptions = {
+  /** сохранять множественные пробелы? по ум. HTML схлопывает их */
+  preserveWhitespace: false,
+};
