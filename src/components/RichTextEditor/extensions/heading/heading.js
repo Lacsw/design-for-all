@@ -32,6 +32,9 @@ export const CustomHeadingExtension = Node.create({
         subHeaders5: '',
         subHeaders6: '',
       },
+      textAlign: {
+        default: 'left',
+      },
     };
   },
 
@@ -45,7 +48,14 @@ export const CustomHeadingExtension = Node.create({
           const dataSet = {
             // [`subHeaders${level}`]: extractHTMLNodeText(node),
           };
-          return { level, dataSet };
+
+          const aligning = node.style.textAlign;
+
+          return {
+            level,
+            dataSet,
+            textAlign: aligning,
+          };
         },
       },
     ];
@@ -65,11 +75,16 @@ export const CustomHeadingExtension = Node.create({
 
     const hTag = `h${level}`;
 
+    const aligning = HTMLAttributes.textAlign;
+    const style =
+      aligning && aligning !== 'left' ? `text-align: ${aligning}` : null;
+
     return [
       hTag,
       {
         class: clsx(this.options.HTMLAttributes?.class),
         [`data-sub-headers-${level}`]: extractNodeText(node),
+        style,
       },
       0,
     ];

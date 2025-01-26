@@ -49,6 +49,7 @@ import './index.css';
 import './components/index.css';
 import './extensions/heading/index.css';
 import { sxEditorWrapper } from './styles';
+import { customHeadingNodeName } from './extensions/heading/constants';
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -107,7 +108,7 @@ const extensions = [
     },
   }),
   TextAlign.configure({
-    types: ['heading', 'paragraph'],
+    types: ['heading', 'paragraph', customHeadingNodeName],
   }),
   Placeholder.configure({
     placeholder: 'Введите текст',
