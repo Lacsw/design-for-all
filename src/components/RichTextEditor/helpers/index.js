@@ -3,6 +3,7 @@ import { customHeadingNodeName } from '../extensions/heading/constants';
 import { COMMANDS_NAMES } from './constants';
 // eslint-disable-next-line no-unused-vars
 import { Editor } from '@tiptap/react';
+import { Node } from '@tiptap/core';
 
 /**
  * @callback TDRteCommand
@@ -27,28 +28,28 @@ export const tiptapCommands = {
   // #region headings
   [COMMANDS_NAMES.heading1]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().insertCustomHeading({ level: 1 }).run();
+    editor?.chain().focus().toggleHeading({ level: 1 }).run();
     // editor?.chain().focus().command().setNode;
   },
   [COMMANDS_NAMES.heading2]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().insertCustomHeading({ level: 2 }).run();
+    editor?.chain().focus().toggleHeading({ level: 2 }).run();
   },
   [COMMANDS_NAMES.heading3]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().insertCustomHeading({ level: 3 }).run();
+    editor?.chain().focus().toggleHeading({ level: 3 }).run();
   },
   [COMMANDS_NAMES.heading4]: (editor) => {
     // @ts-ignore
-    editor?.chain().focus().insertCustomHeading({ level: 4 }).run();
+    editor?.chain().focus().toggleHeading({ level: 4 }).run();
   },
   // [COMMANDS_NAMES.heading5]: (editor) => {
   //   // @ts-ignore
-  //   editor?.chain().focus().insertCustomHeading({ level: 5 }).run();
+  //   editor?.chain().focus().toggleHeading({ level: 5 }).run();
   // },
   // [COMMANDS_NAMES.heading6]: (editor) => {
   //   // @ts-ignore
-  //   editor?.chain().focus().insertCustomHeading({ level: 6 }).run();
+  //   editor?.chain().focus().toggleHeading({ level: 6 }).run();
   // },
   // #endregion headings
 
@@ -329,3 +330,23 @@ export function checkIsCommandDisabled(commandName, editor) {
   return res;
 }
 // #endregion checkIsCommandDisabled
+
+// #region extractNodeText
+/**
+ * @param {HTMLElement} node
+ * @returns {string}
+ */
+export function extractHTMLNodeText(node) {
+  return node.innerText || ' ';
+}
+// #endregion extractNodeText
+
+// #region extractNodeText
+/**
+ * @param {import('prosemirror-model/dist').Node} node
+ * @returns {string}
+ */
+export function extractNodeText(node) {
+  return node.textContent;
+}
+// #endregion extractNodeText

@@ -1,10 +1,8 @@
 // @ts-check
 // custom extensions
-import { CustomHeadingExtension as CustomHeading } from './extensions/heading/heading';
+import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
-import { HeadingMetaTagExtension } from './extensions/heading/headingMetaTag';
-import { VanillaHeadingExtension } from './extensions/heading/headingNative';
 
 // extensions
 import Placeholder from '@tiptap/extension-placeholder';
@@ -122,9 +120,7 @@ const extensions = [
       class: 'rte__node rte__node_img',
     },
   }),
-  VanillaHeadingExtension,
-  HeadingMetaTagExtension,
-  CustomHeading.configure({
+  CustomHeadingExtension.configure({
     HTMLAttributes: {
       class: 'rte__node rte__node_heading',
     },
