@@ -34,9 +34,14 @@
   white-space: nowrap;
 }
 
+.tree-item__title_active {
+  background-color: var(--color-item-active);
+  color: var(--color-bg-secondary);
+}
+
 .tree-item__arrow_visible_dark:hover,
 .tree-item__arrow_visible_light:hover,
 .tree-item__title:hover {
-  background-color: #7b7b7b;
+  background-color: var(--color-item-hover);
   cursor: pointer;
 }

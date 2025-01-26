@@ -5,9 +5,10 @@ const Recommend = ({ imageUrl, title }) => {
   return (
     <div className="recommend">
       <img
-        src={!imageUrl?.includes('blabla') && defaultImage} // в будущем изменить условие на imageUrl || defaultImage
+        src={!imageUrl || imageUrl.includes('test_') ? defaultImage : imageUrl}
         alt="Превью статьи"
         className="recommend__image"
+        onError={evt => evt.target.src = defaultImage}
       />
       <h4 className="recommend__title">
         {title?.slice(0, 40) || 'Заголовок отсутствует'}

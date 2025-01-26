@@ -24,6 +24,6 @@
   font-size: 12px;
   font-weight: 700;
   line-height: 120%;
-  word-break: break-all;
+  word-break: break-word;
   color: var(--color-main);
 }

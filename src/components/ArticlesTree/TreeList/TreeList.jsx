@@ -1,7 +1,7 @@
 import { TreeItem } from 'components';
 import './TreeList.css';
 
-export default function TreeList({ list, language }) {
+export default function TreeList({ list, language, status }) {
   const topics = Object.keys(list);
   return (
     <ul className="tree-list">
@@ -11,6 +11,7 @@ export default function TreeList({ list, language }) {
           title={item}
           data={list[item]}
           language={language}
+          status={status}
         />
       ))}
     </ul>

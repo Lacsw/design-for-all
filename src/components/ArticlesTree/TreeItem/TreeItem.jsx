@@ -1,16 +1,22 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { TreeList } from 'components';
 import './TreeItem.css';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
+import findId from './findId';
 
-export default function TreeItem({ title, data, language }) {
+export default function TreeItem({ title, data, language, status }) {
   const navigate = useNavigate();
+  const { articleId } = useParams();
   const theme = useSelector(getCurrentTheme);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    if (status === false) return false;
+    return findId(data, articleId);
+  });
   const hasChildren = typeof data === 'object';
   const id = hasChildren ? data.id : data;
+  const isActive = articleId ? articleId === id : false;
   const newData = { ...data };
   delete newData.id;
 
@@ -38,12 +44,17 @@ export default function TreeItem({ title, data, language }) {
           className={'tree-item__arrow' + arrowExtraClass}
           onClick={handleOpen}
         />
-        <span className="tree-item__title" onClick={handleNavigate}>
+        <span
+          className={`tree-item__title${
+            isActive ? ' tree-item__title_active' : ''
+          }`}
+          onClick={handleNavigate}
+        >
           {title}
         </span>
       </div>
       {!isOpen || !hasChildren ? null : (
-        <TreeList list={newData} language={language} />
+        <TreeList list={newData} language={language} status={isOpen} />
       )}
     </li>
   );
