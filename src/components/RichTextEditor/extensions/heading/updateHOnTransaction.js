@@ -6,18 +6,15 @@ import { customHeadingNodeName } from './constants';
  * @returns {void}
  */
 export const updateHOnTransaction = ({ editor, transaction }) => {
-  /** @type {import('@tiptap/pm/state').TextSelection} */
-  // @ts-ignore
   const selection = transaction.selection;
-  const { $cursor } = selection;
+  const { $anchor } = selection;
 
-  if ($cursor && $cursor.parent.type.name === customHeadingNodeName) {
-    const text = $cursor.parent.textContent;
-    const level = $cursor.parent.attrs.level;
-    const dataSet = $cursor.parent.attrs.dataSet;
-    const curSubHeader = $cursor.parent.attrs.dataSet?.[`subHeaders${level}`];
+  if ($anchor.parent.type.name === customHeadingNodeName) {
+    const text = $anchor.parent.textContent;
+    const level = $anchor.parent.attrs.level;
+    const curSubHeader = $anchor.parent.attrs.dataSet?.[`subHeaders${level}`];
 
-    if (dataSet !== null && dataSet !== undefined && curSubHeader !== text) {
+    if (curSubHeader !== text) {
       editor.commands.updateAttributes(customHeadingNodeName, {
         dataSet: {
           [`subHeaders${level}`]: text,

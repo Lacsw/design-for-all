@@ -3,7 +3,6 @@ import { customHeadingNodeName } from '../extensions/heading/constants';
 import { COMMANDS_NAMES } from './constants';
 // eslint-disable-next-line no-unused-vars
 import { Editor } from '@tiptap/react';
-import { Node } from '@tiptap/core';
 
 /**
  * @callback TDRteCommand
