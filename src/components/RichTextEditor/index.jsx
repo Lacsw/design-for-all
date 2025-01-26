@@ -6,7 +6,7 @@ import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
 import Placeholder from '@tiptap/extension-placeholder';
-import ImgTiptap from '@tiptap/extension-image';
+// import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -25,12 +25,20 @@ import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
 import { Box, Divider } from '@mui/material';
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { MenuBar, RteButton } from './components';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
 import { ImageModal } from './extensions/image/ImageModal';
 import { allowedHeadingLevels, COMMANDS_NAMES } from './helpers/constants';
+import { parseOptions } from './validation/constants';
 import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
@@ -39,13 +47,21 @@ import { useValidation } from './validation/useValidation';
 import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
+import './extensions/heading/index.css';
 import { sxEditorWrapper } from './styles';
 
+/**
+ * @param {import('@tiptap/core').Editor} editor
+ * @param {import('./types').TJDRteOnInputProp} onInput
+ * @param {import('./validation/types').TJDValidationOptions | undefined} [_validationsOptions]
+ */
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
   // console.log('htmlString', htmlString);
+
   // const json = editor.getJSON();
   // console.log('json', json);
+
   if (_validationsOptions) {
     const result = validate(_validationsOptions, editor);
     onInput(result);
@@ -60,6 +76,58 @@ const incrementStateNumber = (setter) => (evt) => {
 
 /** @type {import('./types').TJDRteClassesProp} */
 const defaultClasses = {};
+
+// #region extensions
+const extensions = [
+  StarterKit.configure({
+    blockquote: false,
+    horizontalRule: false,
+    strike: false,
+    listItem: false, // отключаем, т.к. у нас кастомный
+    heading: false, // кастомные
+    bulletList: {
+      HTMLAttributes: {
+        class: 'rte__node rte__node_bullet-list',
+      },
+    },
+    orderedList: {
+      HTMLAttributes: {
+        class: 'rte__node rte__node_ordered-list',
+      },
+    },
+    code: {
+      HTMLAttributes: {
+        class: 'rte__node rte__node_code',
+      },
+    },
+    codeBlock: {
+      HTMLAttributes: {
+        class: 'rte__node rte__node_code rte__node_code-block',
+      },
+    },
+  }),
+  TextAlign.configure({
+    types: ['heading', 'paragraph'],
+  }),
+  Placeholder.configure({
+    placeholder: 'Введите текст',
+  }),
+  // ImgTiptap,
+  ListItemCustom,
+  CustomImageExtension.configure({
+    // allowBase64: true,
+    HTMLAttributes: {
+      class: 'rte__node rte__node_img',
+    },
+  }),
+  CustomHeadingExtension.configure({
+    HTMLAttributes: {
+      class: 'rte__node rte__node_heading',
+    },
+    levels: allowedHeadingLevels,
+  }),
+];
+// #endregion extensions
 
 // #region FC
 /**
@@ -78,61 +146,6 @@ export const RichTextEditor = memo(function RichTextEditor({
   className,
   classes = defaultClasses,
 }) {
-  // #region extensions
-  const extensions = [
-    StarterKit.configure({
-      blockquote: false,
-      horizontalRule: false,
-      strike: false,
-      listItem: false, // отключаем, т.к. у нас кастомный
-      // image: false, // отключаем, т.к. у нас кастомные
-      heading: {
-        // @ts-ignore
-        levels: allowedHeadingLevels,
-      },
-      bulletList: {
-        HTMLAttributes: {
-          class: 'rte__node rte__node_bullet-list',
-        },
-      },
-      orderedList: {
-        HTMLAttributes: {
-          class: 'rte__node rte__node_ordered-list',
-        },
-      },
-      code: {
-        HTMLAttributes: {
-          class: 'rte__node rte__node_code',
-        },
-      },
-      codeBlock: {
-        HTMLAttributes: {
-          class: 'rte__node rte__node_code rte__node_code-block',
-        },
-      },
-    }),
-    TextAlign.configure({
-      types: ['heading', 'paragraph'],
-    }),
-    Placeholder.configure({
-      placeholder: 'Введите текст',
-    }),
-    ImgTiptap,
-    ListItemCustom,
-    CustomImageExtension.configure({
-      // allowBase64: true,
-      HTMLAttributes: {
-        class: 'rte__node rte__node_img',
-      },
-    }),
-    CustomHeadingExtension.configure({
-      HTMLAttributes: {
-        class: 'rte__node rte__node_heading',
-      },
-    }),
-  ];
-  // #endregion extensions
-
   const _validationsOptions = useValidation(validationsOptions);
 
   /** @type {React.RefObject<HTMLElement>} */
@@ -141,35 +154,41 @@ export const RichTextEditor = memo(function RichTextEditor({
     то при кликах на кнопки команд на мгновения скачут цвета у рамок редактора и его кнопок. */
   const [inFocusWithin, setInFocusWithin] = useState(false);
 
+  // #region onUpdate
   // Передаём данные о вводе в родителя
   const _onUpdateDebounced = useDebounce(_onUpdate, 500, true);
-  const onUpdate = ({ editor, transaction }) => {
-    if (onInput) {
-      _onUpdateDebounced(editor, onInput, _validationsOptions);
-    }
-  };
+  const onUpdate = useCallback(
+    /**
+     * @param {import('@tiptap/react').EditorEvents['update']} props
+     * @returns {void}
+     */
+    ({ editor, transaction }) => {
+      if (onInput) {
+        _onUpdateDebounced(editor, onInput, _validationsOptions);
+      }
+    },
+    [onInput, _onUpdateDebounced, _validationsOptions]
+  );
 
   /* При focusout на элементе обёртки синхронно отправляем данные в родителя,
-    чтобы при быстрой отправке формы контент точно был свежим. */
+  чтобы при быстрой отправке формы контент точно был свежим. */
   function handleBlurOnWrapper() {
     if (editor && onInput) {
       _onUpdate(editor, onInput, _validationsOptions);
     }
   }
+  // #endregion onUpdate
 
   // #region useEditor
-  /* при вызовах данного хука он возвращ-т одну и ту же ссылку похоже
+  /* при вызовах данного хука он возвращ-т одну и ту же ссылку похоже.
       и вроде как реальный вызов происходит только один раз
+      (инстанс редактора не пересоздается, но конфигурируется при сменах ссылок напр на onUpdate ???)
    */
   const editor = useEditor({
     extensions,
-    // content: mockContent,
     content: initialValue,
     editable: !readOnly,
-    parseOptions: {
-      // сохранять множественные пробелы? по ум. HTML схлопывает их
-      preserveWhitespace: false,
-    },
+    parseOptions,
     onUpdate,
     enableContentCheck: true, // не работает?
   });
@@ -177,7 +196,7 @@ export const RichTextEditor = memo(function RichTextEditor({
 
   useEffect(() => {
     if (readOnly && (!initialValue || initialValue === '<p></p>')) {
-      // editor?.commands.setContent('<p>Отсутствует</p>');
+      editor?.commands.setContent('<p>Отсутствует</p>');
     }
   }, [readOnly, initialValue, editor]);
 

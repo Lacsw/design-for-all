@@ -1,4 +1,5 @@
 // @ts-check
+import { customHeadingNodeName } from '../extensions/heading/constants';
 import { COMMANDS_NAMES } from './constants';
 // eslint-disable-next-line no-unused-vars
 import { Editor } from '@tiptap/react';
@@ -25,22 +26,28 @@ export const tiptapCommands = {
 
   // #region headings
   [COMMANDS_NAMES.heading1]: (editor) => {
+    // @ts-ignore
     editor?.chain().focus().toggleHeading({ level: 1 }).run();
     // editor?.chain().focus().command().setNode;
   },
   [COMMANDS_NAMES.heading2]: (editor) => {
+    // @ts-ignore
     editor?.chain().focus().toggleHeading({ level: 2 }).run();
   },
   [COMMANDS_NAMES.heading3]: (editor) => {
+    // @ts-ignore
     editor?.chain().focus().toggleHeading({ level: 3 }).run();
   },
   [COMMANDS_NAMES.heading4]: (editor) => {
+    // @ts-ignore
     editor?.chain().focus().toggleHeading({ level: 4 }).run();
   },
   // [COMMANDS_NAMES.heading5]: (editor) => {
+  //   // @ts-ignore
   //   editor?.chain().focus().toggleHeading({ level: 5 }).run();
   // },
   // [COMMANDS_NAMES.heading6]: (editor) => {
+  //   // @ts-ignore
   //   editor?.chain().focus().toggleHeading({ level: 6 }).run();
   // },
   // #endregion headings
@@ -180,7 +187,17 @@ export function checkIsCommandActive(commandName, editor) {
   let commandParams;
 
   switch (commandName) {
-    case COMMANDS_NAMES.left:
+    case COMMANDS_NAMES.left: {
+      const textAlign =
+        // @ts-ignore
+        editor.view?.domObserver?.currentSelection?.focusNode?.parentNode?.style
+          .textAlign;
+
+      if (textAlign === 'start' || !textAlign) {
+        return true;
+      }
+      return false;
+    }
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
     case COMMANDS_NAMES.justify:
@@ -216,7 +233,10 @@ export function checkIsCommandActive(commandName, editor) {
     case COMMANDS_NAMES.heading4:
       // case COMMANDS_NAMES.heading5:
       // case COMMANDS_NAMES.heading6:
-      commandParams = ['heading', { level: Number(commandName.at(-1)) }];
+      commandParams = [
+        customHeadingNodeName,
+        { level: Number(commandName.at(-1)) },
+      ];
       break;
     default:
       commandParams = [commandName];
@@ -309,3 +329,34 @@ export function checkIsCommandDisabled(commandName, editor) {
   return res;
 }
 // #endregion checkIsCommandDisabled
+
+// #region extractNodeText
+/**
+ * @param {HTMLElement} node
+ * @returns {string}
+ */
+export function extractHTMLNodeText(node) {
+  return node.innerText;
+}
+// #endregion extractNodeText
+
+// #region extractNodeText
+/**
+ * @param {import('prosemirror-model/dist').Node} node
+ * @returns {string}
+ */
+export function extractNodeText(node) {
+  /** @type {string[]} */
+  const res = [];
+
+  node.content.forEach((childNode) => {
+    if (childNode.type.name === 'text') {
+      res.push(childNode.text);
+    } else if (childNode.type.name === 'hardBreak') {
+      res.push('\n');
+    }
+  });
+
+  return res.join('');
+}
+// #endregion extractNodeText

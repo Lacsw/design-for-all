@@ -16,7 +16,7 @@
  * @property {string | null} [initialValue] - Html-string for INITIAL view
  * @property {Partial<import('./validation/types').TJDValidationOptions>} [validationsOptions]
  * @property {TJDRteOnInputProp} [onInput] - Cb fires with debounce when content
- *   changes ib RTE
+ *   changes in RTE
  * @property {boolean} [readOnly] - Isn't RTE editable
  * @property {string} [className]
  * @property {TJDRteClassesProp} [classes]
