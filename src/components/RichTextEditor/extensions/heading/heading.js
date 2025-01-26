@@ -43,7 +43,7 @@ export const CustomHeadingExtension = Node.create({
           const level = Number(node.tagName.charAt(1));
 
           const dataSet = {
-            [`subHeaders${level}`]: extractHTMLNodeText(node),
+            // [`subHeaders${level}`]: extractHTMLNodeText(node),
           };
           return { level, dataSet };
         },

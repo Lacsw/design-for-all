@@ -336,7 +336,7 @@ export function checkIsCommandDisabled(commandName, editor) {
  * @returns {string}
  */
 export function extractHTMLNodeText(node) {
-  return node.innerText || ' ';
+  return node.innerText;
 }
 // #endregion extractNodeText
 
@@ -346,6 +346,17 @@ export function extractHTMLNodeText(node) {
  * @returns {string}
  */
 export function extractNodeText(node) {
-  return node.textContent;
+  /** @type {string[]} */
+  const res = [];
+
+  node.content.forEach((childNode) => {
+    if (childNode.type.name === 'text') {
+      res.push(childNode.text);
+    } else if (childNode.type.name === 'hardBreak') {
+      res.push('\n');
+    }
+  });
+
+  return res.join('');
 }
 // #endregion extractNodeText
