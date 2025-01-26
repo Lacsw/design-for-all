@@ -1,13 +1,16 @@
-/* h1 {
-} */
+h1 strong {
+  font-weight: 900;
+}
+h2 strong {
+  font-weight: 900;
+}
+h3 strong {
+  font-weight: 900;
+}
+h4 strong {
+  font-weight: 900;
+}
 
 h2 {
   font-size: 1.35rem;
-  font-weight: 500;
 }
-
-/* h3 {
-} */
-
-/* h4 {
-} */
