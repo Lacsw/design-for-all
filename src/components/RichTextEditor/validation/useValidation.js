@@ -1,4 +1,5 @@
 // @ts-check
+import { useMemo } from 'react';
 import { defaultValidationOptions } from './constants';
 import { deepmerge } from '@mui/utils';
 
@@ -9,9 +10,13 @@ import { deepmerge } from '@mui/utils';
  * @returns {import('./types').TJDValidationOptions | undefined}
  */
 export const useValidation = (validationOptionsFromProps) => {
-  if (!validationOptionsFromProps) {
-    return;
-  } else {
-    return deepmerge(defaultValidationOptions, validationOptionsFromProps);
-  }
+  const res = useMemo(() => {
+    if (!validationOptionsFromProps) {
+      return;
+    } else {
+      return deepmerge(defaultValidationOptions, validationOptionsFromProps);
+    }
+  }, [validationOptionsFromProps]);
+
+  return res;
 };

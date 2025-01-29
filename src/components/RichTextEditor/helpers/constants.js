@@ -7,6 +7,7 @@ export const COMMANDS_NAMES = {
   heading4: 'heading4',
   // heading5: 'heading5',
   // heading6: 'heading6',
+  headingCustom: 'headingCustom',
   italic: 'italic',
   bold: 'bold',
   underline: 'underline',

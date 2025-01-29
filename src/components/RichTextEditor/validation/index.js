@@ -28,7 +28,7 @@ import { checkEmptySymbols } from './validators/emptySymbols';
 
 /**
  * @param {import('./types').TJDValidationOptions} options
- * @param {import('@tiptap/react').Editor} editor
+ * @param {import('@tiptap/core').Editor} editor
  * @returns {import('./types').TJDValidateResult}
  */
 export const validate = (options, editor) => {
