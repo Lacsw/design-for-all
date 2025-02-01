@@ -197,7 +197,7 @@ export const RichTextEditor = memo(function RichTextEditor({
 
   useEffect(() => {
     if (readOnly && (!initialValue || initialValue === '<p></p>')) {
-      editor?.commands.setContent('<p>Отсутствует</p>');
+      // editor?.commands.setContent('<p>Отсутствует</p>');
     }
   }, [readOnly, initialValue, editor]);
 

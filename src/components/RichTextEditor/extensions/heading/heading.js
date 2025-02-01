@@ -3,7 +3,7 @@ import { Node, textblockTypeInputRule } from '@tiptap/core';
 import { defaultLevels, customHeadingNodeName } from './constants';
 import clsx from 'clsx';
 import {
-  extractHTMLNodeText,
+  // extractHTMLNodeText,
   extractNodeText,
 } from 'components/RichTextEditor/helpers';
 import { updateHOnTransaction } from './updateHOnTransaction';

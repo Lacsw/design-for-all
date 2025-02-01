@@ -1,8 +1,15 @@
+// @ts-check
 import { TextSelection } from '@tiptap/pm/state';
 
-/** Валидация на наличие пробелов в НАЧАЛЕ редактора */
-// TODO Реализовать проверку концевых пробелов
+/**
+ * Валидация на наличие пробелов в НАЧАЛЕ редактора
+ *
+ * Изменяет контент! Не просто проверяет
+ *
+ * @type {import('./types').TJDTrimValidator}
+ */
 export function checkTrim({ editor, from, to, content }) {
+  // TODO Реализовать проверку концевых пробелов
   const firstSpaceIndex = content.indexOf(' ');
   const strBeforeFirstSpace = content.slice(0, firstSpaceIndex);
   /** Пробел вводится в начало редактора? */
@@ -39,7 +46,9 @@ export function checkTrim({ editor, from, to, content }) {
     };
   } else {
     return {
-      validated: null,
+      isValid: true, // ?????
+      validated: '',
+      textSelection: null,
     };
   }
 }

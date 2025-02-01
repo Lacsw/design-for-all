@@ -6,7 +6,7 @@
 /**
  * @typedef TJDValidationOptions
  * @property {Record<TJDValidationKinds, boolean>} kinds - виды проверок
- * @property {'check' | 'prevent'} mode Режим работы валидации
+ * @property {'check'} [mode] Режим работы валидации
  *
  *   - `check` - просто уведомлять об ошибке
  *   - `prevent` - предотвращать неккоректный ввод (TODO)

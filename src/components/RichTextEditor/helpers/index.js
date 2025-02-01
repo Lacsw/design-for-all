@@ -1,12 +1,10 @@
 // @ts-check
 import { customHeadingNodeName } from '../extensions/heading/constants';
 import { COMMANDS_NAMES } from './constants';
-// eslint-disable-next-line no-unused-vars
-import { Editor } from '@tiptap/react';
 
 /**
  * @callback TDRteCommand
- * @param {Editor | null} editor
+ * @param {import('@tiptap/core').Editor | null} editor
  * @param {any} otherParams
  * @returns {boolean}
  */
@@ -174,7 +172,7 @@ export const tiptapCommands = {
 /**
  * @param {string} commandName - RTE command name(key name) from const
  *   {@link COMMANDS_NAMES}
- * @param {Editor | null} editor
+ * @param {import('@tiptap/core').Editor | null} editor
  * @returns {boolean}
  */
 export function checkIsCommandActive(commandName, editor) {
