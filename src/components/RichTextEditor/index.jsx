@@ -58,7 +58,7 @@ import { customHeadingNodeName } from './extensions/heading/constants';
  */
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
-  // console.log('htmlString', htmlString);
+  console.log({ htmlString });
 
   // const json = editor.getJSON();
   // console.log('json', json);

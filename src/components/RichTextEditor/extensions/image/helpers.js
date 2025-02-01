@@ -70,11 +70,34 @@ export const getImgByURL = ({
     });
 };
 
-/** @param {DOMTokenList} classList */
-export const getAligningClass = (classList) => {
-  return classList.contains('justify')
-    ? 'justify'
-    : classList.contains('center')
-    ? 'center'
-    : defaultAligningClass;
+/**
+ * @param {DOMTokenList | string | string[]} value - data for processing
+ *
+ *   - {@link DOMTokenList} - elem.classList
+ *   - string - "my-class my-second-class text_bold"
+ *   - string[] - ["my-class", "my-second-class", "text_bold"]
+ *
+ * @returns {string}
+ */
+export const getAligningClass = (value) => {
+  if (value instanceof DOMTokenList) {
+    return value.contains('justify')
+      ? 'justify'
+      : value.contains('center')
+      ? 'center'
+      : defaultAligningClass;
+  } else if (typeof value === 'string') {
+    const set = new Set(value.split(' '));
+    return set.has('justify')
+      ? 'justify'
+      : set.has('center')
+      ? 'center'
+      : defaultAligningClass;
+  } else {
+    return value.includes('justify')
+      ? 'justify'
+      : value.includes('center')
+      ? 'center'
+      : defaultAligningClass;
+  }
 };
