@@ -191,7 +191,10 @@ export function checkIsCommandActive(commandName, editor) {
         editor.view?.domObserver?.currentSelection?.focusNode?.parentNode?.style
           .textAlign;
 
-      if (textAlign === 'start' || !textAlign) {
+      if (
+        textAlign === 'start' ||
+        (!textAlign && !editor.isActive(COMMANDS_NAMES.img))
+      ) {
         return true;
       }
       return false;
