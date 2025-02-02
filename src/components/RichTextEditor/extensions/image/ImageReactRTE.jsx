@@ -3,10 +3,20 @@ import { NodeViewWrapper } from '@tiptap/react';
 import clsx from 'clsx';
 import React from 'react';
 import { getAligningClass } from './helpers';
+// eslint-disable-next-line no-unused-vars
+import { tiptapCommands } from 'components/RichTextEditor/helpers';
 
 /**
  * @param {import('@tiptap/react').NodeViewRendererProps} props
  * @returns {React.JSX.Element}
+ *
+ *   При вызове команды вставки нашей кастомной ноды изображения\
+ *   (см. {@link tiptapCommands}) вызов метода parseHTML -> getAttrs (#1)\
+ *   не происходит, потому необходимо внутри NodeView подтягиваться\
+ *   стандартные классы, задаваемые при конфигурировании расширения.
+ *
+ *   При загрузке статьи уже происходит парсинг html-строки, потому вызов #1\
+ *   уже происходит.
  */
 export const ImageReactRTE = (props) => {
   // console.log(
