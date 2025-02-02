@@ -1,4 +1,5 @@
 // @ts-check
+/* eslint-disable jsx-a11y/alt-text */
 import { NodeViewWrapper } from '@tiptap/react';
 import clsx from 'clsx';
 import React from 'react';

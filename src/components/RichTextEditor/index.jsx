@@ -1,5 +1,7 @@
 // @ts-check
 // custom extensions
+import { linkExtConfig } from './extensions/link/config';
+import { CustomLinkExtension } from './extensions/link/link';
 import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
@@ -48,6 +50,7 @@ import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
 import './extensions/heading/index.css';
+import './extensions/link/index.css';
 import { sxEditorWrapper } from './styles';
 import { customHeadingNodeName } from './extensions/heading/constants';
 
@@ -58,7 +61,10 @@ import { customHeadingNodeName } from './extensions/heading/constants';
  */
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
-  console.log({ htmlString });
+  // console.log(
+  //   `%c ${htmlString}`,
+  //   'background-color: rgb(155, 154, 154); color:rgb(0, 0, 0); padding: 5px;'
+  // );
 
   // const json = editor.getJSON();
   // console.log('json', json);
@@ -127,6 +133,7 @@ const extensions = [
     },
     levels: allowedHeadingLevels,
   }),
+  CustomLinkExtension.configure(linkExtConfig),
 ];
 // #endregion extensions
 
