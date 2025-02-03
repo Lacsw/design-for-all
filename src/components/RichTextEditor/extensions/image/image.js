@@ -1,16 +1,20 @@
 // @ts-check
 import { ReactNodeViewRenderer } from '@tiptap/react';
 import { ImageReactRTE } from './ImageReactRTE';
-import { COMMANDS_NAMES } from 'components/RichTextEditor/helpers/constants';
 import ImgTiptap from '@tiptap/extension-image';
 import clsx from 'clsx';
-import { defaultAligningClass } from './constants';
+import {
+  customImgNodeName,
+  customImgNodeTagName,
+  defaultAligningClass,
+} from './constants';
 import { getAligningClass } from './helpers';
 
 export const CustomImageExtension = ImgTiptap.extend({
-  draggable: true,
-  name: COMMANDS_NAMES.img,
+  /** Имя ноды такое же, как у команды. Можно и другое задавать. */
+  name: customImgNodeName,
   group: 'block',
+  draggable: true,
 
   addAttributes() {
     return {
@@ -25,8 +29,9 @@ export const CustomImageExtension = ImgTiptap.extend({
 
   parseHTML() {
     return [
+      // для поддержки уже написанных статей, хоть они и тестовые. Постепенно переконвертится
       {
-        tag: COMMANDS_NAMES.img,
+        tag: customImgNodeTagName,
         getAttrs: (
           /**
            * @type {HTMLUnknownElement} - нода самого ProseMirror, ВНЕ рамок\
@@ -92,7 +97,8 @@ export const CustomImageExtension = ImgTiptap.extend({
     // );
 
     return [
-      COMMANDS_NAMES.img,
+      // отдаём стандартный тег, что позволит копировать контент из статей в другие редакторы (ворд и тд)
+      'img',
       {
         src: HTMLAttributes.src,
         class: clsx(this.options.HTMLAttributes.class, aligningClass),

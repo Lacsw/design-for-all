@@ -62,8 +62,10 @@ import { customHeadingNodeName } from './extensions/heading/constants';
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
   // console.log(
-  //   `%c ${htmlString}`,
-  //   'background-color: rgb(155, 154, 154); color:rgb(0, 0, 0); padding: 5px;'
+  //   `%c ${htmlString.replaceAll(/[<>]/g, (substr) =>
+  //     substr.includes('<') ? '\n<' : '>\n'
+  //   )}`,
+  //   'background-color: rgba(155, 154, 154, 0); color:rgb(0, 0, 0); padding: 5px; border: 1px dashed green;'
   // );
 
   // const json = editor.getJSON();
@@ -394,7 +396,12 @@ export const RichTextEditor = memo(function RichTextEditor({
       id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
-      <EditorContent editor={editor} className="rte__editor" />
+      {useMemo(
+        () => (
+          <EditorContent editor={editor} className="rte__editor" />
+        ),
+        [editor]
+      )}
 
       {Bar}
 

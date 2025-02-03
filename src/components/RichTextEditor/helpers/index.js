@@ -1,5 +1,6 @@
 // @ts-check
 import { customHeadingNodeName } from '../extensions/heading/constants';
+import { customImgNodeName } from '../extensions/image/constants';
 import { COMMANDS_NAMES } from './constants';
 
 /**
@@ -156,7 +157,7 @@ export const tiptapCommands = {
     editor
       .chain()
       .insertContentAt(editor.state.selection.head, {
-        type: COMMANDS_NAMES.img,
+        type: customImgNodeName,
         attrs: {
           src: url,
         },
