@@ -8,6 +8,8 @@ import manualWhite from 'images/navigation/manual-icon-white.svg';
 import mobileBlack from 'images/navigation/mobile-icon-black.svg';
 import mobileWhite from 'images/navigation/mobile-icon-white.svg';
 import themeBlack from 'images/navigation/theme-icon-black.svg';
+import arrowBackWhite from 'images/navigation/arrow-back-icon-white.svg';
+
 import updatesBlack from 'images/navigation/updates-icon-black.svg';
 import updatesWhite from 'images/navigation/updates-icon-white.svg';
 import webBlack from 'images/navigation/web-icon-black.svg';
@@ -104,8 +106,8 @@ export const navigationOptionsList = [
   { name: 'Мобильные приложения', src: mobileBlack, link: '/' },
   { name: 'Статьи', src: articleBlack, link: '/' },
   { name: 'Руководства', src: manualBlack, link: '/' },
-  { name: 'Светлая тема', src: themeBlack, link: '/' },
-  { name: 'Свернуть' },
+  { name: 'Светлая тема', src: themeBlack },
+  { name: 'Свернуть', src: arrowBackWhite },
 ];
 
 export const mainNavigationOptionsList = [
