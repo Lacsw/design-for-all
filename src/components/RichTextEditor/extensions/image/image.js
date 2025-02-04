@@ -15,6 +15,7 @@ export const CustomImageExtension = ImgTiptap.extend({
   name: customImgNodeName,
   group: 'block',
   draggable: true,
+  selectable: true,
 
   addAttributes() {
     return {
@@ -97,18 +98,28 @@ export const CustomImageExtension = ImgTiptap.extend({
     // );
 
     return [
-      // отдаём стандартный тег, что позволит копировать контент из статей в другие редакторы (ворд и тд)
-      'img',
+      'figure',
       {
         src: HTMLAttributes.src,
         class: clsx(this.options.HTMLAttributes.class, aligningClass),
       },
+      [
+        'img',
+        {
+          src: HTMLAttributes.src,
+          class: clsx(this.options.HTMLAttributes.class, aligningClass),
+        },
+        ['label', []],
+      ],
     ];
   },
 
   addNodeView() {
     return ReactNodeViewRenderer(ImageReactRTE, {
       as: 'figure',
+      attrs: {
+        contentEditable: 'true',
+      },
     });
   },
 });

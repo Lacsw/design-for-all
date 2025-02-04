@@ -1,6 +1,6 @@
 // @ts-check
 /* eslint-disable jsx-a11y/alt-text */
-import { NodeViewWrapper } from '@tiptap/react';
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import clsx from 'clsx';
 import React from 'react';
 import { getAligningClass } from './helpers';
@@ -33,11 +33,8 @@ export const ImageReactRTE = (props) => {
       )}
     >
       <img src={props.node.attrs.src} />
-
-      {/* TODO labels for images */}
-      {/* <NodeViewContent
-        style={{ backgroundColor: 'red' }}
-      /> */}
+      <label>Ahaha</label>
+      {/* <NodeViewContent>Ahaha</NodeViewContent> */}
     </NodeViewWrapper>
   );
 };

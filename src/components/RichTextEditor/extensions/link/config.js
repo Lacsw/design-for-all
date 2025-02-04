@@ -17,7 +17,7 @@ export const linkExtConfig = {
         - open the link with the mouse wheel, not just with LMB and Ctrl+LMB
         - show vanilla browser tooltip with link href
     */
-    contentEditable: false,
+    // contentEditable: true,
   },
 
   isAllowedUri: (url, ctx) => {
