@@ -61,12 +61,12 @@ import { customHeadingNodeName } from './extensions/heading/constants';
  */
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
-  console.log(
-    `%c ${htmlString.replaceAll(/[<>]/g, (substr) =>
-      substr.includes('<') ? '\n<' : '>\n'
-    )}`,
-    'background-color: rgba(155, 154, 154, 0); color:rgb(0, 0, 0); padding: 5px; border: 1px dashed green;'
-  );
+  // console.log(
+  //   `%c ${htmlString.replaceAll(/[<>]/g, (substr) =>
+  //     substr.includes('<') ? '\n<' : '>\n'
+  //   )}`,
+  //   'background-color: rgba(155, 154, 154, 0); color:rgb(0, 0, 0); padding: 5px; border: 1px dashed green;'
+  // );
 
   // const json = editor.getJSON();
   // console.log('json', json);

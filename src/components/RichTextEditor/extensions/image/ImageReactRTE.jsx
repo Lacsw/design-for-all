@@ -1,5 +1,7 @@
 // @ts-check
 /* eslint-disable jsx-a11y/alt-text */
+
+// eslint-disable-next-line no-unused-vars
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import clsx from 'clsx';
 import React from 'react';
@@ -33,7 +35,7 @@ export const ImageReactRTE = (props) => {
       )}
     >
       <img src={props.node.attrs.src} />
-      <label>Ahaha</label>
+
       {/* <NodeViewContent>Ahaha</NodeViewContent> */}
     </NodeViewWrapper>
   );

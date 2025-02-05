@@ -18,4 +18,4 @@ export const MAX_SIZE_IMG_B64_BYTES = Math.floor(MAX_SIZE_IMG_BYTES / 1.37);
 export const defaultAligningClass = 'center';
 
 export const customImgNodeName = COMMANDS_NAMES.img;
-export const customImgNodeTagName = COMMANDS_NAMES.img;
+export const customImgNodeTagName = COMMANDS_NAMES.img.toLowerCase(); // и так переводится в нижний регистр просемиррором при экспорте в строку, но для консистентности

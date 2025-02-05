@@ -30,7 +30,6 @@ export const CustomImageExtension = ImgTiptap.extend({
 
   parseHTML() {
     return [
-      // для поддержки уже написанных статей, хоть они и тестовые. Постепенно переконвертится
       {
         tag: customImgNodeTagName,
         getAttrs: (
@@ -98,28 +97,20 @@ export const CustomImageExtension = ImgTiptap.extend({
     // );
 
     return [
-      'figure',
+      customImgNodeTagName,
       {
         src: HTMLAttributes.src,
         class: clsx(this.options.HTMLAttributes.class, aligningClass),
       },
-      [
-        'img',
-        {
-          src: HTMLAttributes.src,
-          class: clsx(this.options.HTMLAttributes.class, aligningClass),
-        },
-        ['label', []],
-      ],
     ];
   },
 
   addNodeView() {
     return ReactNodeViewRenderer(ImageReactRTE, {
       as: 'figure',
-      attrs: {
-        contentEditable: 'true',
-      },
+      // attrs: {
+      // contentEditable: 'true',
+      // },
     });
   },
 });

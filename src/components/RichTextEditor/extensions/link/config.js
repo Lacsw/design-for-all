@@ -13,7 +13,7 @@ export const linkExtConfig = {
     // remove nofollow -> allow search engines to follow links
     rel: 'noopener noreferrer',
     target: '_blank',
-    /* Allows:
+    /* contentEditable=false allows:
         - open the link with the mouse wheel, not just with LMB and Ctrl+LMB
         - show vanilla browser tooltip with link href
     */
