@@ -182,16 +182,31 @@ export const mainNavigationOptionsList = [
     link: 'manual',
   },
 ];
-
 export const accountNavigationList = [
   {
+    id: 'writeArticle',
     name: 'Написать статью',
-    src: newArticleBlack,
+    src: { dark: newArticleBlack, light: newArticleBlack },
     link: '/#/author/new-article',
   },
-  { name: 'Публикации', src: articleBlack, link: '/#/author/articles' },
-  { name: 'Профиль', src: profileBlack, link: '/#/author/profile' },
-  { name: 'Выйти', src: exitBlack, link: '/' },
+  {
+    id: 'publications',
+    name: 'Публикации',
+    src: { dark: articleBlack, light: articleBlack },
+    link: '/#/author/articles',
+  },
+  {
+    id: 'profile',
+    name: 'Профиль',
+    src: { dark: profileBlack, light: profileBlack },
+    link: '/#/author/profile',
+  },
+  {
+    id: 'logout',
+    name: 'Выйти',
+    src: { dark: exitBlack, light: exitBlack },
+    // link: '/', // Если для выхода планируется использовать onClick, можно здесь убрать link
+  },
 ];
 
 export const adminNavList = [

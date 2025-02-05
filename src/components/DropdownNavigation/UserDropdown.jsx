@@ -1,9 +1,42 @@
-import DropdownNavigation from "./DropdownNavigation";
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import DropdownNavigation from './DropdownNavigation';
+import { signInSuccess } from 'store/slices';
+import authApi from 'utils/api/auth';
 
-export default function UserDropdown() {
- 
+
+export default function UserDropdown({ resetSection, options, type, title, currentUser, theme , titleIcon}) {
+  const dispatch = useDispatch();
 
 
-  return <DropdownNavigation />;
+  // Обработчик для выхода из аккаунта
+  const handleLogout = useCallback(async () => {
+    try {
+      await authApi.logout();
+      resetSection();
+      dispatch(signInSuccess(null));
+    } catch (err) {
+      console.error('Ошибка при выходе:', err);
+    }
+  }, [dispatch, resetSection]);
 
+
+  if (!currentUser) return null;
+  
+  // Если опция называется "Выйти", добавляем для неё onClick
+  const enhancedOptions = options.map(option =>
+    option.name === 'Выйти' ? { ...option, onClick: handleLogout } : option
+  );
+
+  return (
+    <DropdownNavigation
+    options={enhancedOptions}
+      titleIcon={currentUser.avatar || titleIcon}
+      type={type}
+      title={title}
+      resetSection={resetSection}
+      theme={theme}
+      showName={true}
+    />
+  );
 }

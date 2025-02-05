@@ -18,6 +18,15 @@
   background-color: var(--color-bg-accent);
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
+  overflow: hidden
+
+}
+
+.dropdown-navigation__btn img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit:cover
 }
 
 .dropdown-navigation__container {
