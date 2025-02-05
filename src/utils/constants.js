@@ -11,14 +11,19 @@ import mobileWhite from 'images/navigation/mobile-icon-white.svg';
 import themeBlack from 'images/navigation/theme-icon-black.svg';
 import themeWhite from 'images/navigation/theme-icon-white.svg';
 import arrowBackWhite from 'images/navigation/arrow-back-icon-white.svg';
+import arrowBackBlack from 'images/navigation/arrow-back-icon-black.svg';
 
 import updatesBlack from 'images/navigation/updates-icon-black.svg';
 import updatesWhite from 'images/navigation/updates-icon-white.svg';
 import webBlack from 'images/navigation/web-icon-black.svg';
 import webWhite from 'images/navigation/web-icon-white.svg';
 import exitBlack from 'images/navigation/exit-icon-black.svg';
+import exitWhite from 'images/navigation/exit-icon-white.svg';
 import newArticleBlack from 'images/navigation/new-article-icon-black.svg';
+import newArticleWhite from 'images/navigation/new-article-icon-white.svg';
+
 import profileBlack from 'images/navigation/profile-icon-black.svg';
+import profileWhite from 'images/navigation/profile-icon-white.svg';
 import ruFlag from 'images/flag-icon.svg';
 import chFlag from 'images/ch-flag-icon.svg';
 import enFlag from 'images/en-flag-icon.svg';
@@ -104,43 +109,43 @@ export const navigationOptionsList = [
   {
     id: 'home',
     name: 'Главная',
-    src: { light: mainBlack, dark: mainWhite },
+    src: { light: mainWhite, dark: mainBlack },
     link: '/',
   },
   {
     id: 'updates',
     name: 'Обновления',
-    src: { light: updatesBlack, dark: updatesWhite },
+    src: { light: updatesWhite, dark: updatesBlack },
     link: '/',
   },
   {
     id: 'web',
     name: 'Веб приложения',
-    src: { light: webBlack, dark: webWhite },
+    src: { light: webWhite, dark: webBlack },
     link: '/',
   },
   {
     id: 'desktop',
     name: 'Десктоп приложения',
-    src: { light: desktopBlack, dark: desktopWhite },
+    src: { light: desktopWhite, dark: desktopBlack },
     link: '/',
   },
   {
     id: 'mobile',
     name: 'Мобильные приложения',
-    src: { light: mobileBlack, dark: mobileWhite },
+    src: { light: mobileWhite, dark: mobileBlack },
     link: '/',
   },
   {
     id: 'articles',
     name: 'Статьи',
-    src: { light: articleBlack, dark: articleWhite },
+    src: { light: articleWhite, dark: articleBlack },
     link: '/',
   },
   {
     id: 'manuals',
     name: 'Руководства',
-    src: { light: manualBlack, dark: manualWhite },
+    src: { light: manualWhite, dark: manualBlack },
     link: '/',
   },
   {
@@ -151,7 +156,7 @@ export const navigationOptionsList = [
   {
     id: 'collapse',
     name: 'Свернуть',
-    src: { light: arrowBackWhite, dark: arrowBackWhite },
+    src: { light: arrowBackWhite, dark: arrowBackBlack },
   },
 ];
 export const mainNavigationOptionsList = [
@@ -186,26 +191,25 @@ export const accountNavigationList = [
   {
     id: 'writeArticle',
     name: 'Написать статью',
-    src: { dark: newArticleBlack, light: newArticleBlack },
+    src: { light: newArticleWhite, dark: newArticleBlack },
     link: '/#/author/new-article',
   },
   {
     id: 'publications',
     name: 'Публикации',
-    src: { dark: articleBlack, light: articleBlack },
+    src: { light: articleWhite, dark: articleBlack },
     link: '/#/author/articles',
   },
   {
     id: 'profile',
     name: 'Профиль',
-    src: { dark: profileBlack, light: profileBlack },
+    src: { light: profileWhite, dark: profileBlack },
     link: '/#/author/profile',
   },
   {
     id: 'logout',
     name: 'Выйти',
-    src: { dark: exitBlack, light: exitBlack },
-    // link: '/', // Если для выхода планируется использовать onClick, можно здесь убрать link
+    src: { light: exitWhite, dark: exitBlack },
   },
 ];
 

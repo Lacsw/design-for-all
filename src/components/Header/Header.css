@@ -4,6 +4,9 @@
   background: var(--color-bg-secondary);
   position: relative;
   z-index: 2;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .header__container {
@@ -14,7 +17,7 @@
   align-items: center;
 }
 
-.header__navigation{
+.header__navigation {
   list-style: none;
   display: flex;
   justify-content: center;

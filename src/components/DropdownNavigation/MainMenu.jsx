@@ -35,6 +35,7 @@ export default function MainMenu({
       titleIcon={titleIcon}
       title={title}
       showName={showName}
+      theme={theme}
     />
   );
 }

@@ -4,10 +4,16 @@ import DropdownNavigation from './DropdownNavigation';
 import { signInSuccess } from 'store/slices';
 import authApi from 'utils/api/auth';
 
-
-export default function UserDropdown({ resetSection, options, type, title, currentUser, theme , titleIcon}) {
+export default function UserDropdown({
+  resetSection,
+  options,
+  type,
+  title,
+  currentUser,
+  theme,
+  titleIcon,
+}) {
   const dispatch = useDispatch();
-
 
   // Обработчик для выхода из аккаунта
   const handleLogout = useCallback(async () => {
@@ -20,17 +26,15 @@ export default function UserDropdown({ resetSection, options, type, title, curre
     }
   }, [dispatch, resetSection]);
 
-
   if (!currentUser) return null;
-  
-  // Если опция называется "Выйти", добавляем для неё onClick
-  const enhancedOptions = options.map(option =>
+
+  const enhancedOptions = options.map((option) =>
     option.name === 'Выйти' ? { ...option, onClick: handleLogout } : option
   );
 
   return (
     <DropdownNavigation
-    options={enhancedOptions}
+      options={enhancedOptions}
       titleIcon={currentUser.avatar || titleIcon}
       type={type}
       title={title}

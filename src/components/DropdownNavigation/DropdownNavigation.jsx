@@ -14,6 +14,8 @@ export default function DropdownNavigation({
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const shouldRenderDropdown = options && options.length > 1;
+
   return (
     <div
       className={`dropdown-navigation dropdown-navigation--${align}`}
@@ -28,10 +30,18 @@ export default function DropdownNavigation({
         />
       </button>
 
-      {isDropdownOpen && options.length > 1 && (
-        <div className="dropdown-navigation__container">
+      {shouldRenderDropdown && (
+        <div
+          className={`dropdown-navigation__container ${
+            isDropdownOpen ? 'show' : ''
+          }`}
+        >
           {showName && (
-            <ul className="dropdown-navigation__items dropdown-navigation__text-items">
+            <ul
+              className={`dropdown-navigation__items dropdown-navigation__text-items ${
+                isDropdownOpen ? 'show' : ''
+              }`}
+            >
               {options.map((option, i) => (
                 <li key={i} className="dropdown-navigation__text-item">
                   {option.link ? (
@@ -57,6 +67,7 @@ export default function DropdownNavigation({
               ))}
             </ul>
           )}
+
           <ul
             className={`dropdown-navigation__items dropdown-navigation__icon-items dropdown-navigation__icon-items_${customBottomPadding}`}
           >

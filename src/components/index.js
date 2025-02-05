@@ -49,6 +49,7 @@ export { default as MainMenu } from './DropdownNavigation/MainMenu';
 export { default as LanguageDropdown } from './DropdownNavigation/LanguageDropdown';
 export { default as CurrencyDropdown } from './DropdownNavigation/CurrencyDropdown';
 export { default as UserDropdown } from './DropdownNavigation/UserDropdown';
+export { default as LogoutButton } from './DropdownNavigation/LogoutButton/LogoutButton';
 export { default as DropdownAmount } from './DropdownAmount/DropdownAmount';
 export { default as Guides } from './Guides/Guides';
 export { default as GuidesMenu } from './GuidesMenu/GuidesMenu';

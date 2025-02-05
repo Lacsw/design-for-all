@@ -1,20 +1,21 @@
-import './Header.css';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
+
+import './Header.css';
 import {
   MainMenu,
   LanguageDropdown,
   CurrencyDropdown,
   SearchInput,
   AuthModal,
+  UserDropdown,
+  LogoutButton,
 } from 'components';
 
-import logo from 'images/logo.svg';
-import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
-import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
-import logoBlack from 'images/logo-black.svg';
-import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
+
 import {
   accountNavigationList,
   adminNavList,
@@ -22,11 +23,11 @@ import {
   languageList,
   navigationOptionsList,
 } from 'utils/constants';
-import { useCallback, useEffect, useState } from 'react';
-import LogoutButton from 'components/DropdownNavigation/LogoutButton/LogoutButton';
-import UserDropdown from 'components/DropdownNavigation/UserDropdown';
-import accountDefaultIcon from 'images/admin/avatar_default.svg';
 
+import logo from 'images/logo.svg';
+import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
+import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
+import logoBlack from 'images/logo-black.svg';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();
@@ -39,41 +40,33 @@ export default function Header({ resetSection }) {
   /* в шапке сайта при клике на иконку входа по ум. открывается
   авторизация, а не регистрация */
 
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authModalMode, setAuthModalMode] = useState(false);
+  const [authModal, setAuthModal] = useState({ isOpen: false, mode: null });
 
   const openAuthModal = () => {
     setSearchParams({ 'modal-auth': 'login' });
   };
 
-  function setModalParams(mode = false) {
-    setAuthModalMode(mode);
+  const handleModalChange = (mode = null) => {
+    setAuthModal({ isOpen: Boolean(mode), mode });
     if (mode) {
       setSearchParams({ 'modal-auth': mode });
     } else {
       setSearchParams({});
     }
-  }
+  };
 
   useEffect(() => {
-    const authModalMode = searchParams.get('modal-auth');
-    if (authModalMode && authModalMode === 'login') {
-      setAuthModalMode(authModalMode);
-      setIsAuthModalOpen(true);
-    } else if (authModalMode && authModalMode === 'signUp') {
-      setAuthModalMode(authModalMode);
-      setIsAuthModalOpen(true);
+    const modalMode = searchParams.get('modal-auth');
+    if (modalMode === 'login' || modalMode === 'signUp') {
+      setAuthModal({ isOpen: true, mode: modalMode });
     } else {
-      setIsAuthModalOpen(false);
+      setAuthModal({ isOpen: false, mode: null });
     }
   }, [searchParams]);
-  // Установка темы, сохранённой persist-ом, при загрузке сайта
+
   useEffect(() => {
-    /* без этого условия, если тема и так начальная,
-      то в setTheme будет попытка удалить несуществющий тег style */
-    if (theme !== 'dark') {
-      dispatch(setTheme(theme));
-    }
+    dispatch(setTheme(theme));
+    console.log(theme);
   }, [dispatch, theme]);
 
   const toggleTheme = useCallback(() => {
@@ -130,7 +123,9 @@ export default function Header({ resetSection }) {
               <UserDropdown
                 resetSection={resetSection}
                 options={isAdmin ? adminNavList : accountNavigationList}
-                titleIcon={ theme === 'light' ? dropdownIconBlack : dropdownIconWhite}
+                titleIcon={
+                  theme === 'light' ? dropdownIconBlack : dropdownIconWhite
+                }
                 type="dropdownWithLinks"
                 title="Профиль"
                 currentUser={currentUser}
@@ -141,9 +136,9 @@ export default function Header({ resetSection }) {
         </ul>
       </div>
       <AuthModal
-        isOpen={isAuthModalOpen}
-        onChange={setModalParams}
-        modalMode={authModalMode}
+        isOpen={authModal.isOpen}
+        onChange={handleModalChange}
+        modalMode={authModal.mode}
       />
     </header>
   );
