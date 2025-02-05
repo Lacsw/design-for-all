@@ -24,7 +24,7 @@ export default function LanguageDropdown({ options, title, theme }) {
       titleIcon={langSrc}
       title={title}
       theme={theme}
-      sizeIcon="s"
+      sizeIcon="m"
       customBottomPadding="bottom-padding"
     />
   );

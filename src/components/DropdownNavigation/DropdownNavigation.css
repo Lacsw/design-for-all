@@ -54,7 +54,7 @@
 
 .dropdown-navigation__icon-items {
   width: 36px;
-  padding: 44px 0 18px 0;
+  padding: 44px 0 28px 0;
   align-items: center;
   background-color: var(--color-bg-accent);
 }
@@ -104,9 +104,14 @@
   height: 36px;
 }
 
-.dropdown-navigation__item-img_s {
+.dropdown-navigation__item-img_m {
   width: 28px;
   height: 28px;
+}
+
+.dropdown-navigation__item-img_s {
+  width: 10px;
+  height: 16px;
 }
 
 .dropdown-navigation__item-text {

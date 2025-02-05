@@ -3,7 +3,7 @@ import './Header.css';
 import {
   MainMenu,
   LanguageDropdown,
-  // CurrencyDropdown,
+  CurrencyDropdown,
   // UserDropdown,
   SearchInput,
 } from 'components';
@@ -15,7 +15,7 @@ import logoBlack from 'images/logo-black.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
-import { languageList, navigationOptionsList } from 'utils/constants';
+import { currencyList, languageList, navigationOptionsList } from 'utils/constants';
 import { useCallback, useEffect } from 'react';
 
 export default function Header({ resetSection }) {
@@ -71,10 +71,14 @@ export default function Header({ resetSection }) {
               title="Язык"
             />
           </li>
-          {/* <li>
-            <CurrencyDropdown />
-          </li>
           <li>
+            <CurrencyDropdown
+             options={currencyList}
+             theme={theme}
+             title="Валюта"
+              />
+          </li>
+          {/* <li>
             <UserDropdown />
           </li> */}
         </ul>

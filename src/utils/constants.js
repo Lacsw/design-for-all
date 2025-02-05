@@ -218,7 +218,7 @@ export const adminNavList = [
 ];
 
 export const currencyList = [
-  { name: 'USD', dark: usdIcon, light: usdIconWhite },
+  { id: 'USD', name: 'USD', src: { light: usdIconWhite, dark: usdIcon } },
 ];
 
 export const languageList = [
