@@ -145,7 +145,7 @@ export const navigationOptionsList = [
   },
   {
     id: 'themeToggle',
-    name: 'Светлая тема', 
+    name: 'Светлая тема',
     src: { light: themeBlack, dark: themeWhite },
   },
   {
@@ -222,10 +222,10 @@ export const currencyList = [
 ];
 
 export const languageList = [
-  { name: 'ru', src: ruFlag },
-  { name: 'zh', src: chFlag },
-  { name: 'en', src: enFlag },
-  { name: 'es', src: spaFlag },
+  { id: 'ru', name: 'ru', src: { light: ruFlag, dark: ruFlag } },
+  { id: 'zh', name: 'zh', src: { light: chFlag, dark: chFlag } },
+  { id: 'en', name: 'en', src: { light: enFlag, dark: enFlag } },
+  { id: 'es', name: 'es', src: { light: spaFlag, dark: spaFlag } },
 ];
 
 export const editList = [

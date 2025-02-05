@@ -9,6 +9,8 @@ export default function DropdownNavigation({
   align = 'bottom',
   showName,
   theme,
+  sizeIcon,
+  customBottomPadding,
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -22,7 +24,7 @@ export default function DropdownNavigation({
         <img
           src={titleIcon}
           alt={title}
-          className="dropdown-navigation__icon"
+          className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
         />
       </button>
 
@@ -55,7 +57,9 @@ export default function DropdownNavigation({
               ))}
             </ul>
           )}
-          <ul className="dropdown-navigation__items dropdown-navigation__icon-items">
+          <ul
+            className={`dropdown-navigation__items dropdown-navigation__icon-items dropdown-navigation__icon-items_${customBottomPadding}`}
+          >
             {options.map((option, i) => (
               <li key={i} className="dropdown-navigation__icon-item">
                 {option.link ? (
@@ -65,11 +69,7 @@ export default function DropdownNavigation({
                   >
                     <img
                       src={
-                        option.src.dark && option.src.light
-                          ? theme === 'dark'
-                            ? option.src.dark
-                            : option.src.light
-                          : option.src
+                        theme === 'dark' ? option.src.dark : option.src.light
                       }
                       alt={option.name}
                       className="dropdown-navigation__item-img"
@@ -82,14 +82,10 @@ export default function DropdownNavigation({
                   >
                     <img
                       src={
-                        option.src.dark && option.src.light
-                          ? theme === 'dark'
-                            ? option.src.dark
-                            : option.src.light
-                          : option.src
+                        theme === 'dark' ? option.src.dark : option.src.light
                       }
                       alt={option.name}
-                      className="dropdown-navigation__item-img"
+                      className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
                     />
                   </button>
                 )}

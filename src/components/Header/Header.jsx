@@ -2,7 +2,7 @@ import './Header.css';
 
 import {
   MainMenu,
-  // LanguageDropdown,
+  LanguageDropdown,
   // CurrencyDropdown,
   // UserDropdown,
   SearchInput,
@@ -15,20 +15,34 @@ import logoBlack from 'images/logo-black.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
-import { navigationOptionsList } from 'utils/constants';
+import { languageList, navigationOptionsList } from 'utils/constants';
+import { useCallback, useEffect } from 'react';
 
-export default function Header() {
+export default function Header({ resetSection }) {
   const dispatch = useDispatch();
   const theme = useSelector(getCurrentTheme);
 
-  const toggleTheme = () => {
-    dispatch(setTheme(theme === 'dark' ? 'light' : 'dark'));
-  };
+  // Установка темы, сохранённой persist-ом, при загрузке сайта
+  useEffect(() => {
+    /* без этого условия, если тема и так начальная,
+      то в setTheme будет попытка удалить несуществющий тег style */
+    if (theme !== 'dark') {
+      dispatch(setTheme(theme));
+    }
+  }, [dispatch, theme]);
+
+  const toggleTheme = useCallback(() => {
+    if (theme === 'dark') {
+      dispatch(setTheme('light'));
+    } else {
+      dispatch(setTheme('dark'));
+    }
+  }, [theme, dispatch]);
 
   return (
     <header className="header">
       <div className="header__container">
-        <Link to="/" className="logo-link">
+        <Link to="/" className="logo-link" onClick={resetSection}>
           <img
             src={theme === 'dark' ? logo : logoBlack}
             alt="Логотип"
@@ -47,12 +61,17 @@ export default function Header() {
               }
               toggleTheme={toggleTheme}
               theme={theme}
+              title="Меню"
+            />
+          </li>
+          <li>
+            <LanguageDropdown
+              options={languageList}
+              theme={theme}
+              title="Язык"
             />
           </li>
           {/* <li>
-            <LanguageDropdown />
-          </li>
-          <li>
             <CurrencyDropdown />
           </li>
           <li>

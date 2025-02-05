@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import DropdownNavigation from './DropdownNavigation';
 
-export default function MainMenu({ options = [], titleIcon, toggleTheme, theme }) {
+export default function MainMenu({
+  options = [],
+  titleIcon,
+  title,
+  toggleTheme,
+  theme,
+}) {
   const [showName, setShowName] = useState(true);
 
   const toggleShowName = () => setShowName((prev) => !prev);
@@ -24,6 +30,11 @@ export default function MainMenu({ options = [], titleIcon, toggleTheme, theme }
   });
 
   return (
-    <DropdownNavigation options={updatedOptions} titleIcon={titleIcon} title="Меню" showName={showName} />
+    <DropdownNavigation
+      options={updatedOptions}
+      titleIcon={titleIcon}
+      title={title}
+      showName={showName}
+    />
   );
 }
