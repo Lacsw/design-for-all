@@ -1,20 +1,21 @@
+import './Header.css';
+
 import {
   MainMenu,
-  LanguageDropdown,
-  CurrencyDropdown,
-  UserDropdown,
+  // LanguageDropdown,
+  // CurrencyDropdown,
+  // UserDropdown,
   SearchInput,
 } from 'components';
 import { Link } from 'react-router-dom';
 import logo from 'images/logo.svg';
-
+import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
+import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
-import dotsIcon from 'images/dropdowns/three-dots.svg';
 import { navigationOptionsList } from 'utils/constants';
-
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="header-container">
+      <div className="header__container">
         <Link to="/" className="logo-link">
           <img
             src={theme === 'dark' ? logo : logoBlack}
@@ -34,13 +35,19 @@ export default function Header() {
             className="header__logo"
           />
         </Link>
-        <button onClick={toggleTheme}>Тема</button>
-        <ul className="header__icons-container">
+        <ul className="header__navigation">
           <li>
             <SearchInput />
           </li>
           <li>
-            <MainMenu options={navigationOptionsList} titleIcon={dotsIcon}/>
+            <MainMenu
+              options={navigationOptionsList}
+              titleIcon={
+                theme === 'light' ? dropdownIconBlack : dropdownIconWhite
+              }
+              toggleTheme={toggleTheme}
+              theme={theme}
+            />
           </li>
           {/* <li>
             <LanguageDropdown />

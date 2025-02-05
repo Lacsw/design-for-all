@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-.header__icons-container {
+.header__navigation{
   list-style: none;
   display: flex;
   justify-content: center;
@@ -22,61 +22,4 @@
   gap: 10.5px;
   margin: 0;
   padding: 0;
-}
-
-.header__icon-background {
-  margin: 0;
-  padding: 0;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: var(--color-bg-accent);
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
-.logo-link {
-  line-height: 0;
-  position: relative; /* для носка */
-}
-
-/* всё, что ниже - носок и санта */
-
-.logo-link::before {
-  content: '';
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  left: 16px;
-  top: 90%;
-  background: url(../../images/christmas-sock.svg) center / cover;
-  transform-origin: top;
-  transition: 0.5s ease;
-}
-
-.sock::before {
-  rotate: 15deg;
-  animation: sock 1s 0.5s ease-in-out alternate infinite;
-}
-
-@keyframes sock {
-  to {
-    rotate: -15deg;
-  }
-}
-
-.santa {
-  display: block;
-  width: 36px;
-  filter: drop-shadow(0 0 3px black);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.santa:hover {
-  scale: 1.1;
 }

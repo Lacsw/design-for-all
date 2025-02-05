@@ -3,11 +3,13 @@ import articleWhite from 'images/navigation/article-icon-white.svg';
 import desktopBlack from 'images/navigation/desktop-icon-black.svg';
 import desktopWhite from 'images/navigation/desktop-icon-white.svg';
 import mainBlack from 'images/navigation/main-icon-black.svg';
+import mainWhite from 'images/navigation/main-icon-white.svg';
 import manualBlack from 'images/navigation/manual-icon-black.svg';
 import manualWhite from 'images/navigation/manual-icon-white.svg';
 import mobileBlack from 'images/navigation/mobile-icon-black.svg';
 import mobileWhite from 'images/navigation/mobile-icon-white.svg';
 import themeBlack from 'images/navigation/theme-icon-black.svg';
+import themeWhite from 'images/navigation/theme-icon-white.svg';
 import arrowBackWhite from 'images/navigation/arrow-back-icon-white.svg';
 
 import updatesBlack from 'images/navigation/updates-icon-black.svg';
@@ -99,17 +101,59 @@ export const authorArticlesTabs = [
 ];
 
 export const navigationOptionsList = [
-  { name: 'Главная', src: mainBlack, link: '/' },
-  { name: 'Обновления', src: updatesBlack, link: '/' },
-  { name: 'Веб приложения', src: webBlack, link: '/' },
-  { name: 'Десктоп приложения', src: desktopBlack, link: '/' },
-  { name: 'Мобильные приложения', src: mobileBlack, link: '/' },
-  { name: 'Статьи', src: articleBlack, link: '/' },
-  { name: 'Руководства', src: manualBlack, link: '/' },
-  { name: 'Светлая тема', src: themeBlack },
-  { name: 'Свернуть', src: arrowBackWhite },
+  {
+    id: 'home',
+    name: 'Главная',
+    src: { light: mainBlack, dark: mainWhite },
+    link: '/',
+  },
+  {
+    id: 'updates',
+    name: 'Обновления',
+    src: { light: updatesBlack, dark: updatesWhite },
+    link: '/',
+  },
+  {
+    id: 'web',
+    name: 'Веб приложения',
+    src: { light: webBlack, dark: webWhite },
+    link: '/',
+  },
+  {
+    id: 'desktop',
+    name: 'Десктоп приложения',
+    src: { light: desktopBlack, dark: desktopWhite },
+    link: '/',
+  },
+  {
+    id: 'mobile',
+    name: 'Мобильные приложения',
+    src: { light: mobileBlack, dark: mobileWhite },
+    link: '/',
+  },
+  {
+    id: 'articles',
+    name: 'Статьи',
+    src: { light: articleBlack, dark: articleWhite },
+    link: '/',
+  },
+  {
+    id: 'manuals',
+    name: 'Руководства',
+    src: { light: manualBlack, dark: manualWhite },
+    link: '/',
+  },
+  {
+    id: 'themeToggle',
+    name: 'Светлая тема', 
+    src: { light: themeBlack, dark: themeWhite },
+  },
+  {
+    id: 'collapse',
+    name: 'Свернуть',
+    src: { light: arrowBackWhite, dark: arrowBackWhite },
+  },
 ];
-
 export const mainNavigationOptionsList = [
   { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '' },
   { name: 'Веб приложения', dark: webBlack, light: webWhite, link: 'web' },
