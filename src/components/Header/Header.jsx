@@ -28,6 +28,9 @@ import logo from 'images/logo.svg';
 import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
 import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
+import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
+import authApi from 'utils/api/auth'; // если выход реализован через API
+import { signOut } from 'store/slices';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();
@@ -37,10 +40,33 @@ export default function Header({ resetSection }) {
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
-  /* в шапке сайта при клике на иконку входа по ум. открывается
-  авторизация, а не регистрация */
+
+  // Условие, при котором срабатывать таймаут:
+  const shouldTimeout = isAdmin;
+
+  // Функция, которая вызывается по истечении таймаута.
+  const handleTimeout = async (dispatch) => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.error('Ошибка при выходе:', error);
+    }
+    dispatch(signOut());
+    // После выхода вызывается окно авторизации.
+    openAuthModal();
+  };
+
+  // Хук для установки
+  useSessionTimeout({
+    timeout: 3600000, // 1 час
+    shouldTimeout,
+    onTimeout: handleTimeout,
+  });
 
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: null });
+
+  /* в шапке сайта при клике на иконку входа по ум. открывается
+  авторизация, а не регистрация */
 
   const openAuthModal = () => {
     setSearchParams({ 'modal-auth': 'login' });

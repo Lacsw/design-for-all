@@ -37,6 +37,7 @@ import dotsIconW from 'images/dots-icon.svg';
 import translateIconB from 'images/translate-icon_black.svg';
 import translateIconW from 'images/translate-icon_white.svg';
 import createUser from 'images/admin/create-user.svg';
+import createUserWhite from 'images/admin/create-user-white.svg';
 //socials
 import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
@@ -215,23 +216,27 @@ export const accountNavigationList = [
 
 export const adminNavList = [
   {
+    id: 'requests',
     name: 'Заявки',
-    src: articleBlack,
+    src: { light: articleWhite, dark: articleBlack },
     link: '/#/admin/creates',
   },
   {
+    id: 'createUser',
     name: 'Создать пользователя',
-    src: createUser,
+    src: { light: createUserWhite, dark: createUser },
     link: '/#/admin/create-user',
   },
   {
+    id: 'profile',
     name: 'Профиль',
-    src: profileBlack,
+    src: { light: profileWhite, dark: profileBlack },
     link: '/#/admin/profile',
   },
   {
+    id: 'logout',
     name: 'Выйти',
-    src: exitBlack,
+    src: { light: exitWhite, dark: exitBlack },
     link: '/',
   },
 ];
