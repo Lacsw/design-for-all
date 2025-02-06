@@ -66,7 +66,6 @@ export default function Header({ resetSection }) {
 
   useEffect(() => {
     dispatch(setTheme(theme));
-    console.log(theme);
   }, [dispatch, theme]);
 
   const toggleTheme = useCallback(() => {

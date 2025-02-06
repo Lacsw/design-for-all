@@ -1,5 +1,6 @@
 .search-input {
   width: 549px;
+  flex-grow: 1;
   border-radius: 18px;
   border: 1px solid var(--color-main);
   display: flex;
@@ -45,3 +46,24 @@
   outline: none;
   cursor: pointer;
 }
+
+
+@media (max-width:  768px) {
+
+  .search-input__loupe {
+    width: 34px;
+    height: 34px;
+  }
+
+  .search-input {
+    width: 250vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-input {
+    width: 50vw;
+  }
+}
+
+
