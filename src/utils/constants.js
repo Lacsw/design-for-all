@@ -237,7 +237,7 @@ export const adminNavList = [
     id: 'logout',
     name: 'Выйти',
     src: { light: exitWhite, dark: exitBlack },
-    link: '/',
+ 
   },
 ];
 
