@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 /**
  * Универсальный хук для автоматического завершения сессии.
  *
- * @param {Object} params
+ * @param {object} params
  * @param {number} params.timeout - время таймаута в миллисекундах.
  * @param {boolean} params.shouldTimeout - условие, при котором таймаут активен.
  * @param {Function} params.onTimeout - функция, которая вызывается по истечении
