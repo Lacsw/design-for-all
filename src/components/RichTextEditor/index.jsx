@@ -53,6 +53,16 @@ import './extensions/heading/index.css';
 import './extensions/link/index.css';
 import { sxEditorWrapper } from './styles';
 import { customHeadingNodeName } from './extensions/heading/constants';
+import { useClickSpy } from './hooks/useClickSpy';
+import { onSelectionUpdate } from './helpers/onSelectionUpdate';
+
+function goThroughLink({ href, target, rel }) {
+  Object.assign(document.createElement('a'), {
+    target,
+    rel,
+    href,
+  }).click();
+}
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -200,7 +210,52 @@ export const RichTextEditor = memo(function RichTextEditor({
     editable: !readOnly,
     parseOptions,
     onUpdate,
+    onSelectionUpdate,
     enableContentCheck: true, // не работает?
+    editorProps: {
+      handleDOMEvents: {
+        click: (view, e) => {
+          console.log('CLIIIIIICK', e);
+          // e.preventDefault();
+          // return true;
+        },
+        mouseenter: (view, e) => {
+          console.log('mouseenter', e);
+        },
+      },
+      handleClickOn: (view, pos, node, nodePos, event, direct) => {
+        console.log('handleClickOn', {
+          view,
+          pos,
+          node,
+          nodePos,
+          event,
+          direct,
+        });
+
+        /** @type {EventTarget & HTMLElement} */
+        // @ts-ignore
+        const target = event.target;
+        const res = {
+          href: target.getAttribute('href'),
+          target: target.getAttribute('target'),
+          rel: target.getAttribute('rel'),
+        };
+        console.log('res', res);
+        const isLink = target.tagName === 'A';
+
+        if (isLink && !event.ctrlKey && event.button !== 1) {
+          console.log('!!!');
+          event.preventDefault();
+          return true;
+        }
+
+        if (isLink && event.button === 1) {
+          console.log('098');
+          goThroughLink(res);
+        }
+      },
+    },
   });
   // #endregion useEditor
 
@@ -253,6 +308,8 @@ export const RichTextEditor = memo(function RichTextEditor({
     handleImgInserting,
     handleImgModalClose,
   } = useImageExt(editor);
+
+  // useClickSpy(editor);
 
   // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */

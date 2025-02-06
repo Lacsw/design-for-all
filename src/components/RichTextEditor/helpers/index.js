@@ -187,6 +187,7 @@ export function checkIsCommandActive(commandName, editor) {
 
   switch (commandName) {
     case COMMANDS_NAMES.left: {
+      console.log('111111111111first', editor.isActive('link'));
       const textAlign =
         // @ts-ignore
         editor.view?.domObserver?.currentSelection?.focusNode?.parentNode?.style
@@ -194,7 +195,9 @@ export function checkIsCommandActive(commandName, editor) {
 
       if (
         textAlign === 'start' ||
-        (!textAlign && !editor.isActive(COMMANDS_NAMES.img))
+        (!textAlign &&
+          !editor.isActive(COMMANDS_NAMES.img) &&
+          !editor.isActive('link'))
       ) {
         return true;
       }
