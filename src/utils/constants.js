@@ -3,18 +3,27 @@ import articleWhite from 'images/navigation/article-icon-white.svg';
 import desktopBlack from 'images/navigation/desktop-icon-black.svg';
 import desktopWhite from 'images/navigation/desktop-icon-white.svg';
 import mainBlack from 'images/navigation/main-icon-black.svg';
+import mainWhite from 'images/navigation/main-icon-white.svg';
 import manualBlack from 'images/navigation/manual-icon-black.svg';
 import manualWhite from 'images/navigation/manual-icon-white.svg';
 import mobileBlack from 'images/navigation/mobile-icon-black.svg';
 import mobileWhite from 'images/navigation/mobile-icon-white.svg';
 import themeBlack from 'images/navigation/theme-icon-black.svg';
+import themeWhite from 'images/navigation/theme-icon-white.svg';
+import arrowBackWhite from 'images/navigation/arrow-back-icon-white.svg';
+import arrowBackBlack from 'images/navigation/arrow-back-icon-black.svg';
+
 import updatesBlack from 'images/navigation/updates-icon-black.svg';
 import updatesWhite from 'images/navigation/updates-icon-white.svg';
 import webBlack from 'images/navigation/web-icon-black.svg';
 import webWhite from 'images/navigation/web-icon-white.svg';
 import exitBlack from 'images/navigation/exit-icon-black.svg';
+import exitWhite from 'images/navigation/exit-icon-white.svg';
 import newArticleBlack from 'images/navigation/new-article-icon-black.svg';
+import newArticleWhite from 'images/navigation/new-article-icon-white.svg';
+
 import profileBlack from 'images/navigation/profile-icon-black.svg';
+import profileWhite from 'images/navigation/profile-icon-white.svg';
 import ruFlag from 'images/flag-icon.svg';
 import chFlag from 'images/ch-flag-icon.svg';
 import enFlag from 'images/en-flag-icon.svg';
@@ -97,17 +106,59 @@ export const authorArticlesTabs = [
 ];
 
 export const navigationOptionsList = [
-  { name: 'Главная', src: mainBlack, link: '/' },
-  { name: 'Обновления', src: updatesBlack, link: '/' },
-  { name: 'Веб приложения', src: webBlack, link: '/' },
-  { name: 'Десктоп приложения', src: desktopBlack, link: '/' },
-  { name: 'Мобильные приложения', src: mobileBlack, link: '/' },
-  { name: 'Статьи', src: articleBlack, link: '/' },
-  { name: 'Руководства', src: manualBlack, link: '/' },
-  { name: 'Светлая тема', src: themeBlack, link: '/' },
-  { name: 'Свернуть' },
+  {
+    id: 'home',
+    name: 'Главная',
+    src: { light: mainWhite, dark: mainBlack },
+    link: '/',
+  },
+  {
+    id: 'updates',
+    name: 'Обновления',
+    src: { light: updatesWhite, dark: updatesBlack },
+    link: '/',
+  },
+  {
+    id: 'web',
+    name: 'Веб приложения',
+    src: { light: webWhite, dark: webBlack },
+    link: '/',
+  },
+  {
+    id: 'desktop',
+    name: 'Десктоп приложения',
+    src: { light: desktopWhite, dark: desktopBlack },
+    link: '/',
+  },
+  {
+    id: 'mobile',
+    name: 'Мобильные приложения',
+    src: { light: mobileWhite, dark: mobileBlack },
+    link: '/',
+  },
+  {
+    id: 'articles',
+    name: 'Статьи',
+    src: { light: articleWhite, dark: articleBlack },
+    link: '/',
+  },
+  {
+    id: 'manuals',
+    name: 'Руководства',
+    src: { light: manualWhite, dark: manualBlack },
+    link: '/',
+  },
+  {
+    id: 'themeToggle',
+    name: 'Светлая тема',
+    src: { light: themeBlack, dark: themeWhite },
+  },
+  {
+    id: 'collapse',
+    name: 'Свернуть',
+    src: { light: arrowBackWhite, dark: arrowBackBlack },
+  },
 ];
-
 export const mainNavigationOptionsList = [
   { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '' },
   { name: 'Веб приложения', dark: webBlack, light: webWhite, link: 'web' },
@@ -136,16 +187,30 @@ export const mainNavigationOptionsList = [
     link: 'manual',
   },
 ];
-
 export const accountNavigationList = [
   {
+    id: 'writeArticle',
     name: 'Написать статью',
-    src: newArticleBlack,
+    src: { light: newArticleWhite, dark: newArticleBlack },
     link: '/#/author/new-article',
   },
-  { name: 'Публикации', src: articleBlack, link: '/#/author/articles' },
-  { name: 'Профиль', src: profileBlack, link: '/#/author/profile' },
-  { name: 'Выйти', src: exitBlack, link: '/' },
+  {
+    id: 'publications',
+    name: 'Публикации',
+    src: { light: articleWhite, dark: articleBlack },
+    link: '/#/author/articles',
+  },
+  {
+    id: 'profile',
+    name: 'Профиль',
+    src: { light: profileWhite, dark: profileBlack },
+    link: '/#/author/profile',
+  },
+  {
+    id: 'logout',
+    name: 'Выйти',
+    src: { light: exitWhite, dark: exitBlack },
+  },
 ];
 
 export const adminNavList = [
@@ -172,14 +237,14 @@ export const adminNavList = [
 ];
 
 export const currencyList = [
-  { name: 'USD', dark: usdIcon, light: usdIconWhite },
+  { id: 'USD', name: 'USD', src: { light: usdIconWhite, dark: usdIcon } },
 ];
 
 export const languageList = [
-  { name: 'ru', src: ruFlag },
-  { name: 'zh', src: chFlag },
-  { name: 'en', src: enFlag },
-  { name: 'es', src: spaFlag },
+  { id: 'ru', name: 'ru', src: { light: ruFlag, dark: ruFlag } },
+  { id: 'zh', name: 'zh', src: { light: chFlag, dark: chFlag } },
+  { id: 'en', name: 'en', src: { light: enFlag, dark: enFlag } },
+  { id: 'es', name: 'es', src: { light: spaFlag, dark: spaFlag } },
 ];
 
 export const editList = [

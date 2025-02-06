@@ -1,76 +1,72 @@
-// import { Button } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 
 import './Header.css';
-import logo from 'images/logo.svg';
-import logoBlack from 'images/logo-black.svg';
-import accountDefaultIcon from 'images/admin/avatar_default.svg';
-import siginInIcon from 'images/siginin-icon.svg';
-import siginInIconWhite from 'images/siginin-icon_white.svg';
-import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
-import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
-import santaBlack from 'images/santa_dark.svg';
-import santaWhite from 'images/santa_light.svg';
 import {
-  accountNavigationList,
-  navigationOptionsList,
-  adminNavList,
-  languageList,
-  currencyList,
-} from 'utils/constants';
-import { DropdownNavigation, AuthModal, SearchInput } from 'components';
+  MainMenu,
+  LanguageDropdown,
+  CurrencyDropdown,
+  SearchInput,
+  AuthModal,
+  UserDropdown,
+  LogoutButton,
+} from 'components';
+
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import { setTheme } from 'store/middlewares';
+
+import {
+  accountNavigationList,
+  adminNavList,
+  currencyList,
+  languageList,
+  navigationOptionsList,
+} from 'utils/constants';
+
+import logo from 'images/logo.svg';
+import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
+import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
+import logoBlack from 'images/logo-black.svg';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const theme = useSelector(getCurrentTheme);
 
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authModalMode, setAuthModalMode] = useState(false);
-
   /* в шапке сайта при клике на иконку входа по ум. открывается
   авторизация, а не регистрация */
+
+  const [authModal, setAuthModal] = useState({ isOpen: false, mode: null });
+
   const openAuthModal = () => {
     setSearchParams({ 'modal-auth': 'login' });
   };
 
-  function setModalParams(mode = false) {
-    setAuthModalMode(mode);
+  const handleModalChange = (mode = null) => {
+    setAuthModal({ isOpen: Boolean(mode), mode });
     if (mode) {
       setSearchParams({ 'modal-auth': mode });
     } else {
       setSearchParams({});
     }
-  }
+  };
 
   useEffect(() => {
-    const authModalMode = searchParams.get('modal-auth');
-    if (authModalMode && authModalMode === 'login') {
-      setAuthModalMode(authModalMode);
-      setIsAuthModalOpen(true);
-    } else if (authModalMode && authModalMode === 'signUp') {
-      setAuthModalMode(authModalMode);
-      setIsAuthModalOpen(true);
+    const modalMode = searchParams.get('modal-auth');
+    if (modalMode === 'login' || modalMode === 'signUp') {
+      setAuthModal({ isOpen: true, mode: modalMode });
     } else {
-      setIsAuthModalOpen(false);
+      setAuthModal({ isOpen: false, mode: null });
     }
   }, [searchParams]);
 
-  // Установка темы, сохранённой persist-ом, при загрузке сайта
   useEffect(() => {
-    /* без этого условия, если тема и так начальная,
-      то в setTheme будет попытка удалить несуществющий тег style */
-    if (theme !== 'dark') {
-      dispatch(setTheme(theme));
-    }
+    dispatch(setTheme(theme));
+    console.log(theme);
   }, [dispatch, theme]);
 
   const toggleTheme = useCallback(() => {
@@ -81,98 +77,68 @@ export default function Header({ resetSection }) {
     }
   }, [theme, dispatch]);
 
-  // Новогодний носок (onMouseOver у логотипа)
-  function rotateSock(evt) {
-    const sock = evt.target;
-    if (sock.classList.contains('sock')) return;
-    sock.classList.add('sock');
-    setTimeout(() => sock.classList.remove('sock'), 4000);
-  }
-
   return (
     <header className="header">
       <div className="header__container">
-        <Link
-          to="/"
-          className="logo-link"
-          onClick={resetSection}
-          onMouseOver={rotateSock}
-        >
+        <Link to="/" className="logo-link" onClick={resetSection}>
           <img
             src={theme === 'dark' ? logo : logoBlack}
             alt="Логотип"
             className="header__logo"
           />
         </Link>
-        <ul className="header__icons-container">
+        <ul className="header__navigation">
           <li>
             <SearchInput />
           </li>
           <li>
-            {/* 
-            <Button variant="contained" onClick={toggleTheme}>
-              Смена темы. Текущая: {theme}
-            </Button>
-            */}
-            <img
-              className="santa"
-              src={theme === 'dark' ? santaBlack : santaWhite}
-              alt="Санта"
-              onClick={toggleTheme}
-            />
-          </li>
-          <li>
-            <DropdownNavigation
+            <MainMenu
               options={navigationOptionsList}
               titleIcon={
                 theme === 'light' ? dropdownIconBlack : dropdownIconWhite
               }
-              type="dropdownWithLinks"
+              toggleTheme={toggleTheme}
+              theme={theme}
               title="Меню"
             />
           </li>
           <li>
-            <DropdownNavigation
+            <LanguageDropdown
               options={languageList}
+              theme={theme}
               title="Язык"
-              paddingBottom="5"
-              size="m"
             />
           </li>
           <li>
-            <DropdownNavigation
+            <CurrencyDropdown
               options={currencyList}
+              theme={theme}
               title="Валюта"
-              sizeItem="s"
             />
           </li>
           <li>
             {!currentUser ? (
-              <button
-                className="header__icon-background"
-                onClick={openAuthModal}
-              >
-                <img
-                  src={theme === 'dark' ? siginInIcon : siginInIconWhite}
-                  alt="войти"
-                />
-              </button>
+              <LogoutButton openAuthModal={openAuthModal} />
             ) : (
-              <DropdownNavigation
+              <UserDropdown
+                resetSection={resetSection}
                 options={isAdmin ? adminNavList : accountNavigationList}
-                titleIcon={currentUser.avatar || accountDefaultIcon}
+                titleIcon={
+                  theme === 'light' ? dropdownIconBlack : dropdownIconWhite
+                }
                 type="dropdownWithLinks"
                 title="Профиль"
-                resetSection={resetSection}
+                currentUser={currentUser}
+                theme={theme}
               />
             )}
           </li>
         </ul>
       </div>
       <AuthModal
-        isOpen={isAuthModalOpen}
-        onChange={setModalParams}
-        modalMode={authModalMode}
+        isOpen={authModal.isOpen}
+        onChange={handleModalChange}
+        modalMode={authModal.mode}
       />
     </header>
   );
