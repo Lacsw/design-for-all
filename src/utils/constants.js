@@ -246,11 +246,12 @@ export const currencyList = [
 ];
 
 export const languageList = [
-  { id: 'ru', name: 'ru', src: { light: ruFlag, dark: ruFlag } },
-  { id: 'zh', name: 'zh', src: { light: chFlag, dark: chFlag } },
-  { id: 'en', name: 'en', src: { light: enFlag, dark: enFlag } },
-  { id: 'es', name: 'es', src: { light: spaFlag, dark: spaFlag } },
+  { id: 'ru', name: 'ru', src: ruFlag },
+  { id: 'zh', name: 'zh', src: chFlag },
+  { id: 'en', name: 'en', src: enFlag },
+  { id: 'es', name: 'es', src: spaFlag },
 ];
+
 
 export const editList = [
   { name: 'menu', dark: dotsIconW, light: dotsIconB },

@@ -16,6 +16,13 @@ export default function DropdownNavigation({
 
   const shouldRenderDropdown = options && options.length > 1;
 
+  const getIconSrc = (option) => {
+    if (typeof option.src === 'object' && option.src !== null) {
+      return theme === 'dark' ? option.src.dark : option.src.light;
+    }
+    return option.src;
+  };
+
   return (
     <div
       className={`dropdown-navigation dropdown-navigation--${align}`}
@@ -79,9 +86,7 @@ export default function DropdownNavigation({
                     className="dropdown-navigation__links"
                   >
                     <img
-                      src={
-                        theme === 'dark' ? option.src.dark : option.src.light
-                      }
+                     src={getIconSrc(option)}
                       alt={option.name}
                       className="dropdown-navigation__item-img"
                     />
@@ -92,9 +97,7 @@ export default function DropdownNavigation({
                     className="dropdown-navigation__btns"
                   >
                     <img
-                      src={
-                        theme === 'dark' ? option.src.dark : option.src.light
-                      }
+                      src={getIconSrc(option)}
                       alt={option.name}
                       className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
                     />
