@@ -68,6 +68,11 @@ const userSlice = createSlice({
     setDecision: (state, action) => {
       state.decision = action.payload;
     },
+    signOut: (state) => {
+      state.currentUser = null;
+      state.loading = false;
+      state.error = null;
+    },
   },
 });
 
@@ -81,6 +86,7 @@ export const {
   resetDraft,
   addOriginal,
   setDecision,
+  signOut,
 } = userSlice.actions;
 
 // export const userReducer = userSlice.reducer;

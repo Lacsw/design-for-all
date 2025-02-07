@@ -7,7 +7,7 @@ export default function LanguageDropdown({ options, title, theme }) {
   const dispatch = useDispatch();
 
   const language = useSelector(getLanguage);
-  const langSrc = options.find((item) => item.name === language)?.src[theme];
+  const langSrc = options.find((item) => item.name === language)?.src;
 
   const handleOptionClick = (option) => {
     dispatch(changeLanguage(option));
