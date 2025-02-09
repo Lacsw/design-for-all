@@ -1,7 +1,15 @@
-/* .rte a {
+.tiptap[contenteditable='true'] .rte__mark_link {
+  cursor: text;
+}
+
+.tiptap[contenteditable='true'] .rte__mark_link:hover {
+  opacity: 1;
+}
+
+.extra-mode .tiptap[contenteditable='true'] .rte__mark_link {
   cursor: pointer;
 }
 
-.rte a:hover {
-  opacity: 0.8;
-} */
+.extra-mode .tiptap[contenteditable='true'] .rte__mark_link:hover {
+  opacity: 0.5;
+}

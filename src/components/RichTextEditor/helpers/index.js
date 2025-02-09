@@ -187,17 +187,26 @@ export function checkIsCommandActive(commandName, editor) {
 
   switch (commandName) {
     case COMMANDS_NAMES.left: {
-      console.log('111111111111first', editor.isActive('link'));
-      const textAlign =
+      console.log(
+        'checkIsCommandActive isLink',
+        editor.isActive('link'),
+        editor
+      );
+
+      /** @type {HTMLElement | null} */
+      const node =
         // @ts-ignore
-        editor.view?.domObserver?.currentSelection?.focusNode?.parentNode?.style
-          .textAlign;
+        editor.view?.domObserver?.currentSelection?.focusNode?.parentNode;
+
+      const textAlign = node?.style.textAlign;
 
       if (
         textAlign === 'start' ||
+        (node?.tagName === 'P' && !textAlign) /*||
         (!textAlign &&
           !editor.isActive(COMMANDS_NAMES.img) &&
           !editor.isActive('link'))
+      */
       ) {
         return true;
       }

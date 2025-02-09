@@ -1,51 +1,80 @@
 // @ts-check
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /** @type {AddEventListenerOptions} */
-const handlerParams = {
-  capture: true,
-};
+// const handlerParams = {
+//   capture: true,
+// };
 
-/** @param {import('@tiptap/core').Editor | null} editor */
-export const useClickSpy = (editor) => {
+/**
+ * @typedef TJDClickSpyProps
+ * @type {object}
+ * @property {import('@tiptap/core').Editor | null} editor
+ */
+
+/**
+ * @typedef TJDClickSpyReturning
+ * @type {object}
+ * @property {boolean} isCtrlPressed Нажат ли контрл
+ * @property {boolean} isMMBPressed Нажата ли средняя кнопка мыши
+ */
+
+/**
+ * @param {TJDClickSpyProps} props
+ * @returns {TJDClickSpyReturning}
+ */
+export const useClickSpy = ({ editor }) => {
+  const [isCtrlPressed, setIsContrlPressed] = useState(false);
+  const [isMMBPressed, setIsMMBPressed] = useState(false);
+
   useEffect(() => {
     if (!editor) {
       return;
     }
 
-    // /** @param {MouseEvent} event */
-    // const handleClickOnLink = (event) => {
-    //   event.preventDefault();
-    //   event.stopImmediatePropagation();
-    //   console.log('LIIIINK', event);
-    // };
-
     /** @param {MouseEvent} event */
     const handleClick = (event) => {
-      console.log('first', event);
-      /** @type {EventTarget & HTMLElement} */
-      // @ts-ignore
-      const target = event.target;
+      if (event.button === 1) {
+        setIsMMBPressed(true);
+      }
+    };
 
-      if (target.tagName === 'A') {
-        console.log('!!!!!    target.tagName', target.tagName);
-        event.preventDefault();
-        /** @type {EventTarget & HTMLLinkElement} */
-        // @ts-ignore
-        const targetLink = target;
+    /** @param {MouseEvent} event */
+    const handleMouseUp = (event) => {
+      setIsMMBPressed(false);
+    };
 
-        // targetLink.hasL = true;
+    /** @param {KeyboardEvent} event */
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey) {
+        setIsContrlPressed(true);
+      }
+    };
 
-        // targetLink.addEventListener('click', handleClickOnLink, true);
+    /** @param {KeyboardEvent} event */
+    const handleKeyUp = (event) => {
+      if (event.key === 'Control') {
+        setIsContrlPressed(false);
       }
     };
 
     const editorElement = editor.view.dom;
-    editorElement.addEventListener('click', handleClick);
+
+    editorElement.addEventListener('mousedown', handleClick);
+    editorElement.addEventListener('mouseup', handleMouseUp);
+
+    editorElement.addEventListener('keydown', handleKeyDown);
+    editorElement.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      editorElement.removeEventListener('click', handleClick);
+      editorElement.removeEventListener('mousedown', handleClick);
+      editorElement.removeEventListener('mouseup', handleMouseUp);
+
+      editorElement.removeEventListener('keydown', handleKeyDown);
+      editorElement.removeEventListener('keyup', handleKeyUp);
     };
   }, [editor]);
+
+  return { isMMBPressed, isCtrlPressed };
 };

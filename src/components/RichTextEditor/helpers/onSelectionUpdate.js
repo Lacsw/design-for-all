@@ -1,9 +1,9 @@
 // @ts-check
-import { TextSelection } from '@tiptap/pm/state';
+// import { TextSelection } from '@tiptap/pm/state';
 
 /** @param {import('@tiptap/react').EditorEvents['selectionUpdate']} params */
 export const onSelectionUpdate = ({ editor, transaction }) => {
-  console.log('onSelectionUpdate', { editor, transaction });
+  // console.log('selectionUpdate');
   //   //   const { state } = editor.view;
   //   //   const { from, to } = state.selection;
   //   //   // Находим все марки в текущем выделении

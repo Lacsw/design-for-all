@@ -2,6 +2,7 @@
 // custom extensions
 import { linkExtConfig } from './extensions/link/config';
 import { CustomLinkExtension } from './extensions/link/link';
+import { customHeadingNodeName } from './extensions/heading/constants';
 import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
@@ -45,6 +46,8 @@ import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
 import { useValidation } from './validation/useValidation';
+import { onSelectionUpdate } from './helpers/onSelectionUpdate';
+import { editorProps } from './helpers/editorProps';
 
 import clsx from 'clsx';
 import './index.css';
@@ -52,17 +55,7 @@ import './components/index.css';
 import './extensions/heading/index.css';
 import './extensions/link/index.css';
 import { sxEditorWrapper } from './styles';
-import { customHeadingNodeName } from './extensions/heading/constants';
 import { useClickSpy } from './hooks/useClickSpy';
-import { onSelectionUpdate } from './helpers/onSelectionUpdate';
-
-function goThroughLink({ href, target, rel }) {
-  Object.assign(document.createElement('a'), {
-    target,
-    rel,
-    href,
-  }).click();
-}
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -205,57 +198,14 @@ export const RichTextEditor = memo(function RichTextEditor({
       (инстанс редактора не пересоздается, но конфигурируется при сменах ссылок напр на onUpdate ???)
    */
   const editor = useEditor({
-    extensions,
+    enableContentCheck: true, // не работает?
+    extensions: extensions,
     content: initialValue,
     editable: !readOnly,
-    parseOptions,
-    onUpdate,
-    onSelectionUpdate,
-    enableContentCheck: true, // не работает?
-    editorProps: {
-      handleDOMEvents: {
-        click: (view, e) => {
-          console.log('CLIIIIIICK', e);
-          // e.preventDefault();
-          // return true;
-        },
-        mouseenter: (view, e) => {
-          console.log('mouseenter', e);
-        },
-      },
-      handleClickOn: (view, pos, node, nodePos, event, direct) => {
-        console.log('handleClickOn', {
-          view,
-          pos,
-          node,
-          nodePos,
-          event,
-          direct,
-        });
-
-        /** @type {EventTarget & HTMLElement} */
-        // @ts-ignore
-        const target = event.target;
-        const res = {
-          href: target.getAttribute('href'),
-          target: target.getAttribute('target'),
-          rel: target.getAttribute('rel'),
-        };
-        console.log('res', res);
-        const isLink = target.tagName === 'A';
-
-        if (isLink && !event.ctrlKey && event.button !== 1) {
-          console.log('!!!');
-          event.preventDefault();
-          return true;
-        }
-
-        if (isLink && event.button === 1) {
-          console.log('098');
-          goThroughLink(res);
-        }
-      },
-    },
+    parseOptions: parseOptions,
+    editorProps: editorProps,
+    onUpdate: onUpdate,
+    onSelectionUpdate: onSelectionUpdate,
   });
   // #endregion useEditor
 
@@ -309,7 +259,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     handleImgModalClose,
   } = useImageExt(editor);
 
-  // useClickSpy(editor);
+  const { isMMBPressed, isCtrlPressed } = useClickSpy({ editor });
 
   // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */
@@ -448,7 +398,11 @@ export const RichTextEditor = memo(function RichTextEditor({
   return (
     <Box
       ref={wrapperRef}
-      className={clsx('rte', className)}
+      className={clsx(
+        'rte',
+        className,
+        (isMMBPressed || isCtrlPressed) && 'extra-mode'
+      )}
       sx={sxEditorWrapper({ maxHeight })}
       id={String(id)}
       onBlur={handleBlurOnWrapper}
