@@ -1,2 +1,11 @@
-export const disallowedProtocols = ['ftp', 'file', 'mailto'];
-export const disallowedDomains = [];
+export const disallowedProtocols = [
+  'ftp',
+  'ftps',
+  'mailto',
+  'tel',
+  'callto',
+  'sms',
+  'cid',
+  'xmpp',
+];
+export const disallowedDomains = ['www.afk.com'];

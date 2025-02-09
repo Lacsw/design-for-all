@@ -187,12 +187,6 @@ export function checkIsCommandActive(commandName, editor) {
 
   switch (commandName) {
     case COMMANDS_NAMES.left: {
-      console.log(
-        'checkIsCommandActive isLink',
-        editor.isActive('link'),
-        editor
-      );
-
       /** @type {HTMLElement | null} */
       const node =
         // @ts-ignore
@@ -210,7 +204,13 @@ export function checkIsCommandActive(commandName, editor) {
       ) {
         return true;
       }
-      return false;
+
+      if (node?.tagName === 'A') {
+        commandParams = [{ textAlign: commandName }];
+        break;
+      } else {
+        return false;
+      }
     }
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:

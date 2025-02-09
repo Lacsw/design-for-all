@@ -27,6 +27,8 @@ export const linkExtConfig = {
         ? new URL(url)
         : new URL(`${ctx.defaultProtocol}://${url}`);
 
+      // console.log('isAllowedUri parsedUrl', parsedUrl);
+
       // use default validation
       if (!ctx.defaultValidate(parsedUrl.href)) {
         return false;
