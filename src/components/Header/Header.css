@@ -26,3 +26,44 @@
   margin: 0;
   padding: 0;
 }
+
+.logo-link {
+  height: 30px;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px;
+  }
+
+  .header__navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: var(--color-bg-secondary);
+    height: 50px;
+    column-gap: 30px;
+  }
+
+  .header__navigation-item_mobile-first {
+    order: 1;
+  }
+  .header__navigation-item_mobile-second {
+    order: 2;
+  }
+  .header__navigation-item_mobile-third {
+    order: 3;
+  }
+  .header__navigation-item_mobile-fourth {
+    order: 4;
+  }
+  .header__navigation-item_mobile-last {
+    order: 10;
+  }
+
+  .header__navigation li.hide-on-mobile {
+    display: none;
+  }
+}

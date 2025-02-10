@@ -10,7 +10,7 @@ import {
   SearchInput,
   AuthModal,
   UserDropdown,
-  LogoutButton,
+  LoginButton,
 } from 'components';
 
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
@@ -92,7 +92,6 @@ export default function Header({ resetSection }) {
 
   useEffect(() => {
     dispatch(setTheme(theme));
-    console.log(theme);
   }, [dispatch, theme]);
 
   const toggleTheme = useCallback(() => {
@@ -114,10 +113,10 @@ export default function Header({ resetSection }) {
           />
         </Link>
         <ul className="header__navigation">
-          <li>
+          <li className="header__navigation-item_mobile-third">
             <SearchInput />
           </li>
-          <li>
+          <li className="header__navigation-item_mobile-last">
             <MainMenu
               options={navigationOptionsList}
               titleIcon={
@@ -126,25 +125,27 @@ export default function Header({ resetSection }) {
               toggleTheme={toggleTheme}
               theme={theme}
               title="Меню"
+              currentUser={currentUser}
+              openAuthModal={openAuthModal}
             />
           </li>
-          <li>
+          <li className="header__navigation-item_mobile-first">
             <LanguageDropdown
               options={languageList}
               theme={theme}
               title="Язык"
             />
           </li>
-          <li>
+          <li className="header__navigation-item_mobile-second">
             <CurrencyDropdown
               options={currencyList}
               theme={theme}
               title="Валюта"
             />
           </li>
-          <li>
+          <li className="hide-on-mobile">
             {!currentUser ? (
-              <LogoutButton openAuthModal={openAuthModal} />
+              <LoginButton openAuthModal={openAuthModal} />
             ) : (
               <UserDropdown
                 resetSection={resetSection}

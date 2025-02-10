@@ -25,4 +25,7 @@
 
   /* transition kind */
   --tran-kind-0: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /*mobile header search overlay */
+  --color-bg-search: rgba(36, 36, 36, 0.94);
 }

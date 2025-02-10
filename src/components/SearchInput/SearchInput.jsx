@@ -33,25 +33,38 @@ export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
 
   return (
     <>
-      {isShown ? (
-        <div className="search-input">
-          <input
-            className="search-input__field"
-            ref={inputRef}
-            onChange={onChange}
-          ></input>
-          <button
-            className="search-input__close-btn"
-            onClick={handleCloseClick}
-          >
-            <img src={theme === 'light' ? closeBtnBlack : closeBtn} alt="Кнопка сброса" />
-          </button>
-        </div>
-      ) : (
-        <button className="search-input__loupe" onClick={handleLoupeClick}>
-          <img src={theme === 'light' ? loupeLight : loupe} alt="Иконка лупы" className="header__icon" />
-        </button>
+      {isShown && (
+        <>
+          <div className="search-overlay" onClick={handleCloseClick}></div>
+
+          <div className="search-input  active">
+            <input
+              className="search-input__field"
+              ref={inputRef}
+              onChange={onChange}
+            ></input>
+            <button
+              className="search-input__close-btn"
+              onClick={handleCloseClick}
+            >
+              <img
+                src={theme === 'light' ? closeBtnBlack : closeBtn}
+                alt="Кнопка сброса"
+              />
+            </button>
+          </div>
+        </>
       )}
+      <button
+        className={`search-input__loupe ${isShown && `hide`}`}
+        onClick={isShown ? handleCloseClick : handleLoupeClick}
+      >
+        <img
+          src={theme === 'light' ? loupeLight : loupe}
+          alt="Иконка лупы"
+          className="header__icon"
+        />
+      </button>
     </>
   );
 }

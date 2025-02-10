@@ -4,10 +4,19 @@
   --dropdown-item-size-s: 10px;
 }
 
+@media (max-width: 768px) {
+  :root {
+    --dropdown-item-size: 34px;
+    --dropdown-item-size-m: 26px;
+    --dropdown-item-size-s: 10px;
+  }
+}
+
 .dropdown-navigation {
   display: flex;
   align-items: center;
   position: relative;
+  z-index: 10;
 }
 
 .dropdown-navigation__btn {
@@ -23,20 +32,19 @@
   background-color: var(--color-bg-accent);
   outline: none;
   cursor: pointer;
-  /* box-sizing: border-box; */
   overflow: hidden;
 }
 
 /* Контейнер выпадающего меню */
 .dropdown-navigation__container {
   position: absolute;
-  top: 18px;
+  top: 0;
   right: 0;
   z-index: -10;
   display: flex;
   opacity: 0;
   transition: opacity 0.3s ease;
-  pointer-events: none; /* Когда меню скрыто, оно не реагирует на события */
+  pointer-events: none;
 }
 
 .dropdown-navigation__container.show {
@@ -50,7 +58,7 @@
   flex-direction: column;
   row-gap: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 0 0 16px 16px;
+  border-radius: 16px;
   list-style: none;
 }
 
@@ -60,7 +68,7 @@
   align-items: end;
   transition: opacity 0.3s ease;
   padding: 10px 0 10px 10px;
-  margin: 34px 0 18px 0;
+  margin: 51px 0 18px 0;
   border-radius: 16px 0 0 16px;
   background-color: var(--color-bg-secondary);
 }
@@ -72,9 +80,29 @@
 /* Стили для блока с иконками */
 .dropdown-navigation__icon-items {
   width: var(--dropdown-item-size);
-  padding: 44px 0 28px 0;
+  padding: 61px 0 28px 0;
+
   align-items: center;
   background-color: var(--color-bg-accent);
+}
+
+@media (max-width: 480px) {
+  .dropdown-navigation__container {
+    top: auto;
+    bottom: 0;
+  }
+
+  .dropdown-navigation__text-items {
+    margin: 18px 0 51px 0;
+  }
+
+  .dropdown-navigation__icon-items {
+    padding: 28px 0 61px 0;
+  }
+
+  .dropdown-navigation__icon-items_bottom-padding {
+    padding-top: 0;
+  }
 }
 
 .dropdown-navigation__icon-items_bottom-padding {
@@ -111,7 +139,7 @@
   text-decoration: none;
   background-color: transparent;
   border: none;
-  padding: 0;
+  padding: 1px;
   margin: 0;
 }
 
