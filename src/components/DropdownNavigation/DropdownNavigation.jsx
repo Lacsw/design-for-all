@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './DropdownNavigation.css';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
 
 export default function DropdownNavigation({
   options,
@@ -13,6 +14,7 @@ export default function DropdownNavigation({
   customBottomPadding,
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const shouldRenderDropdown = options && options.length > 1;
 
@@ -21,6 +23,15 @@ export default function DropdownNavigation({
       return theme === 'dark' ? option.src.dark : option.src.light;
     }
     return option.src;
+  };
+
+  const handleOptionClick = (option) => {
+    if (option.onClick) {
+      option.onClick();
+    }
+    if (isMobile && option.closeOnClick) {
+      setIsDropdownOpen(false);
+    }
   };
 
   return (
@@ -62,7 +73,7 @@ export default function DropdownNavigation({
                     </NavLink>
                   ) : (
                     <button
-                      onClick={option.onClick}
+                      onClick={() => handleOptionClick(option)}
                       className="dropdown-navigation__btns"
                     >
                       <span className="dropdown-navigation__item-text">
@@ -86,14 +97,14 @@ export default function DropdownNavigation({
                     className="dropdown-navigation__links"
                   >
                     <img
-                     src={getIconSrc(option)}
+                      src={getIconSrc(option)}
                       alt={option.name}
                       className="dropdown-navigation__item-img"
                     />
                   </NavLink>
                 ) : (
                   <button
-                    onClick={option.onClick}
+                    onClick={() => handleOptionClick(option)}
                     className="dropdown-navigation__btns"
                   >
                     <img
