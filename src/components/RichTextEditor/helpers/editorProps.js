@@ -1,6 +1,6 @@
 // @ts-check
-import { goThroughLink } from '../extensions/link/helpers';
-// import { isActive, isMarkActive } from '@tiptap/core';
+import { findLinkInParents, goThroughLink } from '../extensions/link/helpers';
+import { isActive /*isMarkActive*/ } from '@tiptap/core';
 
 let spaceCount = 0;
 
@@ -8,11 +8,17 @@ let spaceCount = 0;
 export const editorProps = {
   handleClickOn(view, pos, node, nodePos, event, direct) {
     if (view.editable) {
-      /** @type {EventTarget & HTMLElement} */
+      /**
+       * @type {EventTarget & HTMLElement} Может быть как реальной ссылкой, так
+       *   и стилизующим тегом или др. кастомной маркой стиля.
+       */
       // @ts-ignore
       const target = event.target;
 
-      const isLink = target.tagName === 'A';
+      const isLink = target.tagName === 'A' || isActive(view.state, 'link');
+      const linkEl = isLink
+        ? findLinkInParents(target, 5, 'rte__editor')
+        : null;
 
       /*
           Добиваемся поведения: в режиме редактирования клики на ссылку не вызовут перехода.
@@ -23,11 +29,11 @@ export const editorProps = {
         return true;
       }
 
-      if (isLink && event.button === 1) {
+      if (isLink && event.button === 1 && linkEl) {
         goThroughLink({
-          href: target.getAttribute('href'),
-          target: target.getAttribute('target'),
-          rel: target.getAttribute('rel'),
+          href: linkEl.getAttribute('href'),
+          target: linkEl.getAttribute('target'),
+          rel: linkEl.getAttribute('rel'),
         });
       }
     }
