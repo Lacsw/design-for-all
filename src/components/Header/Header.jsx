@@ -113,10 +113,10 @@ export default function Header({ resetSection }) {
           />
         </Link>
         <ul className="header__navigation">
-          <li>
+          <li className="header__navigation-item_mobile-third">
             <SearchInput />
           </li>
-          <li>
+          <li className="header__navigation-item_mobile-last">
             <MainMenu
               options={navigationOptionsList}
               titleIcon={
@@ -127,21 +127,21 @@ export default function Header({ resetSection }) {
               title="Меню"
             />
           </li>
-          <li>
+          <li className="header__navigation-item_mobile-first">
             <LanguageDropdown
               options={languageList}
               theme={theme}
               title="Язык"
             />
           </li>
-          <li>
+          <li className="header__navigation-item_mobile-second">
             <CurrencyDropdown
               options={currencyList}
               theme={theme}
               title="Валюта"
             />
           </li>
-          <li>
+          <li className="hide-on-mobile">
             {!currentUser ? (
               <LogoutButton openAuthModal={openAuthModal} />
             ) : (
