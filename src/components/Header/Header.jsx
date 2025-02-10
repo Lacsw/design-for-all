@@ -10,7 +10,7 @@ import {
   SearchInput,
   AuthModal,
   UserDropdown,
-  LogoutButton,
+  LoginButton,
 } from 'components';
 
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
@@ -143,7 +143,7 @@ export default function Header({ resetSection }) {
           </li>
           <li className="hide-on-mobile">
             {!currentUser ? (
-              <LogoutButton openAuthModal={openAuthModal} />
+              <LoginButton openAuthModal={openAuthModal} />
             ) : (
               <UserDropdown
                 resetSection={resetSection}
