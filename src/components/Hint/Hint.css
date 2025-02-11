@@ -1,0 +1,38 @@
+.hint {
+  position: absolute;
+  bottom: 34px; /* высота инпута*/
+  left: 50%;
+  transform: translateX(-40%);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.hint__children-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 13px;
+  gap: 10px;
+  border-radius: 12px;
+  background: var(--color-main);
+  color: var(--color-bg-secondary);
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.24px;
+  z-index: 100;
+}
+
+.hint svg path {
+  fill: var(--color-main);
+}
+
+.hint svg {
+  margin-left: 12px;
+}
