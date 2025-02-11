@@ -26,6 +26,7 @@
   font-weight: 700;
   line-height: 150%;
   letter-spacing: 0.24px;
+  position: relative;
 }
 
 .new-article__input {

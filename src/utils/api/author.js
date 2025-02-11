@@ -182,6 +182,18 @@ export class AuthorApi {
     );
     return this._checkResponse(response);
   }
+
+  async checkSubCategory(lang, subCategory) {
+    const url = `${this._baseUrl}/check_sub_category/${encodeURIComponent(
+      lang
+    )}/${encodeURIComponent(subCategory)}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
+    });
+    return this._checkResponse(response);
+  }
 }
 
 const authorApi = new AuthorApi({

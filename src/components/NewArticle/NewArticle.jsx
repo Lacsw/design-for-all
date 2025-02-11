@@ -10,6 +10,7 @@ import {
   ModalRecommendation,
   RichTextEditor,
   Modal,
+  Hint,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
@@ -18,6 +19,7 @@ import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
+import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
 
 function createTitle(type) {
   if (type === 'updated') return 'Внесение правок';
@@ -69,6 +71,29 @@ export const NewArticle = memo(function NewArticle({
     },
     [dispatch]
   );
+
+  // Хук для проверки подкатегории
+  const { hint, checkSubCategory, clearHint } = useSubCategoryCheck(
+    draft.lang || 'en'
+  );
+
+  // Обработчик onChange для поля подкатегории
+  const handleSubCategoryChange = (evt) => {
+    const value = evt.target.value;
+    // Обновляем значение в состоянии 
+    changeField('sub_category', value);
+    // Сбрасываем ошибку при вводе нового значения
+    clearHint();
+  };
+  
+  // Обработчик, при потере фокуса
+  const handleSubCategoryBlur = (evt) => {
+    const value = evt.target.value.trim();
+    if (value) {
+      // Проверка при наличии непустого значения
+      checkSubCategory(value);
+    }
+  };
 
   function handleInput({ target }) {
     if (/^https:\/\/\S+\.\S+$/.test(target.value) && !canAdd) setCanAdd(true);
@@ -167,6 +192,11 @@ export const NewArticle = memo(function NewArticle({
           }`}
         >
           <span className="new-article__sub-title">Подкатегория</span>
+          {hint && (
+            <Hint>
+              <span>{hint}</span>
+            </Hint>
+          )}
           <input
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
@@ -176,7 +206,8 @@ export const NewArticle = memo(function NewArticle({
             className="new-article__input"
             size={32}
             value={draft.sub_category}
-            onChange={(evt) => changeField('sub_category', evt.target.value)}
+            onChange={handleSubCategoryChange}
+            onBlur={handleSubCategoryBlur} 
           />
         </label>
 
@@ -324,7 +355,10 @@ export const NewArticle = memo(function NewArticle({
         title="Ссылка на картинку"
         isOpen={imgModal}
         twoBtns
-        onConfirm={() => {changeField('image', inputRef.current.value); setImgModal(false)}}
+        onConfirm={() => {
+          changeField('image', inputRef.current.value);
+          setImgModal(false);
+        }}
         onClose={() => setImgModal(false)}
         isBlocked={!canAdd}
       >
