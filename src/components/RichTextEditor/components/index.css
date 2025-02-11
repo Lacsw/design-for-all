@@ -1,5 +1,6 @@
 @import url('./selectors/styles/index.css');
 @import url('../extensions/image/index.css');
+@import url('./BubbleMenu//index.css');
 
 .rte .rte__button {
   background-color: transparent;

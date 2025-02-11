@@ -56,6 +56,7 @@ import './extensions/heading/index.css';
 import './extensions/link/index.css';
 import { sxEditorWrapper } from './styles';
 import { useClickSpy } from './hooks/useClickSpy';
+import { RTEBubbleMenu } from './components/BubbleMenu/RTEBubbleMenu';
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -407,12 +408,16 @@ export const RichTextEditor = memo(function RichTextEditor({
       id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
-      {useMemo(
-        () => (
-          <EditorContent editor={editor} className="rte__editor" />
-        ),
-        [editor]
-      )}
+      <Box className="rte__editor-with-bubble-menu">
+        <RTEBubbleMenu editor={editor} />
+
+        {useMemo(
+          () => (
+            <EditorContent editor={editor} className="rte__editor" />
+          ),
+          [editor]
+        )}
+      </Box>
 
       {Bar}
 

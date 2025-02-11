@@ -1,0 +1,8 @@
+.rte__bubble-menu {
+  background-color: var(--color-bg-accent);
+  background-color: var(--color-bg-main);
+  border-radius: 15px;
+  padding: 3px 10px;
+  display: flex;
+  gap: 5px 5px;
+}
