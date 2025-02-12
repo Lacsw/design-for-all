@@ -29,6 +29,13 @@
   z-index: 100;
 }
 
+.hint a {
+  color: var(--color-bg-secondary);
+  font-weight: 500;
+  line-height: 130%;
+  text-decoration-style: solid;
+}
+
 .hint svg path {
   fill: var(--color-main);
 }

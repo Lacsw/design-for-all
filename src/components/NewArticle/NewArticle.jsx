@@ -73,9 +73,9 @@ export const NewArticle = memo(function NewArticle({
     [dispatch]
   );
 
-    // Хук для проверки подкатегории
-  const { hint, checkSubCategory, clearHint } = useSubCategoryCheck(
-    draft.lang || 'en'
+  // Хук для проверки подкатегории
+  const { hint, uuid, checkSubCategory, clearHint } = useSubCategoryCheck(
+    draft.lang
   );
 
   // Обработчик с задержка 500 мс
@@ -199,7 +199,14 @@ export const NewArticle = memo(function NewArticle({
           <span className="new-article__sub-title">Подкатегория</span>
           {hint && (
             <Hint>
-              <span>{hint}</span>
+              <span>
+                {hint}{' '}
+                {uuid && (
+                  <Link target="_blank" to={`/${draft.lang}/${uuid}`}>
+                    существующей статьи
+                  </Link>
+                )}
+              </span>
             </Hint>
           )}
           <input
