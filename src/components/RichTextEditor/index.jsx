@@ -8,6 +8,7 @@ import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
+import BubbleMenu from '@tiptap/extension-bubble-menu';
 import Placeholder from '@tiptap/extension-placeholder';
 // import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
@@ -131,6 +132,13 @@ const extensions = [
     // allowBase64: true,
     HTMLAttributes: {
       class: 'rte__node rte__node_img',
+    },
+  }),
+  BubbleMenu.configure({
+    shouldShow: ({ editor, view, state, oldState, from, to }) => {
+      // only show the bubble menu for images and links
+      // return editor.isActive('image') || editor.isActive('link')
+      return true;
     },
   }),
   CustomHeadingExtension.configure({
@@ -408,7 +416,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
-      <Box className="rte__editor-with-bubble-menu">
+      <Box component="span" className="rte__editor-with-bubble-menu">
         <RTEBubbleMenu editor={editor} />
 
         {useMemo(
