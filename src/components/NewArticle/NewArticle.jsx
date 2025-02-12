@@ -20,6 +20,7 @@ import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
+import debounce from 'utils/helpers/debounce';
 
 function createTitle(type) {
   if (type === 'updated') return 'Внесение правок';
@@ -72,27 +73,31 @@ export const NewArticle = memo(function NewArticle({
     [dispatch]
   );
 
-  // Хук для проверки подкатегории
+    // Хук для проверки подкатегории
   const { hint, checkSubCategory, clearHint } = useSubCategoryCheck(
     draft.lang || 'en'
   );
 
-  // Обработчик onChange для поля подкатегории
+  // Обработчик с задержка 500 мс
+  const debouncedCheckSubCategory = useMemo(
+    () =>
+      debounce((value) => {
+        if (value.trim() !== '') {
+          checkSubCategory(value.trim());
+        }
+      }, 500),
+    [checkSubCategory]
+  );
+
+  // Обработчик onChange для  подкатегории:
   const handleSubCategoryChange = (evt) => {
     const value = evt.target.value;
-    // Обновляем значение в состоянии 
+    // Обновляем значение поля
     changeField('sub_category', value);
-    // Сбрасываем ошибку при вводе нового значения
+    // Сбрасываем предыдущий hint сразу при изменении
     clearHint();
-  };
-  
-  // Обработчик, при потере фокуса
-  const handleSubCategoryBlur = (evt) => {
-    const value = evt.target.value.trim();
-    if (value) {
-      // Проверка при наличии непустого значения
-      checkSubCategory(value);
-    }
+    // Запускаем проверку с задержкой
+    debouncedCheckSubCategory(value);
   };
 
   function handleInput({ target }) {
@@ -207,7 +212,6 @@ export const NewArticle = memo(function NewArticle({
             size={32}
             value={draft.sub_category}
             onChange={handleSubCategoryChange}
-            onBlur={handleSubCategoryBlur} 
           />
         </label>
 
