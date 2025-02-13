@@ -13,13 +13,13 @@ import { tiptapCommands } from 'components/RichTextEditor/helpers';
  * @param {import('@tiptap/react').NodeViewRendererProps} props
  * @returns {React.JSX.Element}
  *
- *   При вызове команды вставки нашей кастомной ноды изображения\
- *   (см. {@link tiptapCommands}) вызов метода parseHTML -> getAttrs (#1)\
+ *   При вставке **новой** кастомной ноды изображения\
+ *   (см. {@link tiptapCommands}) вызов метода parseHTML -> getAttrs (`#1`)\
  *   не происходит, потому необходимо внутри NodeView подтягиваться\
  *   стандартные классы, задаваемые при конфигурировании расширения.
  *
- *   При загрузке статьи уже происходит парсинг html-строки, потому вызов #1\
- *   уже происходит.
+ *   При загрузке статьи с уже имеющимися в теле статьи нод картинок\
+ *   происходит парсинг этих нод, потому вызов `#1` уже происходит.
  */
 export const ImageReactRTE = (props) => {
   // console.log(
