@@ -204,6 +204,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     extensions: extensions,
     content: initialValue,
     editable: !readOnly,
+    // editable: false,
     parseOptions: parseOptions,
     editorProps: editorProps,
     onUpdate: onUpdate,

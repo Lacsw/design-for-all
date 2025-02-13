@@ -29,6 +29,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   /** @type {import('@tiptap/extension-bubble-menu').BubbleMenuPluginProps['shouldShow']} */
   const shouldShow = (params) => {
+    if (!params.editor.isEditable) {
+      return false;
+    }
     setFlag((prev) => !prev);
 
     const isSingleLink = countLinksInSelection(params.view) === 1;
