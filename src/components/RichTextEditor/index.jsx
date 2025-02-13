@@ -8,7 +8,7 @@ import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
-import BubbleMenu from '@tiptap/extension-bubble-menu';
+// import BubbleMenu from '@tiptap/extension-bubble-menu';
 import Placeholder from '@tiptap/extension-placeholder';
 // import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
@@ -409,7 +409,7 @@ export const RichTextEditor = memo(function RichTextEditor({
       id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
-      <Box component="span" className="rte__editor-with-bubble-menu">
+      <Box component="div" className="rte__editor-with-bubble-menu">
         <RTEBubbleMenu editor={editor} />
 
         {useMemo(

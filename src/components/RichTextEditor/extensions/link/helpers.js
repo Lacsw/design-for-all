@@ -53,3 +53,29 @@ export function findLinkInParents(el, stopFactor, stoppingClass) {
   // @ts-ignore
   return curEl;
 }
+
+/** Функция для подсчёта определённой марки в текущей селекции */
+
+/**
+ * @param {import('@tiptap/pm/view').EditorView} view
+ * @returns {number}
+ */
+export function countLinksInSelection(view) {
+  const { state } = view;
+  const { selection } = state;
+  const { from, to } = selection;
+
+  let count = 0;
+
+  state.doc.nodesBetween(from, to, (node, pos) => {
+    if (node.isText) {
+      node.marks.forEach((mark) => {
+        if (mark.type === state.schema.marks.link) {
+          count += 1;
+        }
+      });
+    }
+  });
+
+  return count;
+}
