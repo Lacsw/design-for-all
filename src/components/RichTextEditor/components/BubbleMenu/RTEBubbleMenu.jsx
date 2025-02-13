@@ -12,6 +12,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
   return (
     editor && (
       <BubbleMenu
+        shouldShow={() => true}
         tippyOptions={{
           duration: 300,
           placement: 'bottom',
@@ -25,21 +26,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           //     }
           //   },
           popperOptions: {
-            strategy: 'fixed',
-            modifiers: [
-              {
-                name: 'preventOverflow',
-                enabled: true,
-                options: {
-                  boundariesElement: 'div.main-wrapper', // Ограничивает тултип в пределах видимой области
-                },
-              },
-              //   {
-              //     name: 'hide',
-              //     enabled: true, // Автоматически скрывает тултип, если он выходит за границы
-              //   },
-            ],
+            strategy: 'fixed', // fix vertical scroll on html tag when bubble-menu outside of view (TODO WHY?)
           },
+          zIndex: 1,
         }}
         className="rte__bubble-menu"
         editor={editor}

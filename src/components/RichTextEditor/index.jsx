@@ -134,13 +134,6 @@ const extensions = [
       class: 'rte__node rte__node_img',
     },
   }),
-  BubbleMenu.configure({
-    shouldShow: ({ editor, view, state, oldState, from, to }) => {
-      // only show the bubble menu for images and links
-      // return editor.isActive('image') || editor.isActive('link')
-      return true;
-    },
-  }),
   CustomHeadingExtension.configure({
     HTMLAttributes: {
       class: 'rte__node rte__node_heading',
