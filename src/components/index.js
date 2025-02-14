@@ -61,7 +61,6 @@ export { default as Map } from './Map/Map';
 export { RichTextEditor } from './RichTextEditor';
 export { default as MainNavigationBar } from './MainNavigationBar/MainNavigationBar';
 export { default as MainSlider } from './Main/MainSlider/MainSlider';
-export { default as DesktopSlide } from './Main/DesktopSlide/DesktopSlide';
 export { default as SlideIframe } from './Main/SlideIframe/SlideIframe';
 export { default as ArticlesTree } from './ArticlesTree/ArticlesTree';
 export { default as TreeList } from './ArticlesTree/TreeList/TreeList';
