@@ -1,4 +1,4 @@
-import { DesktopSlide, DesktopSlideIframe } from 'components';
+import { DesktopSlide, SlideIframe } from 'components';
 import './MainSlider.css';
 import { useSelector } from 'react-redux';
 import { getLanguage } from 'store/selectors';
@@ -8,11 +8,11 @@ export default function MainSlider({ index }) {
 
   const slideList = [
     <DesktopSlide updates />,
-    <DesktopSlideIframe lang={lang} category="web" />,
-    <DesktopSlideIframe lang={lang} category="desktop" />,
-    <DesktopSlideIframe lang={lang} category="mobile" />,
-    <DesktopSlideIframe lang={lang} category="articles" />,
-    <DesktopSlideIframe lang={lang} category="manual" />,
+    <SlideIframe lang={lang} category="web" />,
+    <SlideIframe lang={lang} category="desktop" />,
+    <SlideIframe lang={lang} category="mobile" />,
+    <SlideIframe lang={lang} category="articles" />,
+    <SlideIframe lang={lang} category="manual" />,
   ];
 
   return (
