@@ -12,7 +12,7 @@ export default function MainSlider({ index }) {
     <DesktopSlideIframe lang={lang} category="desktop" />,
     <DesktopSlideIframe lang={lang} category="mobile" />,
     <DesktopSlideIframe lang={lang} category="articles" />,
-    <DesktopSlideIframe lang={lang} category="manuals" />,
+    <DesktopSlideIframe lang={lang} category="manual" />,
   ];
 
   return (
