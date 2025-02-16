@@ -1,12 +1,11 @@
 // @ts-check
 import { customHeadingNodeName } from '../extensions/heading/constants';
+import { customImgNodeName } from '../extensions/image/constants';
 import { COMMANDS_NAMES } from './constants';
-// eslint-disable-next-line no-unused-vars
-import { Editor } from '@tiptap/react';
 
 /**
  * @callback TDRteCommand
- * @param {Editor | null} editor
+ * @param {import('@tiptap/core').Editor | null} editor
  * @param {any} otherParams
  * @returns {boolean}
  */
@@ -158,7 +157,7 @@ export const tiptapCommands = {
     editor
       .chain()
       .insertContentAt(editor.state.selection.head, {
-        type: COMMANDS_NAMES.img,
+        type: customImgNodeName,
         attrs: {
           src: url,
         },
@@ -174,7 +173,7 @@ export const tiptapCommands = {
 /**
  * @param {string} commandName - RTE command name(key name) from const
  *   {@link COMMANDS_NAMES}
- * @param {Editor | null} editor
+ * @param {import('@tiptap/core').Editor | null} editor
  * @returns {boolean}
  */
 export function checkIsCommandActive(commandName, editor) {
@@ -188,15 +187,30 @@ export function checkIsCommandActive(commandName, editor) {
 
   switch (commandName) {
     case COMMANDS_NAMES.left: {
-      const textAlign =
+      /** @type {HTMLElement | null} */
+      const node =
         // @ts-ignore
-        editor.view?.domObserver?.currentSelection?.focusNode?.parentNode?.style
-          .textAlign;
+        editor.view?.domObserver?.currentSelection?.focusNode?.parentNode;
 
-      if (textAlign === 'start' || !textAlign) {
+      const textAlign = node?.style.textAlign;
+
+      if (
+        textAlign === 'start' ||
+        (node?.tagName === 'P' && !textAlign) /*||
+        (!textAlign &&
+          !editor.isActive(COMMANDS_NAMES.img) &&
+          !editor.isActive('link'))
+      */
+      ) {
         return true;
       }
-      return false;
+
+      if (node?.tagName === 'A') {
+        commandParams = [{ textAlign: commandName }];
+        break;
+      } else {
+        return false;
+      }
     }
     case COMMANDS_NAMES.center:
     case COMMANDS_NAMES.right:
