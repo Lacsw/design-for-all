@@ -1,4 +1,6 @@
 // @ts-check
+import { defaultAligningClass } from './constants';
+
 /**
  * @typedef TJDImgErrors
  * @type {''
@@ -10,8 +12,6 @@
  *   | 'onHostingLoading'
  *   | 'fromLinkLoading'}
  */
-
-import { defaultAligningClass } from './constants';
 
 /** @param {TJDImgErrors} errorKind */
 export const getErrorText = (errorKind) => {

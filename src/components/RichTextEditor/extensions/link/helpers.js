@@ -1,4 +1,18 @@
 // @ts-check
+import { isAllowedUri } from '@tiptap/extension-link';
+import { linkExtConfig } from './config';
+
+/**
+ * @param {string} value
+ * @returns {boolean}
+ */
+export function validateHref(value) {
+  return linkExtConfig.isAllowedUri(value, {
+    defaultValidate: (href) => !!isAllowedUri(href, linkExtConfig.protocols),
+    protocols: linkExtConfig.protocols,
+    defaultProtocol: linkExtConfig.defaultProtocol,
+  });
+}
 
 /** @param {{ href: string; target: string; rel: string }} params */
 export function goThroughLink({ href, target, rel }) {

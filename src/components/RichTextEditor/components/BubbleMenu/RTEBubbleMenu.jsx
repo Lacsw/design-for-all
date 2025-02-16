@@ -1,12 +1,18 @@
 // @ts-check
-import { IconButton, InputBase } from '@mui/material';
+import { IconButton, InputBase, Tooltip } from '@mui/material';
 import { BubbleMenu } from '@tiptap/react';
-import { countLinksInSelection } from 'components/RichTextEditor/extensions/link/helpers';
-import React, { memo, useEffect, useRef, useState } from 'react';
+import {
+  countLinksInSelection,
+  validateHref,
+} from 'components/RichTextEditor/extensions/link/helpers';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { getIsThemeLight } from 'store/selectors';
+import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import { useDebounce } from 'utils/hooks';
 
 /**
  * @typedef TJDRTEBubbleMenuProps
@@ -23,6 +29,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
   const [inputMode, setInputMode] = useState('read');
 
   const [href, setHref] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
   /** @type {import('react').RefObject<HTMLInputElement>} */
   const inputRef = useRef(null);
@@ -46,6 +53,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         if (linkMark) {
           const href = linkMark.attrs.href;
           setHref(href);
+          setIsValid(true);
         }
       }
     }
@@ -66,9 +74,22 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         }, 200);
       }
     } else {
-      setInputMode('read');
+      // mode write - clear btn
+      setHref('');
     }
   };
+
+  const runValidating = useCallback(
+    (/** @type {string} */ value) => {
+      const res = !value ? true : validateHref(value);
+      setIsValid(res);
+    },
+    [setIsValid]
+  );
+  const runValidatingDbncd = useDebounce(runValidating, 500, true);
+
+  /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
+  const handleSubmit = (evt) => {};
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleInputChange = (evt) => {
@@ -77,6 +98,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     }
 
     setHref(evt.target.value);
+    runValidatingDbncd(evt.target.value);
   };
 
   /** @param {import('react').KeyboardEvent<HTMLInputElement>} evt */
@@ -99,7 +121,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
   };
 
   useEffect(() => {
-    const id = window.setTimeout(() => setInputMode('read'), 300);
+    const id = window.setTimeout(() => {
+      setInputMode('read');
+    }, 300);
     return () => clearTimeout(id);
   }, [flag]);
 
@@ -133,7 +157,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           ref={inputRef}
           placeholder="URL"
           value={href}
-          // errors={error}
+          error={!isValid}
           onKeyDown={handleInputKeyDown}
           onChange={handleInputChange}
           className={clsx(
@@ -142,12 +166,38 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           )}
         />
 
-        <IconButton
-          className={clsx('rte__button', !isLight ? 'inverted' : undefined)}
-          onClick={handleEditingClick}
+        <Tooltip
+          title={inputMode === 'read' ? 'Редактировать' : 'Очистить'}
+          enterDelay={500}
+          enterNextDelay={500}
         >
-          <EditRoundedIcon />
-        </IconButton>
+          <span>
+            <IconButton
+              className={clsx('rte__button', !isLight ? 'inverted' : undefined)}
+              onClick={handleEditingClick}
+              // @ts-ignore
+              disabled={inputMode === 'write' && !href.length}
+            >
+              {inputMode === 'read' ? <EditRoundedIcon /> : <BackspaceIcon />}
+            </IconButton>
+          </span>
+        </Tooltip>
+
+        <Tooltip
+          title={'Применить изменения'}
+          enterDelay={500}
+          enterNextDelay={500}
+        >
+          <span>
+            <IconButton
+              className={clsx('rte__button', !isLight ? 'inverted' : undefined)}
+              onClick={handleSubmit}
+              disabled={inputMode === 'read' || !isValid}
+            >
+              <DoneRoundedIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
       </BubbleMenu>
     )
   );
