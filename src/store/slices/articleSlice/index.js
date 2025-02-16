@@ -3,7 +3,7 @@ import createTree from 'utils/helpers/createTree';
 import { getTitles, getTree } from 'utils/api/tree';
 import authorApi from 'utils/api/author';
 import { catalog } from './catalog';
-import previewImage from 'images/article/preview.png';
+import previewImage from 'images/error-image_black.jpg';
 
 export const initialState = {
   catalog,

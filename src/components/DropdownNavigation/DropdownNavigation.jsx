@@ -1,198 +1,124 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getLanguage, getCurrentTheme } from 'store/selectors';
-import { changeLanguage, signInSuccess } from 'store/slices';
 import './DropdownNavigation.css';
-import ArrowBackIcon from 'components/icons/ArrowBackIcon/ArrowBackIcon';
-import authApi from 'utils/api/auth';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
 
 export default function DropdownNavigation({
   options,
-  type,
   titleIcon,
   title,
-  size,
-  sizeItem,
-  paddingBottom,
-  gap,
-  resetSection,
+  align = 'bottom',
+  showName,
+  theme,
+  sizeIcon,
+  customBottomPadding,
 }) {
-  const [selectedOption] = useState(options[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const dispatch = useDispatch();
-  const language = useSelector(getLanguage);
-  const theme = useSelector(getCurrentTheme);
-  const langSrc = options.find((item) => item.name === language)?.src;
+  const isMobile = useIsMobile();
 
-  async function handleLogout() {
-    authApi
-      .logout()
-      .then(() => {
-        resetSection();
-        dispatch(signInSuccess(null));
-      })
-      .catch((err) => console.warn(err));
-  }
+  const shouldRenderDropdown = options && options.length > 1;
+
+  const getIconSrc = (option) => {
+    if (typeof option.src === 'object' && option.src !== null) {
+      return theme === 'dark' ? option.src.dark : option.src.light;
+    }
+    return option.src;
+  };
 
   const handleOptionClick = (option) => {
-    dispatch(changeLanguage(option));
-  };
-
-  const isClassNameTitleWhite = (className) => {
-    if (size) {
-      return className + ` ${className}_size_${size}`;
+    if (option.onClick) {
+      option.onClick();
     }
-    if (options.length === 1) {
-      return className + ` ${className}_disabled`;
+    if (isMobile && option.closeOnClick) {
+      setIsDropdownOpen(false);
     }
-    return className;
-  };
-
-  const isClassNameNavigationImage = (className) => {
-    if (selectedOption.name === 'menu') {
-      return className + ` ${className}_sizeItem_xs`;
-    }
-    if (sizeItem) {
-      return className + ` ${className}_sizeItem_${sizeItem}`;
-    }
-    return className;
-  };
-
-  const isClassNameList = (className) => {
-    let newClass;
-    if (paddingBottom) {
-      newClass = className + ` ${className}_paddingBottom_${paddingBottom}`;
-    }
-    if (size && newClass !== undefined) {
-      newClass = newClass + ` ${className}_size_${size}`;
-    }
-    if (gap && newClass !== undefined) {
-      newClass = newClass + ` ${className}_gap_${gap}`;
-    }
-    if (newClass !== undefined) {
-      return newClass;
-    } else {
-      return className;
-    }
-  };
-
-  const isClassNameListItem = (className) => {
-    if (sizeItem) {
-      return className + ` ${className}_sizeItem_${sizeItem}`;
-    }
-    return className;
   };
 
   return (
     <div
-      className="dropdown-navigation"
+      className={`dropdown-navigation dropdown-navigation--${align}`}
       onMouseEnter={() => setIsDropdownOpen(true)}
-      onMouseLeave={() => {
-        setIsDropdownOpen(false);
-        setIsSideMenuOpen(false);
-      }}
+      onMouseLeave={() => setIsDropdownOpen(false)}
     >
-      <div
-        className={isClassNameTitleWhite(
-          'dropdown-navigation__title-icon-white'
-        )}
-      >
-        {type === 'dropdownWithLinks' ? (
-          <img
-            src={titleIcon}
-            alt={title}
-            className="dropdown-navigation__title-image"
-          />
-        ) : (
-          <img
-            src={langSrc || selectedOption[theme] || selectedOption.src}
-            alt={langSrc ? language : selectedOption.name}
-            className={isClassNameNavigationImage('dropdown-navigation__image')}
-          />
-        )}
-      </div>
+      <button className="dropdown-navigation__btn">
+        <img
+          src={titleIcon}
+          alt={title}
+          className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
+        />
+      </button>
 
-      {isDropdownOpen && options.length !== 1 ? (
-        <>
-          <ul className={isClassNameList('dropdown-navigation__menu-list')}>
-            {type === 'dropdownWithLinks' &&
-              options.map((option, i) => (
-                <li
-                  key={i}
-                  onMouseEnter={() => {
-                    setIsSideMenuOpen(true);
-                  }}
-                >
-                  {option.name === 'Свернуть' ? (
-                    <div
-                      className="dropdown-navigation__wrap-container"
-                      onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
-                    >
-                      <ArrowBackIcon isOpen={isSideMenuOpen} />
-                    </div>
-                  ) : option.name === 'Выйти' ? (
-                    <NavLink to={option.link} onClick={handleLogout}>
-                      <img src={option.src} alt={option.name} />
-                    </NavLink>
-                  ) : (
+      {shouldRenderDropdown && (
+        <div
+          className={`dropdown-navigation__container ${
+            isDropdownOpen ? 'show' : ''
+          }`}
+        >
+          {showName && (
+            <ul
+              className={`dropdown-navigation__items dropdown-navigation__text-items ${
+                isDropdownOpen ? 'show' : ''
+              }`}
+            >
+              {options.map((option, i) => (
+                <li key={i} className="dropdown-navigation__text-item">
+                  {option.link ? (
                     <NavLink
                       to={option.link}
-                      className={
-                        window.location.hash === '#/author/new-article' &&
-                        option.name === 'Написать статью'
-                          ? 'hash_link'
-                          : ''
-                      }
+                      className="dropdown-navigation__links"
                     >
-                      <img src={option.src} alt={option.name} />
+                      <span className="dropdown-navigation__item-text">
+                        {option.name}
+                      </span>
                     </NavLink>
+                  ) : (
+                    <button
+                      onClick={() => handleOptionClick(option)}
+                      className="dropdown-navigation__btns"
+                    >
+                      <span className="dropdown-navigation__item-text">
+                        {option.name}
+                      </span>
+                    </button>
                   )}
                 </li>
               ))}
-            {!type &&
-              options
-                .filter((option) => option.name !== language)
-                .map((option, i) => (
-                  <li key={i} className="dropdown-navigation__menu-item">
-                    <img
-                      className={isClassNameListItem(
-                        'dropdown-navigation__menu-list-item'
-                      )}
-                      src={option.src}
-                      alt={option.name}
-                      onClick={() => handleOptionClick(option.name)}
-                    />
-                  </li>
-                ))}
-            {type === 'dropdownWithTools' &&
-              options
-                .filter((option) => option !== selectedOption)
-                .map((option, i) => (
-                  <li key={i} className="dropdown-navigation__menu-item">
-                    <img
-                      className={isClassNameListItem(
-                        'dropdown-navigation__menu-list-item'
-                      )}
-                      src={option[theme]}
-                      alt={option.name}
-                      onClick={() => console.warn(option.name)}
-                    />
-                  </li>
-                ))}
-          </ul>
-          {isSideMenuOpen ? (
-            <ul className="dropdown-navigation__sidebar">
-              {options.map((option, i) => (
-                <li key={i} className="dropdown-navigation__sidebar-list-item">
-                  {option.name}
-                </li>
-              ))}
             </ul>
-          ) : null}
-        </>
-      ) : null}
+          )}
+
+          <ul
+            className={`dropdown-navigation__items dropdown-navigation__icon-items dropdown-navigation__icon-items_${customBottomPadding}`}
+          >
+            {options.map((option, i) => (
+              <li key={i} className="dropdown-navigation__icon-item">
+                {option.link ? (
+                  <NavLink
+                    to={option.link}
+                    className="dropdown-navigation__links"
+                  >
+                    <img
+                      src={getIconSrc(option)}
+                      alt={option.name}
+                      className="dropdown-navigation__item-img"
+                    />
+                  </NavLink>
+                ) : (
+                  <button
+                    onClick={() => handleOptionClick(option)}
+                    className="dropdown-navigation__btns"
+                  >
+                    <img
+                      src={getIconSrc(option)}
+                      alt={option.name}
+                      className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
+                    />
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

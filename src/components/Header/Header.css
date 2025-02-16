@@ -4,6 +4,9 @@
   background: var(--color-bg-secondary);
   position: relative;
   z-index: 2;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .header__container {
@@ -14,7 +17,7 @@
   align-items: center;
 }
 
-.header__icons-container {
+.header__navigation {
   list-style: none;
   display: flex;
   justify-content: center;
@@ -24,59 +27,43 @@
   padding: 0;
 }
 
-.header__icon-background {
-  margin: 0;
-  padding: 0;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: var(--color-bg-accent);
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
 .logo-link {
-  line-height: 0;
-  position: relative; /* для носка */
+  height: 30px;
 }
 
-/* всё, что ниже - носок и санта */
-
-.logo-link::before {
-  content: '';
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  left: 16px;
-  top: 90%;
-  background: url(../../images/christmas-sock.svg) center / cover;
-  transform-origin: top;
-  transition: 0.5s ease;
-}
-
-.sock::before {
-  rotate: 15deg;
-  animation: sock 1s 0.5s ease-in-out alternate infinite;
-}
-
-@keyframes sock {
-  to {
-    rotate: -15deg;
+@media (max-width: 480px) {
+  .header {
+    padding: 10px;
   }
-}
 
-.santa {
-  display: block;
-  width: 36px;
-  filter: drop-shadow(0 0 3px black);
-  cursor: pointer;
-  transition: 0.2s;
-}
+  .header__navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: var(--color-bg-secondary);
+    height: 50px;
+    column-gap: 30px;
+  }
 
-.santa:hover {
-  scale: 1.1;
+  .header__navigation-item_mobile-first {
+    order: 1;
+  }
+  .header__navigation-item_mobile-second {
+    order: 2;
+  }
+  .header__navigation-item_mobile-third {
+    order: 3;
+  }
+  .header__navigation-item_mobile-fourth {
+    order: 4;
+  }
+  .header__navigation-item_mobile-last {
+    order: 10;
+  }
+
+  .header__navigation li.hide-on-mobile {
+    display: none;
+  }
 }

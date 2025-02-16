@@ -40,8 +40,10 @@ class AuthApi {
   async logout() {
     const response = await fetch(`${this._baseUrl}/logout`, {
       method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
     });
-    return response.ok ? Promise.resolve() : Promise.reject('Выход не удался.');
+    return this._checkResponse(response);
   }
 
   async regUser(data) {

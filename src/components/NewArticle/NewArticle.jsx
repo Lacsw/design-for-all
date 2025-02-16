@@ -10,6 +10,7 @@ import {
   ModalRecommendation,
   RichTextEditor,
   Modal,
+  Hint,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
@@ -18,6 +19,8 @@ import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
+import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
+import debounce from 'utils/helpers/debounce';
 
 function createTitle(type) {
   if (type === 'updated') return 'Внесение правок';
@@ -69,6 +72,33 @@ export const NewArticle = memo(function NewArticle({
     },
     [dispatch]
   );
+
+  // Хук для проверки подкатегории
+  const { hint, uuid, checkSubCategory, clearHint } = useSubCategoryCheck(
+    draft.lang
+  );
+
+  // Обработчик с задержка 500 мс
+  const debouncedCheckSubCategory = useMemo(
+    () =>
+      debounce((value) => {
+        if (value.trim() !== '') {
+          checkSubCategory(value.trim());
+        }
+      }, 500),
+    [checkSubCategory]
+  );
+
+  // Обработчик onChange для  подкатегории:
+  const handleSubCategoryChange = (evt) => {
+    const value = evt.target.value;
+    // Обновляем значение поля
+    changeField('sub_category', value);
+    // Сбрасываем предыдущий hint сразу при изменении
+    clearHint();
+    // Запускаем проверку с задержкой
+    debouncedCheckSubCategory(value);
+  };
 
   function handleInput({ target }) {
     if (/^https:\/\/\S+\.\S+$/.test(target.value) && !canAdd) setCanAdd(true);
@@ -167,6 +197,18 @@ export const NewArticle = memo(function NewArticle({
           }`}
         >
           <span className="new-article__sub-title">Подкатегория</span>
+          {hint && (
+            <Hint>
+              <span>
+                {hint}{' '}
+                {uuid && (
+                  <Link target="_blank" to={`/${draft.lang}/${uuid}`}>
+                    существующей статьи
+                  </Link>
+                )}
+              </span>
+            </Hint>
+          )}
           <input
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
@@ -176,7 +218,7 @@ export const NewArticle = memo(function NewArticle({
             className="new-article__input"
             size={32}
             value={draft.sub_category}
-            onChange={(evt) => changeField('sub_category', evt.target.value)}
+            onChange={handleSubCategoryChange}
           />
         </label>
 
@@ -324,7 +366,10 @@ export const NewArticle = memo(function NewArticle({
         title="Ссылка на картинку"
         isOpen={imgModal}
         twoBtns
-        onConfirm={() => {changeField('image', inputRef.current.value); setImgModal(false)}}
+        onConfirm={() => {
+          changeField('image', inputRef.current.value);
+          setImgModal(false);
+        }}
         onClose={() => setImgModal(false)}
         isBlocked={!canAdd}
       >
