@@ -13,6 +13,8 @@ import { getIsThemeLight } from 'store/selectors';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { useDebounce } from 'utils/hooks';
+import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config';
+import { TextSelection } from '@tiptap/pm/state';
 
 /**
  * @typedef TJDRTEBubbleMenuProps
@@ -27,35 +29,44 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   /** @type {import('types/react/hooks').TJDUseState<'read' | 'write'>} */
   const [inputMode, setInputMode] = useState('read');
-
   const [href, setHref] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [isDebouncing, setIsDebouncing] = useState(false);
 
-  /** @type {import('react').RefObject<HTMLInputElement>} */
+  /** @type {import('react').RefObject<HTMLInputElement | null>} */
   const inputRef = useRef(null);
+  /**
+   * @type {import('react').MutableRefObject<
+   *   import('prosemirror-model').Mark | null
+   * >}
+   */
+  const curLinkMark = useRef(null);
 
   /** @type {import('@tiptap/extension-bubble-menu').BubbleMenuPluginProps['shouldShow']} */
   const shouldShow = (params) => {
     if (!params.editor.isEditable) {
       return false;
     }
+
     setFlag((prev) => !prev);
-
     const isSingleLink = countLinksInSelection(params.view) === 1;
-    if (isSingleLink) {
-      const { state, to } = params;
 
-      const node = state.doc.nodeAt(to);
-      if (node) {
-        const linkMark = node.marks.find(
-          (mark) => mark.type === state.schema.marks.link
-        );
-        if (linkMark) {
-          const href = linkMark.attrs.href;
-          setHref(href);
-          setIsValid(true);
+    if (isSingleLink) {
+      const { state, from, to } = params;
+      const markType = editor.state.schema.marks.link;
+
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.isText) {
+          node.marks.forEach((mark) => {
+            if (mark.type === markType) {
+              curLinkMark.current = mark;
+              const href = mark.attrs.href;
+              setHref(href);
+              setIsValid(true);
+            }
+          });
         }
-      }
+      });
     }
 
     return isSingleLink;
@@ -76,6 +87,8 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     } else {
       // mode write - clear btn
       setHref('');
+      setIsDebouncing(true);
+      runValidatingDbncd('');
     }
   };
 
@@ -83,13 +96,64 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     (/** @type {string} */ value) => {
       const res = !value ? true : validateHref(value);
       setIsValid(res);
+      setIsDebouncing(false);
     },
     [setIsValid]
   );
   const runValidatingDbncd = useDebounce(runValidating, 500, true);
 
   /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
-  const handleSubmit = (evt) => {};
+  const handleSubmit = (evt) => {
+    if (!isValid || evt.detail > 1) {
+      return;
+    }
+
+    const { tr, selection, doc } = editor.state;
+    const { from, to } = selection;
+
+    let markStart = null;
+    let markEnd = null;
+    const markType = editor.state.schema.marks.link;
+    /** @type {import('prosemirror-model').Mark | null} */
+    let curLinkMark = null;
+
+    doc.nodesBetween(from, to, (node, pos) => {
+      if (node.isText) {
+        // наше бабл-меню появляется только когда одна ссылка попала в выделение
+        node.marks.forEach((mark) => {
+          if (mark.type === markType) {
+            curLinkMark = mark;
+            markStart = pos;
+            markEnd = pos + node.nodeSize;
+          }
+        });
+      }
+    });
+
+    if (!href) {
+      tr.removeMark(markStart, markEnd, markType);
+    } else {
+      const newURL = href.includes(':')
+        ? new URL(href)
+        : new URL(`${linkExtConfig.defaultProtocol}://${href}`);
+
+      if (markStart !== null && markEnd !== null) {
+        tr.removeMark(markStart, markEnd, markType);
+        const newMark = markType.create({
+          ...curLinkMark.attrs,
+          href: newURL.href,
+        });
+
+        const newSelection = TextSelection.create(tr.doc, markEnd);
+        tr.setSelection(newSelection);
+
+        tr.addMark(markStart, markEnd, newMark);
+      }
+    }
+
+    editor.view.dispatch(tr);
+    editor.commands.focus();
+  };
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
   const handleInputChange = (evt) => {
@@ -98,6 +162,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     }
 
     setHref(evt.target.value);
+    setIsDebouncing(true);
     runValidatingDbncd(evt.target.value);
   };
 
@@ -192,7 +257,12 @@ const RTEBubbleMenuRaw = ({ editor }) => {
             <IconButton
               className={clsx('rte__button', !isLight ? 'inverted' : undefined)}
               onClick={handleSubmit}
-              disabled={inputMode === 'read' || !isValid}
+              disabled={
+                inputMode === 'read' ||
+                !isValid ||
+                curLinkMark.current?.attrs.href === href ||
+                isDebouncing
+              }
             >
               <DoneRoundedIcon />
             </IconButton>

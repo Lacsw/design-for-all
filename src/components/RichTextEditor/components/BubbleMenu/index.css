@@ -18,7 +18,7 @@
 } */
 
 .rte__bubble-menu .MuiInputBase-root {
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   border-radius: 10px;
   transition:
     background-color var(--tran-dur-s),
