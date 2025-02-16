@@ -1,6 +1,7 @@
 // @ts-check
 import { isAllowedUri } from '@tiptap/extension-link';
 import { linkExtConfig } from './config';
+import { shallowEqual } from 'react-redux';
 
 /**
  * @param {string} value
@@ -68,9 +69,11 @@ export function findLinkInParents(el, stopFactor, stoppingClass) {
   return curEl;
 }
 
-/** Функция для подсчёта определённой марки в текущей селекции */
-
 /**
+ * Функция для подсчёта числа марок ссылок в текущей селекции
+ *
+ * Сравниваются неглубоким способом атрибуты марок ссылок в селекции
+ *
  * @param {import('@tiptap/pm/view').EditorView} view
  * @returns {number}
  */
@@ -81,11 +84,15 @@ export function countLinksInSelection(view) {
 
   let count = 0;
 
+  let prevAttrs = {};
   state.doc.nodesBetween(from, to, (node, pos) => {
     if (node.isText) {
-      node.marks.forEach((mark) => {
+      node.marks.forEach((mark, idx) => {
         if (mark.type === state.schema.marks.link) {
-          count += 1;
+          if (!shallowEqual(prevAttrs, mark.attrs)) {
+            prevAttrs = mark.attrs;
+            count += 1;
+          }
         }
       });
     }

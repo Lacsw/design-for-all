@@ -40,7 +40,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
    *   import('prosemirror-model').Mark | null
    * >}
    */
-  const curLinkMark = useRef(null);
+  const curLinkMarkRef = useRef(null);
 
   /** @type {import('@tiptap/extension-bubble-menu').BubbleMenuPluginProps['shouldShow']} */
   const shouldShow = (params) => {
@@ -59,7 +59,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         if (node.isText) {
           node.marks.forEach((mark) => {
             if (mark.type === markType) {
-              curLinkMark.current = mark;
+              curLinkMarkRef.current = mark;
               const href = mark.attrs.href;
               setHref(href);
               setIsValid(true);
@@ -108,7 +108,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
       return;
     }
 
-    const { tr, selection, doc } = editor.state;
+    const { doc, tr, selection } = editor.state;
     const { from, to } = selection;
 
     let markStart = null;
@@ -123,7 +123,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         node.marks.forEach((mark) => {
           if (mark.type === markType) {
             curLinkMark = mark;
-            markStart = pos;
+            if (markStart === null) {
+              markStart = pos;
+            }
             markEnd = pos + node.nodeSize;
           }
         });
@@ -260,7 +262,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
               disabled={
                 inputMode === 'read' ||
                 !isValid ||
-                curLinkMark.current?.attrs.href === href ||
+                curLinkMarkRef.current?.attrs?.href === href ||
                 isDebouncing
               }
             >
