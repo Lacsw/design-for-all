@@ -6,16 +6,15 @@ import {
   checkIsCommandDisabled,
   tiptapCommands,
 } from '../helpers';
-import { buttonsHeadings, COMMANDS_NAMES } from '../helpers/constants';
+import { buttonsHeadings } from '../helpers/constants';
 import clsx from 'clsx';
-import { Editor } from '@tiptap/react';
 
 /**
  * @callback TDRteButtonOnClickProp
  * @param {React.MouseEvent} evt
  * @param {import('../helpers').TDRteCommand} directCb Прямая команда редактора
  *   для текущего имени команды
- * @param {Editor | null} editor
+ * @param {import('@tiptap/core').Editor | null} editor
  */
 
 /**
@@ -28,7 +27,7 @@ import { Editor } from '@tiptap/react';
  * @property {string} name RTE command name(object key name) from const
  *   {@link COMMANDS_NAMES}
  * @property {TDRteButtonOnClickProp} [onClick]
- * @property {Editor | null} editor
+ * @property {import('@tiptap/core').Editor | null} editor
  * @property {boolean} inFocusWithin
  * @property {string} className
  */

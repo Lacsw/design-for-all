@@ -1,6 +1,6 @@
 /**
  * @callback TJDRteOnInputProp
- * @param {import('./validation').TJDValidateResult} data
+ * @param {import('./validation/types').TJDValidateResult} data
  * @returns {void}
  */
 

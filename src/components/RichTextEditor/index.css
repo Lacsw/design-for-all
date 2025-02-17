@@ -169,6 +169,7 @@
   padding: 3px 10px;
   display: flex;
   gap: 5px 5px;
+  z-index: 2;
 }
 
 .theme-light .rte__menu-bar {

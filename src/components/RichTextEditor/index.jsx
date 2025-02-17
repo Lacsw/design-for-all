@@ -1,10 +1,14 @@
 // @ts-check
 // custom extensions
+import { linkExtConfig } from './extensions/link/config';
+import { CustomLinkExtension } from './extensions/link/link';
+import { customHeadingNodeName } from './extensions/heading/constants';
 import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
 
 // extensions
+// import BubbleMenu from '@tiptap/extension-bubble-menu';
 import Placeholder from '@tiptap/extension-placeholder';
 // import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
@@ -43,13 +47,17 @@ import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
 import { useValidation } from './validation/useValidation';
+import { onSelectionUpdate } from './helpers/onSelectionUpdate';
+import { editorProps } from './helpers/editorProps';
 
 import clsx from 'clsx';
 import './index.css';
 import './components/index.css';
 import './extensions/heading/index.css';
+import './extensions/link/index.css';
 import { sxEditorWrapper } from './styles';
-import { customHeadingNodeName } from './extensions/heading/constants';
+import { useClickSpy } from './hooks/useClickSpy';
+import { RTEBubbleMenu } from './components/BubbleMenu/RTEBubbleMenu';
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -58,7 +66,12 @@ import { customHeadingNodeName } from './extensions/heading/constants';
  */
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
-  // console.log('htmlString', htmlString);
+  // console.log(
+  //   `%c ${htmlString.replaceAll(/[<>]/g, (substr) =>
+  //     substr.includes('<') ? '\n<' : '>\n'
+  //   )}`,
+  //   'background-color: rgba(155, 154, 154, 0); color:rgb(0, 0, 0); padding: 5px; border: 1px dashed green;'
+  // );
 
   // const json = editor.getJSON();
   // console.log('json', json);
@@ -127,6 +140,7 @@ const extensions = [
     },
     levels: allowedHeadingLevels,
   }),
+  CustomLinkExtension.configure(linkExtConfig),
 ];
 // #endregion extensions
 
@@ -186,18 +200,21 @@ export const RichTextEditor = memo(function RichTextEditor({
       (инстанс редактора не пересоздается, но конфигурируется при сменах ссылок напр на onUpdate ???)
    */
   const editor = useEditor({
-    extensions,
+    enableContentCheck: true, // не работает?
+    extensions: extensions,
     content: initialValue,
     editable: !readOnly,
-    parseOptions,
-    onUpdate,
-    enableContentCheck: true, // не работает?
+    // editable: false,
+    parseOptions: parseOptions,
+    editorProps: editorProps,
+    onUpdate: onUpdate,
+    onSelectionUpdate: onSelectionUpdate,
   });
   // #endregion useEditor
 
   useEffect(() => {
     if (readOnly && (!initialValue || initialValue === '<p></p>')) {
-      editor?.commands.setContent('<p>Отсутствует</p>');
+      // editor?.commands.setContent('<p>Отсутствует</p>');
     }
   }, [readOnly, initialValue, editor]);
 
@@ -244,6 +261,8 @@ export const RichTextEditor = memo(function RichTextEditor({
     handleImgInserting,
     handleImgModalClose,
   } = useImageExt(editor);
+
+  const { isMMBPressed, isCtrlPressed } = useClickSpy({ editor });
 
   // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */
@@ -382,12 +401,25 @@ export const RichTextEditor = memo(function RichTextEditor({
   return (
     <Box
       ref={wrapperRef}
-      className={clsx('rte', className)}
+      className={clsx(
+        'rte',
+        className,
+        (isMMBPressed || isCtrlPressed) && 'extra-mode'
+      )}
       sx={sxEditorWrapper({ maxHeight })}
       id={String(id)}
       onBlur={handleBlurOnWrapper}
     >
-      <EditorContent editor={editor} className="rte__editor" />
+      <Box component="div" className="rte__editor-with-bubble-menu">
+        <RTEBubbleMenu editor={editor} />
+
+        {useMemo(
+          () => (
+            <EditorContent editor={editor} className="rte__editor" />
+          ),
+          [editor]
+        )}
+      </Box>
 
       {Bar}
 

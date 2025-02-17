@@ -7,8 +7,25 @@
   background: var(--color-bg-main);
 }
 
+/* LoVe Fear HAtes */
 a {
+  cursor: pointer;
   color: #0b8aff;
+  transition:
+    opacity var(--tran-dur-s) ease-out,
+    color var(--tran-dur-s) ease-out;
+}
+
+a.link_type_in-text:visited {
+  color: #5969fa;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+a.link_type_in-text:active {
+  color: var(--color-failure);
 }
 
 ul,

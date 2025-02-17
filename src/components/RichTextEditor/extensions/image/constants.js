@@ -1,3 +1,5 @@
+import { COMMANDS_NAMES } from 'components/RichTextEditor/helpers/constants';
+
 /**
  * The maximum image size in bytes.\
  * Is according to the image hosting site's policy. 32 Mb
@@ -14,3 +16,6 @@ export const MAX_SIZE_IMG_BYTES = 32 * 1024 * 1024;
 export const MAX_SIZE_IMG_B64_BYTES = Math.floor(MAX_SIZE_IMG_BYTES / 1.37);
 
 export const defaultAligningClass = 'center';
+
+export const customImgNodeName = COMMANDS_NAMES.img;
+export const customImgNodeTagName = COMMANDS_NAMES.img.toLowerCase(); // и так переводится в нижний регистр просемиррором при экспорте в строку, но для консистентности

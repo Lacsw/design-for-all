@@ -1,4 +1,10 @@
-/** Валидация на пустоту редактора */
+// @ts-check
+
+/**
+ * Валидация на пустоту редактора
+ *
+ * @type {import('./types').TJDValidator}
+ */
 export function checkEmptiness(editor) {
   const text = editor.getText();
   let isEmpty = false;
