@@ -214,7 +214,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           popperOptions: {
             strategy: 'fixed', // fix vertical scroll on html tag when bubble-menu outside of view (TODO WHY?)
           },
-          zIndex: 1,
+          zIndex: 3,
         }}
         className="rte__bubble-menu"
         editor={editor}
