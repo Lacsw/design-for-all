@@ -4,7 +4,6 @@ import './Intro.css';
 import { useEffect, useRef } from 'react';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 
-
 export default function Intro() {
   const theme = useSelector(getCurrentTheme);
   const typeRef = useRef(null);
@@ -14,40 +13,26 @@ export default function Intro() {
     ? 'Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.'
     : 'Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.';
 
-    useEffect(() => {
-      // При каждом изменении слогана сбрасываем содержимое и запускаем анимацию заново
-      if (typeRef.current) {
-        typeRef.current.innerHTML = '';
+  useEffect(() => {
+    // При каждом изменении слогана сбрасываем содержимое и запускаем анимацию заново
+    if (typeRef.current) {
+      typeRef.current.innerHTML = '';
+    }
+    const letters = slogan.split('');
+    let i = 0;
+    const timer = setInterval(() => {
+      if (letters[i] === '/') {
+        typeRef.current.innerHTML += '<br>'; // чтобы буквы сразу печатались с новой строки
+      } else {
+        typeRef.current.innerHTML += letters[i];
       }
-      const letters = slogan.split('');
-      let i = 0;
-      const timer = setInterval(() => {
-        if (letters[i] === '/') {
-          typeRef.current.innerHTML += '<br>'; // чтобы буквы сразу печатались с новой строки
-        } else {
-          typeRef.current.innerHTML += letters[i];
-        }
-        i++;
-        if (i === letters.length) {
-          clearInterval(timer);
-        }
-      }, 20);
-      return () => clearInterval(timer);
-    }, [slogan]);
-  
-    
-  // useEffect(() => {
-  //   const letters = slogan.split('');
-  //   let i = 0;
-  //   let timer = setInterval(() => {
-  //     if (letters[i] === '/') {
-  //       typeRef.current.innerHTML += '<br>'; // чтобы буквы сразу печатались с новой строки
-  //     } else typeRef.current.innerHTML += letters[i];
-  //     i++;
-  //     if (i === letters.length) clearInterval(timer);
-  //   }, 20);
-  //   return () => clearInterval(timer);
-  // }, [typeRef]);
+      i++;
+      if (i === letters.length) {
+        clearInterval(timer);
+      }
+    }, 20);
+    return () => clearInterval(timer);
+  }, [slogan]);
 
   return (
     <div className={'intro ' + theme}>

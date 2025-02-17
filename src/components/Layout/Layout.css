@@ -10,4 +10,14 @@
 
 .main {
   min-height: calc(100vh - 60px);
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .main-wrapper {
+    margin-top: -45px;
+  }
+  .main {
+    margin-top: 45px;
+  }
 }
