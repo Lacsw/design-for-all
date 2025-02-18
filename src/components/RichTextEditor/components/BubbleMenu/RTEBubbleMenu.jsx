@@ -8,7 +8,7 @@ import {
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { getIsThemeLight } from 'store/selectors';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import BackspaceIcon from '@mui/icons-material/Backspace';
@@ -49,19 +49,36 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     }
 
     setFlag((prev) => !prev);
-    const isSingleLink = countLinksInSelection(params.view) === 1;
+
+    const markType = editor.state.schema.marks.link;
+    const { state, from, to } = params;
+
+    const linkQty = countLinksInSelection(params.view);
+    const isSingleLink = linkQty === 1;
+    let linkQtyWithExtraChecking = linkQty;
 
     if (isSingleLink) {
-      const { state, from, to } = params;
-      const markType = editor.state.schema.marks.link;
-
       state.doc.nodesBetween(from, to, (node, pos) => {
         if (node.isText) {
           node.marks.forEach((mark) => {
             if (mark.type === markType) {
               curLinkMarkRef.current = mark;
-              const href = mark.attrs.href;
-              setHref(href);
+              setHref(mark.attrs.href);
+              setIsValid(true);
+            }
+          });
+        }
+      });
+    } else if (linkQty === 0 && from === to) {
+      // когда каретка в конце марки, то меню не показывается, фиксим это (#1)
+      // ! при выделении нулевой длины
+      state.doc.nodesBetween(from - 1, to, (node, pos) => {
+        if (node.isText) {
+          node.marks.forEach((mark) => {
+            if (mark.type === markType) {
+              linkQtyWithExtraChecking++;
+              curLinkMarkRef.current = mark;
+              setHref(mark.attrs.href);
               setIsValid(true);
             }
           });
@@ -69,7 +86,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
       });
     }
 
-    return isSingleLink;
+    return isSingleLink || linkQtyWithExtraChecking === 1;
   };
 
   /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
@@ -104,6 +121,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
   const handleSubmit = (evt) => {
+    // debugger;
     if (!isValid || evt.detail > 1) {
       return;
     }
@@ -111,11 +129,19 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     const { doc, tr, selection } = editor.state;
     const { from, to } = selection;
 
-    let markStart = null;
-    let markEnd = null;
+    /** @type {null | number} */
+    let trStart = null;
+    /** @type {null | number} */
+    let trEnd = null;
     const markType = editor.state.schema.marks.link;
     /** @type {import('prosemirror-model').Mark | null} */
     let curLinkMark = null;
+
+    const getCurLinkMarkAttrs = () => curLinkMark.attrs;
+    const getTrStart = () => trStart;
+    const setTrStart = (/** @type {number} */ value) => {
+      trStart = value;
+    };
 
     doc.nodesBetween(from, to, (node, pos) => {
       if (node.isText) {
@@ -123,33 +149,94 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         node.marks.forEach((mark) => {
           if (mark.type === markType) {
             curLinkMark = mark;
-            if (markStart === null) {
-              markStart = pos;
+            if (trStart === null) {
+              trStart = pos;
             }
-            markEnd = pos + node.nodeSize;
+            trEnd = pos + node.nodeSize;
           }
         });
       }
     });
 
+    // когда каретка в конце марки, то меню все равно покажется(#1), потому надо искать ссылки и до каретки,
+    // если в изначальном выделении марка ссылки найдена не была
+    if (curLinkMark === null && from === to) {
+      // готовимся двигаться взад по текстовым нодам с одинаковой маркой ссылки, но с различными стилевым маркам
+      trStart = trEnd = to;
+
+      // для начала проверяем первую текстовую ноду до каретки
+      const prevNode = doc.nodeAt(from - 1);
+      if (prevNode.isText) {
+        prevNode.marks.forEach((mark) => {
+          if (mark.type === markType) {
+            trStart = trStart - prevNode.nodeSize;
+            /* на данную марку ссылки и будем ориентироваться. Если у идущих до prevNode текстовых нод
+             такие же марки - смещаем вычисляемую позицию начала нашей транзакции(markStart) */
+            curLinkMark = mark;
+          }
+        });
+      }
+
+      if (curLinkMark === null) {
+        // не должны сюда попасть, т.к. меню не появится при отсутствии марки ссылки в селекции или в ноде до селекции
+        console.warn('Link mark not found!');
+      } else {
+        /** @type {boolean | null} */
+        let isMarksEqual = null;
+        const setIsMarksEqual = (/** @type {boolean} */ value) => {
+          isMarksEqual = value;
+        };
+
+        let counter = 0;
+
+        const check = () => isMarksEqual === null || isMarksEqual;
+
+        while (check()) {
+          console.log('iter');
+          counter++;
+          const anotherNode = doc.nodeAt(getTrStart() - 1);
+          // nodeSize это ещё и вход + выход?
+          if (anotherNode.isText) {
+            anotherNode.marks.forEach((mark) => {
+              if (mark.type === markType) {
+                const curLinkMarkAttrs = getCurLinkMarkAttrs();
+                const trStart = getTrStart();
+                if (shallowEqual(curLinkMarkAttrs, mark.attrs)) {
+                  setIsMarksEqual(true);
+                  setTrStart(trStart - anotherNode.nodeSize);
+                } else {
+                  setIsMarksEqual(false);
+                }
+              } else {
+                setIsMarksEqual(false);
+              }
+            });
+          } else {
+            setIsMarksEqual(false);
+          }
+        }
+        console.log('counter', counter);
+      }
+    }
+
     if (!href) {
-      tr.removeMark(markStart, markEnd, markType);
+      tr.removeMark(trStart, trEnd, markType);
     } else {
       const newURL = href.includes(':')
         ? new URL(href)
         : new URL(`${linkExtConfig.defaultProtocol}://${href}`);
 
-      if (markStart !== null && markEnd !== null) {
-        tr.removeMark(markStart, markEnd, markType);
+      if (trStart !== null && trEnd !== null) {
+        tr.removeMark(trStart, trEnd, markType);
         const newMark = markType.create({
           ...curLinkMark.attrs,
           href: newURL.href,
         });
 
-        const newSelection = TextSelection.create(tr.doc, markEnd);
+        const newSelection = TextSelection.create(tr.doc, trEnd);
         tr.setSelection(newSelection);
 
-        tr.addMark(markStart, markEnd, newMark);
+        tr.addMark(trStart, trEnd, newMark);
       }
     }
 
