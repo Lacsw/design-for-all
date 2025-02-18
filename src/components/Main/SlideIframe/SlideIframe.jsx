@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
-import './DesktopSlideIframe.css';
+import './SlideIframe.css';
 import { useMemo } from 'react';
 
-export function DesktopSlideIframe({ lang, category }) {
+export function SlideIframe({ lang, category }) {
   const theme = useSelector(getCurrentTheme);
 
   // Формируем URL для статичного HTML-файла с параметром темы
@@ -13,14 +13,14 @@ export function DesktopSlideIframe({ lang, category }) {
 
   return (
     <div
-      className="desktop-slide-iframe__container"
+      className="slide-iframe__container"
     >
       <iframe
         src={previewUrl}
-        title="Desktop Slide Preview"
-        className="desktop-slide-iframe"
+        title="Slide Preview"
+        className="slide-iframe"
       ></iframe>
     </div>
   );
 }
-export default DesktopSlideIframe;
+export default SlideIframe;

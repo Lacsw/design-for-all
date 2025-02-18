@@ -2,17 +2,16 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 1440px;
-  padding: 103px 120px 120px;
+  aspect-ratio: 1440/523;
   margin: 0 auto;
   display: flex;
-  justify-content: flex-start;
   position: relative;
 }
 
 .intro::before {
   content: '';
   width: 100%;
-  height: 523px;
+  aspect-ratio: 1440/523;
   position: absolute;
   top: 0;
   left: 0;
@@ -29,7 +28,14 @@
   background-image: url(/src/images/intro-light.png);
 }
 
+.dark::before,
+.light::before {
+  background-position: end;
+  background-size: contain;
+}
+
 .intro__container {
+  padding: 103px 120px 120px;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -59,4 +65,86 @@
   font-size: 30px;
   line-height: 1.3;
   color: var(--color-main);
+}
+
+@media (max-width: 1024px) {
+  .intro__container {
+    width: 90vw;
+    padding: 0;
+    gap: 17px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .intro__title {
+    font-size: 55px;
+    line-height: 130%;
+  }
+
+  .intro__subtitle {
+    min-height: 60px; /* бронируем место под анимированный текст*/
+    font-size: 20px;
+    line-height: 130%;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro {
+    width: 100vw;
+    aspect-ratio: 360/355;
+    justify-content: center;
+  }
+
+  .intro::before {
+    content: '';
+    width: 100vw;
+    aspect-ratio: 360/355;
+    height: auto;
+    position: absolute;
+  }
+
+  .dark::before,
+  .light::before {
+    background-position: center;
+    background-size: contain;
+  }
+
+  .dark::before {
+    background-image: url(/src/images/intro-black-mobile.png);
+  }
+
+  .light::before {
+    background-image: url(/src/images/intro-light-mobile.png);
+  }
+
+  .intro__container {
+    padding: 0;
+    width: inherit;
+    height: inherit;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+  }
+
+  .intro__title {
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    line-height: 130%;
+  }
+
+  .intro__subtitle {
+    width: 100%;
+    text-align: center;
+    min-height: 54px; /* бронируем место под анимированный текст*/
+    font-size: 14px;
+    line-height: 130%;
+  }
+}
+
+@media (max-width: 374px) {
+  .intro__subtitle {
+    font-size: 13px;
+  }
 }

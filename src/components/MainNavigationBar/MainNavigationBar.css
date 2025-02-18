@@ -1,16 +1,17 @@
 .main-navbar {
   position: sticky;
   top: 0;
-  z-index: 1;
   display: flex;
   justify-content: center;
   gap: 60px;
-  background-color: var(--color-bg-accent);
+  background-color: var(--color-bg-main-nav-bar);
   margin: 0 auto;
   max-width: 1000px;
   border-radius: 30px;
   padding: 5px 0;
   list-style: none;
+  margin-top: -80px;
+  z-index: 100;
 }
 
 .main-navbar__item {
@@ -55,4 +56,43 @@
   opacity: 1;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 480px) {
+  .main-navbar {
+    z-index: 1000; /* Навигация должна быть поверх других элементов */
+    margin: 0 10px;
+    min-width: 340px;
+    padding: 4px 12px;
+    justify-content: space-between;
+    gap: 5px;
+    border-radius: 6px;
+  }
+
+  .main-navbar__item {
+    height: 36px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+
+  .main-navbar__icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .current {
+    display: flex;
+    width: 70px;
+    height: 28px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: opacity 0.2s ease-in-out;
+    font-size: 11px;
+    font-weight: 400;
+  }
 }
