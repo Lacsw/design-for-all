@@ -147,16 +147,18 @@ body.theme-light {
   }
 
   .preview-section__title {
-    font-size: 24px;
-    font-weight: 700;
-  }
-
-  .preview-section__subtitle {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 130%;
-    letter-spacing: 0.32px;
+    line-height: normal;
+  }
+
+  .preview-section__subtitle {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 
   .preview-section__text {
