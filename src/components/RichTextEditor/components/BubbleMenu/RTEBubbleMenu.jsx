@@ -121,7 +121,6 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
   const handleSubmit = (evt) => {
-    // debugger;
     if (!isValid || evt.detail > 1) {
       return;
     }
@@ -161,7 +160,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     // когда каретка в конце марки, то меню все равно покажется(#1), потому надо искать ссылки и до каретки,
     // если в изначальном выделении марка ссылки найдена не была
     if (curLinkMark === null && from === to) {
-      // готовимся двигаться взад по текстовым нодам с одинаковой маркой ссылки, но с различными стилевым маркам
+      // готовимся двигаться взад по текстовым нодам с одинаковой маркой ссылки, но с различными стилевым марками
       trStart = trEnd = to;
 
       // для начала проверяем первую текстовую ноду до каретки
@@ -170,8 +169,11 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         prevNode.marks.forEach((mark) => {
           if (mark.type === markType) {
             trStart = trStart - prevNode.nodeSize;
-            /* на данную марку ссылки и будем ориентироваться. Если у идущих до prevNode текстовых нод
-             такие же марки - смещаем вычисляемую позицию начала нашей транзакции(markStart) */
+            /**
+             * на данную марку ссылки и будем ориентироваться. Если у идущих до
+             * prevNode текстовых нод такие же марки ссылки - будем смещать
+             * вычисляемую позицию начала нашей транзакции {@link trt}.
+             */
             curLinkMark = mark;
           }
         });
@@ -179,7 +181,8 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
       if (curLinkMark === null) {
         // не должны сюда попасть, т.к. меню не появится при отсутствии марки ссылки в селекции или в ноде до селекции
-        console.warn('Link mark not found!');
+        console.warn('Link mark not found! Error code: 190225-0023_184.');
+        return;
       } else {
         /** @type {boolean | null} */
         let isMarksEqual = null;
@@ -188,38 +191,40 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         };
 
         let counter = 0;
-
-        const check = () => isMarksEqual === null || isMarksEqual;
-
-        while (check()) {
-          console.log('iter');
+        while ((isMarksEqual === null || isMarksEqual) && counter < 3000) {
           counter++;
+          if (counter === 3000) {
+            console.warn(
+              'Link is too long, processing stopped! Error code: 190225-0044_198.'
+            );
+          }
           const anotherNode = doc.nodeAt(getTrStart() - 1);
-          // nodeSize это ещё и вход + выход?
+
           if (anotherNode.isText) {
-            anotherNode.marks.forEach((mark) => {
-              if (mark.type === markType) {
-                const curLinkMarkAttrs = getCurLinkMarkAttrs();
-                const trStart = getTrStart();
-                if (shallowEqual(curLinkMarkAttrs, mark.attrs)) {
-                  setIsMarksEqual(true);
-                  setTrStart(trStart - anotherNode.nodeSize);
-                } else {
-                  setIsMarksEqual(false);
-                }
+            const findedMark = anotherNode.marks.find(
+              (mark) => mark.type === markType
+            );
+            if (findedMark) {
+              const curLinkMarkAttrs = getCurLinkMarkAttrs();
+              const trStart = getTrStart();
+              if (shallowEqual(curLinkMarkAttrs, findedMark.attrs)) {
+                setIsMarksEqual(true);
+                setTrStart(trStart - anotherNode.nodeSize);
               } else {
                 setIsMarksEqual(false);
               }
-            });
+            } else {
+              setIsMarksEqual(false);
+            }
           } else {
             setIsMarksEqual(false);
           }
         }
-        console.log('counter', counter);
       }
     }
 
     if (!href) {
+      // инпут адреса очистили, значит преобразуем в текст = убираем марку ссылки
       tr.removeMark(trStart, trEnd, markType);
     } else {
       const newURL = href.includes(':')
@@ -231,12 +236,12 @@ const RTEBubbleMenuRaw = ({ editor }) => {
         const newMark = markType.create({
           ...curLinkMark.attrs,
           href: newURL.href,
-        });
+        }); // убрали старую марку
 
         const newSelection = TextSelection.create(tr.doc, trEnd);
         tr.setSelection(newSelection);
 
-        tr.addMark(trStart, trEnd, newMark);
+        tr.addMark(trStart, trEnd, newMark); // добавили новую
       }
     }
 
