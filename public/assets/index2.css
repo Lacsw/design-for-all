@@ -82,24 +82,6 @@ body.theme-light {
   border-radius: 6px;
 }
 
-/* Скроллбар для Webkit */
-.preview-container::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-  background-color: transparent;
-  border-radius: 12px;
-}
-
-.preview-container::-webkit-scrollbar-corner {
-  background-color: transparent;
-  border-radius: 12px;
-}
-
-.preview-container::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color);
-  border-radius: 12px;
-}
-
 @media (max-width: 768px) {
   .preview-container {
     padding: 15px 15px;

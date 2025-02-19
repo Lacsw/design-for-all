@@ -18,7 +18,7 @@ export default function MainSlider({ index }) {
   ];
 
   // Реф для хранения текущего анимированного индекса.
-  // 0.5 - смещение для стартовой анимация,"-" направление
+  // 0.5 - смещение для стартовой анимации, "-" направление
   const animatedIndexRef = useRef(index - 0.5);
   // Реф для контейнера слайдов, чтобы иметь прямой доступ к DOM-элементам слайдов
   const containerRef = useRef(null);
@@ -32,7 +32,7 @@ export default function MainSlider({ index }) {
     const oldMain = Math.round(initialIndex); // Фиксируем старый основной слайд
     const newMain = index; // новый основной слайд
 
-    // вызывается на каждом кадре анимации через requestAnimationFrame
+    // Вызывается на каждом кадре анимации через requestAnimationFrame
     function step(timestamp) {
       if (!start) start = timestamp;
       const progress = Math.min((timestamp - start) / duration, 1);
@@ -49,12 +49,12 @@ export default function MainSlider({ index }) {
           } else {
             slides[i].style.opacity = '1';
             slides[i].style.pointerEvents = 'auto';
-            const translateX = diff * 40; // смещение по X в процентах,  каждый шаг diff = 1 соответствует 40% от ширины
-            const translateY = 50 * Math.min(Math.abs(diff), 1); // Смещение по Y: для активного слайда (diff ≈ 0) смещение по Y = 0 / для неактивных поднимаем вверх до -200px, интерполируя по Math.min(Math.abs(diff), 1)
+            const translateX = diff * 40; // смещение по X в процентах
+            const translateY = 50 * Math.min(Math.abs(diff), 1); // смещение по Y
             const scale = 0.4 + (1 - 0.4) * (1 - Math.abs(diff)); // масштаб
-            const blur = 5 * Math.abs(diff); //степень размытия: активный слайд без размытия, соседние – до 5px
+            const blur = 3.5 * Math.abs(diff); // степень размытия
 
-            // Определяем z-index:
+            // Определяем z-index
             let zIndex = 1;
             if (i === newMain) {
               zIndex = 10;
@@ -64,24 +64,28 @@ export default function MainSlider({ index }) {
               zIndex = 1;
             }
 
-            // Применяем стили
             slides[i].style.transformOrigin = 'top center';
-
             slides[
               i
             ].style.transform = `translateX(${translateX}%) translateY(${translateY}px) scale(${scale})`;
             slides[i].style.filter = `blur(${blur}px)`;
             slides[i].style.zIndex = zIndex;
           }
+          // Переключаем CSS-классы для плавного перехода mask, overflow и max-height
+          if (i === newMain) {
+            slides[i].classList.add('active-slide');
+            slides[i].classList.remove('inactive-slide');
+          } else {
+            slides[i].classList.add('inactive-slide');
+            slides[i].classList.remove('active-slide');
+          }
         }
-
         // Обновляем высоту контейнера на основе активного слайда
         const activeSlide = containerRef.current.children[newMain];
         if (activeSlide) {
           containerRef.current.style.height = activeSlide.offsetHeight + 'px';
         }
       }
-
       if (progress < 1) {
         requestAnimationFrame(step);
       }
@@ -89,7 +93,7 @@ export default function MainSlider({ index }) {
     requestAnimationFrame(step);
   }, [index]);
 
-  // Используем ResizeObserver для отслеживания изменений размеров активного слайда
+  // ResizeObserver для отслеживания изменений размеров активного слайда
   useEffect(() => {
     let observer;
     const activeSlide = containerRef.current?.children[index];
@@ -114,7 +118,6 @@ export default function MainSlider({ index }) {
   return (
     <div className="main-slider" ref={containerRef}>
       {slideList.map((slide, i) => {
-        // Передаём пропс active: слайд активен, если его индекс совпадает с текущим index
         const isActive = i === index;
         return (
           <div key={slide.key} className="main-slider__slide">
