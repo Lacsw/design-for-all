@@ -1,14 +1,13 @@
 .slide-iframe__container {
   position: relative;
   width: 1000px;
-  height: 1000px;
+  height: auto;
   display: flex;
   justify-content: center;
 }
 
 .slide-iframe {
   width: 100%;
-  height: 100%;
   border: none;
   margin: 0;
   color: var(--color-main);
