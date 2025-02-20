@@ -1,7 +1,7 @@
 .updates-slide {
   width: 1000px;
   max-height: 1000px;
-  overflow: auto;
+  overflow-y: auto;
   border: 5px solid var(--color-secondary);
   padding: 15px 39px;
   background-color: var(--color-secondary);

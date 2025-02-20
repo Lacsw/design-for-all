@@ -25,7 +25,7 @@ body.theme-light {
 .preview-container {
   max-width: 1000px;
   overflow-x: hidden;
-  padding: 15px 70px;
+  padding: 20px 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +34,6 @@ body.theme-light {
   border-radius: 12px;
   background: var(--bg-color);
   box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.3);
-  border: 5px solid var(--bg-color);
 }
 
 .preview-section {
@@ -84,9 +83,8 @@ body.theme-light {
 
 @media (max-width: 768px) {
   .preview-container {
-    padding: 15px 15px;
+    padding: 13px 16px;
     row-gap: 10px;
-    border: 3px solid var(--bg-color);
   }
 
   .preview-section {
@@ -117,9 +115,8 @@ body.theme-light {
 
 @media (max-width: 480px) {
   .preview-container {
-    padding: 15px 10px;
+    padding: 16px 10px;
     row-gap: 10px;
-    border: 3px solid var(--bg-color);
   }
 
   .preview-section {

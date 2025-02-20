@@ -8,6 +8,7 @@
 }
 
 .slide-iframe {
+  border-radius: 12px;
   width: 100%;
   border: none;
   margin: 0;
