@@ -1,11 +1,10 @@
-import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+// import { useSelector } from 'react-redux';
+// import { getCurrentTheme } from 'store/selectors';
 import './Intro.css';
 import { useEffect, useRef } from 'react';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 
 export default function Intro() {
-  const theme = useSelector(getCurrentTheme);
   const typeRef = useRef(null);
   const isMobile = useIsMobile();
 
@@ -35,11 +34,11 @@ export default function Intro() {
   }, [slogan]);
 
   return (
-    <div className={'intro ' + theme}>
+
       <div className="intro__container">
         <h1 className="intro__title">Design for all</h1>
         <p className="intro__subtitle" ref={typeRef}></p>
       </div>
-    </div>
+  
   );
 }
