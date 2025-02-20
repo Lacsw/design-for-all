@@ -1,8 +1,9 @@
 .header {
+  width: 100%;
   padding: 13px 20px;
   border-radius: 0px 0px 12px 12px;
   background: var(--color-bg-secondary);
-  position: relative;
+  position: fixed;
   z-index: 999;
   transition:
     background-color 0.3s ease,

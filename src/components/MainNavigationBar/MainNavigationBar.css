@@ -1,17 +1,15 @@
 .main-navbar {
-  position: sticky;
-  top: 10px;
   display: flex;
   justify-content: center;
   gap: 60px;
   background-color: var(--color-bg-main-nav-bar);
   margin: 0 auto;
   max-width: 1000px;
+  width: 100%;
   border-radius: 30px;
   padding: 5px 0;
   list-style: none;
   margin-top: -80px;
-  z-index: 100;
 }
 
 .main-navbar__item {
