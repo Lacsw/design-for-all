@@ -66,9 +66,10 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
 
   .intro__container {
+    margin: 0;
     padding: 0;
     width: inherit;
     height: inherit;

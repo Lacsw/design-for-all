@@ -21,7 +21,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .slide-iframe__container {
     width: calc(100vw - 16px);
   }

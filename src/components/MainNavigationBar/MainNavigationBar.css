@@ -60,12 +60,30 @@
     margin: 0 20px 10px 20px;
     max-width: calc(100vw - 40px);
   }
+
+  .main-navbar__item {
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 25px;
+    overflow: hidden;
+
+    
+  }
+  .main-navbar__icon {
+    width: 35px;
+    height: 35px;
+  }
 }
 
-@media (max-width: 480px) {
+
+@media (max-width: 600px) {
   .main-navbar {
+    margin: 0;
+    position: absolute;
+    bottom: 15px;
     z-index: 1000; /* Навигация должна быть поверх других элементов */
-    margin: 0 10px;
     min-width: 340px;
     padding: 4px 12px;
     justify-content: space-between;

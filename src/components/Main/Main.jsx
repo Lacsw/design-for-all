@@ -26,7 +26,7 @@ export default function Main({ setSection }) {
           activeTab={activeTab}
           setSection={setSection}
         />
-        <div className="beauty" />
+        {/* <div className="beauty" /> */}
       </div>
 
       <div className="main__content">
