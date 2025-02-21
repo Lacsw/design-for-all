@@ -8,16 +8,18 @@
   padding-top: 62px;
 }
 
-.main {
-  /* min-height: calc(100vh - 60px); */
+/* .main {
   position: relative;
-}
+} */
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .main-wrapper {
-    margin-top: -45px;
+    padding-top: 0;
   }
-  .main {
-    margin-top: 45px;
+  .page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh);
+    overflow-y: auto;
   }
 }
