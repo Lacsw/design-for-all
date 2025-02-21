@@ -76,3 +76,4 @@ export { default as Creation } from './Creation/Creation';
 export { default as ViewArticle } from './ViewArticle/ViewArticle';
 export { default as Svg } from './Svg/Svg';
 export { default as Hint } from './Hint/Hint';
+export { ArticleNavigator } from './ArticleNavigator/ArticleNavigator';

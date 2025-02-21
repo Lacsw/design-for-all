@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -13,18 +13,24 @@ import {
   AuthorAndReviewers,
   Recommendations,
   RichTextEditor,
+  ArticleNavigator,
 } from 'components';
 import './CatalogArticle.css';
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
+
+  const { lang, articleId } = useParams();
+
   const article = useSelector(selectArticle);
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
-  const { lang, articleId } = useParams();
+  const articleRef = useRef(null);
+
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
+
   const createDate = new Date(
     article?.publication.date_create * 1000
   ).toLocaleDateString();
@@ -37,7 +43,12 @@ export default function CatalogArticle() {
     dispatch(fetchArticle({ lang, articleId }));
   }, [lang, articleId, needToFetch, dispatch]);
 
-  useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0));
+  // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
+
+  const [navigatorFlag, setNavugatorFlag] = useState(false);
+  const handleDescriptonParsingDone = useCallback(() => {
+    setNavugatorFlag((prev) => !prev);
+  }, []);
 
   return isBlank ? (
     <div className="blank">
@@ -57,16 +68,25 @@ export default function CatalogArticle() {
           timeCreate={createDate}
           timeUpdate={updateDate}
         />
-        <div className="article__main">
+        <div ref={articleRef} className="article__main">
           <img
             src={article.publication.image}
             alt="Превью статьи"
             className="article__image"
           />
+
+          <ArticleNavigator
+            flag={navigatorFlag}
+            selector=".tiptap.ProseMirror"
+            targetRef={articleRef}
+            targetHeadings={[1, 2, 3]}
+          />
+
           <RichTextEditor
             className="rte__article"
             initialValue={article.publication.description}
             readOnly={true}
+            onInput={handleDescriptonParsingDone}
           />
         </div>
         <Recommendations list={article.recommend} />

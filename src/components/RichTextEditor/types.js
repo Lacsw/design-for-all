@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @callback TJDRteOnInputProp
  * @param {import('./validation/types').TJDValidateResult} data
