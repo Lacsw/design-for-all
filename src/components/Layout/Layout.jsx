@@ -10,7 +10,6 @@ export default function Layout({ resetSection, children }) {
       <Header resetSection={resetSection} />
       <div className="main-wrapper">
         <main className="main">{children}</main>
-       
       </div>
       <Footer />
     </div>

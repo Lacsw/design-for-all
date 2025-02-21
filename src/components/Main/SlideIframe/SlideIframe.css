@@ -8,6 +8,7 @@
 }
 
 .slide-iframe {
+  border-radius: 12px;
   width: 100%;
   border: none;
   margin: 0;
@@ -20,7 +21,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .slide-iframe__container {
     width: calc(100vw - 16px);
   }

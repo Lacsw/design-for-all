@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // Хук для определения мобильной версии
 
-export function useIsMobile(breakpoint = 480) {
+export function useIsMobile(breakpoint = 600) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
@@ -26,7 +26,9 @@ export default function Main({ setSection }) {
           activeTab={activeTab}
           setSection={setSection}
         />
+        {/* <div className="beauty" /> */}
       </div>
+
       <div className="main__content">
         <MainSlider index={activeTab.index} />
       </div>
