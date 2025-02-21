@@ -10,7 +10,6 @@
   max-width: 1440px;
   aspect-ratio: 1440/523;
   margin: 0 auto;
-  /* padding: 5px 0; */
   list-style: none;
   z-index: 100;
   background-color: var(--color-bg-main);
@@ -101,8 +100,7 @@
   }
 
   .main__content {
-    /* width: calc(100vw - 16px);
-    overflow-x: hidden; */
+    overflow-x: hidden;
     margin-bottom: 30px;
   }
 }

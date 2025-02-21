@@ -3,6 +3,7 @@
   max-width: 1000px;
   width: 100%;
   height: auto;
+  margin: 0 auto;
 }
 
 .main-slider__slide {
@@ -48,3 +49,8 @@
   align-items: center;
 }
 
+@media (max-width: 600px) {
+  .main-slider {
+    overflow-x: hidden;
+  }
+}

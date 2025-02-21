@@ -46,3 +46,43 @@
   align-items: end;
   white-space: nowrap;
 }
+@media (max-width: 600px) {
+  .update-card {
+    border-radius: 6px;
+  }
+
+  .update-card__link {
+    padding: 8px;
+    gap: 10px;
+  }
+
+  .update-card__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1; /* Позволяет этому блоку занимать оставшееся пространство */
+    min-width: 0;
+  }
+
+  .update-card__section-name {
+    font-size: 16px;
+    line-height: 130%;
+  }
+
+  .update-card__path {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+
+  .update-card__others {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
+    line-height: 130%; /* 13px */
+  }
+}
