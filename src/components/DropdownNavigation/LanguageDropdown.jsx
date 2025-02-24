@@ -9,11 +9,13 @@ export default function LanguageDropdown({ options, title, theme }) {
   const language = useSelector(getLanguage);
   const langSrc = options.find((item) => item.name === language)?.src;
 
+  const filteredOptions = options.filter((item) => item.name !== language);
+
   const handleOptionClick = (option) => {
     dispatch(changeLanguage(option));
   };
 
-  const updatedOptions = options.map((option) => ({
+  const updatedOptions = filteredOptions.map((option) => ({
     ...option,
     onClick: () => handleOptionClick(option.name),
   }));
