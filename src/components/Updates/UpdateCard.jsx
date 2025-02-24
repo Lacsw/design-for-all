@@ -15,7 +15,11 @@ export default function UpdateCard({ update }) {
         </div>
         <div className="update-card__info">
           <span className="update-card__others">
-            {update.what_update ? 'Перевод статьи' : 'Новая статья'}
+            {update.type === 'created'
+              ? 'Новая статья'
+              : update.type === 'created_lang'
+              ? 'Перевод статьи'
+              : ''}
           </span>
           <span className="update-card__others">
             {update.time_action.split(' ')[0].split('-').reverse().join('.')}

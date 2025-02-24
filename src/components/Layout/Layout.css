@@ -1,7 +1,8 @@
 .page {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 62);
+  height: 100vh;
+  justify-content: space-between;
 }
 
 .main-wrapper {
@@ -11,10 +12,5 @@
 @media (max-width: 600px) {
   .main-wrapper {
     padding-top: 0;
-  }
-  .page {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh);
   }
 }
