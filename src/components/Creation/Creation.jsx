@@ -5,7 +5,7 @@ import { prepareDraft, resetDraft, addOriginal } from 'store/slices';
 import authorApi from 'utils/api/author';
 import { selectArticle } from 'store/slices/articleSlice';
 import { NewArticle, ViewArticle } from 'components';
-import previewImage from 'images/article/preview.png';
+// import previewImage from 'images/article/preview.png';
 import { langSelectOptions } from 'utils/constants';
 import './Creation.css';
 import { getDraft } from 'store/selectors';
@@ -52,7 +52,7 @@ const Creation = () => {
           };
           if (data.type !== 'created') {
             newDraft.what_update = data.offered_update?.what_update;
-            original.current.image = previewImage;
+            // original.current.image = previewImage;
           }
           if (data.offered_update?.type === 'updated') {
             original.current.lang = data.offered_update?.lang;
