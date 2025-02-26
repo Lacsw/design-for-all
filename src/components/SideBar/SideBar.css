@@ -80,3 +80,9 @@
 .sidebar__item b {
   color: rgb(190, 47, 47);
 }
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}

@@ -1,4 +1,4 @@
-.author {
+.user {
   padding: 15px 30px;
   border-radius: 12px;
   background-color: var(--color-bg-secondary);
@@ -9,14 +9,14 @@
   align-items: center;
 }
 
-.author__avatar {
+.user__avatar {
   width: 62px;
   height: 62px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.author__titles {
+.user__titles {
   color: var(--color-main);
   font-family: 'Inter';
   font-style: normal;
@@ -25,18 +25,18 @@
   text-align: center;
 }
 
-.author__name {
+.user__name {
   margin: 0;
   font-size: 14px;
 }
 
-.author__role {
+.user__role {
   margin: 0;
   font-size: 10px;
   font-weight: 400;
 }
 
-.author__socials-container {
+.user__socials-container {
   max-width: 108px;
   display: flex;
   align-items: center;
@@ -44,12 +44,12 @@
   gap: 4px;
 }
 
-.author__social {
+.user__social {
   width: 24px;
   height: 24px;
 }
 
-.author__see-more {
+.user__see-more {
   margin: 0;
   color: var(--color-main);
   font-size: 10px;
@@ -60,21 +60,21 @@
   cursor: pointer;
   text-align: center;
 }
-.author__see-more::after {
+.user__see-more::after {
   content: '';
   display: inline-block;
   width: 5px;
   height: 8px;
-  background-image: url(../../images/author/arrow.svg);
+  background-image: url(../../images/user/arrow.svg);
   margin-left: 6px;
 }
 
-.author__see-more_opened::after {
+.user__see-more_opened::after {
   transform: rotate(-90deg);
   margin-left: 6px;
 }
 
-.author__socials-text {
+.user__socials-text {
   margin: 0;
   color: var(--plholder-dark, #343434);
   font-family: Inter;
