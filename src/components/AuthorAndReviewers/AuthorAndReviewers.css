@@ -9,8 +9,8 @@
 @media (max-width: 600px) {
   .author-and-reviewers {
     box-sizing: border-box;
-    margin: 0 9px;
-    width: calc(100vw - 18px);
+    margin: 0 auto;
+    width: calc(100vw - 20px);
     top: 0;
     z-index: 997;
     background-color: var(--color-bg-secondary);

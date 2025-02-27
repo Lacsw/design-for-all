@@ -1,5 +1,5 @@
 import './Overlay.css';
 
-export default function Overlay({ onClick }) {
-  return <div className="overlay" onClick={onClick} />;
+export default function Overlay({ onClick, customClass = '' }) {
+  return <div className={`overlay ${customClass}`} onClick={onClick} />;
 }
