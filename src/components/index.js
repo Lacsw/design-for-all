@@ -22,6 +22,8 @@ export { default as Account } from './Account/Account';
 export { default as AccountAuthorNavbar } from './AccountAuthorNavbar/AccountAuthorNavbar';
 export { default as AccountAdminNavbar } from './AccountAdminNavbar/AccountAdminNavbar';
 export { default as AccountAuthor } from './AccountAuthor/AccountAuthor';
+export { default as MobileAccountAuthor } from './AccountAuthor/MobileAccountAuthor/MobileAccountAuthor';
+
 export { default as AccountAdmin } from './AccountAdmin/AccountAdmin';
 export { default as AdminApplicationsNav } from './AdminApplicationsNav/AdminApplicationsNav';
 export { default as AdminApplicationNewAuthor } from './AdminApplicationNewAuthor/AdminApplicationNewAuthor';
@@ -75,6 +77,4 @@ export { default as Creation } from './Creation/Creation';
 export { default as ViewArticle } from './ViewArticle/ViewArticle';
 export { default as Svg } from './Svg/Svg';
 export { default as Hint } from './Hint/Hint';
-export {default as Overlay} from './Overlay/Overlay';
-
-
+export { default as Overlay } from './Overlay/Overlay';

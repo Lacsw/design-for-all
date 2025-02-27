@@ -26,3 +26,9 @@
 .button:disabled {
   color: var(--color-main-disabled);
 }
+
+.mobile-account-author__button {
+  padding: 12px 30px;
+  background-color: var(--color-main);
+  color: var(--color-bg-main);
+}
