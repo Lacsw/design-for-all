@@ -8,14 +8,26 @@
   z-index: 100;
 }
 
-.overlay__header-mobile {
-  bottom: 47px;
-  height: calc(100vh - 47px);
-  z-index: -1;
-}
-
-.overlay__header-desktop {
+.overlay__header {
   top: 63px;
   height: calc(100vh - 63px);
   z-index: -1;
+}
+
+.overlay__mobile-search {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .overlay__header {
+    top: 0;
+    height: calc(100vh - 47px);
+    z-index: -1;
+  }
+
+  .overlay__mobile-search {
+    display: block;
+    height: calc(100vh - 50px);
+    z-index: -1;
+  }
 }

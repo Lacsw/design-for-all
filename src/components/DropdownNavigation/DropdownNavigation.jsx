@@ -57,9 +57,7 @@ export default function DropdownNavigation({
         >
           <Overlay
             onClick={() => setIsDropdownOpen(false)}
-            customClass={
-              isMobile ? 'overlay__header-mobile' : 'overlay__header-desktop'
-            }
+            customClass="overlay__header"
           />
           {showName && (
             <ul

@@ -7,6 +7,7 @@ import closeBtn from 'images/close-btn.svg';
 import closeBtnBlack from 'images/close-btn_black.svg';
 import loupe from 'images/loupe-icon.svg';
 import loupeLight from 'images/loupe-icon_white.svg';
+import Overlay from 'components/Overlay/Overlay';
 
 export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
   const [isShown, setIsShown] = useState(false);
@@ -35,7 +36,10 @@ export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
     <>
       {isShown && (
         <>
-          <div className="search-overlay" onClick={handleCloseClick}></div>
+          <Overlay
+            onClick={handleCloseClick}
+            customClass="overlay__mobile-search"
+          />
 
           <div className="search-input  active">
             <input
