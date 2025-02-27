@@ -17,6 +17,8 @@ import {
 } from 'components';
 import './CatalogArticle.css';
 
+const selectorOfScrollableEl = ['.main-wrapper', 'root'];
+
 export default function CatalogArticle() {
   const dispatch = useDispatch();
 
@@ -45,9 +47,9 @@ export default function CatalogArticle() {
 
   // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
 
-  const [navigatorFlag, setNavugatorFlag] = useState(false);
+  const [navigatorFlag, setNavigatorFlag] = useState(false);
   const handleDescriptonParsingDone = useCallback(() => {
-    setNavugatorFlag((prev) => !prev);
+    setNavigatorFlag((prev) => !prev);
   }, []);
 
   return isBlank ? (
@@ -75,19 +77,22 @@ export default function CatalogArticle() {
             className="article__image"
           />
 
-          <ArticleNavigator
-            flag={navigatorFlag}
-            selector=".tiptap.ProseMirror"
-            targetRef={articleRef}
-            targetHeadings={[1, 2, 3]}
-          />
+          <div className="article__editor-container">
+            <ArticleNavigator
+              flag={navigatorFlag}
+              selector=".tiptap.ProseMirror"
+              selectorOfScrollableEl={selectorOfScrollableEl}
+              targetRef={articleRef}
+              targetHeadings={[1, 2, 3, 4, 5, 6]}
+            />
 
-          <RichTextEditor
-            className="rte__article"
-            initialValue={article.publication.description}
-            readOnly={true}
-            onInput={handleDescriptonParsingDone}
-          />
+            <RichTextEditor
+              className="rte__article"
+              initialValue={article.publication.description}
+              readOnly={true}
+              onInput={handleDescriptonParsingDone}
+            />
+          </div>
         </div>
         <Recommendations list={article.recommend} />
       </div>
