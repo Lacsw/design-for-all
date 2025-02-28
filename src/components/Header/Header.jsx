@@ -127,6 +127,7 @@ export default function Header({ resetSection }) {
               title="Меню"
               currentUser={currentUser}
               openAuthModal={openAuthModal}
+            
             />
           </li>
           <li className="header__navigation-item_mobile-first">
