@@ -103,3 +103,10 @@
 .dark .modal__btn_cancel:hover {
   background-image: url(../../images/modals/cancel-white.svg);
 }
+
+@media (max-width: 600px) {
+  .modal {
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+}
