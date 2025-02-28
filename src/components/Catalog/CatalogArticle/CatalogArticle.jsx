@@ -13,8 +13,10 @@ import {
   AuthorAndReviewers,
   Recommendations,
   RichTextEditor,
+  ViewMobileArticle,
 } from 'components';
 import './CatalogArticle.css';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ export default function CatalogArticle() {
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
   const { lang, articleId } = useParams();
+  const isMobile = useIsMobile();
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
@@ -38,7 +41,7 @@ export default function CatalogArticle() {
   }, [lang, articleId, needToFetch, dispatch]);
 
   useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0));
-
+console.log(article);
   return isBlank ? (
     <div className="blank">
       Воспользуйтесь поиском по дереву <br /> или поиском по заголовкам статей
@@ -57,18 +60,23 @@ export default function CatalogArticle() {
           timeCreate={createDate}
           timeUpdate={updateDate}
         />
-        <div className="article__main">
-          <img
-            src={article.publication.image}
-            alt="Превью статьи"
-            className="article__image"
-          />
-          <RichTextEditor
-            className="rte__article"
-            initialValue={article.publication.description}
-            readOnly={true}
-          />
-        </div>
+        {isMobile ? (
+          <ViewMobileArticle />
+        ) : (
+          <div className="article__main">
+            <img
+              src={article.publication.image}
+              alt="Превью статьи"
+              className="article__image"
+            />
+            <RichTextEditor
+              className="rte__article"
+              initialValue={article.publication.description}
+              readOnly={true}
+            />
+          </div>
+        )}
+
         <Recommendations list={article.recommend} />
       </div>
       <AuthorAndReviewers />
