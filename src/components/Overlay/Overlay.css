@@ -1,0 +1,33 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-bg-search);
+  z-index: 100;
+}
+
+.overlay__header {
+  top: 63px;
+  height: calc(100vh - 63px);
+  z-index: -1;
+}
+
+.overlay__mobile-search {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .overlay__header {
+    top: 0;
+    height: calc(100vh - 47px);
+    z-index: -1;
+  }
+
+  .overlay__mobile-search {
+    display: block;
+    height: calc(100vh - 50px);
+    z-index: -1;
+  }
+}

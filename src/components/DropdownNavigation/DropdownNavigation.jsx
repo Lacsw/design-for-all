@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './DropdownNavigation.css';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
+import Overlay from 'components/Overlay/Overlay';
 
 export default function DropdownNavigation({
   options,
@@ -54,6 +55,10 @@ export default function DropdownNavigation({
             isDropdownOpen ? 'show' : ''
           }`}
         >
+          <Overlay
+            onClick={() => setIsDropdownOpen(false)}
+            customClass="overlay__header"
+          />
           {showName && (
             <ul
               className={`dropdown-navigation__items dropdown-navigation__text-items ${
