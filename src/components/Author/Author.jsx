@@ -39,7 +39,15 @@ export default function Author({ showReviewers }) {
           className="author__avatar"
         />
         <div className="author__titles">
-          <p className="author__name">{author.fio}</p>
+          <p
+            className={`author__name ${
+              showReviewers && isMobile
+                ? 'author__name-no-cut'
+                : 'author__name-cut'
+            }`}
+          >
+            {author.fio}
+          </p>
           <p className="author__role">Автор</p>
         </div>
       </div>

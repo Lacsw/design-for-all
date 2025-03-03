@@ -2,11 +2,13 @@ import { useIsMobile } from 'utils/hooks/useIsMobile';
 import './AuthorAndReviewers.css';
 import { Author, Overlay, Reviewers } from 'components';
 import { useState } from 'react';
+import { selectArticle } from 'store/slices/articleSlice';
+import { useSelector } from 'react-redux';
 
 export default function AuthorAndReviewers() {
-  const isMobile = useIsMobile(600);
+  const { reviews } = useSelector(selectArticle);
+  const isMobile = useIsMobile();
   const [showReviewers, setShowReviewers] = useState(false);
-
   const toggleReviewers = () => {
     setShowReviewers((prev) => !prev);
   };
@@ -25,7 +27,7 @@ export default function AuthorAndReviewers() {
       {showReviewers && <Overlay onClick={toggleReviewers} />}
       <div className="author-and-reviewers" onClick={toggleReviewers}>
         <Author showReviewers={showReviewers} />
-        {showReviewers && <Reviewers />}
+        {showReviewers && reviews.length !== 0 && <Reviewers />}
         <span className="author-and-reviewers__decoration"></span>
       </div>
     </>

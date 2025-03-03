@@ -148,12 +148,22 @@
 
   .author__name {
     max-width: 130px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     margin: 0;
     font-size: 14px;
     line-height: 130%;
+  }
+
+  .author__name-no-cut {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .author__name-cut {
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .author__role {
