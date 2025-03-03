@@ -31,11 +31,15 @@ import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import authApi from 'utils/api/auth'; // если выход реализован через API
 import { signOut } from 'store/slices';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
+import { selectIsCatalogOpen } from 'store/slices/articleSlice';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useSelector(getCurrentTheme);
+  const isMobile = useIsMobile();
+  const isCatalogOpen = useSelector(selectIsCatalogOpen);
 
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
@@ -116,6 +120,12 @@ export default function Header({ resetSection }) {
           <li className="header__navigation-item_mobile-third">
             <SearchInput />
           </li>
+          {isMobile && isCatalogOpen && (
+            <li className="header__navigation-item_mobile-forth">
+              {/* <MobileTreesDropdown> */}
+            </li>
+          )}
+
           <li className="header__navigation-item_mobile-last">
             <MainMenu
               options={navigationOptionsList}
@@ -127,7 +137,6 @@ export default function Header({ resetSection }) {
               title="Меню"
               currentUser={currentUser}
               openAuthModal={openAuthModal}
-            
             />
           </li>
           <li className="header__navigation-item_mobile-first">

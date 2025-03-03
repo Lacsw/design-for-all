@@ -17,12 +17,17 @@ export const initialState = {
   article: null,
   loading: true,
   error: '',
+  isCatalogOpen: false,
 };
 
 const articleSlice = createSlice({
   name: 'article',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsCatalogOpen: (state, action) => {
+      state.isCatalogOpen = action.payload;
+    },
+  },
   selectors: {
     selectCatalog: (state) => state.catalog,
     selectTitles: (state) => state.titles,
@@ -85,6 +90,8 @@ const articleSlice = createSlice({
   },
 });
 
+export const { setIsCatalogOpen } = articleSlice.actions;
+
 export const fetchTree = createAsyncThunk('tree/get', async (options) =>
   getTree(options)
 );
@@ -109,5 +116,7 @@ export const {
   selectError,
   selectLoading,
 } = articleSlice.selectors;
+
+export const selectIsCatalogOpen = (state) => state.article.isCatalogOpen;
 
 export default articleSlice.reducer;
