@@ -69,7 +69,6 @@ export { default as TreeList } from './ArticlesTree/TreeList/TreeList';
 export { default as TreeItem } from './ArticlesTree/TreeItem/TreeItem';
 export { default as Catalog } from './Catalog/Catalog';
 export { default as CatalogArticle } from './Catalog/CatalogArticle/CatalogArticle';
-export { default as ViewMobileArticle } from './Catalog/CatalogArticle/ViewMobileArticle/ViewMobileArticle';
 export { default as Layout } from './Layout/Layout';
 export { default as User } from './User/User';
 export { default as Recommendations } from './Recommendations/Recommendations';
