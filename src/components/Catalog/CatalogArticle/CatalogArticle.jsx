@@ -83,7 +83,7 @@ export default function CatalogArticle() {
               selector=".tiptap.ProseMirror"
               selectorOfScrollableEl={selectorOfScrollableEl}
               targetRef={articleRef}
-              targetHeadings={[1, 2, 3, 4, 5, 6]}
+              targetHeadings={[1]}
             />
 
             <RichTextEditor

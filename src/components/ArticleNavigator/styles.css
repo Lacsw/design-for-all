@@ -1,5 +1,5 @@
 .article-navigator {
-  position: sticky;
+  position: absolute;
   top: 15px;
   left: 0px;
   z-index: 1;
