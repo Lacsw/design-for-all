@@ -32,6 +32,7 @@ export { default as AdminNavbar } from './AccountAdminNavbar/AdminNavbar/AdminNa
 export { default as AdminAppNewAuthorNavbar } from './AccountAdminNavbar/AdminAppNewAuthorNavbar/AdminAppNewAuthorNavbar';
 export { default as LinkButton } from './LinkButton/LinkButton';
 export { default as Button } from './Button/Button';
+export { default as MobileTreesВutton } from './DropdownNavigation/MobileTreesВutton/MobileTreesВutton';
 export { default as ModalAttention } from './Modal/ModalAttention/ModalAttention';
 export { default as ModalRecommendation } from './Modal/ModalRecommendation/ModalRecommendation';
 export { default as ModalReasons } from './Modal/ModalReasons/ModalReasons';
