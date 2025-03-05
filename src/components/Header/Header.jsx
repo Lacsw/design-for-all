@@ -119,7 +119,7 @@ export default function Header({ resetSection }) {
         </Link>
         <ul className="header__navigation">
           <li className="header__navigation-item_mobile-third">
-            <SearchInput />
+            <SearchInput isMobileVisible={isMobile} />
           </li>
           {isMobile && isCatalogOpen && (
             <li className="header__navigation-item_mobile-fourth">
