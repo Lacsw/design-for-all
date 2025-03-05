@@ -60,10 +60,6 @@
 }
 
 @media (max-width: 600px) {
-  .hide {
-    display: block;
-  }
-
   .search-input {
     width: calc(100vw - 20px);
     z-index: 10;

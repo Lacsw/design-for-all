@@ -9,7 +9,13 @@ import loupe from 'images/loupe-icon.svg';
 import loupeLight from 'images/loupe-icon_white.svg';
 import Overlay from 'components/Overlay/Overlay';
 
-export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
+export default function SearchInput({
+  onChange,
+  onSearch,
+  onResults,
+  onOpen,
+  isMobileVisible = false,
+}) {
   const [isShown, setIsShown] = useState(false);
   const inputRef = useRef();
   const theme = useSelector(getCurrentTheme);
@@ -36,10 +42,12 @@ export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
     <>
       {isShown && (
         <>
-          <Overlay
-            onClick={handleCloseClick}
-            customClass="overlay__mobile-search"
-          />
+          {isMobileVisible && (
+            <Overlay
+              onClick={handleCloseClick}
+              customClass="overlay__mobile-search"
+            />
+          )}
 
           <div className="search-input  active">
             <input
@@ -60,7 +68,9 @@ export default function SearchInput({ onChange, onSearch, onResults, onOpen }) {
         </>
       )}
       <button
-        className={`search-input__loupe ${isShown && `hide`}`}
+        className={`search-input__loupe ${
+          (isShown && !isMobileVisible) && `hide`
+        }`}
         onClick={isShown ? handleCloseClick : handleLoupeClick}
       >
         <img

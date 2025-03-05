@@ -45,6 +45,12 @@
   padding: 0;
 }
 
+.footer__list-item {
+  height: 18px;
+}
+
+
+
 .footer__list_socials {
   flex-direction: row;
   flex-wrap: wrap;

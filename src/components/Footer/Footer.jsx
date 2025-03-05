@@ -16,37 +16,37 @@ export default function Footer() {
         <div className="footer__list-container">
           <h2 className="footer__title">Основные страницы</h2>
           <ul className="footer__list">
-            <li>
+            <li className='footer__list-item'>
               <Link to="/" className="footer__link">
                 Главная
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/updates" className="footer__link">
                 Обновления
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/articles/web" className="footer__link">
                 Веб приложения
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/articles/desktop" className="footer__link">
                 Десктоп приложения
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/articles/mobiles" className="footer__link">
                 Мобильные приложения
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/articles" className="footer__link">
                 Статьи
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/guides" className="footer__link">
                 Руководства
               </Link>
@@ -56,17 +56,17 @@ export default function Footer() {
         <div className="footer__list-container">
           <h2 className="footer__title">Контакты</h2>
           <ul className="footer__list">
-            <li>
+            <li className='footer__list-item'>
               <Link to="/" className="footer__link">
                 example@mail.com
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/" className="footer__link">
                 support@mail.com
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/" className="footer__link">
                 marketing@mail.com
               </Link>
@@ -76,12 +76,12 @@ export default function Footer() {
         <div className="footer__list-container">
           <h2 className="footer__title">Правовая информация</h2>
           <ul className="footer__list">
-            <li>
+            <li className='footer__list-item'>
               <Link to="/" className="footer__link">
                 Пользовательское соглашение
               </Link>
             </li>
-            <li>
+            <li className='footer__list-item'>
               <Link to="/" className="footer__link">
                 Пользовательское соглашение
               </Link>
