@@ -2,7 +2,14 @@
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { mergeSx } from 'merge-sx';
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { sxRoot } from './styles';
 import './styles.css';
 import {
@@ -10,6 +17,7 @@ import {
   firstShowingOffsetDefault,
   targetHeadingsDefault,
 } from './constants';
+import { createPortal } from 'react-dom';
 
 /**
  * @type {import('react').NamedExoticComponent<
@@ -21,6 +29,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   selector,
   targetRef,
   selectorOfScrollableEl,
+  parentSelector,
   firstShowingOffset = firstShowingOffsetDefault,
   scrollPercent = scrollPercentDefault,
   targetHeadings = targetHeadingsDefault,
@@ -28,14 +37,19 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   id,
   sx,
 }) {
+  const parentEl = useMemo(
+    () => document.querySelector(parentSelector),
+    [parentSelector]
+  );
+
   /** @type {import('types/react/hooks').TJDUseState<HTMLHeadingElement[]>} */
   const [headingsEls, setHeadingsEls] = useState([]);
 
   /** @type {React.RefObject<HTMLDivElement>} */
   const navigatorRef = useRef(null);
 
-  /** @type {import('types/react/hooks').TJDUseState<boolean>} */
   const [isShowing, setIsShowing] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const findTargetEl = useCallback(() => {
     /** @type {HTMLElement | null} */
@@ -119,18 +133,28 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     scrollPercent,
   ]);
 
-  return (
+  const markup = (
     <Box
       id={id}
-      className={clsx('article-navigator', isShowing && 'visible', className)}
+      className={clsx(
+        'article-navigator',
+        isShowing && 'visible',
+        expanded && 'expanded',
+        className
+      )}
       sx={mergeSx(sxRoot({}), sx)}
       ref={navigatorRef}
     >
       <ol
         className="article-navigator__list"
-        onScroll={(e) => {
+        onScroll={(evt) => {
           // stop scroll in parent when ol.article-navigator__list fully scrolled itself
-          e.stopPropagation();
+          evt.stopPropagation();
+        }}
+        onClick={(evt) => {
+          if (isShowing) {
+            setExpanded(true);
+          }
         }}
       >
         {headingsEls.map((headingEl, idx) => {
@@ -139,15 +163,26 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
               key={idx}
               className="article-navigator__item"
               onClick={(e) => {
+                if (!expanded) {
+                  return;
+                }
                 headingEl.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              {headingEl.textContent}
+              <span className="heading-text">{headingEl.textContent}</span>
+              <span className="counter">
+                {idx + 1}/{headingsEls.length ? headingsEls.length : '\u00A0'}
+              </span>
             </li>
           );
         })}
       </ol>
-      <Box>{headingsEls.length ? headingsEls.length : '\u00A0'}</Box>
     </Box>
   );
+
+  if (parentEl) {
+    return createPortal(markup, parentEl);
+  } else {
+    return null;
+  }
 });

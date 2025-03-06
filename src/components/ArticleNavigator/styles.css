@@ -1,18 +1,28 @@
 .article-navigator {
   position: absolute;
-  top: 15px;
-  left: 0px;
+  top: 42px;
+  left: 50%;
+  transform: translate(-50%, 20px);
   z-index: 1;
 
-  border: 1px solid transparent;
+  border: 0px solid transparent;
+  border-radius: 6px;
   padding: 0px;
+  min-width: 320px;
+  width: 40vw;
+  max-width: 601px;
   height: 0px;
 
-  color: blue;
-  background: grey;
+  color: var(--color-secondary);
+
+  font-family: Gotham;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0%;
 
   display: flex;
-  overflow: auto;
+  overflow: hidden;
 
   opacity: 0;
   visibility: hidden;
@@ -26,10 +36,10 @@
 }
 
 .article-navigator.visible {
-  border: 1px solid red;
-  padding: 6px;
+  border: 1px solid transparent;
+  padding: 0px;
 
-  height: 70px;
+  height: 46px;
 
   opacity: 1;
   visibility: visible;
@@ -39,7 +49,70 @@
     visibility 0ms 0ms;
 }
 
+.article-navigator.expanded {
+  overflow: auto;
+  background: var(--color-bg-secondary);
+  padding: 13px 10px;
+  top: 17vh;
+  height: fit-content;
+  max-height: 246px;
+}
+
 .article-navigator__list {
   margin: 0;
   padding: 0;
+  width: 100%;
+}
+
+.article-navigator__item {
+  border-radius: 6px;
+  background: var(--color-item-active);
+  width: 100%;
+  padding: 14px 13px;
+  height: 46px;
+
+  display: flex;
+}
+
+.article-navigator__item .heading-text {
+  flex: 1 1 auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.article-navigator__item .counter {
+  color: #585858;
+
+  font-family: Gotham;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+
+  margin-left: 10px;
+}
+
+@media (width < 1300px) {
+  .article-navigator {
+    width: 60vw;
+  }
+}
+
+@media (width < 900px) {
+  .article-navigator {
+    width: 80vw;
+  }
+}
+
+@media (width < 600px) {
+  .article-navigator {
+    width: 90vw;
+  }
+}
+
+.theme-light .article-navigator__item .counter {
+  color: var(--color-main-disabled);
 }

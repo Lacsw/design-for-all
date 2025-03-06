@@ -17,7 +17,7 @@ import {
 } from 'components';
 import './CatalogArticle.css';
 
-const selectorOfScrollableEl = ['.main-wrapper', 'root'];
+const selectorOfScrollableEl = ['div.main-wrapper', 'root'];
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
@@ -81,9 +81,10 @@ export default function CatalogArticle() {
             <ArticleNavigator
               flag={navigatorFlag}
               selector=".tiptap.ProseMirror"
+              parentSelector="div.main-wrapper"
               selectorOfScrollableEl={selectorOfScrollableEl}
               targetRef={articleRef}
-              targetHeadings={[1]}
+              targetHeadings={[1, 2]}
             />
 
             <RichTextEditor
