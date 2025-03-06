@@ -48,7 +48,6 @@ export default function DropdownNavigation({
           className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
         />
       </button>
-
       {shouldRenderDropdown && (
         <div
           className={`dropdown-navigation__container ${

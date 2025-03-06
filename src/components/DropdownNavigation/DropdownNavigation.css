@@ -8,7 +8,6 @@
   display: flex;
   align-items: center;
   position: relative;
-  z-index: 10;
 }
 
 .dropdown-navigation__btn {
@@ -25,6 +24,8 @@
   outline: none;
   cursor: pointer;
   overflow: hidden;
+  position: relative;
+  z-index: 100;
 }
 
 /* Контейнер выпадающего меню */
@@ -73,7 +74,6 @@
 .dropdown-navigation__icon-items {
   width: var(--dropdown-item-size);
   padding: 61px 0 28px 0;
-
   align-items: center;
   background-color: var(--color-bg-accent);
 }
