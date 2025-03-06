@@ -144,6 +144,14 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       )}
       sx={mergeSx(sxRoot({}), sx)}
       ref={navigatorRef}
+      onClick={function (evt) {
+        if (
+          evt.target instanceof HTMLElement &&
+          evt.target.classList.contains('article-navigator')
+        ) {
+          setExpanded(false);
+        }
+      }}
     >
       <ol
         className="article-navigator__list"
