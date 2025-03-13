@@ -42,7 +42,7 @@ export default function Catalog({ section, setSection }) {
     <div className="catalog__container" ref={catalogRef}>
       {isMobile ? (
         activeComponent === 'mobileSidebar' && (
-          <Overlay onClick={closeSidebar} zIndex={998}>
+          <Overlay onClick={closeSidebar} zIndex={998} disableHover ={ true}>
             <SideBar section={section} setSection={setSection} />
           </Overlay>
         )
