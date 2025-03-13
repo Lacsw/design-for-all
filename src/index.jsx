@@ -8,7 +8,7 @@ import GlobalCssPriority from 'styles/mui/GlobalCssPriority';
 import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
-
+import { InteractiveManagerProvider } from 'utils/contexts/InteractiveManagerContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +17,9 @@ root.render(
       <BrowserRouter>
         <GlobalCssPriority>
           <CssBaseline />
-          <App />
+          <InteractiveManagerProvider>
+            <App />
+          </InteractiveManagerProvider>
         </GlobalCssPriority>
       </BrowserRouter>
     </PersistGate>

@@ -7,11 +7,11 @@ import {
   MainMenu,
   LanguageDropdown,
   CurrencyDropdown,
-  SearchInput,
   AuthModal,
   UserDropdown,
   LoginButton,
   MobileTreesВutton,
+  HeaderSearchInput,
 } from 'components';
 
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
@@ -30,7 +30,7 @@ import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
 import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
-import authApi from 'utils/api/auth'; // если выход реализован через API
+import authApi from 'utils/api/auth';
 import { signOut } from 'store/slices';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { selectIsCatalogOpen } from 'store/slices/articleSlice';
@@ -119,7 +119,7 @@ export default function Header({ resetSection }) {
         </Link>
         <ul className="header__navigation">
           <li className="header__navigation-item_mobile-third">
-            <SearchInput isMobileVisible={isMobile} />
+            <HeaderSearchInput isMobileVisible={isMobile} id="header" />
           </li>
           {isMobile && isCatalogOpen && (
             <li className="header__navigation-item_mobile-fourth">

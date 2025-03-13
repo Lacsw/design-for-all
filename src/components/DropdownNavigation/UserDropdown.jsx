@@ -34,6 +34,7 @@ export default function UserDropdown({
 
   return (
     <DropdownNavigation
+      id="user-menu"
       options={enhancedOptions}
       titleIcon={currentUser.avatar || titleIcon}
       type={type}

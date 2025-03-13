@@ -22,6 +22,7 @@ export default function LanguageDropdown({ options, title, theme }) {
 
   return (
     <DropdownNavigation
+      id="language-menu"
       options={updatedOptions}
       titleIcon={langSrc}
       title={title}

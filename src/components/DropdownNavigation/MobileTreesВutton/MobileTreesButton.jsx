@@ -1,19 +1,21 @@
-import './MobileTreesВutton.css';
-
-import { useDispatch, useSelector } from 'react-redux';
+import './MobileTreesButton.css';
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
+import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import mobileTreesIcon from 'images/navigation/mobile-trees-icon.svg';
 import mobileTreesIconWhite from 'images/navigation/mobile-trees-icon_white.svg';
-import { selectIsMobileSidebarOpen, setIsMobileSidebarOpen } from 'store/slices/articleSlice';
 
-export default function MobileTreesВutton() {
+export default function MobileTreesButton() {
   const theme = useSelector(getCurrentTheme);
-  const dispatch = useDispatch();
-  const isMobileSidebarOpen = useSelector(selectIsMobileSidebarOpen);
-
+  const { activeComponent, openComponent, closeComponent } = useInteractiveManager();
+  const isMobileSidebarOpen = activeComponent === 'mobileSidebar';
 
   const handleClick = () => {
-    dispatch(setIsMobileSidebarOpen(!isMobileSidebarOpen));
+    if (isMobileSidebarOpen) {
+      closeComponent('mobileSidebar');
+    } else {
+      openComponent('mobileSidebar');
+    }
   };
 
   return (

@@ -92,6 +92,7 @@ export default function MainMenu({
       title={title}
       showName={showName}
       theme={theme}
+      id="main-menu"
     />
   );
 }
