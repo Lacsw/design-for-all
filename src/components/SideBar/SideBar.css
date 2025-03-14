@@ -36,7 +36,7 @@
 }
 
 .sidebar__list {
-  max-height: 80vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -52,7 +52,6 @@
   width: 100%;
   border-radius: 12px;
   color: var(--color-main);
-  outline: 1px solid currentColor;
   border: 5px solid var(--color-bg-secondary);
   background-color: var(--color-bg-secondary);
   overflow: auto;
@@ -110,6 +109,7 @@
 
   .sidebar__list {
     margin: 10px;
+    height: 85vh;
     width: calc(100% - 20px);
   }
 }
