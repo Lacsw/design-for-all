@@ -9,7 +9,7 @@ import profileWhiteIcon from 'images/account/profile-white-icon.svg';
 import profileBlackIcon from 'images/account/profile-black-icon.svg';
 import logoutIcon from 'images/account/logout-icon.svg';
 
-export default function AuthorNavbar() {
+export default function AuthorNavbar({ logout }) {
   return (
     <nav className="author-navbar">
       <ul className="author-navbar__list">
@@ -40,7 +40,7 @@ export default function AuthorNavbar() {
         </li>
 
         <li className="author-navbar__item">
-          <HashButton to="/" icon={logoutIcon}>
+          <HashButton onClick={logout} to="/" icon={logoutIcon}>
             Выйти
           </HashButton>
         </li>

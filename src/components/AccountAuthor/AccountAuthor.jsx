@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './AccountAuthor.css';
 import {
   AuthorArticlesNav,
@@ -9,16 +9,22 @@ import {
   NewArticleNavbar,
   AuthorNavbar,
   Creation,
+  MobileAccountAuthor,
 } from 'components';
 
 import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
+import authApi from 'utils/api/auth';
+import { signInSuccess } from 'store/slices';
 
 const authorTabs = ['approve', 'drafted', 'offered', 'rejected', 'deleted'];
 
 export default function AccountAuthor({ hash, resetSection }) {
+  const isMobile = useIsMobile();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
   const [, setSearchParams] = useSearchParams();
@@ -33,6 +39,17 @@ export default function AccountAuthor({ hash, resetSection }) {
   const access = isValid && user?.role === 'mentor';
   const NavBar =
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await authApi.logout();
+      resetSection();
+      dispatch(signInSuccess(null));
+      navigate('/');
+    } catch (err) {
+      console.error('Ошибка при выходе:', err);
+    }
+  }, [dispatch, resetSection, navigate]);
 
   useEffect(() => {
     if (!isValid || (user && !access)) return;
@@ -52,31 +69,47 @@ export default function AccountAuthor({ hash, resetSection }) {
     }
   }, [pagination, tab, isValid, access, user, setSearchParams, hash, navigate]);
 
-  return access ? (
-    <Account navBar={<NavBar onChange={setTab} />}>
-      {hash === hashPaths.newArticle ? (
-        <Creation />
-      ) : hash === hashPaths.profile ? (
-        <Profile resetSection={resetSection} />
-      ) : (
-        <div className="account-author__articles">
-          <AuthorArticlesNav
-            handlePagination={setPagination}
-            selected={tab}
-            onChange={setTab}
-          />
-          <AuthorArticlesList
-            articles={articles}
-            section={tab}
-            changeList={setArticles}
-            pagination={pagination}
-          />
-        </div>
-      )}
-    </Account>
-  ) : !isValid ? (
-    <NotFound resetSection={resetSection} />
-  ) : user ? (
-    <NotFound resetSection={resetSection} role={'автор'} />
-  ) : null;
+  // Если hash недопустим, возвращаем NotFound
+  if (!isValid) {
+    return <NotFound resetSection={resetSection} />;
+  }
+
+  // Если пользователь существует, но не имеет доступа, тоже NotFound с ролью
+  if (user && !access) {
+    return <NotFound resetSection={resetSection} role="автор" />;
+  }
+
+  // Если доступ есть и устройство мобильное, возвращаем мобильную версию
+  if (access && isMobile) {
+    return <MobileAccountAuthor handleLogout={handleLogout} />;
+  }
+
+  // Если доступ есть и устройство не мобильное, возвращаем стандартный кабинет
+  if (access && !isMobile) {
+    return (
+      <Account navBar={<NavBar onChange={setTab} logout={handleLogout} />}>
+        {hash === hashPaths.newArticle ? (
+          <Creation />
+        ) : hash === hashPaths.profile ? (
+          <Profile resetSection={resetSection} />
+        ) : (
+          <div className="account-author__articles">
+            <AuthorArticlesNav
+              handlePagination={setPagination}
+              selected={tab}
+              onChange={setTab}
+            />
+            <AuthorArticlesList
+              articles={articles}
+              section={tab}
+              changeList={setArticles}
+              pagination={pagination}
+            />
+          </div>
+        )}
+      </Account>
+    );
+  }
+
+  return null;
 }
