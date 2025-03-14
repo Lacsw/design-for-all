@@ -1,26 +1,22 @@
 import { useEffect, useRef } from 'react';
 import { CatalogArticle, SideBar, NotFound, Overlay } from 'components';
 import './Catalog.css';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectIsMobileSidebarOpen,
-  selectTitles,
-  setIsMobileSidebarOpen,
-} from 'store/slices/articleSlice';
 import { useParams } from 'react-router-dom';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
+import { useSelector } from 'react-redux';
+import { selectTitles } from 'store/slices/articleSlice';
 
 export default function Catalog({ section, setSection }) {
   const catalogRef = useRef();
-  const dispatch = useDispatch();
-
   const { lang, articleId } = useParams();
   const titles = useSelector(selectTitles);
-  const isMobileSidebarOpen = useSelector(selectIsMobileSidebarOpen);
   const isMobile = useIsMobile();
   const langs = Object.keys(titles);
 
-  const isWrong = (function () {
+  const { activeComponent, closeComponent } = useInteractiveManager();
+
+  const isWrong = (() => {
     if (
       lang &&
       articleId &&
@@ -32,10 +28,12 @@ export default function Catalog({ section, setSection }) {
     return false;
   })();
 
-  useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0));
+  useEffect(() => {
+    document.querySelector('.main-wrapper').scrollTo(0, 0);
+  }, []);
 
   const closeSidebar = () => {
-    dispatch(setIsMobileSidebarOpen(false)); 
+    closeComponent('mobileSidebar');
   };
 
   return isWrong ? (
@@ -43,15 +41,14 @@ export default function Catalog({ section, setSection }) {
   ) : (
     <div className="catalog__container" ref={catalogRef}>
       {isMobile ? (
-        isMobileSidebarOpen && (
-          <Overlay onClick={closeSidebar} zIndex={998}>
+        activeComponent === 'mobileSidebar' && (
+          <Overlay onClick={closeSidebar} zIndex={998} disableHover ={ true}>
             <SideBar section={section} setSection={setSection} />
           </Overlay>
         )
       ) : (
         <SideBar section={section} setSection={setSection} />
       )}
-
       <CatalogArticle />
     </div>
   );

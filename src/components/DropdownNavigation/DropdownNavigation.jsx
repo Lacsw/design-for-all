@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './DropdownNavigation.css';
-import { useIsMobile } from 'utils/hooks/useIsMobile';
 import Overlay from 'components/Overlay/Overlay';
+import './DropdownNavigation.css';
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 
 export default function DropdownNavigation({
+  id,
   options,
   titleIcon,
   title,
@@ -14,10 +14,9 @@ export default function DropdownNavigation({
   sizeIcon,
   customBottomPadding,
 }) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const isMobile = useIsMobile();
-
-  const shouldRenderDropdown = options && options.length > 1;
+  const { activeComponent, openComponent, closeComponent } =
+    useInteractiveManager();
+  const isOpen = activeComponent === id;
 
   const getIconSrc = (option) => {
     if (typeof option.src === 'object' && option.src !== null) {
@@ -30,38 +29,45 @@ export default function DropdownNavigation({
     if (option.onClick) {
       option.onClick();
     }
-    if (isMobile && option.closeOnClick) {
-      setIsDropdownOpen(false);
+    closeComponent(id);
+  };
+
+  const handleMouseEnter = () => openComponent(id);
+  const handleMouseLeave = () => closeComponent(id);
+
+  const handleToggle = () => {
+    if (isOpen) {
+      closeComponent(id);
+    } else {
+      openComponent(id);
     }
   };
 
   return (
     <div
       className={`dropdown-navigation dropdown-navigation--${align}`}
-      onMouseEnter={() => setIsDropdownOpen(true)}
-      onMouseLeave={() => setIsDropdownOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <button className="dropdown-navigation__btn">
+      <button className="dropdown-navigation__btn" onClick={handleToggle}>
         <img
           src={titleIcon}
           alt={title}
           className={`dropdown-navigation__item-img dropdown-navigation__item-img_${sizeIcon}`}
         />
       </button>
-      {shouldRenderDropdown && (
+      {options && options.length > 1 && (
         <div
-          className={`dropdown-navigation__container ${
-            isDropdownOpen ? 'show' : ''
-          }`}
+          className={`dropdown-navigation__container ${isOpen ? 'show' : ''}`}
         >
           <Overlay
-            onClick={() => setIsDropdownOpen(false)}
+            onClick={() => closeComponent(id)}
             customClass="overlay__header"
           />
           {showName && (
             <ul
               className={`dropdown-navigation__items dropdown-navigation__text-items ${
-                isDropdownOpen ? 'show' : ''
+                isOpen ? 'show' : ''
               }`}
             >
               {options.map((option, i) => (
@@ -70,6 +76,7 @@ export default function DropdownNavigation({
                     <NavLink
                       to={option.link}
                       className="dropdown-navigation__links"
+                      onClick={() => handleOptionClick(option)}
                     >
                       <span className="dropdown-navigation__item-text">
                         {option.name}
@@ -89,7 +96,6 @@ export default function DropdownNavigation({
               ))}
             </ul>
           )}
-
           <ul
             className={`dropdown-navigation__items dropdown-navigation__icon-items dropdown-navigation__icon-items_${customBottomPadding}`}
           >
@@ -99,6 +105,7 @@ export default function DropdownNavigation({
                   <NavLink
                     to={option.link}
                     className="dropdown-navigation__links"
+                    onClick={() => handleOptionClick(option)}
                   >
                     <img
                       src={getIconSrc(option)}

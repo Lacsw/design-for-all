@@ -8,6 +8,7 @@ export default function CurrencyDropdown({ options, theme, title }) {
 
   return (
     <DropdownNavigation
+      id="currency-menu"
       options={options}
       titleIcon={currencySrc}
       title={title}

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import './Overlay.css';
 
 export default function Overlay({
@@ -5,10 +6,31 @@ export default function Overlay({
   customClass = '',
   children,
   zIndex,
+  hoverDelay = 3000, // задержка в мс
+  disableHover = false, // если true, не использовать логику ховера
 }) {
+  const timerRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (!disableHover && hoverDelay > 0) {
+      timerRef.current = setTimeout(() => {
+        onClick && onClick();
+      }, hoverDelay);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+
   return (
     <div
       className={`overlay ${customClass}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={onClick}
       style={{ zIndex }}
     >

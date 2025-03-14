@@ -1,16 +1,22 @@
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import './AuthorAndReviewers.css';
 import { Author, Overlay, Reviewers } from 'components';
-import { useState } from 'react';
-import { selectArticle } from 'store/slices/articleSlice';
 import { useSelector } from 'react-redux';
+import { selectArticle } from 'store/slices/articleSlice';
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 
 export default function AuthorAndReviewers() {
   const { reviews } = useSelector(selectArticle);
   const isMobile = useIsMobile();
-  const [showReviewers, setShowReviewers] = useState(false);
+  const { activeComponent, openComponent, closeComponent } = useInteractiveManager();
+  const isOpen = activeComponent === 'authorAndReviewers';
+
   const toggleReviewers = () => {
-    setShowReviewers((prev) => !prev);
+    if (isOpen) {
+      closeComponent('authorAndReviewers');
+    } else {
+      openComponent('authorAndReviewers');
+    }
   };
 
   if (!isMobile) {
@@ -24,10 +30,10 @@ export default function AuthorAndReviewers() {
 
   return (
     <>
-      {showReviewers && <Overlay onClick={toggleReviewers} />}
+      {isOpen && <Overlay onClick={toggleReviewers} />}
       <div className="author-and-reviewers" onClick={toggleReviewers}>
-        <Author showReviewers={showReviewers} />
-        {showReviewers && reviews.length !== 0 && <Reviewers />}
+        <Author showReviewers={isOpen} />
+        {isOpen && reviews.length !== 0 && <Reviewers />}
         <span className="author-and-reviewers__decoration"></span>
       </div>
     </>

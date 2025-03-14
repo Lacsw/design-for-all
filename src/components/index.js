@@ -32,7 +32,7 @@ export { default as AdminNavbar } from './AccountAdminNavbar/AdminNavbar/AdminNa
 export { default as AdminAppNewAuthorNavbar } from './AccountAdminNavbar/AdminAppNewAuthorNavbar/AdminAppNewAuthorNavbar';
 export { default as LinkButton } from './LinkButton/LinkButton';
 export { default as Button } from './Button/Button';
-export { default as MobileTreesВutton } from './DropdownNavigation/MobileTreesВutton/MobileTreesВutton';
+export { default as MobileTreesВutton } from './DropdownNavigation/MobileTreesВutton/MobileTreesButton';
 export { default as ModalAttention } from './Modal/ModalAttention/ModalAttention';
 export { default as ModalRecommendation } from './Modal/ModalRecommendation/ModalRecommendation';
 export { default as ModalReasons } from './Modal/ModalReasons/ModalReasons';
@@ -58,6 +58,7 @@ export { default as Guides } from './Guides/Guides';
 export { default as GuidesMenu } from './GuidesMenu/GuidesMenu';
 export { default as GuidesArticle } from './GuidesArticle/GuidesArticle';
 export { default as SearchInput } from './SearchInput/SearchInput';
+export { default as HeaderSearchInput } from './DropdownNavigation/HeaderSearchInput/HeaderSearchInput';
 export { default as Reviewers } from './Reviewers/Reviewers';
 export { default as SideBar } from './SideBar/SideBar';
 export { default as Map } from './Map/Map';

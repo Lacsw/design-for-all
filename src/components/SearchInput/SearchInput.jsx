@@ -7,14 +7,12 @@ import closeBtn from 'images/close-btn.svg';
 import closeBtnBlack from 'images/close-btn_black.svg';
 import loupe from 'images/loupe-icon.svg';
 import loupeLight from 'images/loupe-icon_white.svg';
-import Overlay from 'components/Overlay/Overlay';
 
 export default function SearchInput({
   onChange,
   onSearch,
   onResults,
   onOpen,
-  isMobileVisible = false,
 }) {
   const [isShown, setIsShown] = useState(false);
   const inputRef = useRef();
@@ -41,35 +39,26 @@ export default function SearchInput({
   return (
     <>
       {isShown && (
-        <>
-          {isMobileVisible && (
-            <Overlay
-              onClick={handleCloseClick}
-              customClass="overlay__mobile-search"
+        <div className="search-input">
+          <input
+            className="search-input__field"
+            ref={inputRef}
+            onChange={onChange}
+          ></input>
+          <button
+            className="search-input__close-btn"
+            onClick={handleCloseClick}
+          >
+            <img
+              src={theme === 'light' ? closeBtnBlack : closeBtn}
+              alt="Кнопка сброса"
             />
-          )}
-
-          <div className="search-input  active">
-            <input
-              className="search-input__field"
-              ref={inputRef}
-              onChange={onChange}
-            ></input>
-            <button
-              className="search-input__close-btn"
-              onClick={handleCloseClick}
-            >
-              <img
-                src={theme === 'light' ? closeBtnBlack : closeBtn}
-                alt="Кнопка сброса"
-              />
-            </button>
-          </div>
-        </>
+          </button>
+        </div>
       )}
       <button
         className={`search-input__loupe ${
-          (isShown && !isMobileVisible) && `hide`
+          isShown &&  `hide`
         }`}
         onClick={isShown ? handleCloseClick : handleLoupeClick}
       >
