@@ -6,7 +6,7 @@ export default function Overlay({
   customClass = '',
   children,
   zIndex,
-  hoverDelay = 3000, // задержка в мс
+  hoverDelay = 800, // задержка в мс
   disableHover = false, // если true, не использовать логику ховера
 }) {
   const timerRef = useRef(null);
