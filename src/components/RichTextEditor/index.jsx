@@ -47,7 +47,6 @@ import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
 import { useValidation } from './validation/useValidation';
-import { onSelectionUpdate } from './helpers/onSelectionUpdate';
 import { editorProps } from './helpers/editorProps';
 
 import clsx from 'clsx';

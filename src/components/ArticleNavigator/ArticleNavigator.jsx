@@ -6,7 +6,6 @@ import React, {
   memo,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -57,9 +56,8 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     const res = selector
       ? targetRef.current?.querySelector('.tiptap')
       : targetRef.current;
-    console.log('FIND targetEl', { selector, t: targetRef.current, res });
     return res;
-  }, [selector, targetRef, targetRef.current]);
+  }, [selector, targetRef]);
 
   /**
    * @type {import('types/react/hooks').TJDUseState<
@@ -73,7 +71,6 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   }, [findTargetEl, flag]);
 
   useEffect(() => {
-    console.log('headings');
     const headingsSelector = targetHeadings
       .filter((headingLevel) => {
         const headingLevelRounded = Math.round(headingLevel);
@@ -83,14 +80,12 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       .join(',');
 
     if (!targetEl) {
-      console.log('NO target');
       return;
     }
 
     /** @type {NodeListOf<HTMLHeadingElement>} */
     const nodesList = targetEl.querySelectorAll(headingsSelector);
     setHeadingsEls(Array.from(nodesList));
-    console.log('HAVE target', Array.from(nodesList));
   }, [targetEl, flag, targetHeadings]);
 
   useEffect(() => {
@@ -111,7 +106,6 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 
     /** @type {(evt: Event) => void} */
     function handleScroll(evt) {
-      console.log('SCROLL');
       const firstHeadingEl = headingsEls[0];
       if (!firstHeadingEl) {
         return;
@@ -119,18 +113,10 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 
       const bounding = firstHeadingEl.getBoundingClientRect();
       const key = selectorOfScrlEl === 'html' ? 'documentElement' : null;
-      const el = key ? scrollableEl[key] : scrollableEl;
-      console.log('SCROLL', {
-        evt,
-        key,
-        el,
-        'el.scrollTop': el.scrollTop,
-        'el.scrollHeight': el.scrollHeight,
-        scrollPercent,
-      });
+      const finalEl = key ? scrollableEl[key] : scrollableEl;
       if (
         bounding.y < -firstShowingOffset &&
-        el.scrollTop / el.scrollHeight < scrollPercent / 100
+        finalEl.scrollTop / finalEl.scrollHeight < scrollPercent / 100
       ) {
         setIsShowing(true);
       } else {

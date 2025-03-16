@@ -49,7 +49,6 @@ export default function CatalogArticle() {
 
   const [navigatorFlag, setNavigatorFlag] = useState(false);
   const handleDescriptonParsingDone = useCallback((props) => {
-    console.log('PARSED', props);
     setTimeout(() => setNavigatorFlag((prev) => !prev));
   }, []);
 
