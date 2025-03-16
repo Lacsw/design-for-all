@@ -1,21 +1,13 @@
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  Main,
-  Catalog,
-  AccountAuthor,
-  AccountAdmin,
-  MobileAccountAuthor,
-} from 'components';
+import { Main, Catalog, AccountAuthor, AccountAdmin } from 'components';
 import { adminHash } from 'utils/constants';
 import { useEffect } from 'react';
-import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useDispatch } from 'react-redux';
 import { setIsCatalogOpen } from 'store/slices/articleSlice';
 
 const Fork = ({ section, setSection }) => {
   const location = useLocation();
   const { lang } = useParams();
-  const isMobile = useIsMobile();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,12 +27,7 @@ const Fork = ({ section, setSection }) => {
   }
 
   if (location.hash) {
-    return isMobile ? (
-      <MobileAccountAuthor
-        hash={location.hash}
-        resetSection={() => setSection('')}
-      />
-    ) : (
+    return (
       <AccountAuthor hash={location.hash} resetSection={() => setSection('')} />
     );
   }

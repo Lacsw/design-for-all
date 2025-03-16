@@ -29,7 +29,9 @@ export default function DropdownNavigation({
     if (option.onClick) {
       option.onClick();
     }
-    closeComponent(id);
+    if (option.id !== 'collapse') {
+      closeComponent(id);
+    }
   };
 
   const handleMouseEnter = () => openComponent(id);
