@@ -155,6 +155,7 @@ export const RichTextEditor = memo(function RichTextEditor({
   readOnly = false,
   cancel,
   onInput,
+  onCreate,
   validationsOptions,
   maxHeight = 'initial',
   id,
@@ -208,7 +209,7 @@ export const RichTextEditor = memo(function RichTextEditor({
     parseOptions: parseOptions,
     editorProps: editorProps,
     onUpdate: onUpdate,
-    onSelectionUpdate: onSelectionUpdate,
+    onCreate: onCreate,
   });
   // #endregion useEditor
 

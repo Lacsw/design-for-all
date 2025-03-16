@@ -17,7 +17,7 @@ import {
 } from 'components';
 import './CatalogArticle.css';
 
-const selectorOfScrollableEl = ['div.main-wrapper', 'root'];
+const selectorOfScrollableEl = ['html', 'root'];
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
@@ -48,8 +48,9 @@ export default function CatalogArticle() {
   // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
 
   const [navigatorFlag, setNavigatorFlag] = useState(false);
-  const handleDescriptonParsingDone = useCallback(() => {
-    setNavigatorFlag((prev) => !prev);
+  const handleDescriptonParsingDone = useCallback((props) => {
+    console.log('PARSED', props);
+    setTimeout(() => setNavigatorFlag((prev) => !prev));
   }, []);
 
   return isBlank ? (
@@ -91,7 +92,7 @@ export default function CatalogArticle() {
               className="rte__article"
               initialValue={article.publication.description}
               readOnly={true}
-              onInput={handleDescriptonParsingDone}
+              onCreate={handleDescriptonParsingDone}
             />
           </div>
         </div>
