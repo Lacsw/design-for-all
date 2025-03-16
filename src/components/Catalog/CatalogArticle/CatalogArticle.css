@@ -96,3 +96,12 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 600px) {
+  .article {
+    padding: 10px 16px;
+    margin: 5px 10px 10px;
+    background-color: var(--color-bg-low-accent);
+    width: 100%;
+  }
+}

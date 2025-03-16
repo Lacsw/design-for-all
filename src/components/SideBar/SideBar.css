@@ -1,6 +1,6 @@
 .sidebar {
   position: sticky;
-  top: 30px;
+  top: 92px;
 }
 
 .sidebar__header {
@@ -36,6 +36,10 @@
 }
 
 .sidebar__list {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
   list-style: none;
   padding: 10px;
   margin: 0;
@@ -48,11 +52,10 @@
   width: 100%;
   border-radius: 12px;
   color: var(--color-main);
-  border: 1px solid currentColor;
+  border: 5px solid var(--color-bg-secondary);
   background-color: var(--color-bg-secondary);
   overflow: auto;
   white-space: nowrap;
-  max-height: 80vh;
 }
 
 .sidebar__item:hover {
@@ -60,13 +63,10 @@
   opacity: 0.7;
 }
 
-.sidebar__item:not(:last-child) {
-  margin-bottom: 10px;
-}
-
 .sidebar__link {
   color: var(--color-main);
   text-decoration: none;
+  margin-right: 10px;
 }
 
 .sidebar__link:hover {
@@ -79,4 +79,37 @@
 
 .sidebar__item b {
   color: rgb(190, 47, 47);
+}
+
+.sidebar__list::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.sidebar__list::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.sidebar__list::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: var(--color-bg-low-accent);
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sidebar__header {
+    min-height: 46px;
+  }
+
+  .sidebar__list {
+    margin: 10px;
+    width: calc(100% - 20px);
+    height: calc(100vh - 116px);
+  }
 }

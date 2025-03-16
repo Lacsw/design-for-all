@@ -1,8 +1,9 @@
 .header {
+  width: 100%;
   padding: 13px 20px;
   border-radius: 0px 0px 12px 12px;
   background: var(--color-bg-secondary);
-  position: relative;
+  position: fixed;
   z-index: 999;
   transition:
     background-color 0.3s ease,
@@ -28,12 +29,21 @@
 }
 
 .logo-link {
-  height: 30px;
+  display: flex;
+  align-items: center;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .header {
-    padding: 10px;
+    padding: 0;
+    position: relative;
+    background: transparent;
+  }
+
+  .header__container {
+    z-index: -1;
+    position: relative;
+    width: 100%;
   }
 
   .header__navigation {
@@ -41,8 +51,9 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 9999;
     background: var(--color-bg-secondary);
+
     height: 50px;
     column-gap: 30px;
   }
@@ -64,6 +75,10 @@
   }
 
   .header__navigation li.hide-on-mobile {
+    display: none;
+  }
+
+  .logo-link {
     display: none;
   }
 }

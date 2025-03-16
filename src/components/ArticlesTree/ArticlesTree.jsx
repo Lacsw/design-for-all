@@ -14,10 +14,8 @@ export default function TestTree({ path, catalog, language }) {
   }, [fetchPath, fetchTime, dispatch]);
 
   return (
-    <div className="tree-container">
-      <div className="tree">
-        {tree && <TreeList list={tree} language={language} />}
-      </div>
+    <div className="tree">
+      {tree && <TreeList list={tree} language={language} />}
     </div>
   );
 }

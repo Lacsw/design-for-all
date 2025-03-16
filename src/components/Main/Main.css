@@ -1,5 +1,114 @@
+.main__intro-nav-bar {
+  position: sticky;
+  top: -22vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  row-gap: 55px;
+  width: 100%;
+  max-width: 1440px;
+  aspect-ratio: 1440/523;
+  margin: 0 auto;
+  list-style: none;
+  z-index: 100;
+  background-color: var(--color-bg-main);
+}
+
+.main__intro-nav-bar::before {
+  content: '';
+  width: 100%;
+  max-width: 1440px;
+  aspect-ratio: 1440/523;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  background-repeat: no-repeat;
+  background-position: right 80px top 0;
+}
+
+.dark::before {
+  background-image: url(/src/images/intro-black.png);
+}
+
+.light::before {
+  background-image: url(/src/images/intro-light.png);
+}
+
+.dark::before,
+.light::before {
+  background-position: end;
+  background-size: contain;
+}
+
 .main__content {
   display: flex;
   justify-content: center;
-  margin: 10px 0 64px 0;
+  margin: 0 0 64px 0;
+}
+
+@media (max-width: 1024px) {
+  .intro__container {
+    width: 90vw;
+    padding: 0;
+    gap: 17px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .intro__title {
+    font-size: 55px;
+    line-height: 130%;
+  }
+
+  .intro__subtitle {
+    min-height: 60px; /* бронируем место под анимированный текст*/
+    font-size: 20px;
+    line-height: 130%;
+  }
+}
+
+@media (max-width: 600px) {
+  .main__intro-nav-bar {
+    width: 100vw;
+    aspect-ratio: 360/430;
+    justify-content: center;
+    top: -100vw;
+  }
+
+  .main__intro-nav-bar::before {
+    content: '';
+    width: 100vw;
+    aspect-ratio: 360/430;
+    height: auto;
+    position: absolute;
+  }
+
+  .dark::before,
+  .light::before {
+    background-position: center;
+    background-size: contain;
+  }
+
+  .dark::before {
+    background-image: url(/src/images/intro-black-mobile.png);
+  }
+
+  .light::before {
+    background-image: url(/src/images/intro-light-mobile.png);
+  }
+
+  .main__content {
+    overflow-x: hidden;
+    margin-bottom: 30px;
+  }
+
+  .main-mobile-logo__container {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+  }
+
+
 }

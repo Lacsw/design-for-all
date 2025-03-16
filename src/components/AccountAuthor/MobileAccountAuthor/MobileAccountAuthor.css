@@ -1,0 +1,33 @@
+.mobile-account-author {
+  width: 100vw;
+  height: calc(100vh - 50px);
+  background-color: var(--color-bg-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.mobile-account-author__content {
+  padding: 20px;
+  row-gap: 20px;
+  background-color: var(--color-bg-secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.mobile-account-author__text {
+  color: var(--color-main);
+  text-align: center;
+  font-feature-settings: 'calt' off;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: 0.28px;
+  margin: 0;
+}

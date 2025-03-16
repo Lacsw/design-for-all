@@ -2,12 +2,15 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  justify-content: space-between;
 }
 
 .main-wrapper {
-  overflow-y: auto;
+  padding-top: 62px;
 }
 
-.main {
-  min-height: calc(100vh - 60px);
+@media (max-width: 600px) {
+  .main-wrapper {
+    padding-top: 0;
+  }
 }

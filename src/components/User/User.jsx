@@ -35,36 +35,36 @@ export default function User() {
             socialIcons.instagram
           }
           alt={item[0]}
-          className="author__social"
+          className="user__social"
         />
       </a>
     ));
   };
 
   return (
-    <div className="author">
+    <div className="user">
       <img
         src={user.avatar || defaultAvatar}
         alt="Аватар"
-        className="author__avatar"
+        className="user__avatar"
       />
-      <div className="author__titles">
-        <p className="author__name">{user.fio}</p>
-        <p className="author__role">{user.role || 'user'}</p>
+      <div className="user__titles">
+        <p className="user__name">{user.fio}</p>
+        <p className="user__role">{user.role || 'user'}</p>
       </div>
       {user.social_media ? (
-        <div className="author__socials-container">
+        <div className="user__socials-container">
           {renderSocialMedia(shownList)}
         </div>
       ) : (
-        <p className="author__socials-text">Контакты отсутствуют</p>
+        <p className="user__socials-text">Контакты отсутствуют</p>
       )}
       {socialList.length > 4 && (
         <p
           className={
             isOpen
-              ? 'author__see-more author__see-more_opened'
-              : 'author__see-more'
+              ? 'user__see-more user__see-more_opened'
+              : 'user__see-more'
           }
           onClick={() => setIsOpen(!isOpen)}
         >

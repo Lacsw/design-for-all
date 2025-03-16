@@ -24,10 +24,8 @@ body.theme-light {
 
 .preview-container {
   max-width: 1000px;
-  max-height: 1000px;
-  overflow-y: auto;
   overflow-x: hidden;
-  padding: 15px 70px;
+  padding: 20px 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +34,6 @@ body.theme-light {
   border-radius: 12px;
   background: var(--bg-color);
   box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.3);
-  border: 5px solid var(--bg-color);
 }
 
 .preview-section {
@@ -84,29 +81,10 @@ body.theme-light {
   border-radius: 6px;
 }
 
-/* Скроллбар для Webkit */
-.preview-container::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-  background-color: transparent;
-  border-radius: 12px;
-}
-
-.preview-container::-webkit-scrollbar-corner {
-  background-color: transparent;
-  border-radius: 12px;
-}
-
-.preview-container::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color);
-  border-radius: 12px;
-}
-
 @media (max-width: 768px) {
   .preview-container {
-    padding: 15px 15px;
+    padding: 13px 16px;
     row-gap: 10px;
-    border: 3px solid var(--bg-color);
   }
 
   .preview-section {
@@ -137,9 +115,8 @@ body.theme-light {
 
 @media (max-width: 480px) {
   .preview-container {
-    padding: 15px 10px;
+    padding: 16px 10px;
     row-gap: 10px;
-    border: 3px solid var(--bg-color);
   }
 
   .preview-section {
@@ -147,16 +124,18 @@ body.theme-light {
   }
 
   .preview-section__title {
-    font-size: 24px;
-    font-weight: 700;
-  }
-
-  .preview-section__subtitle {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 130%;
-    letter-spacing: 0.32px;
+    line-height: normal;
+  }
+
+  .preview-section__subtitle {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 
   .preview-section__text {

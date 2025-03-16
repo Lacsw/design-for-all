@@ -52,7 +52,7 @@ export default function SideBar({ section, setSection }) {
       setResults(results);
     } else setResults(null);
   }
-  
+
   const searchWithDelay = debounce(handleSearch, 500);
 
   function changeSection(section) {
@@ -79,6 +79,7 @@ export default function SideBar({ section, setSection }) {
           </div>
         )}
         <SearchInput
+          id="sidebar"
           onChange={searchWithDelay}
           onSearch={setIsInput}
           onResults={setResults}

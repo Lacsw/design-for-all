@@ -7,7 +7,7 @@
   flex-direction: column;
   gap: 10px;
   align-items: center;
-}
+} 
 
 .reviewers__title {
   margin: 0;
@@ -88,4 +88,13 @@
 
 .reviewers__icon-container::-webkit-scrollbar-thumb {
   background-color: #242424;
+}
+
+
+
+@media (max-width: 600px) {
+  .reviewers {
+    box-shadow: none;
+    padding: 0;
+  }
 }
