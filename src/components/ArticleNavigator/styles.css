@@ -1,4 +1,6 @@
 .article-navigator {
+  --vis-dur: 400ms;
+
   position: fixed;
   top: 0px;
   left: 0;
@@ -17,19 +19,17 @@
 
   opacity: 0;
   visibility: hidden;
-
   transition:
-    opacity 300ms 0ms linear,
-    visibility 0ms 300ms;
+    opacity var(--vis-dur) 0s,
+    visibility 0s var(--vis-dur);
 }
 
 .article-navigator.visible {
   opacity: 1;
   visibility: visible;
-
   transition:
-    opacity 300ms 0ms linear,
-    visibility 0ms 0ms;
+    opacity var(--vis-dur) var(--vis-dur),
+    visibility 0s 0s;
 }
 
 .article-navigator.expanded {
