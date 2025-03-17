@@ -41,7 +41,11 @@ import React, {
 import { MenuBar, RteButton } from './components';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
 import { ImageModal } from './extensions/image/ImageModal';
-import { allowedHeadingLevels, COMMANDS_NAMES } from './helpers/constants';
+import {
+  allowedHeadingLevels,
+  cbStub,
+  COMMANDS_NAMES,
+} from './helpers/constants';
 import { parseOptions } from './validation/constants';
 import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
@@ -155,6 +159,7 @@ export const RichTextEditor = memo(function RichTextEditor({
   cancel,
   onInput,
   onCreate,
+  onRealCreate,
   validationsOptions,
   maxHeight = 'initial',
   id,
@@ -207,8 +212,8 @@ export const RichTextEditor = memo(function RichTextEditor({
     // editable: false,
     parseOptions: parseOptions,
     editorProps: editorProps,
-    onUpdate: onUpdate,
-    onCreate: onCreate,
+    onUpdate: onUpdate ?? cbStub,
+    onCreate: onCreate ?? cbStub, // need stub <--- error when can't call "apply" method for undefined
   });
   // #endregion useEditor
 
@@ -263,6 +268,12 @@ export const RichTextEditor = memo(function RichTextEditor({
   } = useImageExt(editor);
 
   const { isMMBPressed, isCtrlPressed } = useClickSpy({ editor });
+
+  useEffect(() => {
+    if (editor) {
+      onRealCreate(editor);
+    }
+  }, [editor, onRealCreate]);
 
   // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */

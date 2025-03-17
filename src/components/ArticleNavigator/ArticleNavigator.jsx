@@ -54,7 +54,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   const findTargetEl = useCallback(() => {
     /** @type {HTMLElement | null} */
     const res = selector
-      ? targetRef.current?.querySelector('.tiptap')
+      ? targetRef.current?.querySelector(selector)
       : targetRef.current;
     return res;
   }, [selector, targetRef]);
@@ -64,7 +64,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
    *   HTMLElement | undefined
    * >}
    */
-  const [targetEl, setTargetEl] = useState(findTargetEl());
+  const [targetEl, setTargetEl] = useState();
 
   useEffect(() => {
     setTargetEl(findTargetEl());

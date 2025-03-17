@@ -20,6 +20,11 @@
  * @property {TJDRteOnInputProp} [onInput] - Cb fires with debounce when content
  *   changes in RTE
  * @property {import('@tiptap/react').EditorOptions['onCreate']} [onCreate]
+ * @property {(editor: import('@tiptap/react').Editor) => void} [onRealCreate]
+ *   - `onCreate` cb is called when the element is created but not attached to the
+ *       DOM-tree. `onRealCreate` cb is called in the effect when the attachment
+ *       is already done
+ *
  * @property {boolean} [readOnly] - Isn't RTE editable
  * @property {string} [className]
  * @property {TJDRteClassesProp} [classes]

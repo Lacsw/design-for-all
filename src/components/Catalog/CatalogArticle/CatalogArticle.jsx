@@ -48,8 +48,8 @@ export default function CatalogArticle() {
   // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
 
   const [navigatorFlag, setNavigatorFlag] = useState(false);
-  const handleDescriptonParsingDone = useCallback((props) => {
-    setTimeout(() => setNavigatorFlag((prev) => !prev));
+  const handleEditorCreation = useCallback((editor) => {
+    setNavigatorFlag((prev) => !prev);
   }, []);
 
   return isBlank ? (
@@ -91,7 +91,7 @@ export default function CatalogArticle() {
               className="rte__article"
               initialValue={article.publication.description}
               readOnly={true}
-              onCreate={handleDescriptonParsingDone}
+              onRealCreate={handleEditorCreation}
             />
           </div>
         </div>

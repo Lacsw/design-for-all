@@ -56,3 +56,5 @@ export const buttonsHeadings = {
 
 /** @type {TJDAllowedHeadingLevels} */
 export const allowedHeadingLevels = [1, 2, 3, 4];
+
+export const cbStub = () => {};
