@@ -118,7 +118,11 @@ export default function Header({ resetSection }) {
           />
         </Link>
         <ul className="header__navigation">
-          <li className="header__navigation-item_mobile-third">
+          <li
+            className={`header__navigation-item_mobile-third ${
+              !isMobile ? 'header__search' : ''
+            }`}
+          >
             <HeaderSearchInput isMobileVisible={isMobile} id="header" />
           </li>
           {isMobile && isCatalogOpen && (

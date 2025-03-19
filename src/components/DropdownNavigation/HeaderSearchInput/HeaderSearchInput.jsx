@@ -70,10 +70,16 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
     <>
       {isShown && (
         <>
-          {isMobileVisible && (
+          {isMobileVisible ? (
             <Overlay
               onClick={handleCloseClick}
               customClass="overlay__mobile-search"
+            />
+          ) : (
+            <Overlay
+              onClick={handleCloseClick}
+              customClass="overlay__header"
+              disableHover={true}
             />
           )}
           <div className="header-search-input">
