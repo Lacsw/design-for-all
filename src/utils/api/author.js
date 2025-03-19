@@ -1,4 +1,5 @@
 // @ts-check
+import { apiUrl, domain } from 'utils/config';
 
 export class AuthorApi {
   /** @type {string} */
@@ -121,7 +122,7 @@ export class AuthorApi {
   }
 
   async profileAuthor() {
-    const response = await fetch(`https://design-for-all.net/profile`, {
+    const response = await fetch(`${domain}/profile`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
@@ -197,7 +198,7 @@ export class AuthorApi {
 }
 
 const authorApi = new AuthorApi({
-  baseUrl: 'https://design-for-all.net/api/v1',
+  baseUrl: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },

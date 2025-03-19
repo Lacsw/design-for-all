@@ -1,4 +1,5 @@
-const baseUrl = 'https://design-for-all.net/api/v1';
+import { apiUrl } from 'utils/config';
+
 const headers = {
   'Content-Type': 'application/json',
 };
@@ -10,7 +11,7 @@ export async function createUser(data) {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(baseUrl + '/admin_create_user', options).then((res) => {
+  return fetch(apiUrl + '/admin_create_user', options).then((res) => {
     if (res.ok) {
       return res.status !== 200 ? res.statusText : res.json();
     } else {
@@ -26,7 +27,7 @@ export async function sendDecision(endPoint, data) {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(baseUrl + '/admin_' + endPoint, options).then((res) => {
+  return fetch(apiUrl + '/admin_' + endPoint, options).then((res) => {
     if (res.ok) {
       return res.status !== 200 ? res.statusText : res.json();
     } else {
@@ -42,7 +43,7 @@ export async function getRequests(endPoint, pagination) {
     credentials: 'include',
   };
   return fetch(
-    baseUrl + '/admin_find_' + endPoint + '/' + pagination,
+    apiUrl + '/admin_find_' + endPoint + '/' + pagination,
     options
   ).then((res) => {
     if (res.ok) {
@@ -61,7 +62,7 @@ export async function getOneRequest(endPoint, uuid) {
     credentials: 'include',
   };
   return fetch(
-    baseUrl + '/admin_find_' + endPoint + '/' + uuid,
+    apiUrl + '/admin_find_' + endPoint + '/' + uuid,
     options
   ).then((res) => {
     if (res.ok) {
