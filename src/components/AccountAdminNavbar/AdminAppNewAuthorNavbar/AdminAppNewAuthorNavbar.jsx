@@ -12,6 +12,7 @@ import { sendDecision } from 'utils/api/admin';
 import { Modal } from 'components';
 import './AdminAppNewAuthorNavbar.css';
 import ReasonFields from './ReasonFields';
+import { domain } from 'utils/config';
 
 const requestPaths = {
   created_account: '_statement_author_account',
@@ -201,7 +202,7 @@ export default function AdminAppNewAuthorNavbar() {
           <p className="small-text">
             Статья доступна по ссылке:
             <br />
-            {'https://design-for-all.net/' + decisionModal}
+            {domain + '/' + decisionModal}
           </p>
         )}
       </Modal>

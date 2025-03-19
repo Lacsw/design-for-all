@@ -1,3 +1,5 @@
+import { apiUrl, domain } from 'utils/config';
+
 class AuthApi {
   constructor(options) {
     this._baseUrl = options.baseUrl;
@@ -13,7 +15,7 @@ class AuthApi {
   }
 
   async mainPage() {
-    const response = await fetch(`https://design-for-all.net/`, {
+    const response = await fetch(`${domain}/`, {
       method: 'GET',
       headers: this._headers,
     });
@@ -70,14 +72,14 @@ class AuthApi {
   }
 
   async getCaptcha(theme) {
-    return fetch('https://design-for-all.net/api/v1/get_captcha/' + theme).then(
+    return fetch(`${apiUrl}/get_captcha/${theme}`).then(
       (res) => res.blob()
     );
   }
 }
 
 const authApi = new AuthApi({
-  baseUrl: 'https://design-for-all.net/api/v1',
+  baseUrl: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
