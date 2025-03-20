@@ -18,6 +18,8 @@ export const initialState = {
   loading: true,
   error: '',
   isCatalogOpen: false,
+  mainCategory: '',
+  shouldRemountTree: false,
 };
 
 const articleSlice = createSlice({
@@ -26,6 +28,12 @@ const articleSlice = createSlice({
   reducers: {
     setIsCatalogOpen: (state, action) => {
       state.isCatalogOpen = action.payload;
+    },
+    setMainCategory: (state, action) => {
+      state.mainCategory = action.payload;
+    },
+    setShouldRemountTree: (state, action) => {
+      state.shouldRemountTree = action.payload;
     },
   },
   selectors: {
@@ -90,7 +98,8 @@ const articleSlice = createSlice({
   },
 });
 
-export const { setIsCatalogOpen } = articleSlice.actions;
+export const { setIsCatalogOpen, setMainCategory, setShouldRemountTree } =
+  articleSlice.actions;
 
 export const fetchTree = createAsyncThunk('tree/get', async (options) =>
   getTree(options)
@@ -118,5 +127,8 @@ export const {
 } = articleSlice.selectors;
 
 export const selectIsCatalogOpen = (state) => state.article.isCatalogOpen;
+export const selectMainCategory = (state) => state.article.mainCategory;
+export const selectShouldRemountTree = (state) =>
+  state.article.shouldRemountTree;
 
 export default articleSlice.reducer;
