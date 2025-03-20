@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ArticlesTree, SearchInput } from 'components';
 import ResultItem from './ResultItem';
-import { selectCatalog, selectTitles } from 'store/slices/articleSlice';
+import {
+  selectCatalog,
+  selectMainCategory,
+  selectShouldRemountTree,
+  selectTitles,
+  setShouldRemountTree,
+} from 'store/slices/articleSlice';
 import { getCurrentTheme, getLanguage } from 'store/selectors';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
@@ -11,37 +17,45 @@ import treeIcon from 'images/tree-menu-icon.svg';
 import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
 
-/*
-Функция срабатывает при переходе в статью по прямой ссылке, т.е. когда нет выбранного
-пользователем раздела. Пытается найти категорию статьи в html и вычислить название общего
-ключа для переключения дерева статей в нужный раздел. В случае неудачи возвращает
-название раздела `desktop`.
-*/
-function getSection(titles, lang) {
+function getSection(titles, lang, mainCategory) {
+  if (mainCategory) {
+    for (let key in titles[lang]) {
+      if (titles[lang][key] === mainCategory) return key;
+    }
+  }
+
   const category = document.head
     .querySelector('title')
-    .getAttribute('main_category');
-  for (let key in titles[lang]) {
-    if (titles[lang][key] === category) return key;
+    ?.getAttribute('main_category');
+
+  if (category) {
+    for (let key in titles[lang]) {
+      if (titles[lang][key] === category) return key;
+    }
   }
+
   return 'desktop';
 }
 
 export default function SideBar({ section, setSection }) {
+  const dispatch = useDispatch();
   const { lang } = useParams();
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
   const catalog = useSelector(selectCatalog);
   const titles = useSelector(selectTitles);
-
+  const mainCategory = useSelector(selectMainCategory);
+  const shouldRemountTree = useSelector(selectShouldRemountTree);
+  const [currentSection, setCurrentSection] = useState(
+    () => section || getSection(titles, lang, mainCategory)
+  );
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
 
-  const sureSection = section ? section : getSection(titles, lang);
-  const articles = catalog[language][sureSection].original;
+  const articles = catalog[language][currentSection].original;
   const titlesList = Object.keys(titles[language]).filter(
-    (item) => item !== sureSection
+    (item) => item !== currentSection
   );
 
   function handleSearch({ target }) {
@@ -57,8 +71,21 @@ export default function SideBar({ section, setSection }) {
 
   function changeSection(section) {
     setIsOpen(false);
-    setSection(section);
+    setCurrentSection(section);
+    if (setSection) setSection(section);
   }
+
+  useEffect(() => {
+    const newSection = getSection(titles, lang, mainCategory);
+    setCurrentSection(newSection);
+  }, [mainCategory, titles, lang]);
+
+// для корректного построения дерева 
+  useEffect(() => {
+    if (shouldRemountTree) {
+      dispatch(setShouldRemountTree(false));
+    }
+  }, [shouldRemountTree, dispatch]);
 
   return (
     <nav className="sidebar">
@@ -69,7 +96,7 @@ export default function SideBar({ section, setSection }) {
             onClick={() => setIsOpen(!isOpen)}
           >
             <h2 className="sidebar__title">
-              {titles[language][sureSection] || ''}
+              {titles[language][currentSection] || ''}
             </h2>
             <img
               className={isOpen ? 'sidebar__icon_open' : ''}
@@ -108,7 +135,14 @@ export default function SideBar({ section, setSection }) {
           </ul>
         )}
       </div>
-      <ArticlesTree path={sureSection} catalog={catalog} language={language} />
+      <ArticlesTree
+        key={
+          shouldRemountTree ? `${currentSection}-${Date.now()}` : currentSection
+        }
+        path={currentSection}
+        catalog={catalog}
+        language={language}
+      />
     </nav>
   );
 }

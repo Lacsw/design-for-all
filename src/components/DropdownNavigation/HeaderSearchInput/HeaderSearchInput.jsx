@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentTheme, getLanguage } from 'store/selectors';
 import Overlay from 'components/Overlay/Overlay';
 import closeBtn from 'images/close-btn.svg';
@@ -11,8 +11,13 @@ import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext'
 import { NavLink } from 'react-router-dom';
 import { serverSearch } from 'utils/api/search';
 import { useDebounce } from 'utils/hooks';
+import {
+  setMainCategory,
+  setShouldRemountTree,
+} from 'store/slices/articleSlice';
 
 export default function HeaderSearchInput({ id, isMobileVisible = false }) {
+  const dispatch = useDispatch();
   const inputRef = useRef();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -65,23 +70,17 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
   const handleCloseClick = () => {
     closeComponent(id);
   };
-
   return (
     <>
       {isShown && (
         <>
-          {isMobileVisible ? (
-            <Overlay
-              onClick={handleCloseClick}
-              customClass="overlay__mobile-search"
-            />
-          ) : (
-            <Overlay
-              onClick={handleCloseClick}
-              customClass="overlay__header"
-              disableHover={true}
-            />
-          )}
+          <Overlay
+            onClick={handleCloseClick}
+            customClass={
+              isMobileVisible ? 'overlay__mobile-search' : 'overlay__header'
+            }
+            disableHover={true}
+          />
           <div className="header-search-input">
             <input
               type="text"
@@ -108,6 +107,11 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
                   <NavLink
                     to={`/${language}/${item.uuid}`}
                     className="header-search__link"
+                    onClick={() => {
+                      dispatch(setMainCategory(item.main_category));
+                      dispatch(setShouldRemountTree(true));
+                      handleCloseClick();
+                    }}
                   >
                     <span className="header-search__title">{item.title}</span>
                     <span className="header-search__sub-category">

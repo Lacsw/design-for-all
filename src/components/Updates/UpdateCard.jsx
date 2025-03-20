@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
 import './UpdateCard.css';
+import { useDispatch } from 'react-redux';
+import { setMainCategory } from 'store/slices/articleSlice';
 
 export default function UpdateCard({ update }) {
+  const dispatch = useDispatch();
   return (
     <li className="update-card">
       <Link
         to={`/${update.lang}/${update.what_update || update.what_create}`}
         className="update-card__link"
         onClick={() => {
-          const titleEl = document.head.querySelector('title');
-          if (titleEl) {
-            titleEl.setAttribute('main_category', update.main_category);
-          }
+          dispatch(setMainCategory(update.main_category));
         }}
       >
         <div className="update-card__titles">
