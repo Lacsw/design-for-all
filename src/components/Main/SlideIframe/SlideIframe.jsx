@@ -2,6 +2,7 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import './SlideIframe.css';
+import { domain } from 'utils/config';
 
 export function SlideIframe({ lang, category, active }) {
   const theme = useSelector(getCurrentTheme);
@@ -10,7 +11,7 @@ export function SlideIframe({ lang, category, active }) {
 
   // Формируем URL для статичного HTML-файла с параметром темы
   const previewUrl = useMemo(() => {
-    return `https://design-for-all.net/${lang}_main_${category}_preview.html?theme=${theme}`;
+    return `${domain}/${lang}_main_${category}_preview.html?theme=${theme}`;
   }, [lang, theme, category]);
 
   const handleIframeLoad = () => {

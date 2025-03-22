@@ -19,9 +19,10 @@
 }
 
 .header__navigation {
+  flex-grow: 1;
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
   gap: 10.5px;
   margin: 0;
@@ -31,6 +32,12 @@
 .logo-link {
   display: flex;
   align-items: center;
+}
+
+.header__search {
+  flex-grow: 1;
+  display: flex;
+  justify-content: end;
 }
 
 @media (max-width: 600px) {
@@ -53,9 +60,9 @@
     width: 100%;
     z-index: 9999;
     background: var(--color-bg-secondary);
-
     height: 50px;
     column-gap: 30px;
+    justify-content: center;
   }
 
   .header__navigation-item_mobile-first {

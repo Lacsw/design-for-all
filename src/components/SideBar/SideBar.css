@@ -78,7 +78,7 @@
 }
 
 .sidebar__item b {
-  color: rgb(190, 47, 47);
+  font-weight: 700;
 }
 
 .sidebar__list::-webkit-scrollbar {
@@ -111,5 +111,7 @@
     margin: 10px;
     width: calc(100% - 20px);
     height: calc(100vh - 116px);
+    font-size: 12px;
+    line-height: 130%;
   }
 }
