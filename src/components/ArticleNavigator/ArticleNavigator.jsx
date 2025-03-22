@@ -51,6 +51,19 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   /** @type {React.RefObject<HTMLDivElement>} */
   const navigatorRef = useRef(null);
 
+  /**
+   * data - элемент, в котором можно взять инфу по скроллу (см. #1)
+   *
+   * @type {React.MutableRefObject<{
+   *   el: Element | HTMLDivElement | Document | null;
+   *   data: Element | HTMLElement | null;
+   * }>}
+   */
+  const scrollableRef = useRef({
+    el: null,
+    data: null,
+  });
+
   const [isShowing, setIsShowing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -99,6 +112,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
           : document.querySelector(selector)
         : targetRef.current.querySelector(selector);
     if (!scrollableEl) {
+      scrollableRef.current = { el: null, data: null };
       return;
     }
 
@@ -110,9 +124,12 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       }
       const rect = firstHeadingEl.getBoundingClientRect();
 
-      // когда скролл на теге html, то обработчик вешаем на document, а инфа о скролле берется из document.documentElement... o_O
+      // когда скролл на теге html, то обработчик вешаем на document, а инфа о скролле берется из document.documentElement... o_O #1
       const key = selector === 'html' ? 'documentElement' : null;
+
+      /** @type {Element | HTMLElement} */
       const elWithScrollData = key ? scrollableEl[key] : scrollableEl;
+      scrollableRef.current = { el: scrollableEl, data: elWithScrollData };
 
       if (
         rect.y < -firstShowingOffset &&
@@ -146,11 +163,14 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       )}
       sx={mergeSx(sxRoot({}), sx)}
       ref={navigatorRef}
-      onClick={function (evt) {
+      onClick={(evt) => {
         if (
           evt.target instanceof HTMLElement &&
           evt.target.classList.contains('article-navigator')
         ) {
+          // if (scrollableRef.current.data instanceof HTMLElement) {
+          //   scrollableRef.current.data.style.overflow = 'initial';
+          // }
           setIsExpanded(false);
         }
       }}
@@ -163,6 +183,9 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         }}
         onClick={(evt) => {
           if (isShowing) {
+            // if (scrollableRef.current.data instanceof HTMLElement) {
+            //   scrollableRef.current.data.style.overflow = 'hidden';
+            // }
             setIsExpanded(true);
           }
         }}
@@ -172,7 +195,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
             <li
               key={idx}
               className="article-navigator__item"
-              onClick={(e) => {
+              onClick={(evt) => {
                 if (!isExpanded) {
                   return;
                 }
