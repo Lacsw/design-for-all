@@ -4,4 +4,4 @@
  * @type {[T, React.Dispatch<React.SetStateAction<T>>]}
  */
 
-export const Types = {};
+export const TJDReactHooks = {};

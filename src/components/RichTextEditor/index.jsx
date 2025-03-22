@@ -270,7 +270,7 @@ export const RichTextEditor = memo(function RichTextEditor({
   const { isMMBPressed, isCtrlPressed } = useClickSpy({ editor });
 
   useEffect(() => {
-    if (editor) {
+    if (editor && onRealCreate) {
       onRealCreate(editor);
     }
   }, [editor, onRealCreate]);

@@ -20,16 +20,18 @@ import {
 import { createPortal } from 'react-dom';
 
 /**
- * @type {import('react').NamedExoticComponent<
+ * Всплывающее окно для отображения ближайшего заголовка <h1-6 /> статьи.
+ *
+ * @type {React.NamedExoticComponent<
  *   import('./types').TJDArticleNavigatorProps
  * >}
  */
 export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   flag,
-  selector,
-  targetRef,
-  selectorOfScrollableEl,
   parentSelector,
+  targetSelector,
+  targetRef,
+  scrollableElParams,
   firstShowingOffset = firstShowingOffsetDefault,
   scrollPercent = scrollPercentDefault,
   targetHeadings = targetHeadingsDefault,
@@ -41,36 +43,35 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     () => document.querySelector(parentSelector),
     [parentSelector]
   );
-
-  /** @type {import('types/react/hooks').TJDUseState<HTMLHeadingElement[]>} */
-  const [headingsEls, setHeadingsEls] = useState([]);
+  /** @type {import('types').TJDUseState<HTMLElement | undefined>} */
+  const [targetEl, setTargetEl] = useState();
+  /** @type {import('types').TJDUseState<HTMLHeadingElement[]>} */
+  const [headings, setHeadings] = useState([]);
 
   /** @type {React.RefObject<HTMLDivElement>} */
   const navigatorRef = useRef(null);
 
   const [isShowing, setIsShowing] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const findTargetEl = useCallback(() => {
     /** @type {HTMLElement | null} */
-    const res = selector
-      ? targetRef.current?.querySelector(selector)
+    const res = targetSelector
+      ? targetRef.current?.querySelector(targetSelector)
       : targetRef.current;
     return res;
-  }, [selector, targetRef]);
-
-  /**
-   * @type {import('types/react/hooks').TJDUseState<
-   *   HTMLElement | undefined
-   * >}
-   */
-  const [targetEl, setTargetEl] = useState();
+  }, [targetSelector, targetRef]);
 
   useEffect(() => {
     setTargetEl(findTargetEl());
   }, [findTargetEl, flag]);
 
+  // ищем заголовки
   useEffect(() => {
+    if (!targetEl) {
+      return;
+    }
+
     const headingsSelector = targetHeadings
       .filter((headingLevel) => {
         const headingLevelRounded = Math.round(headingLevel);
@@ -79,44 +80,44 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       .map((headingLevel) => 'h' + headingLevel)
       .join(',');
 
-    if (!targetEl) {
-      return;
-    }
-
     /** @type {NodeListOf<HTMLHeadingElement>} */
     const nodesList = targetEl.querySelectorAll(headingsSelector);
-    setHeadingsEls(Array.from(nodesList));
-  }, [targetEl, flag, targetHeadings]);
+    setHeadings(Array.from(nodesList));
+  }, [targetEl, targetHeadings]);
 
+  // работаем с прокручиваемым элементом
   useEffect(() => {
-    const [selectorOfScrlEl, mode] = selectorOfScrollableEl;
-    if (mode === 'target' && !targetRef.current) {
+    const [selector, searchMode] = scrollableElParams;
+    if (searchMode === 'target' && !targetRef.current) {
       return;
     }
     /** @type {HTMLElement | Document | Element | null} */
     const scrollableEl =
-      mode === 'root'
-        ? selectorOfScrlEl === 'html'
+      searchMode === 'root'
+        ? selector === 'html'
           ? document
-          : document.querySelector(selectorOfScrlEl)
-        : targetRef.current.querySelector(selectorOfScrlEl);
+          : document.querySelector(selector)
+        : targetRef.current.querySelector(selector);
     if (!scrollableEl) {
       return;
     }
 
     /** @type {(evt: Event) => void} */
     function handleScroll(evt) {
-      const firstHeadingEl = headingsEls[0];
+      const firstHeadingEl = headings[0];
       if (!firstHeadingEl) {
         return;
       }
+      const rect = firstHeadingEl.getBoundingClientRect();
 
-      const bounding = firstHeadingEl.getBoundingClientRect();
-      const key = selectorOfScrlEl === 'html' ? 'documentElement' : null;
-      const finalEl = key ? scrollableEl[key] : scrollableEl;
+      // когда скролл на теге html, то обработчик вешаем на document, а инфа о скролле берется из document.documentElement... o_O
+      const key = selector === 'html' ? 'documentElement' : null;
+      const elWithScrollData = key ? scrollableEl[key] : scrollableEl;
+
       if (
-        bounding.y < -firstShowingOffset &&
-        finalEl.scrollTop / finalEl.scrollHeight < scrollPercent / 100
+        rect.y < -firstShowingOffset &&
+        elWithScrollData.scrollTop / elWithScrollData.scrollHeight <
+          scrollPercent / 100
       ) {
         setIsShowing(true);
       } else {
@@ -125,14 +126,11 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     }
 
     scrollableEl.addEventListener('scroll', handleScroll);
-    return () => {
-      scrollableEl?.removeEventListener('scroll', handleScroll);
-    };
+    return () => scrollableEl?.removeEventListener('scroll', handleScroll);
   }, [
-    headingsEls,
-    flag,
-    selectorOfScrollableEl,
+    scrollableElParams,
     targetRef,
+    headings,
     firstShowingOffset,
     scrollPercent,
   ]);
@@ -143,7 +141,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       className={clsx(
         'article-navigator',
         isShowing && 'visible',
-        expanded && 'expanded',
+        isExpanded && 'expanded',
         className
       )}
       sx={mergeSx(sxRoot({}), sx)}
@@ -153,7 +151,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
           evt.target instanceof HTMLElement &&
           evt.target.classList.contains('article-navigator')
         ) {
-          setExpanded(false);
+          setIsExpanded(false);
         }
       }}
     >
@@ -165,17 +163,17 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         }}
         onClick={(evt) => {
           if (isShowing) {
-            setExpanded(true);
+            setIsExpanded(true);
           }
         }}
       >
-        {headingsEls.map((headingEl, idx) => {
+        {headings.map((headingEl, idx) => {
           return (
             <li
               key={idx}
               className="article-navigator__item"
               onClick={(e) => {
-                if (!expanded) {
+                if (!isExpanded) {
                   return;
                 }
                 headingEl.scrollIntoView({ behavior: 'smooth' });
@@ -183,7 +181,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
             >
               <span className="heading-text">{headingEl.textContent}</span>
               <span className="counter">
-                {idx + 1}/{headingsEls.length ? headingsEls.length : '\u00A0'}
+                {idx + 1}/{headings.length ? headings.length : '\u00A0'}
               </span>
             </li>
           );

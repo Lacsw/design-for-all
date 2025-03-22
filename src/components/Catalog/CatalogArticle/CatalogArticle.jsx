@@ -17,7 +17,8 @@ import {
 } from 'components';
 import './CatalogArticle.css';
 
-const selectorOfScrollableEl = ['html', 'root'];
+const scrollableElParams = ['html', 'root'];
+const targetHeadings = [1, 2, 3, 4];
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
@@ -80,11 +81,11 @@ export default function CatalogArticle() {
           <div className="article__editor-container">
             <ArticleNavigator
               flag={navigatorFlag}
-              selector=".tiptap.ProseMirror"
               parentSelector="div.main-wrapper"
-              selectorOfScrollableEl={selectorOfScrollableEl}
+              targetSelector=".tiptap.ProseMirror"
               targetRef={articleRef}
-              targetHeadings={[1, 2]}
+              scrollableElParams={scrollableElParams}
+              targetHeadings={targetHeadings}
             />
 
             <RichTextEditor
