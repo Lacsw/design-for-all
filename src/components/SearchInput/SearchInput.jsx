@@ -9,6 +9,7 @@ import loupe from 'images/loupe-icon.svg';
 import loupeLight from 'images/loupe-icon_white.svg';
 
 export default function SearchInput({
+  isInput,
   onChange,
   onSearch,
   onResults,
@@ -24,6 +25,12 @@ export default function SearchInput({
     }
   }, [isShown]);
 
+  useEffect(() => {
+    if (!isInput) {
+      setIsShown(false);
+    }
+  }, [isInput]);
+
   const handleLoupeClick = () => {
     setIsShown(true);
     onSearch && onSearch(true);
@@ -33,33 +40,25 @@ export default function SearchInput({
   const handleCloseClick = () => {
     setIsShown(false);
     onSearch && onSearch(false);
-    onResults && onResults(null);
   };
 
   return (
     <>
-      {isShown && (
-        <div className="search-input">
-          <input
-            className="search-input__field"
-            ref={inputRef}
-            onChange={onChange}
-          ></input>
-          <button
-            className="search-input__close-btn"
-            onClick={handleCloseClick}
-          >
-            <img
-              src={theme === 'light' ? closeBtnBlack : closeBtn}
-              alt="Кнопка сброса"
-            />
-          </button>
-        </div>
-      )}
+      <div className={`search-input ${!isShown && `hide`}`}>
+        <input
+          className="search-input__field"
+          ref={inputRef}
+          onChange={onChange}
+        ></input>
+        <button className="search-input__close-btn" onClick={handleCloseClick}>
+          <img
+            src={theme === 'light' ? closeBtnBlack : closeBtn}
+            alt="Кнопка сброса"
+          />
+        </button>
+      </div>
       <button
-        className={`search-input__loupe ${
-          isShown &&  `hide`
-        }`}
+        className={`search-input__loupe ${isShown && `hide`}`}
         onClick={isShown ? handleCloseClick : handleLoupeClick}
       >
         <img

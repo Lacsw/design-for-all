@@ -1,6 +1,7 @@
 .sidebar {
   position: sticky;
   top: 92px;
+  z-index: 10;
 }
 
 .sidebar__header {
@@ -36,20 +37,22 @@
 }
 
 .sidebar__list {
+  position: absolute;
+  z-index: 1000;
   height: 70vh;
+  max-width: 1200px;
+  min-width: 222px;
+  width: auto;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   list-style: none;
   padding: 10px;
   margin: 0;
-  position: absolute;
-  z-index: 10;
   font-family: Inter;
   font-size: 14px;
   top: 46px;
   left: 0;
-  width: 100%;
   border-radius: 12px;
   color: var(--color-main);
   border: 5px solid var(--color-bg-secondary);
@@ -94,6 +97,10 @@
 .sidebar__list::-webkit-scrollbar-thumb {
   border-radius: 3px;
   background-color: var(--color-bg-low-accent);
+}
+
+.hide {
+  display: none;
 }
 
 @media (max-width: 600px) {
