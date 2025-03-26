@@ -123,7 +123,7 @@ export default function Header({ resetSection }) {
               !isMobile ? 'header__search' : ''
             }`}
           >
-            <HeaderSearchInput isMobileVisible={isMobile} id="header" />
+            <HeaderSearchInput isMobileVisible={isMobile} id="headerSearch" />
           </li>
           {isMobile && isCatalogOpen && (
             <li className="header__navigation-item_mobile-fourth">
