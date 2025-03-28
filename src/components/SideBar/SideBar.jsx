@@ -152,7 +152,7 @@ export default function SideBar({ section, setSection }) {
           onResults={setResults}
           onOpen={() => openComponent('treeSearch')}
         />
-        {isInput && results && (
+        {isInput && (
           <>
             {!isMobile && (
               <Overlay
@@ -166,16 +166,20 @@ export default function SideBar({ section, setSection }) {
               />
             )}
             <ul className="sidebar__list">
-              {results.length > 0
-                ? results.map((item) => (
-                    <ResultItem
-                      item={item}
-                      language={language}
-                      key={item.uuid}
-                      onClick={() => setIsInput(false)}
-                    />
-                  ))
-                : 'Ничего не найдено'}
+              {!results ? (
+                <li className="sidebar__item">Введите запрос...</li>
+              ) : results.length === 0 ? (
+                <li className="sidebar__item">Ничего не найдено</li>
+              ) : (
+                results.map((item) => (
+                  <ResultItem
+                    item={item}
+                    language={language}
+                    key={item.uuid}
+                    onClick={() => setIsInput(false)}
+                  />
+                ))
+              )}
             </ul>
           </>
         )}

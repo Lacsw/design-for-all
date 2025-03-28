@@ -4,10 +4,15 @@ import { Input, Modal } from 'components';
 import authorApi from 'utils/api/author';
 import { useSelector } from 'react-redux';
 import { getDraft } from 'store/selectors';
+import { domain } from 'utils/config';
 
-const baseRegex = /^https:\/\/design-for-all\.net/i;
-const fullRegex =
-  /^https:\/\/design-for-all\.net\/(en|es|ru|zh)\/[a-z0-9]{32}$/;
+const dfaUrl = new URL(domain);
+const hostname = dfaUrl.hostname; // "dev.design-for-all.net" или "design-for-all.net"
+
+export const baseRegex = new RegExp(`^https:\\/\\/${hostname}`, 'i');
+export const fullRegex = new RegExp(
+  `^https:\\/\\/${hostname}\\/(en|es|ru|zh)\\/[a-z0-9]{32}$`
+);
 const pathRegex = /[a-z]{2}\/[a-z0-9]{32}/;
 const baseError = 'Вставьте ссылку с этого сайта';
 const fullError = 'Ссылка не является адресом статьи';
