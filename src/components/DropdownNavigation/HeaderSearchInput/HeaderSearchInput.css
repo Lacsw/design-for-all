@@ -1,5 +1,3 @@
-
-
 .header-search-input_active {
   max-width: 753px;
   width: 100%;
@@ -139,8 +137,6 @@
   margin: 0;
 }
 
-
-
 .header-search-input__loupe {
   margin: 0;
   padding: 0;
@@ -158,6 +154,15 @@
 
 .header-search-input-hide {
   display: none;
+}
+
+.header-search__results {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+.header-search__results.hide {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 600px) {

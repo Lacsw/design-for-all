@@ -1,11 +1,10 @@
 import { useSelector } from 'react-redux';
 import './SocialsBar.css';
-
 import { socialIcons } from 'utils/constants';
 import plusBigIcon from 'images/author/plus-icon.svg';
 import { getCurrentTheme } from 'store/selectors';
 
-export default function SocialsBar() {
+export default function SocialsBar({ onOpen }) {
   const { currentUser } = useSelector((state) => state.user);
   const theme = useSelector(getCurrentTheme);
 
@@ -14,7 +13,11 @@ export default function SocialsBar() {
       ([key, value], index) => (
         <a key={index} href={value} target="_blank" rel="noreferrer">
           <img
-            src={socialIcons[key][theme] || socialIcons[key]}
+            src={
+              (socialIcons[key] && socialIcons[key][theme]) ||
+              socialIcons[key] ||
+              socialIcons['default'][theme]
+            }
             alt="Иконка"
             className="socials-bar-btn"
           />
@@ -26,7 +29,7 @@ export default function SocialsBar() {
   return (
     <div className="socials-bar">
       {renderSocialMedia()}
-      <button className="socials-bar-btn">
+      <button type="button" className="socials-bar-btn" onClick={onOpen}>
         <img src={plusBigIcon} alt="Иконка добавить" />
       </button>
     </div>

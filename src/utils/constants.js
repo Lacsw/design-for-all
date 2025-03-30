@@ -39,6 +39,10 @@ import translateIconW from 'images/translate-icon_white.svg';
 import createUser from 'images/admin/create-user.svg';
 import createUserWhite from 'images/admin/create-user-white.svg';
 //socials
+import emailBlack from 'images/socials/email-icon-black.svg';
+import emailWhite from 'images/socials/email-icon-white.svg';
+import phoneBlack from 'images/socials/phone-icon-black.svg';
+import phoneWhite from 'images/socials/phone-icon-white.svg';
 import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
 import facebook from 'images/socials/facebook-icon.svg';
@@ -237,7 +241,6 @@ export const adminNavList = [
     id: 'logout',
     name: 'Выйти',
     src: { light: exitWhite, dark: exitBlack },
- 
   },
 ];
 
@@ -251,7 +254,6 @@ export const languageList = [
   { id: 'en', name: 'en', src: enFlag },
   { id: 'es', name: 'es', src: spaFlag },
 ];
-
 
 export const editList = [
   { name: 'menu', dark: dotsIconW, light: dotsIconB },
@@ -298,9 +300,15 @@ export const adminHash = {
   closed: '#/admin/closed',
   closedV: '#/admin/closed/view',
 };
-// SOCIALS //
 
+// SOCIALS //
 export const socialIcons = {
+  default: {
+    light: webBlack,
+    dark: webWhite,
+  },
+  email: { light: emailBlack, dark: emailWhite },
+  phone: { light: phoneBlack, dark: phoneWhite },
   telegram,
   behance,
   dribbble,

@@ -41,6 +41,9 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
   // isShown определяет, открыт ли компонент
   const isShown = activeComponent === id;
 
+  const shouldHideResults =
+    (!results || results.length === 0) && !showLoading && !showError;
+
   // При вводе обновляем localQuery и запускаем debouncedSearch, который обновит состояние в useServerSearch через SET_QUERY
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -58,6 +61,18 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
 
   const handleLoupeClick = () => openComponent(id);
   const handleCloseClick = () => closeComponent(id);
+
+  const handleCleaAndClose = () => {
+    if (localQuery !== '') {
+      // Если в поле есть текст — очищаем его
+      setLocalQuery('');
+      // Если используется серверный поиск, можно сбросить запрос:
+      debouncedSearch('');
+    } else {
+      // Если поле уже пустое — закрываем компонент
+      handleCloseClick();
+    }
+  };
 
   // Обработчик скролла с debounce
   useEffect(() => {
@@ -114,17 +129,27 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
             className="header-search-input__field"
             ref={inputRef}
             onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                handleCloseClick();
+              }
+            }}
           />
           <button
             className="header-search-input__close-btn"
-            onClick={handleCloseClick}
+            onClick={handleCleaAndClose}
           >
             <img
               src={theme === 'light' ? closeBtnBlack : closeBtn}
               alt="Кнопка сброса"
             />
           </button>
-          <ul className="header-search__results" ref={resultsRef}>
+          <ul
+            className={`header-search__results ${
+              shouldHideResults ? 'hide' : ''
+            }`}
+            ref={resultsRef}
+          >
             {results.map((item) => (
               <li key={item.uuid} className="header-search__result">
                 <NavLink

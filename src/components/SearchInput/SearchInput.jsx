@@ -7,6 +7,7 @@ import closeBtn from 'images/close-btn.svg';
 import closeBtnBlack from 'images/close-btn_black.svg';
 import loupe from 'images/loupe-icon.svg';
 import loupeLight from 'images/loupe-icon_white.svg';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
 
 export default function SearchInput({
   isInput,
@@ -18,6 +19,7 @@ export default function SearchInput({
   const [isShown, setIsShown] = useState(false);
   const inputRef = useRef();
   const theme = useSelector(getCurrentTheme);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isShown) {
@@ -34,12 +36,26 @@ export default function SearchInput({
   const handleLoupeClick = () => {
     setIsShown(true);
     onSearch && onSearch(true);
-    onOpen && onOpen(false);
+    if (!isMobile) {
+      onOpen && onOpen(false);
+    }
   };
 
   const handleCloseClick = () => {
     setIsShown(false);
     onSearch && onSearch(false);
+    onResults && onResults(null);
+  };
+
+  const handleClearAndClose = () => {
+    if (inputRef.current && inputRef.current.value !== '') {
+      inputRef.current.value = '';
+      onResults && onResults(null);
+      onChange && onChange({ target: { value: '' } });
+      return;
+    }
+
+    handleCloseClick();
   };
 
   return (
@@ -49,8 +65,16 @@ export default function SearchInput({
           className="search-input__field"
           ref={inputRef}
           onChange={onChange}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              handleCloseClick();
+            }
+          }}
         ></input>
-        <button className="search-input__close-btn" onClick={handleCloseClick}>
+        <button
+          className="search-input__close-btn"
+          onClick={handleClearAndClose}
+        >
           <img
             src={theme === 'light' ? closeBtnBlack : closeBtn}
             alt="Кнопка сброса"
