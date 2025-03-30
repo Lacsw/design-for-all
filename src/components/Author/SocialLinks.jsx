@@ -21,7 +21,7 @@ const SocialLinks = ({ socialData, cut }) => {
             src={
               socialIcons[key]?.[theme] ||
               socialIcons[key] ||
-              socialIcons.instagram
+              socialIcons['default'][theme]
             }
             alt={key}
             className="author__social"

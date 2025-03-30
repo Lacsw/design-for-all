@@ -36,6 +36,7 @@ export { default as MobileTrees–íutton } from './DropdownNavigation/MobileTrees–
 export { default as ModalAttention } from './Modal/ModalAttention/ModalAttention';
 export { default as ModalRecommendation } from './Modal/ModalRecommendation/ModalRecommendation';
 export { default as ModalReasons } from './Modal/ModalReasons/ModalReasons';
+export { default as ModalSocials } from './Modal/ModalSocials/ModalSocials';
 export { default as AuthModal } from './AuthModal/AuthModal';
 export { default as LoginForm } from './AuthModal/LoginForm/LoginForm';
 export { default as SignUpForm } from './AuthModal/SignUpForm/SignUpForm';

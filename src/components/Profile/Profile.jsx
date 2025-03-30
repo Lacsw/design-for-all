@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './Profile.css';
-import { Button, SocialsBar, InputEditable, Modal } from 'components';
+import {
+  Button,
+  SocialsBar,
+  InputEditable,
+  Modal,
+  ModalSocials,
+} from 'components';
 import { useRef, useState } from 'react';
 import ModalFIO from 'components/Modal/ModalFIO/ModalFIO';
 import ModalLogPass from 'components/Modal/ModalLogPass/ModalLogPass';
@@ -116,7 +122,7 @@ export default function Profile({ resetSection }) {
 
           <div className="profile__field">
             <span className="profile__sub-title">Социальные сети</span>
-            <SocialsBar />
+            <SocialsBar onOpen={() => setModal('addSocials')} />
           </div>
 
           <label className="profile__field">
@@ -165,6 +171,12 @@ export default function Profile({ resetSection }) {
         onClose={() => setModal('')}
         onSave={changeForm}
         name={modal === 'password' ? modal : 'login'}
+      />
+      <ModalSocials
+        isOpen={modal === 'addSocials'}
+        onClose={() => setModal('')}
+        onSave={changeForm}
+        title="Добавить контакт"
       />
       <Modal
         title="Ссылка на картинку"

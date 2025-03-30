@@ -105,7 +105,6 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
     }
   }, [error]);
 
-  console.log(results);
   return (
     <>
       <div

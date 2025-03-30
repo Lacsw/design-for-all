@@ -32,7 +32,7 @@ export default function User() {
           src={
             socialIcons[item[0]]?.[theme] ||
             socialIcons[item[0]] ||
-            socialIcons.instagram
+            socialIcons['default'][theme]
           }
           alt={item[0]}
           className="user__social"
