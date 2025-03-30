@@ -47,7 +47,6 @@ import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
 import facebook from 'images/socials/facebook-icon.svg';
 import instagram from 'images/socials/instagram-icon.svg';
-import twitter from 'images/socials/twitter-icon.svg';
 import vk from 'images/socials/vk-icon.svg';
 import dribbble from 'images/socials/dribbble-icon.svg';
 import youtube from 'images/socials/youtube-icon.svg';
@@ -313,7 +312,6 @@ export const socialIcons = {
   behance,
   dribbble,
   youtube,
-  twitter,
   vk,
   facebook,
   instagram,
