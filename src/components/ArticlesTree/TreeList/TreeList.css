@@ -1,6 +1,6 @@
 .tree-list {
   display: flex;
-  font-family: Inter, sans-serif;
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   flex-direction: column;
   gap: 6px;

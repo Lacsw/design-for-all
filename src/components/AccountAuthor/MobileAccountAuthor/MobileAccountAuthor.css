@@ -23,7 +23,7 @@
   color: var(--color-main);
   text-align: center;
   font-feature-settings: 'calt' off;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

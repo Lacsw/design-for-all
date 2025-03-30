@@ -7,7 +7,7 @@
 }
 
 .rc-tree-title {
-  font-family: 'Inter';
+font-family: 'Gotham', 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -31,7 +31,7 @@
 
 .tree-node {
   padding: 0 10px !important;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;

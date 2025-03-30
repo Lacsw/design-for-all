@@ -22,7 +22,7 @@
   text-decoration: none;
   color: var(--color-main);
   padding: 8px;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
