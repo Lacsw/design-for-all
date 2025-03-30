@@ -177,6 +177,10 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     >
       <ol
         className="article-navigator__list"
+        onWheel={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
         onScroll={(evt) => {
           // stop scroll in parent when ol.article-navigator__list fully scrolled itself
           evt.stopPropagation();
