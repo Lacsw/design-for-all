@@ -77,6 +77,22 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     return res;
   }, [targetSelector, targetRef]);
 
+  const expand = () => {
+    if (scrollableRef.current.data instanceof HTMLElement) {
+      scrollableRef.current.data.style.overflow = 'hidden';
+    }
+    headerElRef.current?.classList.add('navigator-expanded');
+    setIsExpanded(true);
+  };
+
+  const collapse = () => {
+    if (scrollableRef.current.data instanceof HTMLElement) {
+      scrollableRef.current.data.style.overflow = 'auto';
+    }
+    headerElRef.current?.classList.remove('navigator-expanded');
+    setIsExpanded(false);
+  };
+
   useEffect(() => {
     setTargetEl(findTargetEl());
   }, [findTargetEl, flag]);
@@ -147,11 +163,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       ) {
         setIsShowing(true);
       } else {
-        if (scrollableRef.current.data instanceof HTMLElement) {
-          scrollableRef.current.data.style.overflow = 'auto';
-        }
-        headerElRef.current?.classList.remove('navigator-opened');
-        setIsExpanded(false);
+        collapse();
         setIsShowing(false);
       }
     }
@@ -182,11 +194,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
           evt.target instanceof HTMLElement &&
           evt.target.classList.contains('article-navigator')
         ) {
-          if (scrollableRef.current.data instanceof HTMLElement) {
-            scrollableRef.current.data.style.overflow = 'auto';
-          }
-          headerElRef.current?.classList.remove('navigator-opened');
-          setIsExpanded(false);
+          collapse();
         }
       }}
     >
@@ -194,13 +202,9 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         className="article-navigator__list"
         onClick={(evt) => {
           if (isShowing) {
-            if (scrollableRef.current.data instanceof HTMLElement) {
-              scrollableRef.current.data.style.overflow = 'hidden';
-            }
-            headerElRef.current?.classList.add('navigator-opened');
             // condition need because of event propagation from click on li
             if (!isExpanded) {
-              setIsExpanded(true);
+              expand();
             }
           }
         }}
@@ -214,10 +218,11 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
                 if (!isExpanded) {
                   return;
                 }
-                setIsExpanded(false);
+
+                collapse();
                 setTimeout(
                   () => headingEl.scrollIntoView({ behavior: 'smooth' }),
-                  100
+                  50 // equals to transition delay in ./styles.js .header (see #25-04-01-00-14)
                 );
               }}
             >
