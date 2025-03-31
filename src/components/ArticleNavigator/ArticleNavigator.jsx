@@ -64,6 +64,8 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     data: null,
   });
 
+  const headerElRef = useRef(null);
+
   const [isShowing, setIsShowing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -111,10 +113,24 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
           ? document
           : document.querySelector(selector)
         : targetRef.current.querySelector(selector);
+
     if (!scrollableEl) {
       scrollableRef.current = { el: null, data: null };
       return;
     }
+
+    // когда скролл на теге html, то обработчик вешаем на document, а инфа о скролле берется из document.documentElement... o_O #1
+    const key = selector === 'html' ? 'documentElement' : null;
+
+    /** @type {Element | HTMLElement} */
+    const elWithScrollData = key ? scrollableEl[key] : scrollableEl;
+    scrollableRef.current = { el: scrollableEl, data: elWithScrollData };
+
+    if (elWithScrollData instanceof HTMLElement) {
+      elWithScrollData.style.scrollbarGutter = 'stable';
+    }
+
+    headerElRef.current = document.querySelector('header.header') || null;
 
     /** @type {(evt: Event) => void} */
     function handleScroll(evt) {
@@ -124,13 +140,6 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       }
       const rect = firstHeadingEl.getBoundingClientRect();
 
-      // когда скролл на теге html, то обработчик вешаем на document, а инфа о скролле берется из document.documentElement... o_O #1
-      const key = selector === 'html' ? 'documentElement' : null;
-
-      /** @type {Element | HTMLElement} */
-      const elWithScrollData = key ? scrollableEl[key] : scrollableEl;
-      scrollableRef.current = { el: scrollableEl, data: elWithScrollData };
-
       if (
         rect.y < -firstShowingOffset &&
         elWithScrollData.scrollTop / elWithScrollData.scrollHeight <
@@ -138,6 +147,11 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       ) {
         setIsShowing(true);
       } else {
+        if (scrollableRef.current.data instanceof HTMLElement) {
+          scrollableRef.current.data.style.overflow = 'auto';
+        }
+        headerElRef.current?.classList.remove('navigator-opened');
+        setIsExpanded(false);
         setIsShowing(false);
       }
     }
@@ -168,29 +182,26 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
           evt.target instanceof HTMLElement &&
           evt.target.classList.contains('article-navigator')
         ) {
-          // if (scrollableRef.current.data instanceof HTMLElement) {
-          //   scrollableRef.current.data.style.overflow = 'initial';
-          // }
+          if (scrollableRef.current.data instanceof HTMLElement) {
+            scrollableRef.current.data.style.overflow = 'auto';
+          }
+          headerElRef.current?.classList.remove('navigator-opened');
           setIsExpanded(false);
         }
       }}
     >
       <ol
         className="article-navigator__list"
-        onWheel={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
-        onScroll={(evt) => {
-          // stop scroll in parent when ol.article-navigator__list fully scrolled itself
-          evt.stopPropagation();
-        }}
         onClick={(evt) => {
           if (isShowing) {
-            // if (scrollableRef.current.data instanceof HTMLElement) {
-            //   scrollableRef.current.data.style.overflow = 'hidden';
-            // }
-            setIsExpanded(true);
+            if (scrollableRef.current.data instanceof HTMLElement) {
+              scrollableRef.current.data.style.overflow = 'hidden';
+            }
+            headerElRef.current?.classList.add('navigator-opened');
+            // condition need because of event propagation from click on li
+            if (!isExpanded) {
+              setIsExpanded(true);
+            }
           }
         }}
       >
@@ -203,7 +214,11 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
                 if (!isExpanded) {
                   return;
                 }
-                headingEl.scrollIntoView({ behavior: 'smooth' });
+                setIsExpanded(false);
+                setTimeout(
+                  () => headingEl.scrollIntoView({ behavior: 'smooth' }),
+                  100
+                );
               }}
             >
               <span className="heading-text">{headingEl.textContent}</span>
