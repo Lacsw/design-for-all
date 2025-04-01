@@ -9,7 +9,7 @@
   width: 100%;
   text-align: center;
   margin-top: 12px;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -76,7 +76,7 @@
   margin-top: 10px;
 
   color: var(--color-bg-accent);
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -127,7 +127,7 @@
   margin-left: -60px;
 
   text-align: center;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;

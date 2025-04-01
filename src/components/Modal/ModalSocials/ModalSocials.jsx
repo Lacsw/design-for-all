@@ -4,9 +4,34 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import './ModalSocials.css';
 
-const emailRegex = /^[\w.-]+@[\w.-]+\.\w+$/;
+const emailRegex = /^\S+@\S+\.\S+$/;
 const phoneRegex = /^\+?\d{10,15}$/;
 const socialsRegex = /^https:\/\/\S+\.\S+$/;
+
+function detectSocialPlatform(url) {
+  const platforms = [
+    { key: 'telegram', substrings: ['telegram', 't.me'] },
+    { key: 'behance', substrings: ['behance'] },
+    { key: 'dribbble', substrings: ['dribbble'] },
+    { key: 'youtube', substrings: ['youtube', 'youtu.be'] },
+    { key: 'vk', substrings: ['vk'] },
+    { key: 'facebook', substrings: ['facebook', 'fb.me'] },
+    { key: 'instagram', substrings: ['instagram', 'instagr.am'] },
+    { key: 'pinterest', substrings: ['pinterest'] },
+    { key: 'whatsapp', substrings: ['whatsapp'] },
+    { key: 'x', substrings: ['x'] },
+  ];
+
+  const lowerUrl = url.toLowerCase();
+  for (let platform of platforms) {
+    for (let sub of platform.substrings) {
+      if (lowerUrl.includes(sub)) {
+        return platform.key;
+      }
+    }
+  }
+  return 'default';
+}
 
 export default function ModalSocials({ isOpen, onClose, onSave, title }) {
   const theme = useSelector(getCurrentTheme);
@@ -42,7 +67,11 @@ export default function ModalSocials({ isOpen, onClose, onSave, title }) {
 
   const handleConfirm = () => {
     if (!error && inputValue) {
-      onSave({ social_media: { [selectedOption]: inputValue } });
+      const platform =
+        selectedOption === 'socials'
+          ? detectSocialPlatform(inputValue)
+          : selectedOption;
+      onSave({ social_media: { [platform]: inputValue } });
       setInputValue('');
       onClose();
     }

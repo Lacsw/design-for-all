@@ -12,7 +12,7 @@
 
 .intro__title {
   margin: 0;
-  font-family: 'Gotham';
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 60px;
@@ -25,7 +25,7 @@
   max-width: 593px;
   min-height: 117px;
   margin: 0;
-  font-family: 'Gotham';
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 30px;

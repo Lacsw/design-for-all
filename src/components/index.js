@@ -46,6 +46,7 @@ export { default as Modal } from './Modal/Modal';
 export { default as MenuTree } from './MenuTree/MenuTree';
 export { default as MapList } from './MapList/MapList';
 export { default as SocialsBar } from './SocialsBar/SocialsBar';
+export { default as SocialItem } from './SocialsBar/SocialItem';
 export { default as FieldEditable } from './FieldEditable/FieldEditable';
 export { default as Dropdown } from './Dropdown/Dropdown';
 export { default as DropdownNavigation } from './DropdownNavigation/DropdownNavigation';

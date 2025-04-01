@@ -27,7 +27,7 @@
 }
 
 .modal__container > p {
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 14px;
   margin: 0;
   padding: 0;
@@ -51,7 +51,7 @@
 
 .modal__title {
   margin: 0;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-style: normal;
   line-height: 130%;
   letter-spacing: 0.56px;

@@ -7,46 +7,50 @@ import instagramIcon from 'images/socials/instagram-icon.svg';
 import facebookIcon from 'images/socials/facebook-icon.svg';
 import vkIcon from 'images/socials/vk-icon.svg';
 import pinterestIcon from 'images/socials/pinterest-icon.svg';
-import twitterIcon from 'images/socials/twitter-icon.svg';
+import { useSelector } from 'react-redux';
+import { getCurrentTheme } from 'store/selectors';
+import xBlack from 'images/socials/x-icon_black.svg';
+import xWhite from 'images/socials/x-icon_white.svg';
 
 export default function Footer() {
+  const theme = useSelector(getCurrentTheme);
   return (
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__list-container">
           <h2 className="footer__title">Основные страницы</h2>
           <ul className="footer__list">
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/" className="footer__link">
                 Главная
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/updates" className="footer__link">
                 Обновления
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/articles/web" className="footer__link">
                 Веб приложения
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/articles/desktop" className="footer__link">
                 Десктоп приложения
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/articles/mobiles" className="footer__link">
                 Мобильные приложения
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/articles" className="footer__link">
                 Статьи
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/guides" className="footer__link">
                 Руководства
               </Link>
@@ -56,17 +60,17 @@ export default function Footer() {
         <div className="footer__list-container">
           <h2 className="footer__title">Контакты</h2>
           <ul className="footer__list">
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/" className="footer__link">
                 example@mail.com
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/" className="footer__link">
                 support@mail.com
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/" className="footer__link">
                 marketing@mail.com
               </Link>
@@ -76,12 +80,12 @@ export default function Footer() {
         <div className="footer__list-container">
           <h2 className="footer__title">Правовая информация</h2>
           <ul className="footer__list">
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/" className="footer__link">
                 Пользовательское соглашение
               </Link>
             </li>
-            <li className='footer__list-item'>
+            <li className="footer__list-item">
               <Link to="/" className="footer__link">
                 Пользовательское соглашение
               </Link>
@@ -143,12 +147,15 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                to="https://twitter.com/Ivan1983759"
+                to="https://x.com/Ivan1983759"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
-                <img src={twitterIcon} alt="Иконка твиттера" />
+                <img
+                  src={theme === 'dark' ? xWhite : xBlack}
+                  alt="Иконка твиттера"
+                />
               </Link>
             </li>
           </ul>

@@ -20,7 +20,7 @@
   background: var(--color-main);
   color: var(--color-bg-secondary);
   text-align: center;
-  font-family: Inter, sans-serif;
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
