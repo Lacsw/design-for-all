@@ -139,7 +139,6 @@ export default function ModalSocials({ isOpen, onClose, onSave, title }) {
           }
           onChange={handleInputChange}
           errors={error}
-          maxLength={400}
         />
       </label>
     </Modal>

@@ -28,6 +28,7 @@ const initialForm = {
 };
 
 export default function Profile({ resetSection }) {
+  const inputRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -38,16 +39,22 @@ export default function Profile({ resetSection }) {
         ? currentUser.social_media
         : {},
   });
-
   const [modal, setModal] = useState('');
   const [canAdd, setCanAdd] = useState(false);
-  const inputRef = useRef(null);
-  const isFormReady = Object.keys(formData).some(
-    (key) =>
-      (key === 'avatar' && formData[key] !== currentUser.avatar) ||
-      (key !== 'avatar' && formData[key])
-  );
-  console.log(currentUser.social_media);
+
+  const isSocialMediaChanged =
+    JSON.stringify(formData.social_media) !==
+    JSON.stringify(currentUser.social_media);
+
+  const isFormReady =
+    (formData.fio && formData.fio.trim().length > 0) ||
+    (formData.login && formData.login.trim().length > 0) ||
+    (formData.password && formData.password.trim().length > 0) ||
+    (formData.avatar && formData.avatar !== currentUser.avatar) ||
+    isSocialMediaChanged;
+
+  console.log(initialForm);
+
   function handleFormSubmit(evt) {
     evt.preventDefault();
 
@@ -106,6 +113,23 @@ export default function Profile({ resetSection }) {
     }
   }
 
+  // требует реализации
+  function handleEditSocial(platform, value) {
+    setModal('editSocial');
+  }
+
+  function handleDeleteSocial(platform) {
+    setFormData((prev) => ({
+      ...prev,
+      social_media: Object.keys(prev.social_media).reduce((acc, key) => {
+        if (key !== platform) {
+          acc[key] = prev.social_media[key];
+        }
+        return acc;
+      }, {}),
+    }));
+  }
+
   return (
     <>
       <form
@@ -143,6 +167,8 @@ export default function Profile({ resetSection }) {
             <SocialsBar
               onOpen={() => setModal('addSocials')}
               socialMediaList={formData.social_media}
+              onEdit={handleEditSocial}
+              onDelete={handleDeleteSocial}
             />
           </div>
 
