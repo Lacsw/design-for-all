@@ -24,7 +24,7 @@ const initialForm = {
   old_password: '',
   fio: '',
   avatar: '',
-  social_media: '',
+  social_media: {},
 };
 
 export default function Profile({ resetSection }) {
@@ -33,7 +33,12 @@ export default function Profile({ resetSection }) {
   const [formData, setFormData] = useState({
     ...initialForm,
     avatar: currentUser.avatar,
+    social_media:
+      currentUser.social_media && typeof currentUser.social_media === 'object'
+        ? currentUser.social_media
+        : {},
   });
+
   const [modal, setModal] = useState('');
   const [canAdd, setCanAdd] = useState(false);
   const inputRef = useRef(null);
@@ -42,17 +47,20 @@ export default function Profile({ resetSection }) {
       (key === 'avatar' && formData[key] !== currentUser.avatar) ||
       (key !== 'avatar' && formData[key])
   );
-
+  console.log(currentUser.social_media);
   function handleFormSubmit(evt) {
     evt.preventDefault();
+
     const filledData = Object.keys(formData).reduce((acc, key) => {
       if (
         (key === 'avatar' && formData[key] !== currentUser.avatar) ||
         (key !== 'avatar' && formData[key])
-      )
+      ) {
         acc[key] = formData[key];
+      }
       return acc;
     }, {});
+
     authApi
       .updateUser(filledData)
       .then(() => {
@@ -64,6 +72,7 @@ export default function Profile({ resetSection }) {
           setFormData({
             ...initialForm,
             avatar: formData.avatar,
+            social_media: formData.social_media,
           });
         }
       })
@@ -71,7 +80,16 @@ export default function Profile({ resetSection }) {
   }
 
   function changeForm(data) {
-    setFormData((prev) => ({ ...prev, ...data }));
+    setFormData((prev) => {
+      if (data.social_media) {
+        return {
+          ...prev,
+          ...data,
+          social_media: { ...prev.social_media, ...data.social_media },
+        };
+      }
+      return { ...prev, ...data };
+    });
   }
 
   function handleInput({ target }) {
@@ -122,7 +140,10 @@ export default function Profile({ resetSection }) {
 
           <div className="profile__field">
             <span className="profile__sub-title">Социальные сети</span>
-            <SocialsBar onOpen={() => setModal('addSocials')} />
+            <SocialsBar
+              onOpen={() => setModal('addSocials')}
+              socialMediaList={formData.social_media}
+            />
           </div>
 
           <label className="profile__field">
