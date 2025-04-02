@@ -37,7 +37,7 @@
 }
 
 .radio-text {
- font-family: 'Gotham', 'Inter', sans-serif;
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -59,4 +59,17 @@
 }
 .modal-socials__options.light input:checked + .radio-custom {
   background-image: url('/src/images/radio-btn-selected_white.svg');
+}
+
+.modal-socials__error {
+  padding-top: 10px;
+  display: block;
+  width: 329px;
+  color: var(--color-main);
+  font-family: 'Gotham', 'Inter', sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.24px;
 }

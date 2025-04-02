@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { socialIcons } from 'utils/constants';
 import { getCurrentTheme, getCurrentUser } from 'store/selectors';
 import defaultAvatar from 'images/admin/avatar_default.svg';
+import { getSocialHref } from 'utils/socials';
 import './User.css';
 
 export default function User() {
@@ -20,21 +21,21 @@ export default function User() {
   const shownList = isOpen ? socialList : socialList.slice(0, 4);
 
   const renderSocialMedia = (shownList) => {
-    return shownList.map((item, index) => (
+    return shownList.map(([name, url], index) => (
       <a
-        key={item[1] + index}
-        href={item[1]}
+        key={`${name}-${index}`}
+        href={getSocialHref(name, url)}
         target="_blank"
         rel="noreferrer"
         className="social-link"
       >
         <img
           src={
-            socialIcons[item[0]]?.[theme] ||
-            socialIcons[item[0]] ||
+            socialIcons[name]?.[theme] ||
+            socialIcons[name] ||
             socialIcons['default'][theme]
           }
-          alt={item[0]}
+          alt={name}
           className="user__social"
         />
       </a>
@@ -62,9 +63,7 @@ export default function User() {
       {socialList.length > 4 && (
         <p
           className={
-            isOpen
-              ? 'user__see-more user__see-more_opened'
-              : 'user__see-more'
+            isOpen ? 'user__see-more user__see-more_opened' : 'user__see-more'
           }
           onClick={() => setIsOpen(!isOpen)}
         >
