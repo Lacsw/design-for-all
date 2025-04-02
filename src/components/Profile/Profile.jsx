@@ -41,6 +41,7 @@ export default function Profile({ resetSection }) {
   });
   const [modal, setModal] = useState('');
   const [canAdd, setCanAdd] = useState(false);
+  const [editingContact, setEditingContact] = useState(null);
 
   const isSocialMediaChanged =
     JSON.stringify(formData.social_media) !==
@@ -52,8 +53,6 @@ export default function Profile({ resetSection }) {
     (formData.password && formData.password.trim().length > 0) ||
     (formData.avatar && formData.avatar !== currentUser.avatar) ||
     isSocialMediaChanged;
-
-  console.log(initialForm);
 
   function handleFormSubmit(evt) {
     evt.preventDefault();
@@ -113,8 +112,8 @@ export default function Profile({ resetSection }) {
     }
   }
 
-  // требует реализации
   function handleEditSocial(platform, value) {
+    setEditingContact({ type: platform, value });
     setModal('editSocial');
   }
 
@@ -165,7 +164,10 @@ export default function Profile({ resetSection }) {
           <div className="profile__field">
             <span className="profile__sub-title">Социальные сети</span>
             <SocialsBar
-              onOpen={() => setModal('addSocials')}
+              onOpen={() => {
+                setModal('addSocials');
+                setEditingContact(null);
+              }}
               socialMediaList={formData.social_media}
               onEdit={handleEditSocial}
               onDelete={handleDeleteSocial}
@@ -202,7 +204,7 @@ export default function Profile({ resetSection }) {
         <Button
           type={'button'}
           disabled={!isFormReady}
-          onClick={() => setFormData(initialForm)}
+          onClick={() => setFormData(currentUser)}
         >
           Отменить
         </Button>
@@ -220,10 +222,14 @@ export default function Profile({ resetSection }) {
         name={modal === 'password' ? modal : 'login'}
       />
       <ModalSocials
-        isOpen={modal === 'addSocials'}
-        onClose={() => setModal('')}
+        isOpen={modal === 'addSocials' || modal === 'editSocial'}
+        onClose={() => {
+          setModal('');
+          setEditingContact(null);
+        }}
         onSave={changeForm}
-        title="Добавить контакт"
+        title={modal === 'editSocial' ? 'Редактировать' : 'Добавить контакт'}
+        contact={editingContact}
       />
       <Modal
         title="Ссылка на картинку"

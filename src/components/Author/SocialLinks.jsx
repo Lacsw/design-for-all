@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { socialIcons } from 'utils/constants';
+import { getSocialHref } from 'utils/socials';
 
 const SocialLinks = ({ socialData, cut }) => {
   const theme = useSelector(getCurrentTheme);
@@ -9,21 +10,21 @@ const SocialLinks = ({ socialData, cut }) => {
     : Object.entries(socialData);
   return (
     <>
-      {socialList.map(([key, value]) => (
+      {socialList.map(([name, url]) => (
         <a
-          key={key}
-          href={value}
+          key={name}
+          href={getSocialHref(name, url)}
           target="_blank"
           rel="noreferrer"
           className="social-link"
         >
           <img
             src={
-              socialIcons[key]?.[theme] ||
-              socialIcons[key] ||
+              socialIcons[name]?.[theme] ||
+              socialIcons[name] ||
               socialIcons['default'][theme]
             }
-            alt={key}
+            alt={name}
             className="author__social"
           />
         </a>

@@ -1,131 +1,186 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input, Modal } from 'components';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import './ModalSocials.css';
+import {
+  emailRegex,
+  phoneRegex,
+  socialsRegex,
+  detectSocialPlatform,
+  detectTitleName,
+} from 'utils/socials';
 
-const emailRegex = /^\S+@\S+\.\S+$/;
-const phoneRegex = /^\+?\d{10,15}$/;
-const socialsRegex = /^https:\/\/\S+\.\S+$/;
-
-function detectSocialPlatform(url) {
-  const platforms = [
-    { key: 'telegram', substrings: ['telegram', 't.me'] },
-    { key: 'behance', substrings: ['behance'] },
-    { key: 'dribbble', substrings: ['dribbble'] },
-    { key: 'youtube', substrings: ['youtube', 'youtu.be'] },
-    { key: 'vk', substrings: ['vk'] },
-    { key: 'facebook', substrings: ['facebook', 'fb.me'] },
-    { key: 'instagram', substrings: ['instagram', 'instagr.am'] },
-    { key: 'pinterest', substrings: ['pinterest'] },
-    { key: 'whatsapp', substrings: ['whatsapp'] },
-    { key: 'x', substrings: ['x'] },
-  ];
-
-  const lowerUrl = url.toLowerCase();
-  for (let platform of platforms) {
-    for (let sub of platform.substrings) {
-      if (lowerUrl.includes(sub)) {
-        return platform.key;
-      }
-    }
-  }
-  return 'default';
-}
-
-export default function ModalSocials({ isOpen, onClose, onSave, title }) {
+export default function ModalSocials({
+  isOpen,
+  onClose,
+  onSave,
+  title,
+  contact,
+}) {
   const theme = useSelector(getCurrentTheme);
-  const [selectedOption, setSelectedOption] = useState('phone');
-  const [inputValue, setInputValue] = useState('');
+  const isEditMode = Boolean(contact);
+  const [selectedOption, setSelectedOption] = useState(
+    isEditMode ? contact.type : 'phone'
+  );
+  const [inputValue, setInputValue] = useState(isEditMode ? contact.value : '');
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    if (contact) {
+      setSelectedOption(contact.type);
+      setInputValue(contact.value);
+    } else {
+      setSelectedOption('phone');
+      setInputValue('');
+      setError('');
+    }
+  }, [contact]);
+
+  // Разрешаем изменять выбранную опцию только в режиме добавления
   const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-    setInputValue('');
-    setError('');
+    if (!isEditMode) {
+      setSelectedOption(e.target.value);
+      setInputValue('');
+      setError('');
+    }
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
 
+    if (value.length > 400) {
+      setError('Длина ссылки не должна превышать 400 символов');
+      return;
+    }
+
     let regex;
-    if (selectedOption === 'phone') {
-      regex = phoneRegex;
-    } else if (selectedOption === 'email') {
-      regex = emailRegex;
+    // В режиме добавления используем выбранный тип, в режиме редактирования – фиксированный тип
+    if (!isEditMode) {
+      if (selectedOption === 'phone') {
+        regex = phoneRegex;
+      } else if (selectedOption === 'email') {
+        regex = emailRegex;
+      } else {
+        regex = socialsRegex;
+      }
     } else {
-      regex = socialsRegex;
+      if (contact.type === 'phone') {
+        regex = phoneRegex;
+      } else if (contact.type === 'email') {
+        regex = emailRegex;
+      } else {
+        regex = socialsRegex;
+      }
     }
 
     if (value && !regex.test(value)) {
       setError('Введите корректное значение');
-    } else {
-      setError('');
+      return;
     }
+
+    // Дополнительная проверка для социальных сетей в режиме редактирования:
+    if (
+      isEditMode &&
+      contact &&
+      contact.type !== 'phone' &&
+      contact.type !== 'email'
+    ) {
+      const detected = detectSocialPlatform(value);
+      if (value && detected !== contact.type) {
+        setError(
+          'Ой, адрес не соответствует выбранной соцсети. Проверьте, пожалуйста, ссылку.'
+        );
+        return;
+      }
+    }
+
+    setError('');
   };
 
   const handleConfirm = () => {
     if (!error && inputValue) {
-      const platform =
-        selectedOption === 'socials'
+      // В режиме добавления, если выбран тип "socials", определяем его автоматически
+      const platform = !isEditMode
+        ? selectedOption === 'socials'
           ? detectSocialPlatform(inputValue)
-          : selectedOption;
+          : selectedOption
+        : contact.type; // В режиме редактирования тип фиксирован
+
+      // Если в режиме редактирования URL не соответствует исходному типу, блокируем подтверждение
+      if (isEditMode && contact.type !== 'phone' && contact.type !== 'email') {
+        const detected = detectSocialPlatform(inputValue);
+        if (detected !== contact.type) {
+          setError(
+            'Ой, адрес не соответствует выбранной соцсети. Проверьте, пожалуйста, ссылку.'
+          );
+          return;
+        }
+      }
+      // Передаём объект контакта для обновления
       onSave({ social_media: { [platform]: inputValue } });
       setInputValue('');
       onClose();
     }
   };
 
+  const modalTitle = isEditMode
+    ? `Редактировать ${detectTitleName(contact.value, contact.type)}`
+    : title;
+
   return (
     <Modal
-      title={title}
+      title={modalTitle}
       isOpen={isOpen}
       onClose={onClose}
       onConfirm={handleConfirm}
       twoBtns
       isBlocked={!!error || !inputValue}
     >
-      <div
-        className={`modal-socials__options ${
-          theme === 'dark' ? 'dark' : 'light'
-        }`}
-      >
-        <label className="custom-radio">
-          <input
-            type="radio"
-            name="contactType"
-            value="phone"
-            checked={selectedOption === 'phone'}
-            onChange={handleOptionChange}
-          />
-          <span className="radio-custom" />
-          <span className="radio-text">Телефон</span>
-        </label>
-        <label className="custom-radio">
-          <input
-            type="radio"
-            name="contactType"
-            value="email"
-            checked={selectedOption === 'email'}
-            onChange={handleOptionChange}
-          />
-          <span className="radio-custom" />
-          <span className="radio-text">Email</span>
-        </label>
+      {!isEditMode && (
+        <div
+          className={`modal-socials__options ${
+            theme === 'dark' ? 'dark' : 'light'
+          }`}
+        >
+          <label className="custom-radio">
+            <input
+              type="radio"
+              name="contactType"
+              value="phone"
+              checked={selectedOption === 'phone'}
+              onChange={handleOptionChange}
+            />
+            <span className="radio-custom" />
+            <span className="radio-text">Телефон</span>
+          </label>
+          <label className="custom-radio">
+            <input
+              type="radio"
+              name="contactType"
+              value="email"
+              checked={selectedOption === 'email'}
+              onChange={handleOptionChange}
+            />
+            <span className="radio-custom" />
+            <span className="radio-text">Email</span>
+          </label>
 
-        <label className="custom-radio">
-          <input
-            type="radio"
-            name="contactType"
-            value="socials"
-            checked={selectedOption === 'socials'}
-            onChange={handleOptionChange}
-          />
-          <span className="radio-custom" />
-          <span className="radio-text">Соц. сети</span>
-        </label>
-      </div>
+          <label className="custom-radio">
+            <input
+              type="radio"
+              name="contactType"
+              value="socials"
+              checked={selectedOption === 'socials'}
+              onChange={handleOptionChange}
+            />
+            <span className="radio-custom" />
+            <span className="radio-text">Соц. сети</span>
+          </label>
+        </div>
+      )}
+
       <label className="modal-socials__input-label">
         <Input
           type="text"
@@ -140,6 +195,9 @@ export default function ModalSocials({ isOpen, onClose, onSave, title }) {
           onChange={handleInputChange}
           errors={error}
         />
+        {error && isEditMode && (
+          <span className="modal-socials__error">{error}</span>
+        )}
       </label>
     </Modal>
   );
