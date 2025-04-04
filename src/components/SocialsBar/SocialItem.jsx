@@ -32,6 +32,8 @@ function SocialItem({ type, value, onEdit, onDelete }) {
         className="socials-bar-btn socials-bar-btn-margin"
       >
         <img
+                className="socials-bar-btn-img"
+
           src={
             (socialIcons[type] && socialIcons[type][theme]) ||
             socialIcons[type] ||
