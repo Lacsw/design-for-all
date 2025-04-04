@@ -29,4 +29,8 @@
 
   /*mobile header search overlay */
   --color-bg-search: rgba(36, 36, 36, 0.94);
+
+  /* tooltip*/
+  --tooltip-bg: rgba(218, 218, 218, 0.5);
+
 }

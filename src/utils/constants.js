@@ -65,6 +65,8 @@ import deleteIconB from 'images/account/delete-icon_black.svg';
 import deleteIconW from 'images/account/delete-icon_white.svg';
 import reasonIconB from 'images/account/reason-icon_black.svg';
 import reasonIconW from 'images/account/reason-icon_white.svg';
+import rejectHintB from 'images/account/warining-icon_black.svg';
+import rejectHintW from 'images/account/warining-icon_white.svg';
 
 export const langSelectOptions = [
   { label: 'Русский', value: 'ru' },
@@ -348,6 +350,12 @@ const reasonButton = {
   name: 'reason',
   dark: reasonIconB,
   light: reasonIconW,
+};
+
+export const rejectHint = {
+  name: 'reject hint',
+  dark: rejectHintW,
+  light: rejectHintB,
 };
 
 export const tableButtons = {

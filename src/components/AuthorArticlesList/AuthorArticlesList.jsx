@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 import './AuthorArticlesList.css';
-import { SearchInput, ModalReasons, Modal } from 'components';
-import { tableButtons } from 'utils/constants';
+import { SearchInput, ModalReasons, Modal, Tooltip } from 'components';
+import { tableButtons, rejectHint } from 'utils/constants';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/selectors';
 import { useNavigate } from 'react-router-dom';
@@ -138,11 +138,13 @@ export default function AuthorArticlesList({
                 <td className="author-articles-list__table-cell">
                   {article.type}
                   {article.rejected_fields && (
-                    <div className="author-articles-list__warning">
-                      <span className="author-articles-list__warning-text">
-                        Частично отклонено
-                      </span>
-                    </div>
+                    <Tooltip title="Частично отклонено" placement="top" arrow>
+                      <img
+                        src={rejectHint[theme]}
+                        alt={rejectHint.name}
+                        className="author-articles-list__warning"
+                      />
+                    </Tooltip>
                   )}
                 </td>
                 <td className="author-articles-list__table-cell">
