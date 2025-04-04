@@ -156,12 +156,18 @@ export default function AuthorArticlesList({
                 <td className="author-articles-list__table-cell">
                   {article.main_category}
                 </td>
-                <td className="author-articles-list__table-cell">
-                  {article.sub_category}
-                </td>
-                <td className="author-articles-list__table-cell">
-                  {article.title}
-                </td>
+
+                <Tooltip title={article.sub_category} placement="top" arrow>
+                  <td className="author-articles-list__table-cell">
+                    {article.sub_category}
+                  </td>
+                </Tooltip>
+
+                <Tooltip title={article.title} placement="top" arrow>
+                  <td className="author-articles-list__table-cell">
+                    {article.title}
+                  </td>
+                </Tooltip>
 
                 {tableButtons[section].map((item, i) => {
                   if (
@@ -179,16 +185,18 @@ export default function AuthorArticlesList({
                       key={item.name}
                       className="author-articles-list__table-cell-buttons"
                     >
-                      <button
-                        className="author-articles-list__icon-background"
-                        onClick={() => handleClick(article, item.name)}
-                      >
-                        <img
-                          src={item[theme]}
-                          alt={item.name}
-                          className="author-articles-list__icon"
-                        />
-                      </button>
+                      <Tooltip title={item.tooltip} placement="top" arrow>
+                        <button
+                          className="author-articles-list__icon-background"
+                          onClick={() => handleClick(article, item.name)}
+                        >
+                          <img
+                            src={item[theme]}
+                            alt={item.name}
+                            className="author-articles-list__icon"
+                          />
+                        </button>
+                      </Tooltip>
                     </td>
                   );
                 })}

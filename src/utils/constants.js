@@ -324,30 +324,35 @@ export const socialIcons = {
 
 export const editButton = {
   name: 'edit',
+  tooltip: 'Редактировать',
   dark: editIconB,
   light: editIconW,
 };
 
 export const viewButton = {
   name: 'view',
+  tooltip: 'Посмотреть',
   dark: viewIconB,
   light: viewIconW,
 };
 
 const draftButton = {
   name: 'draft',
+  tooltip: 'В черновик',
   dark: draftIconB,
   light: draftIconW,
 };
 
 const deleteButton = {
   name: 'delete',
+  tooltip: 'Удалить',
   dark: deleteIconB,
   light: deleteIconW,
 };
 
 const reasonButton = {
   name: 'reason',
+  tooltip: 'Причина',
   dark: reasonIconB,
   light: reasonIconW,
 };
