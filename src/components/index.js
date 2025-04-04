@@ -82,3 +82,4 @@ export { default as ViewArticle } from './ViewArticle/ViewArticle';
 export { default as Svg } from './Svg/Svg';
 export { default as Hint } from './Hint/Hint';
 export { default as Overlay } from './Overlay/Overlay';
+export { default as Tooltip } from './Tooltip/Tooltip';

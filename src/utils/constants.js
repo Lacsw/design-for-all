@@ -65,6 +65,8 @@ import deleteIconB from 'images/account/delete-icon_black.svg';
 import deleteIconW from 'images/account/delete-icon_white.svg';
 import reasonIconB from 'images/account/reason-icon_black.svg';
 import reasonIconW from 'images/account/reason-icon_white.svg';
+import rejectHintB from 'images/account/warining-icon_black.svg';
+import rejectHintW from 'images/account/warining-icon_white.svg';
 
 export const langSelectOptions = [
   { label: 'Русский', value: 'ru' },
@@ -322,32 +324,43 @@ export const socialIcons = {
 
 export const editButton = {
   name: 'edit',
+  tooltip: 'Редактировать',
   dark: editIconB,
   light: editIconW,
 };
 
 export const viewButton = {
   name: 'view',
+  tooltip: 'Посмотреть',
   dark: viewIconB,
   light: viewIconW,
 };
 
 const draftButton = {
   name: 'draft',
+  tooltip: 'В черновик',
   dark: draftIconB,
   light: draftIconW,
 };
 
 const deleteButton = {
   name: 'delete',
+  tooltip: 'Удалить',
   dark: deleteIconB,
   light: deleteIconW,
 };
 
 const reasonButton = {
   name: 'reason',
+  tooltip: 'Причина',
   dark: reasonIconB,
   light: reasonIconW,
+};
+
+export const rejectHint = {
+  name: 'reject hint',
+  dark: rejectHintW,
+  light: rejectHintB,
 };
 
 export const tableButtons = {
