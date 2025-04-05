@@ -132,7 +132,7 @@ export const NewArticle = memo(function NewArticle({
     toggleRecommendation();
   }
 
-  /** @type {import('components/RichTextEditor').TJDRteOnInputProp} */
+  /** @type {import('components/RichTextEditor/types').TJDRteOnInputProp} */
   const handleArticleContentChange = useCallback(
     ({ content, validity }) => {
       changeField('description', content);

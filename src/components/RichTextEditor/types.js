@@ -12,7 +12,7 @@
  */
 
 /**
- * @typedef RichTextEditorProps
+ * @typedef TJDRteProps
  * @property {string | null} [initialValue] - Html-string for INITIAL view
  * @property {Partial<import('./validation/types').TJDValidationOptions>} [validationsOptions]
  * @property {TJDRteOnInputProp} [onInput] - Cb fires with debounce when content
@@ -30,7 +30,7 @@
 
 /**
  * @callback TJDRichTextEditor
- * @param {RichTextEditorProps} props
+ * @param {TJDRteProps} props
  */
 
 export {};
