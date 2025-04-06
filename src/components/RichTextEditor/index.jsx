@@ -62,8 +62,8 @@ import { sxEditorWrapper, sxErrorBoundary } from './styles';
 
 /**
  * @param {import('@tiptap/core').Editor} editor
- * @param {import('./types').TJDRteOnInputProp} onInput
- * @param {import('./validation/types').TJDValidationOptions | undefined} [_validationsOptions]
+ * @param {import('./types').TRteOnInputProp} onInput
+ * @param {import('./validation/types').TValidationOptions | undefined} [_validationsOptions]
  */
 function _onUpdate(editor, onInput, _validationsOptions) {
   const htmlString = editor.getHTML();
@@ -89,7 +89,7 @@ const incrementStateNumber = (setter) => (evt) => {
   setter((prev) => prev + 1);
 };
 
-/** @type {import('./types').TJDRteClassesProp} */
+/** @type {import('./types').TRteClassesProp} */
 const defaultClasses = {};
 
 // #region extensions
@@ -149,7 +149,7 @@ const extensions = [
 /**
  * Богатый текстовый редактор
  *
- * @type {import('./types').TJDRichTextEditor}
+ * @type {import('./types').TRichTextEditor}
  */
 const RichTextEditorRaw = memo(function RichTextEditor({
   initialValue = null,
@@ -439,7 +439,7 @@ const RichTextEditorRaw = memo(function RichTextEditor({
 /**
  * Customize error boundary for RTE.
  *
- * @typedef TJDRteBoundarynProps
+ * @typedef TRteBoundarynProps
  * @type {object}
  * @property {string} [className]
  * @property {import('@mui/material').SxProps} [sx]
@@ -453,17 +453,17 @@ const RichTextEditorRaw = memo(function RichTextEditor({
  */
 
 /**
- * @callback TJDBoundaredRte
+ * @callback TBoundaredRte
  * @param {{
- *   boundaryProps?: TJDRteBoundarynProps;
- * } & import('./types').TJDRteProps} props
+ *   boundaryProps?: TRteBoundarynProps;
+ * } & import('./types').TRteProps} props
  * @returns {JSX.Element}
  */
 
 /**
  * Богатый текстовый редактор
  *
- * @type {TJDBoundaredRte}
+ * @type {TBoundaredRte}
  */
 export const RichTextEditor = ({ boundaryProps, ...rest }) => {
   const { className, sx, id, text, component, silent, onError } =

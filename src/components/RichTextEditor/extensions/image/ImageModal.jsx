@@ -21,23 +21,23 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [isDragHover, setIsDragHover] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDebouncing, setIsDebouncing] = useState(false);
-  /** @type {import('types/react/hooks').TJDUseState<'text' | 'file'>} */
+  /** @type {import('types/react/hooks').TUseState<'text' | 'file'>} */
   const [mode, setMode] = useState('text');
 
   /** @type {React.MutableRefObject<null | File>} */
   const fileRef = useRef(null);
 
   /**
-   * @type {import('types/react/hooks').TJDUseState<
-   *   import('./helpers').TJDImgErrors
+   * @type {import('types/react/hooks').TUseState<
+   *   import('./helpers').TImgErrors
    * >}
    */
   const [error, setError] = useState('');
 
-  /** @type {import('react').RefObject<HTMLInputElement>} */
+  /** @type {React.RefObject<HTMLInputElement>} */
   const fileInputRef = useRef(null);
 
-  /** @type {import('react').RefObject<HTMLElement>} */
+  /** @type {React.RefObject<HTMLElement>} */
   const modalRef = useRef(null);
 
   // #region text input change
@@ -57,7 +57,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   };
   const checkURLPatternDbnc = useDebounce(checkURLPattern, 1000, true);
 
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  /** @param {React.ChangeEvent<HTMLInputElement>} evt */
   const handleTextInputChange = (evt) => {
     fileRef.current = null;
     if (fileInputRef.current) {
@@ -71,7 +71,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   // #endregion text input change
 
   // #region file input change
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  /** @param {React.ChangeEvent<HTMLInputElement>} evt */
   const handleFileInputChange = (evt) => {
     const file = evt.target.files[0];
     if (!file) {
@@ -89,7 +89,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
     setIsDragHover(false);
     fileRef.current = file;
 
-    /** @type {import('utils/filesTypes').TJDOnImgValidating} */
+    /** @type {import('utils/filesTypes').TOnImgValidating} */
     function handleCheckEnding(isValid, reason) {
       setIsLoading(false);
 

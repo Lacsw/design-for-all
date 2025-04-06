@@ -2,7 +2,7 @@
 import { alpha } from '@mui/material';
 
 /**
- * @type {import('types/mui/sx').TJDSxPropCbWithData<{
+ * @type {import('types/mui/sx').TSxPropCbWithData<{
  *   maxHeight: import('csstype').Property.MaxHeight | undefined;
  * }>}
  */

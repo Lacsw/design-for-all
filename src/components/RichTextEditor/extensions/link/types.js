@@ -1,5 +1,5 @@
 /**
- * @typedef TJDRTELinkAttrs
+ * @typedef TRTELinkAttrs
  * @type {object}
  * @property {string} class
  * @property {string} href

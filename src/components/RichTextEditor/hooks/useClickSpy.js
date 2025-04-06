@@ -8,21 +8,21 @@ import { useEffect, useState } from 'react';
 // };
 
 /**
- * @typedef TJDClickSpyProps
+ * @typedef TClickSpyProps
  * @type {object}
  * @property {import('@tiptap/core').Editor | null} editor
  */
 
 /**
- * @typedef TJDClickSpyReturning
+ * @typedef TClickSpyReturning
  * @type {object}
  * @property {boolean} isCtrlPressed Нажат ли контрл
  * @property {boolean} isMMBPressed Нажата ли средняя кнопка мыши
  */
 
 /**
- * @param {TJDClickSpyProps} props
- * @returns {TJDClickSpyReturning}
+ * @param {TClickSpyProps} props
+ * @returns {TClickSpyReturning}
  */
 export const useClickSpy = ({ editor }) => {
   const [isCtrlPressed, setIsContrlPressed] = useState(false);
