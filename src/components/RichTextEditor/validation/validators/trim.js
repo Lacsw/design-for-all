@@ -6,7 +6,7 @@ import { TextSelection } from '@tiptap/pm/state';
  *
  * Изменяет контент! Не просто проверяет
  *
- * @type {import('./types').TJDTrimValidator}
+ * @type {import('./types').TTrimValidator}
  */
 export function checkTrim({ editor, from, to, content }) {
   // TODO Реализовать проверку концевых пробелов

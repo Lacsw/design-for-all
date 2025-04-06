@@ -94,7 +94,7 @@ export const CustomHeadingExtension = Node.create({
   addCommands() {
     return {
       setHeading:
-        (/** @type {import('./types').TJDHeadingCommand} */ options) =>
+        (/** @type {import('./types').THeadingCommand} */ options) =>
         (/** @type {import('@tiptap/core').CommandProps} */ props) => {
           if (!this.options.levels.includes(options.level)) {
             return false;

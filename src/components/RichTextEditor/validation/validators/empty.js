@@ -3,7 +3,7 @@
 /**
  * Валидация на пустоту редактора
  *
- * @type {import('./types').TJDValidator}
+ * @type {import('./types').TValidator}
  */
 export function checkEmptiness(editor) {
   const text = editor.getText();

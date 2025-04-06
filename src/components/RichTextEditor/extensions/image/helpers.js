@@ -2,7 +2,7 @@
 import { defaultAligningClass } from './constants';
 
 /**
- * @typedef TJDImgErrors
+ * @typedef TImgErrors
  * @type {''
  *   | 'fileType'
  *   | 'fileSize'
@@ -13,7 +13,7 @@ import { defaultAligningClass } from './constants';
  *   | 'fromLinkLoading'}
  */
 
-/** @param {TJDImgErrors} errorKind */
+/** @param {TImgErrors} errorKind */
 export const getErrorText = (errorKind) => {
   switch (errorKind) {
     case 'fileSize':

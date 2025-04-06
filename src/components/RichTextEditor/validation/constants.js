@@ -1,9 +1,9 @@
 // @ts-check
 
-/** @type {import('./types').TJDValidationKinds[]} */
+/** @type {import('./types').TValidationKinds[]} */
 export const validationKinds = ['trim', 'empty', 'emptySymbols'];
 
-/** @type {import('./types').TJDValidationOptions} */
+/** @type {import('./types').TValidationOptions} */
 export const defaultValidationOptions = {
   kinds: {
     empty: false,

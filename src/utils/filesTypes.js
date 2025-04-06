@@ -34,13 +34,13 @@ export function checkFileType(file, validTypes) {
 }
 
 /**
- * @typedef TJDMime
+ * @typedef TMime
  * @property {string} mime
  * @property {(number | undefined)[]} pattern
  */
 
 /**
- * @type {TJDMime[]}
+ * @type {TMime[]}
  * @see https://mimesniff.spec.whatwg.org/#matching-an-image-type-pattern
  */
 export const imageMimes = [
@@ -89,7 +89,7 @@ export function checkBytesPattern(bytes, pattern) {
 }
 
 /**
- * @callback TJDOnImgValidating
+ * @callback TOnImgValidating
  * @param {boolean} isValid
  * @param {'done' | 'typeError' | 'error'} reason
  *
@@ -102,7 +102,7 @@ export function checkBytesPattern(bytes, pattern) {
 
 /**
  * @param {File} file
- * @param {TJDOnImgValidating} callback
+ * @param {TOnImgValidating} callback
  * @returns {void}
  * @summary The first few bytes of the file are read for checking the file's MIME-type.
  */

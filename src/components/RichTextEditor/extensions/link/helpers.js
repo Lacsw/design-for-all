@@ -1,19 +1,45 @@
 // @ts-check
-import { isAllowedUri } from '@tiptap/extension-link';
-import { linkExtConfig } from './config';
 import { shallowEqual } from 'react-redux';
+import { allowedProtocols as allowedProtocolsOuter } from './constants';
+
+// #region isAllowedUriInternal
+// adapted source code from @tiptap/extension-link
+// see function isAllowedUri (name on version 2.11.5)
+
+// From DOMPurify
+// https://github.com/cure53/DOMPurify/blob/main/src/regexp.js
+const ATTR_WHITESPACE =
+  // eslint-disable-next-line no-control-regex
+  /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g;
 
 /**
- * @param {string} value
- * @returns {boolean}
+ * @param {string | undefined} uri
+ * @param {import('@tiptap/extension-link').LinkOptions['protocols']} protocols
+ * @returns {true | RegExpMatchArray | null}
  */
-export function validateHref(value) {
-  return linkExtConfig.isAllowedUri(value, {
-    defaultValidate: (href) => !!isAllowedUri(href, linkExtConfig.protocols),
-    protocols: linkExtConfig.protocols,
-    defaultProtocol: linkExtConfig.defaultProtocol,
-  });
+export function isAllowedUriCustom(uri, protocols) {
+  /** @type {string[]} */
+  const allowedProtocols = [...allowedProtocolsOuter];
+  if (protocols) {
+    protocols.forEach((protocol) => {
+      const nextProtocol =
+        typeof protocol === 'string' ? protocol : protocol.scheme;
+
+      if (nextProtocol) {
+        allowedProtocols.push(nextProtocol);
+      }
+    });
+  }
+
+  const res =
+    !uri ||
+    uri.replace(ATTR_WHITESPACE, '').match(
+      // eslint-disable-next-line no-useless-escape
+      new RegExp(`^(?:(?:${allowedProtocols.join('|')}):|[^a-z]|[a-z0-9+.\-]+(?:[^a-z+.\-:]|$))`, 'i') // prettier-ignore
+    );
+  return res;
 }
+// #endregion isAllowedUriInternal
 
 /** @param {{ href: string; target: string; rel: string }} params */
 export function goThroughLink({ href, target, rel }) {
