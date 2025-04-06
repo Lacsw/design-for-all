@@ -1,6 +1,6 @@
 /**
  * @template T
- * @callback TJDSxPropCbWithData
+ * @callback TSxPropCbWithData
  * @param {T} data
  * @returns {import('@mui/material').SxProps}
  */

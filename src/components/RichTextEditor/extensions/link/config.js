@@ -1,13 +1,15 @@
 // @ts-check
-import { disallowedDomains, disallowedProtocols } from './constants';
+// import { find as findLinks } from 'linkifyjs';
+import { RTE_DEF_LINK_PROTO } from './constants';
+import { isAllowedUriCustom } from './helpers';
 
 /** @type {Partial<import('@tiptap/extension-link').LinkOptions>} */
 export const linkExtConfig = {
   autolink: true,
   linkOnPaste: true,
   openOnClick: true,
-  protocols: ['http', 'https'],
-  defaultProtocol: 'https',
+  protocols: [], // custom protocols
+  defaultProtocol: RTE_DEF_LINK_PROTO,
   HTMLAttributes: {
     class: 'link_type_in-text rte__mark rte__mark_link',
     // remove nofollow -> allow search engines to follow links
@@ -20,61 +22,32 @@ export const linkExtConfig = {
     // contentEditable: true,
   },
 
-  isAllowedUri: (url, ctx) => {
-    try {
-      // construct URL
-      const parsedUrl = url.includes(':')
-        ? new URL(url)
-        : new URL(`${ctx.defaultProtocol}://${url}`);
-
-      // use default validation
-      if (!ctx.defaultValidate(parsedUrl.href)) {
-        return false;
-      }
-
-      // disallowed protocols
-      const protocol = parsedUrl.protocol.replace(':', '');
-
-      if (disallowedProtocols.includes(protocol)) {
-        return false;
-      }
-
-      // only allow protocols specified in ctx.protocols
-      const allowedProtocols = ctx.protocols.map((prot) =>
-        typeof prot === 'string' ? prot : prot.scheme
-      );
-
-      if (!allowedProtocols.includes(protocol)) {
-        return false;
-      }
-
-      // disallowed domains
-      const domain = parsedUrl.hostname;
-
-      if (disallowedDomains.includes(domain)) {
-        return false;
-      }
-
-      // all checks have passed
-      return true;
-    } catch {
-      return false;
-    }
+  // Effects on autolinking when pasting
+  isAllowedUri(url, ctx) {
+    return !!isAllowedUriCustom(url, ctx.protocols);
   },
 
-  shouldAutoLink: (url) => {
-    try {
-      // construct URL
-      const parsedUrl = url.includes(':')
-        ? new URL(url)
-        : new URL(`https://${url}`);
+  // Effects on autolinking when inputs
+  // shouldAutoLink: (url) => {
+  //   const result = findLinks(url)[0];
 
-      // only auto-link if the domain is not in the disallowed list
-      const domain = parsedUrl.hostname;
+  //   switch (result.type) {
+  //     case 'email':
+  //       return false;
+  //     default:
+  //       break;
+  //   }
 
-      return !disallowedDomains.includes(domain);
-    } catch {
-      return false;
-    }
-  },
+  //   try {
+  //     const parsedUrl = url.includes(':')
+  //       ? new URL(url)
+  //       : new URL(`${RTE_DEF_LINK_PROTO}://${url}`);
+
+  //     const domain = parsedUrl.hostname;
+
+  //     return !disallowedDomains.includes(domain);
+  //   } catch {
+  //     return false;
+  //   }
+  // },
 };

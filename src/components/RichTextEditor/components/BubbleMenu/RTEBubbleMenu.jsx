@@ -1,42 +1,44 @@
 // @ts-check
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IconButton, InputBase, Tooltip } from '@mui/material';
 import { BubbleMenu } from '@tiptap/react';
-import {
-  countLinksInSelection,
-  validateHref,
-} from 'components/RichTextEditor/extensions/link/helpers';
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import clsx from 'clsx';
-import { useSelector } from 'react-redux';
-import { getIsThemeLight } from 'store/selectors';
-import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
-import BackspaceIcon from '@mui/icons-material/Backspace';
-import { useDebounce } from 'utils/hooks';
-import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config';
 import { TextSelection } from '@tiptap/pm/state';
 
+import { getIsThemeLight } from 'store/selectors';
+import { useDebounce } from 'utils/hooks';
+import { validateLink } from 'components/RichTextEditor/extensions/link/link';
+import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config';
+import { countLinksInSelection } from 'components/RichTextEditor/extensions/link/helpers';
+
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import clsx from 'clsx';
+
 /**
- * @typedef TJDRTEBubbleMenuProps
+ * @typedef TRTEBubbleMenuProps
  * @property {import('@tiptap/core').Editor | null} editor
  */
 
-/** @type {import('react').FC<TJDRTEBubbleMenuProps>} */
+/** @type {React.FC<TRTEBubbleMenuProps>} */
 const RTEBubbleMenuRaw = ({ editor }) => {
   const isLight = useSelector(getIsThemeLight);
 
   const [flag, setFlag] = useState(false);
 
-  /** @type {import('types/react/hooks').TJDUseState<'read' | 'write'>} */
-  const [inputMode, setInputMode] = useState('read');
+  const [inputMode, setInputMode] =
+    /** @type {TState<'read' | 'write'>} */
+    (useState('read'));
+
   const [href, setHref] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [isDebouncing, setIsDebouncing] = useState(false);
 
-  /** @type {import('react').RefObject<HTMLInputElement | null>} */
+  /** @type {React.RefObject<HTMLInputElement | null>} */
   const inputRef = useRef(null);
   /**
-   * @type {import('react').MutableRefObject<
+   * @type {React.MutableRefObject<
    *   import('prosemirror-model').Mark | null
    * >}
    */
@@ -72,7 +74,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     return isSingleLink;
   };
 
-  /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
+  /** @param {React.MouseEvent<HTMLButtonElement>} evt */
   const handleEditingClick = (evt) => {
     if (inputMode === 'read') {
       setInputMode('write');
@@ -84,6 +86,8 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
         }, 200);
       }
+
+      runValidating(href);
     } else {
       // mode write - clear btn
       setHref('');
@@ -94,7 +98,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   const runValidating = useCallback(
     (/** @type {string} */ value) => {
-      const res = !value ? true : validateHref(value);
+      const res = !value ? true : validateLink(value);
       setIsValid(res);
       setIsDebouncing(false);
     },
@@ -102,7 +106,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
   );
   const runValidatingDbncd = useDebounce(runValidating, 500, true);
 
-  /** @param {import('react').MouseEvent<HTMLButtonElement>} evt */
+  /** @param {React.MouseEvent<HTMLButtonElement>} evt */
   const handleSubmit = (evt) => {
     if (!isValid || evt.detail > 1) {
       return;
@@ -157,7 +161,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     editor.commands.focus();
   };
 
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  /** @param {React.ChangeEvent<HTMLInputElement>} evt */
   const handleInputChange = (evt) => {
     if (inputMode === 'read') {
       return;
@@ -168,9 +172,8 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     runValidatingDbncd(evt.target.value);
   };
 
-  /** @param {import('react').KeyboardEvent<HTMLInputElement>} evt */
+  /** @param {React.KeyboardEvent<HTMLInputElement>} evt */
   const handleInputKeyDown = (evt) => {
-    // @ts-ignore
     if (inputMode === 'write') {
       return;
     } else if (inputMode === 'read') {
@@ -214,12 +217,11 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           popperOptions: {
             strategy: 'fixed', // fix vertical scroll on html tag when bubble-menu outside of view (TODO WHY?)
           },
-          zIndex: 1,
+          zIndex: 3,
         }}
         className="rte__bubble-menu"
         editor={editor}
       >
-        {/* @ts-ignore */}
         <InputBase
           ref={inputRef}
           placeholder="URL"
@@ -227,10 +229,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           error={!isValid}
           onKeyDown={handleInputKeyDown}
           onChange={handleInputChange}
-          className={clsx(
-            // @ts-ignore
-            inputMode === 'write' && 'editable'
-          )}
+          className={clsx(inputMode === 'write' && 'editable')}
         />
 
         <Tooltip
@@ -242,7 +241,6 @@ const RTEBubbleMenuRaw = ({ editor }) => {
             <IconButton
               className={clsx('rte__button', !isLight ? 'inverted' : undefined)}
               onClick={handleEditingClick}
-              // @ts-ignore
               disabled={inputMode === 'write' && !href.length}
             >
               {inputMode === 'read' ? <EditRoundedIcon /> : <BackspaceIcon />}

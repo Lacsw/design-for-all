@@ -27,13 +27,13 @@ import { checkEmptySymbols } from './validators/emptySymbols';
 // const { from, to } = editor.state.selection;
 
 /**
- * @param {import('./types').TJDValidationOptions} options
+ * @param {import('./types').TValidationOptions} options
  * @param {import('@tiptap/core').Editor} editor
- * @returns {import('./types').TJDValidateResult}
+ * @returns {import('./types').TValidateResult}
  */
 export const validate = (options, editor) => {
   const kinds = options.kinds;
-  /** @type {import('./types').TJDValidationKinds[]} */
+  /** @type {import('./types').TValidationKinds[]} */
   const disturbedRules = [];
 
   if (kinds.empty) {
