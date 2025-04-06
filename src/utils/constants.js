@@ -122,37 +122,37 @@ export const navigationOptionsList = [
     id: 'updates',
     name: 'Обновления',
     src: { light: updatesWhite, dark: updatesBlack },
-    link: '/',
+    link: '/#/updates',
   },
   {
     id: 'web',
     name: 'Веб приложения',
     src: { light: webWhite, dark: webBlack },
-    link: '/',
+    link: '/#/web',
   },
   {
     id: 'desktop',
     name: 'Десктоп приложения',
     src: { light: desktopWhite, dark: desktopBlack },
-    link: '/',
+    link: '/#/desktop',
   },
   {
     id: 'mobile',
     name: 'Мобильные приложения',
     src: { light: mobileWhite, dark: mobileBlack },
-    link: '/',
+    link: '/#/mobile',
   },
   {
     id: 'articles',
     name: 'Статьи',
     src: { light: articleWhite, dark: articleBlack },
-    link: '/',
+    link: '/#/articles',
   },
   {
-    id: 'manuals',
+    id: 'manual',
     name: 'Руководства',
     src: { light: manualWhite, dark: manualBlack },
-    link: '/',
+    link: '/#/manual',
   },
   {
     id: 'themeToggle',
@@ -165,34 +165,80 @@ export const navigationOptionsList = [
     src: { light: arrowBackWhite, dark: arrowBackBlack },
   },
 ];
+
+export const mainCategory = [
+  {
+    lang: 'ru',
+    category: {
+      desktop: 'десктоп',
+      web: 'веб',
+      mobile: 'телефон',
+      manual: 'руководство',
+    },
+  },
+  {
+    lang: 'en',
+    category: {
+      desktop: 'desktop',
+      web: 'web',
+      mobile: 'mobile',
+      manual: 'manual',
+    },
+  },
+  {
+    lang: 'zh',
+    category: {
+      desktop: '桌面',
+      web: '网络',
+      mobile: '手机',
+      manual: '指南篇',
+    },
+  },
+  {
+    lang: 'es',
+    category: {
+      desktop: 'escritorio',
+      web: 'web',
+      mobile: 'móvil',
+      manual: 'guía',
+    },
+  },
+];
+
 export const mainNavigationOptionsList = [
-  { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '' },
-  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: 'web' },
+  {
+    name: 'Обновления',
+    dark: updatesBlack,
+    light: updatesWhite,
+    link: '/#/updates',
+  },
+  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: '/#/web' },
   {
     name: 'Десктоп приложения',
     dark: desktopBlack,
     light: desktopWhite,
-    link: 'desktop',
+    link: '/#/desktop',
   },
   {
     name: 'Мобильные приложения',
     dark: mobileBlack,
     light: mobileWhite,
-    link: 'mobile',
+    link: '/#/mobile',
   },
   {
     name: 'Статьи',
     dark: articleBlack,
     light: articleWhite,
-    link: '',
+    link: '/#/articles',
   },
   {
     name: 'Руководства',
     dark: manualBlack,
     light: manualWhite,
-    link: 'manual',
+    link: '/#/manual',
   },
 ];
+
 export const accountNavigationList = [
   {
     id: 'writeArticle',
