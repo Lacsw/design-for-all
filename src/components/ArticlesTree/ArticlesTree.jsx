@@ -4,7 +4,7 @@ import { fetchTree } from 'store/slices/articleSlice';
 import { TreeList } from 'components';
 import './ArticlesTree.css';
 
-export default function TestTree({ path, catalog, language }) {
+export default function ArticlesTree({ path, catalog, language }) {
   const dispatch = useDispatch();
   const { tree, fetchTime } = catalog[language][path];
   const fetchPath = `${language}_${path}`;

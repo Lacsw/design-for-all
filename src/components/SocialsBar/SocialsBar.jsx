@@ -11,8 +11,9 @@ export default function SocialsBar({
   const renderSocialMedia = () => {
     const entries = Object.entries(socialMediaList || {});
     if (entries.length === 0) {
-      return <p className="socials-bar-empty">Контакты отсутствуют</p>;
+      return null;
     }
+
     return entries.map(([type, value], index) => (
       <SocialItem
         key={type + index}

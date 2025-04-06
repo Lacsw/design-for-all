@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ArticlesTree, Overlay, SearchInput } from 'components';
 import ResultItem from './ResultItem';
@@ -19,60 +19,33 @@ import './SideBar.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 
-/*
-Функция getSection определяет текущую секцию для отображения дерева статей.
 
-1. Если задан mainCategory, функция перебирает все ключи в titles[lang] и, если найдено совпадение (значение равно mainCategory), возвращает соответствующий ключ.
-2. Если mainCategory не задан или совпадение не найдено, функция пытается получить атрибут "main_category" из тега <title> в head документа.
-3. Если атрибут найден, функция снова перебирает ключи в titles[lang] и возвращает ключ, если его значение совпадает с полученным атрибутом.
-4. Если ни один из вариантов не сработал, функция возвращает строку 'desktop' в качестве значения по умолчанию.
-*/
-
-function getSection(titles, lang, mainCategory) {
-  if (mainCategory) {
-    for (let key in titles[lang]) {
-      if (titles[lang][key] === mainCategory) return key;
-    }
-  }
-
-  const category = document.head
-    .querySelector('title')
-    ?.getAttribute('main_category');
-
-  if (category) {
-    for (let key in titles[lang]) {
-      if (titles[lang][key] === category) return key;
-    }
-  }
-
-  return 'desktop';
-}
+import getSection from 'utils/helpers/getSection';
+import { useLocation } from 'react-router-dom';
 
 export default function SideBar({ section, setSection }) {
+  const location = useLocation();
   const dispatch = useDispatch();
-  const { lang } = useParams();
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
+  const isMobile = useIsMobile();
   const catalog = useSelector(selectCatalog);
   const titles = useSelector(selectTitles);
   const mainCategory = useSelector(selectMainCategory);
-
   const shouldRemountTree = useSelector(selectShouldRemountTree);
   const [currentSection, setCurrentSection] = useState(
-    () => section || getSection(titles, lang, mainCategory)
+    () => section || getSection(titles, language, mainCategory)
   );
-
   const [isInput, setIsInput] = useState(false);
-
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
-  const isMobile = useIsMobile();
+ 
 
   const { activeComponent, openComponent, closeComponent } =
     useInteractiveManager();
   const isTreeSearchOpen = activeComponent === 'treeSearch';
-
   const articles = catalog[language][currentSection].original;
+
   const titlesList = Object.keys(titles[language]).filter(
     (item) => item !== currentSection
   );
@@ -98,10 +71,25 @@ export default function SideBar({ section, setSection }) {
     if (setSection) setSection(section);
   }
 
+  // Если внешний пропс section не задан, обновляем раздел по mainCategory  
   useEffect(() => {
-    const newSection = getSection(titles, lang, mainCategory);
-    setCurrentSection(newSection);
-  }, [mainCategory, titles, lang]);
+    if (!section) {
+      const newSection = getSection(titles, language, mainCategory);
+      setCurrentSection(newSection);
+    }
+  }, [mainCategory, titles, language, section]);
+
+  // Следим за изменением hash в URL и обновляем раздел, если нужно
+  useEffect(() => {
+    const validKeys = ['web', 'desktop', 'mobile', 'manual'];
+    const rawHash = location.hash ? location.hash.replace(/^#\/?/, '') : '';
+    if (rawHash && validKeys.includes(rawHash) && rawHash !== currentSection) {
+      setCurrentSection(rawHash);
+      if (setSection) {
+        setSection(rawHash);
+      }
+    }
+  }, [location.hash, currentSection, setSection]);
 
   // для корректного построения дерева
   useEffect(() => {

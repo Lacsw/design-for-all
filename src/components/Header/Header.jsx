@@ -177,11 +177,14 @@ export default function Header({ resetSection }) {
           </li>
         </ul>
       </div>
-      <AuthModal
-        isOpen={authModal.isOpen}
-        onChange={handleModalChange}
-        modalMode={authModal.mode}
-      />
+
+      {!currentUser && (
+        <AuthModal
+          isOpen={authModal.isOpen}
+          onChange={handleModalChange}
+          modalMode={authModal.mode}
+        />
+      )}
     </header>
   );
 }

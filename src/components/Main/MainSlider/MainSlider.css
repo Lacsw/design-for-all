@@ -10,6 +10,7 @@
   border-radius: 12px;
   position: absolute;
   width: 100%;
+  min-height: 700px
 }
 
 .main-slider__slide.active-slide {
