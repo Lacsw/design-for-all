@@ -4,16 +4,16 @@ export const socialsRegex = /^https:\/\/\S+\.\S+$/;
 
 export function detectSocialPlatform(url) {
   const platforms = [
-    { key: 'telegram', substrings: ['telegram', 't.me'] },
-    { key: 'behance', substrings: ['behance'] },
-    { key: 'dribbble', substrings: ['dribbble'] },
-    { key: 'youtube', substrings: ['youtube', 'youtu.be'] },
-    { key: 'vk', substrings: ['vk'] },
-    { key: 'facebook', substrings: ['facebook', 'fb.me'] },
-    { key: 'instagram', substrings: ['instagram', 'instagr.am'] },
-    { key: 'pinterest', substrings: ['pinterest'] },
-    { key: 'whatsapp', substrings: ['whatsapp'] },
-    { key: 'x', substrings: ['x'] },
+    { key: 'telegram', substrings: ['t.me', 'telegram.me', 'telegram.org'] },
+    { key: 'behance', substrings: ['behance.net'] },
+    { key: 'dribbble', substrings: ['dribbble.com'] },
+    { key: 'youtube', substrings: ['youtube.com', 'youtu.be'] },
+    { key: 'vk', substrings: ['vk.com'] },
+    { key: 'facebook', substrings: ['facebook.com', 'fb.me'] },
+    { key: 'instagram', substrings: ['instagram.com', 'instagr.am'] },
+    { key: 'pinterest', substrings: ['pinterest.com'] },
+    { key: 'whatsapp', substrings: ['wa.me', 'whatsapp.com'] },
+    { key: 'x', substrings: ['x.com'] },
   ];
 
   const lowerUrl = url.toLowerCase();
