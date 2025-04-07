@@ -5,12 +5,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'utils/helpers/debounce';
 import './Updates.css';
 
-export default function Updates() {
+// Презентационный компонент
+const UpdatesList = ({ updates, onScroll, slideRef }) => (
+  <section className="updates-slide" ref={slideRef}>
+    <h2 className="updates-slide__title">Обновления</h2>
+    {updates.loading && <span className="preloader" />}
+    {updates.error && updates.error}
+    <ul className="updates-slide__list">
+      {updates.cards.map((item, index) => (
+        <UpdateCard 
+          update={item} 
+          key={`${(item.what_update || item.what_create) + item.lang}-${index}`} 
+        />
+      ))}
+    </ul>
+  </section>
+);
+
+// Компонент-контейнер
+export default function Updates({ section }) {
   const slideRef = useRef(null);
   const page = useRef(1);
   const updates = useSelector(selectUpdates);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     Date.now() - updates.fetchTime > 30000 && !updates.loading && dispatch(fetchUpdates(1));
   }, [updates, dispatch]);
@@ -35,15 +53,10 @@ export default function Updates() {
   const scrollWithDelay = debounce(handleScroll, 200);
 
   return (
-    <section className="updates-slide" ref={slideRef}>
-      <h2 className="updates-slide__title">Обновления</h2>
-      {updates.loading && <span className="preloader" />}
-      {updates.error && updates.error}
-      <ul className="updates-slide__list">
-        {updates.cards.map((item) => (
-          <UpdateCard update={item} key={(item.what_update || item.what_create) + item.lang} />
-        ))}
-      </ul>
-    </section>
+    <UpdatesList 
+      updates={updates} 
+      onScroll={scrollWithDelay} 
+      slideRef={slideRef}
+    />
   );
 }
