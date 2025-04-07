@@ -23,7 +23,7 @@ import { createPortal } from 'react-dom';
  * Всплывающее окно для отображения ближайшего заголовка <h1-6 /> статьи.
  *
  * @type {React.NamedExoticComponent<
- *   import('./types').TJDArticleNavigatorProps
+ *   import('./types').TArticleNavigatorProps
  * >}
  */
 export const ArticleNavigator = memo(function ArticleNavigatorRaw({
@@ -43,9 +43,9 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     () => document.querySelector(parentSelector),
     [parentSelector]
   );
-  /** @type {import('types').TJDUseState<HTMLElement | undefined>} */
+  /** @type {TState<HTMLElement | undefined>} */
   const [targetEl, setTargetEl] = useState();
-  /** @type {import('types').TJDUseState<HTMLHeadingElement[]>} */
+  /** @type {TState<HTMLHeadingElement[]>} */
   const [headings, setHeadings] = useState([]);
 
   /** @type {React.RefObject<HTMLDivElement>} */

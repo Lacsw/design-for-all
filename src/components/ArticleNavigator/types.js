@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @typedef TJDArticleNavigatorProps
+ * @typedef TArticleNavigatorProps
  * @property {boolean} flag булевый флаг, который отвечает за ререндер.\
  *   Поменяйте его значение, когда компонент редактора закончит парсинг и\
  *   **вставку своих нод в dom-дерево**!
