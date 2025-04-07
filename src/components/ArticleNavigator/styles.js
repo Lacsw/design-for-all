@@ -1,6 +1,11 @@
 // @ts-check
 
-/** @type {import('types/mui/sx').TSxPropCbWithData<{}>} */
-export const sxRoot = () => {
+/** @type {import('@mui/material').SxProps} */
+export const sxBarRoot = () => {
+  return {};
+};
+
+/** @type {import('@mui/material').SxProps} */
+export const sxModalRoot = () => {
   return {};
 };

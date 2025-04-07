@@ -1,7 +1,4 @@
 // @ts-check
-import { Box } from '@mui/material';
-import clsx from 'clsx';
-import { mergeSx } from 'merge-sx';
 import React, {
   memo,
   useCallback,
@@ -10,14 +7,17 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { sxRoot } from './styles';
-import './styles.css';
+import { createPortal } from 'react-dom';
+
 import {
   scrollPercentDefault,
   firstShowingOffsetDefault,
   targetHeadingsDefault,
 } from './constants';
-import { createPortal } from 'react-dom';
+
+import { Modal } from './Modal';
+import { Bar } from './Bar';
+import './styles.css';
 
 /**
  * Всплывающее окно для отображения ближайшего заголовка <h1-6 /> статьи.
@@ -35,9 +35,12 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   firstShowingOffset = firstShowingOffsetDefault,
   scrollPercent = scrollPercentDefault,
   targetHeadings = targetHeadingsDefault,
-  className,
-  id,
-  sx,
+  classNameBar,
+  sxBar,
+  idBar,
+  classNameModal,
+  sxModal,
+  idModal,
 }) {
   const parentEl = useMemo(
     () => document.querySelector(parentSelector),
@@ -92,6 +95,14 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     headerElRef.current?.classList.remove('navigator-expanded');
     setIsExpanded(false);
   };
+
+  /** @type {React.MouseEventHandler<HTMLDivElement>} */
+  const handleBarClick = (evt) => {
+    if (evt.detail > 1) return;
+  };
+
+  /** @type {import('./dtypes').ICloseArtNavModal} */
+  const handleModalClosing = (reason, el) => {};
 
   useEffect(() => {
     setTargetEl(findTargetEl());
@@ -178,68 +189,31 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     scrollPercent,
   ]);
 
-  const markup = (
-    <Box
-      id={id}
-      className={clsx(
-        'article-navigator',
-        isShowing && 'visible',
-        isExpanded && 'expanded',
-        className
-      )}
-      sx={mergeSx(sxRoot({}), sx)}
-      ref={navigatorRef}
-      onClick={(evt) => {
-        if (
-          evt.target instanceof HTMLElement &&
-          evt.target.classList.contains('article-navigator')
-        ) {
-          collapse();
-        }
-      }}
-    >
-      <ol
-        className="article-navigator__list"
-        onClick={(evt) => {
-          if (isShowing) {
-            // condition need because of event propagation from click on li
-            if (!isExpanded) {
-              expand();
-            }
-          }
-        }}
-      >
-        {headings.map((headingEl, idx) => {
-          return (
-            <li
-              key={idx}
-              className="article-navigator__item"
-              onClick={(evt) => {
-                if (!isExpanded) {
-                  return;
-                }
-
-                collapse();
-                setTimeout(
-                  () => headingEl.scrollIntoView({ behavior: 'smooth' }),
-                  50 // equals to transition delay in ./styles.js .header (see #25-04-01-00-14)
-                );
-              }}
-            >
-              <span className="heading-text">{headingEl.textContent}</span>
-              <span className="counter">
-                {idx + 1}/{headings.length ? headings.length : '\u00A0'}
-              </span>
-            </li>
-          );
-        })}
-      </ol>
-    </Box>
+  const modalEl = (
+    <Modal
+      isOpen={isExpanded}
+      headings={headings}
+      onClose={handleModalClosing}
+      id={idModal}
+      className={classNameModal}
+      sx={sxModal}
+    />
   );
 
-  if (parentEl) {
-    return createPortal(markup, parentEl);
-  } else {
-    return null;
-  }
+  return (
+    <>
+      <Bar
+        isShowing={isShowing}
+        label={''}
+        index={0}
+        quantity={headings.length}
+        onClick={handleBarClick}
+        id={idBar}
+        className={classNameBar}
+        sx={sxBar}
+      />
+
+      {parentEl && createPortal(modalEl, parentEl)}
+    </>
+  );
 });

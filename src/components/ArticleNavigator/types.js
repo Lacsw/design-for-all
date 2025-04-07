@@ -1,6 +1,28 @@
 // @ts-check
 
 /**
+ * @typedef TArtNavBarProps
+ * @property {boolean} isShowing
+ * @property {string} label
+ * @property {number} index Номер текущего заголовка
+ * @property {number} quantity Число заголовков
+ * @property {React.MouseEventHandler<HTMLDivElement>} onClick
+ * @property {string} [id]
+ * @property {string} [className]
+ * @property {import('@mui/material').SxProps} [sx]
+ */
+
+/**
+ * @typedef TArtNavModalProps
+ * @property {boolean} isOpen
+ * @property {HTMLHeadElement[]} headings
+ * @property {import('./dtypes').ICloseArtNavModal} onClose
+ * @property {string} [id]
+ * @property {string} [className]
+ * @property {import('@mui/material').SxProps} [sx]
+ */
+
+/**
  * @typedef TArticleNavigatorProps
  * @property {boolean} flag булевый флаг, который отвечает за ререндер.\
  *   Поменяйте его значение, когда компонент редактора закончит парсинг и\
@@ -25,9 +47,12 @@
  *   которого эл-т скрывается. Default is `70`
  * @property {number[]} [targetHeadings=[1,2,3,4,5,6]] Какие заголовки искать.
  *   Default is `[1,2,3,4,5,6]`
- * @property {string} [className]
- * @property {import('@mui/material').SxProps} [sx]
- * @property {string} [id]
+ * @property {string} [classNameBar]
+ * @property {string} [classNameModal]
+ * @property {import('@mui/material').SxProps} [sxBar]
+ * @property {import('@mui/material').SxProps} [sxModal]
+ * @property {string} [idBar]
+ * @property {string} [idModal]
  */
 
 export const Types = {};
