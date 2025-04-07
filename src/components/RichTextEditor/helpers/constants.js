@@ -50,11 +50,11 @@ export const buttonsHeadings = {
 };
 
 /**
- * @typedef TJDAllowedHeadingLevels
+ * @typedef TAllowedHeadingLevels
  * @type {1 | 2 | 3 | 4}
  */
 
-/** @type {TJDAllowedHeadingLevels} */
+/** @type {TAllowedHeadingLevels} */
 export const allowedHeadingLevels = [1, 2, 3, 4];
 
 export const cbStub = () => {};

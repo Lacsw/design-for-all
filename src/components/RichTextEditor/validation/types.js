@@ -1,11 +1,11 @@
 /**
- * @typedef TJDValidationKinds
+ * @typedef TValidationKinds
  * @type {'trim' | 'empty' | 'emptySymbols'}
  */
 
 /**
- * @typedef TJDValidationOptions
- * @property {Record<TJDValidationKinds, boolean>} kinds - виды проверок
+ * @typedef TValidationOptions
+ * @property {Record<TValidationKinds, boolean>} kinds - виды проверок
  * @property {'check'} [mode] Режим работы валидации
  *
  *   - `check` - просто уведомлять об ошибке
@@ -13,7 +13,7 @@
  */
 
 /**
- * @typedef TJDValidateResult
+ * @typedef TValidateResult
  * @property {object} validity
  * @property {boolean} validity.isValid - is editor content valid
  * @property {string} content - editor content --- HTML-string

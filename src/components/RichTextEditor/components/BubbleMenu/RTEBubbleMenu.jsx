@@ -17,17 +17,17 @@ import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config'
 import { TextSelection } from '@tiptap/pm/state';
 
 /**
- * @typedef TJDRTEBubbleMenuProps
+ * @typedef TRTEBubbleMenuProps
  * @property {import('@tiptap/core').Editor | null} editor
  */
 
-/** @type {import('react').FC<TJDRTEBubbleMenuProps>} */
+/** @type {import('react').FC<TRTEBubbleMenuProps>} */
 const RTEBubbleMenuRaw = ({ editor }) => {
   const isLight = useSelector(getIsThemeLight);
 
   const [flag, setFlag] = useState(false);
 
-  /** @type {import('types/react/hooks').TJDUseState<'read' | 'write'>} */
+  /** @type {import('types/react/hooks').TUseState<'read' | 'write'>} */
   const [inputMode, setInputMode] = useState('read');
   const [href, setHref] = useState('');
   const [isValid, setIsValid] = useState(true);

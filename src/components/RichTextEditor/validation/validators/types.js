@@ -3,20 +3,20 @@
 import { ResolvedPos } from '@tiptap/pm/model';
 
 /**
- * @typedef TJDValidatorResult
+ * @typedef TValidatorResult
  * @property {string} validated - validated content (this is preparing for
  *   validation mode "correct content to valid") at least partially
  * @property {boolean} isValid
  */
 
 /**
- * @callback TJDValidator
+ * @callback TValidator
  * @param {import('@tiptap/core').Editor} editor
- * @returns {TJDValidatorResult}
+ * @returns {TValidatorResult}
  */
 
 /**
- * @typedef TJDTrimValidatorProps
+ * @typedef TTrimValidatorProps
  * @property {import('@tiptap/core').Editor} editor
  * @property {number} from relates to {@link ResolvedPos}
  * @property {number} to relates to {@link ResolvedPos}
@@ -24,9 +24,9 @@ import { ResolvedPos } from '@tiptap/pm/model';
  */
 
 /**
- * @callback TJDTrimValidator
- * @param {TJDTrimValidatorProps} props
- * @returns {TJDValidatorResult & {
+ * @callback TTrimValidator
+ * @param {TTrimValidatorProps} props
+ * @returns {TValidatorResult & {
  *   textSelection: import('@tiptap/pm/state').TextSelection;
  * }}
  */

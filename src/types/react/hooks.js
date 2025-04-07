@@ -1,7 +1,7 @@
 /**
  * @template T
- * @typedef TJDUseState
+ * @typedef TUseState
  * @type {[T, React.Dispatch<React.SetStateAction<T>>]}
  */
 
-export const TJDReactHooks = {};
+export const TReactHooks = {};

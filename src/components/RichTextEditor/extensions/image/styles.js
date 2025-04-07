@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * @type {import('types/mui/sx').TJDSxPropCbWithData<{
+ * @type {import('types/mui/sx').TSxPropCbWithData<{
  *   isDragging: boolean;
  *   isDragHover: boolean;
  * }>}
