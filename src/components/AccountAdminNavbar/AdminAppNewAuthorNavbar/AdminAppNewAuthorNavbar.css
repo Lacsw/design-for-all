@@ -1,24 +1,25 @@
 .admin-app-newauthor-navbar__list {
-	list-style: none;
-	padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .input-reason {
-	border-radius: 12px;
+  border-radius: 12px;
   background-color: var(--color-bg-low-accent);
   padding: 8px 10px;
   width: 350px;
   max-height: 300px;
-	color: var(--color-main);
- font-family: 'Gotham', 'Inter', sans-serif;
+  color: var(--color-main);
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
   letter-spacing: 0.24px;
-	border: none;
+  border: none;
   resize: none;
 }
+
 
 .input-reason::-webkit-scrollbar,
 .reject-textbox::-webkit-scrollbar {
@@ -34,20 +35,29 @@
 
 .input-reason::-webkit-scrollbar-thumb,
 .reject-textbox::-webkit-scrollbar-thumb {
+  border-radius: 3px;
   background-color: #919191;
 }
 
 .reject-textbox {
-  width: 350px;
- font-family: 'Gotham', 'Inter', sans-serif;
+  width: 340px;
+  font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 12px;
   max-height: 300px;
   overflow: auto;
+  background-color: var(--color-bg-low-accent);
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 100px;
+  border: 5px solid var(--color-bg-low-accent);
 }
 
 .reject-text {
   padding: 0;
   margin: 0;
+  color: var(--color-main);
+  line-height: 150%;
+  letter-spacing: 0.24px;
 }
 
 .reject-text_center {
@@ -55,5 +65,5 @@
 }
 
 .reject-text:not(:first-child) {
-  margin-top: 3px;
+  margin-top: 8wpx;
 }

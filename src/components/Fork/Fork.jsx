@@ -3,8 +3,9 @@ import { Main, Catalog, AccountAuthor, AccountAdmin } from 'components';
 import { adminHash } from 'utils/constants';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Updates from 'components/Updates/Updates';
 import { setIsCatalogOpen } from 'store/slices/articleSlice';
+import UpdatesPage from 'components/Updates/UpdatesPage';
+
 
 const VALID_KEYS = ['web', 'desktop', 'mobile', 'manual'];
 
@@ -41,7 +42,7 @@ const Fork = ({ section, setSection }) => {
   }
 
   if (rawHash === 'updates') {
-    return <Updates section={rawHash} setSection={setSection} />;
+    return <UpdatesPage section={rawHash} setSection={setSection} />;
   }
 
   if (articleId) {
