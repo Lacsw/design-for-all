@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ArticlesTree, SearchInput } from 'components';
+import { ArticlesTree, Overlay, SearchInput } from 'components';
 import ResultItem from './ResultItem';
 import {
   selectCatalog,
@@ -16,47 +16,43 @@ import debounce from 'utils/helpers/debounce';
 import treeIcon from 'images/tree-menu-icon.svg';
 import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
 
-function getSection(titles, lang, mainCategory) {
-  if (mainCategory) {
-    for (let key in titles[lang]) {
-      if (titles[lang][key] === mainCategory) return key;
-    }
-  }
 
-  const category = document.head
-    .querySelector('title')
-    ?.getAttribute('main_category');
-
-  if (category) {
-    for (let key in titles[lang]) {
-      if (titles[lang][key] === category) return key;
-    }
-  }
-
-  return 'desktop';
-}
+import getSection from 'utils/helpers/getSection';
+import { useLocation } from 'react-router-dom';
 
 export default function SideBar({ section, setSection }) {
+  const location = useLocation();
   const dispatch = useDispatch();
-  const { lang } = useParams();
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
+  const isMobile = useIsMobile();
   const catalog = useSelector(selectCatalog);
   const titles = useSelector(selectTitles);
   const mainCategory = useSelector(selectMainCategory);
   const shouldRemountTree = useSelector(selectShouldRemountTree);
   const [currentSection, setCurrentSection] = useState(
-    () => section || getSection(titles, lang, mainCategory)
+    () => section || getSection(titles, language, mainCategory)
   );
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
+ 
 
+  const { activeComponent, openComponent, closeComponent } =
+    useInteractiveManager();
+  const isTreeSearchOpen = activeComponent === 'treeSearch';
   const articles = catalog[language][currentSection].original;
+
   const titlesList = Object.keys(titles[language]).filter(
     (item) => item !== currentSection
   );
+
+  useEffect(() => {
+    setIsInput(isTreeSearchOpen);
+  }, [isTreeSearchOpen]);
 
   function handleSearch({ target }) {
     const value = prepareValue(target.value);
@@ -70,17 +66,32 @@ export default function SideBar({ section, setSection }) {
   const searchWithDelay = debounce(handleSearch, 500);
 
   function changeSection(section) {
-    setIsOpen(false);
+    setIsOpen(!isOpen);
     setCurrentSection(section);
     if (setSection) setSection(section);
   }
 
+  // Если внешний пропс section не задан, обновляем раздел по mainCategory  
   useEffect(() => {
-    const newSection = getSection(titles, lang, mainCategory);
-    setCurrentSection(newSection);
-  }, [mainCategory, titles, lang]);
+    if (!section) {
+      const newSection = getSection(titles, language, mainCategory);
+      setCurrentSection(newSection);
+    }
+  }, [mainCategory, titles, language, section]);
 
-// для корректного построения дерева 
+  // Следим за изменением hash в URL и обновляем раздел, если нужно
+  useEffect(() => {
+    const validKeys = ['web', 'desktop', 'mobile', 'manual'];
+    const rawHash = location.hash ? location.hash.replace(/^#\/?/, '') : '';
+    if (rawHash && validKeys.includes(rawHash) && rawHash !== currentSection) {
+      setCurrentSection(rawHash);
+      if (setSection) {
+        setSection(rawHash);
+      }
+    }
+  }, [location.hash, currentSection, setSection]);
+
+  // для корректного построения дерева
   useEffect(() => {
     if (shouldRemountTree) {
       dispatch(setShouldRemountTree(false));
@@ -91,48 +102,74 @@ export default function SideBar({ section, setSection }) {
     <nav className="sidebar">
       <div className="sidebar__header">
         {!isInput && (
-          <div
-            className="sidebar__title-container"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <h2 className="sidebar__title">
-              {titles[language][currentSection] || ''}
-            </h2>
-            <img
-              className={isOpen ? 'sidebar__icon_open' : ''}
-              src={theme === 'dark' ? treeIcon : treeIconB}
-              alt="выбрать"
-            />
-          </div>
+          <>
+            <div
+              className="sidebar__title-container"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <h2 className="sidebar__title">
+                {titles[language][currentSection] || ''}
+              </h2>
+              <img
+                className={isOpen ? 'sidebar__icon_open' : ''}
+                src={theme === 'dark' ? treeIcon : treeIconB}
+                alt="выбрать"
+              />
+            </div>
+            {isOpen && (
+              <ul className="sidebar__list">
+                {titlesList.map((title) => (
+                  <li
+                    className="sidebar__item"
+                    key={title}
+                    onClick={() => changeSection(title)}
+                  >
+                    {titles[language][title]}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
         )}
+
         <SearchInput
+          isInput={isInput}
           id="sidebar"
           onChange={searchWithDelay}
           onSearch={setIsInput}
           onResults={setResults}
-          onOpen={setIsOpen}
+          onOpen={() => openComponent('treeSearch')}
         />
-        {isOpen && (
-          <ul className="sidebar__list">
-            {titlesList.map((title) => (
-              <li
-                className="sidebar__item"
-                key={title}
-                onClick={() => changeSection(title)}
-              >
-                {titles[language][title]}
-              </li>
-            ))}
-          </ul>
-        )}
-        {results && (
-          <ul className="sidebar__list">
-            {results.length
-              ? results.map((item) => (
-                  <ResultItem item={item} language={language} key={item.uuid} />
+        {isInput && (
+          <>
+            {!isMobile && (
+              <Overlay
+                onClick={() => {
+                  closeComponent('treeSearch');
+                  setIsInput(false);
+                }}
+                customClass="overlay__header"
+                disableHover={true}
+                zIndex={-1}
+              />
+            )}
+            <ul className="sidebar__list">
+              {!results ? (
+                <li className="sidebar__item">Введите запрос...</li>
+              ) : results.length === 0 ? (
+                <li className="sidebar__item">Ничего не найдено</li>
+              ) : (
+                results.map((item) => (
+                  <ResultItem
+                    item={item}
+                    language={language}
+                    key={item.uuid}
+                    onClick={() => setIsInput(false)}
+                  />
                 ))
-              : 'Ничего не найдено'}
-          </ul>
+              )}
+            </ul>
+          </>
         )}
       </div>
       <ArticlesTree

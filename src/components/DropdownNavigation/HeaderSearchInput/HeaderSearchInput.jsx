@@ -9,121 +9,178 @@ import loupeLight from 'images/loupe-icon_white.svg';
 import './HeaderSearchInput.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { NavLink } from 'react-router-dom';
-import { serverSearch } from 'utils/api/search';
-import { useDebounce } from 'utils/hooks';
 import {
   setMainCategory,
   setShouldRemountTree,
 } from 'store/slices/articleSlice';
+import debounce from 'utils/helpers/debounce';
+import { useServerSearch } from 'utils/hooks/useServerSearch';
 
 export default function HeaderSearchInput({ id, isMobileVisible = false }) {
   const dispatch = useDispatch();
   const inputRef = useRef();
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const { activeComponent, openComponent, closeComponent } =
-    useInteractiveManager();
+  const resultsRef = useRef(null);
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
 
-  // Компонент открыт, если его id совпадает с активным
+  // Локальное состояние для мгновенного отображения введенного текста
+  const [localQuery, setLocalQuery] = useState('');
+
+  // Локальные состояния для показа индикаторов с задержкой
+  const [showLoading, setShowLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  // Получаем управление видимостью из контекста
+  const { activeComponent, openComponent, closeComponent } =
+    useInteractiveManager();
+
+  // Кастомный хук для поиска
+  const { state, debouncedSearch, handleScroll } = useServerSearch(language);
+  const { results, loading, error } = state;
+
+  // isShown определяет, открыт ли компонент
   const isShown = activeComponent === id;
 
-  // Функция для запроса на сервер
-  const performSearch = async (text) => {
-    if (text.trim().length < 3) {
-      setResults([]);
-      return;
-    }
-    try {
-      const res = await serverSearch({
-        searchText: text,
-        lang: language,
-        pagination: '1;20',
-      });
-      setResults(res);
-    } catch (err) {
-      console.error('Ошибка поиска:', err);
-      setResults([]);
-    }
-  };
+  const shouldHideResults =
+    (!results || results.length === 0) && !showLoading && !showError;
 
-  // Оборачиваем функцию поиска в debounce, чтобы не пинговать сервер слишком часто
-  const debouncedSearch = useDebounce(performSearch, 500);
-
+  // При вводе обновляем localQuery и запускаем debouncedSearch, который обновит состояние в useServerSearch через SET_QUERY
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setQuery(value);
+    setLocalQuery(value);
     debouncedSearch(value);
   };
 
+  // Фокусируем input и сбрасываем скролл контейнера при открытии
   useEffect(() => {
     if (isShown && inputRef.current) {
       inputRef.current.focus();
+      if (resultsRef.current) resultsRef.current.scrollTop = 0;
     }
   }, [isShown]);
 
-  const handleLoupeClick = () => {
-    openComponent(id);
+  const handleLoupeClick = () => openComponent(id);
+  const handleCloseClick = () => closeComponent(id);
+
+  const handleCleaAndClose = () => {
+    if (localQuery !== '') {
+      // Если в поле есть текст — очищаем его
+      setLocalQuery('');
+      // Если используется серверный поиск, можно сбросить запрос:
+      debouncedSearch('');
+    } else {
+      // Если поле уже пустое — закрываем компонент
+      handleCloseClick();
+    }
   };
 
-  const handleCloseClick = () => {
-    closeComponent(id);
-  };
+  // Обработчик скролла с debounce
+  useEffect(() => {
+    const container = resultsRef.current;
+    if (!container) return;
+    const debouncedScroll = debounce(handleScroll, 200);
+    container.addEventListener('scroll', debouncedScroll);
+    return () => {
+      container.removeEventListener('scroll', debouncedScroll);
+    };
+  }, [handleScroll]);
+
+  // Задержка для отображения индикатора загрузки (300 мс)
+  useEffect(() => {
+    if (loading) {
+      const timer = setTimeout(() => setShowLoading(true), 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoading(false);
+    }
+  }, [loading]);
+
+  // Задержка для отображения ошибки (300 мс)
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setShowError(true), 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowError(false);
+    }
+  }, [error]);
+
   return (
     <>
-      {isShown && (
-        <>
-          <Overlay
-            onClick={handleCloseClick}
-            customClass={
-              isMobileVisible ? 'overlay__mobile-search' : 'overlay__header'
-            }
-            disableHover={true}
+      <div
+        className={
+          isShown
+            ? 'header-search-input_active'
+            : 'header-search-input_disabled'
+        }
+      >
+        <Overlay
+          onClick={handleCloseClick}
+          customClass={
+            isMobileVisible ? 'overlay__mobile-search' : 'overlay__header'
+          }
+          disableHover={true}
+        />
+        <div className="header-search-input">
+          <input
+            type="text"
+            placeholder="Поиск статей..."
+            value={localQuery}
+            className="header-search-input__field"
+            ref={inputRef}
+            onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                handleCloseClick();
+              }
+            }}
           />
-          <div className="header-search-input">
-            <input
-              type="text"
-              placeholder="Поиск статей..."
-              value={query}
-              className="header-search-input__field"
-              ref={inputRef}
-              onChange={handleInputChange}
+          <button
+            className="header-search-input__close-btn"
+            onClick={handleCleaAndClose}
+          >
+            <img
+              src={theme === 'light' ? closeBtnBlack : closeBtn}
+              alt="Кнопка сброса"
             />
-            <button
-              className="header-search-input__close-btn"
-              onClick={handleCloseClick}
-            >
-              <img
-                src={theme === 'light' ? closeBtnBlack : closeBtn}
-                alt="Кнопка сброса"
-              />
-            </button>
-          </div>
-          {results.length > 0 && (
-            <ul className="header-search__results">
-              {results.map((item) => (
-                <li key={item.uuid} className="header-search__result">
-                  <NavLink
-                    to={`/${language}/${item.uuid}`}
-                    className="header-search__link"
-                    onClick={() => {
-                      dispatch(setMainCategory(item.main_category));
-                      dispatch(setShouldRemountTree(true));
-                      handleCloseClick();
-                    }}
-                  >
-                    <span className="header-search__title">{item.title}</span>
-                    <span className="header-search__sub-category">
-                      {item.sub_category}
-                    </span>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
+          </button>
+          <ul
+            className={`header-search__results ${
+              shouldHideResults ? 'hide' : ''
+            }`}
+            ref={resultsRef}
+          >
+            {results.map((item) => (
+              <li key={item.uuid} className="header-search__result">
+                <NavLink
+                  to={`/${language}/${item.uuid}`}
+                  className="header-search__link"
+                  onClick={() => {
+                    dispatch(setMainCategory(item.main_category));
+                    dispatch(setShouldRemountTree(true));
+                    handleCloseClick();
+                  }}
+                >
+                  <span className="header-search__title">{item.title}</span>
+                  <span className="header-search__sub-category">
+                    {item.sub_category}
+                  </span>
+                </NavLink>
+              </li>
+            ))}
+            {showLoading && (
+              <li className="header-search__result">
+                <p className="header-search__result-text">Загрузка...</p>
+              </li>
+            )}
+            {showError && (
+              <li className="header-search__result">
+                <p className="header-search__result-text">{error}</p>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
       <button
         className={`header-search-input__loupe ${
           isShown && !isMobileVisible ? 'header-search-input-hide' : ''

@@ -6,11 +6,10 @@ import { customHeadingNodeName } from './extensions/heading/constants';
 import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
+import { ImageModal } from './extensions/image/ImageModal';
 
 // extensions
-// import BubbleMenu from '@tiptap/extension-bubble-menu';
 import Placeholder from '@tiptap/extension-placeholder';
-// import ImgTiptap from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -28,7 +27,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import React, {
   memo,
   useCallback,
@@ -37,30 +36,32 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { MenuBar, RteButton } from './components';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
-import { ImageModal } from './extensions/image/ImageModal';
 import {
   allowedHeadingLevels,
   cbStub,
   COMMANDS_NAMES,
 } from './helpers/constants';
+import { RTEBubbleMenu } from './components/BubbleMenu/RTEBubbleMenu';
+
 import { parseOptions } from './validation/constants';
 import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
 import { useValidation } from './validation/useValidation';
+import { useClickSpy } from './hooks/useClickSpy';
 import { editorProps } from './helpers/editorProps';
 
 import clsx from 'clsx';
+import { mergeSx } from 'merge-sx';
 import './index.css';
 import './components/index.css';
 import './extensions/heading/index.css';
 import './extensions/link/index.css';
-import { sxEditorWrapper } from './styles';
-import { useClickSpy } from './hooks/useClickSpy';
-import { RTEBubbleMenu } from './components/BubbleMenu/RTEBubbleMenu';
+import { sxEditorWrapper, sxErrorBoundary } from './styles';
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -153,7 +154,7 @@ const extensions = [
  *
  * @type {import('./types').TRichTextEditor}
  */
-export const RichTextEditor = memo(function RichTextEditor({
+const RichTextEditorRaw = memo(function RichTextEditor({
   initialValue = null,
   readOnly = false,
   cancel,
@@ -444,3 +445,79 @@ export const RichTextEditor = memo(function RichTextEditor({
   // #endregion Render
 });
 // #endregion FC
+
+// #region Boundary
+/**
+ * Customize error boundary for RTE.
+ *
+ * @typedef TRteBoundarynProps
+ * @type {object}
+ * @property {string} [className]
+ * @property {import('@mui/material').SxProps} [sx]
+ * @property {string} [id]
+ * @property {string} [text] Text for stub.
+ * @property {JSX.Element} [component] Children for stub.\
+ *   If use this, then `text` will be ignored.
+ * @property {boolean} [silent] If `true` - `onError` will not be called
+ *   (neither yours nor the standard one).
+ * @property {import('react-error-boundary').ErrorBoundaryProps['onError']} [onError]
+ */
+
+/**
+ * @callback TBoundaredRte
+ * @param {{
+ *   boundaryProps?: TRteBoundarynProps;
+ * } & import('./types').TRteProps} props
+ * @returns {JSX.Element}
+ */
+
+/**
+ * Богатый текстовый редактор
+ *
+ * @type {TBoundaredRte}
+ */
+export const RichTextEditor = ({ boundaryProps, ...rest }) => {
+  const { className, sx, id, text, component, silent, onError } =
+    boundaryProps ?? {};
+
+  return (
+    <ErrorBoundary
+      fallback={
+        <Box
+          className={clsx('rte__error-boundary-fallback', className)}
+          sx={mergeSx(sxErrorBoundary, sx)}
+          id={id}
+        >
+          {component ?? (
+            <Typography className="main-text">
+              {text ?? '⁉️ Oops... Something went wrong'}
+            </Typography>
+          )}
+        </Box>
+      }
+      onError={(error, info) => {
+        if (silent) {
+          return;
+        }
+
+        if (onError) {
+          onError(error, info);
+          return;
+        }
+
+        console.error(
+          `%c  DFA. Error in RichTextEditor!  `,
+          'border: 2px dashed red',
+          '\n',
+          error,
+          '\nInfo:\n',
+          info,
+          '\n'
+        );
+      }}
+    >
+      <RichTextEditorRaw {...rest} />
+    </ErrorBoundary>
+  );
+};
+// #endregion Boundary

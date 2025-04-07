@@ -9,7 +9,7 @@
 
   color: var(--color-main);
   text-align: center;
-  font-family: Inter;
+ font-family: 'Gotham', 'Inter', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

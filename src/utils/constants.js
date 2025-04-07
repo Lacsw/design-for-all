@@ -39,11 +39,14 @@ import translateIconW from 'images/translate-icon_white.svg';
 import createUser from 'images/admin/create-user.svg';
 import createUserWhite from 'images/admin/create-user-white.svg';
 //socials
+import emailBlack from 'images/socials/email-icon-black.svg';
+import emailWhite from 'images/socials/email-icon-white.svg';
+import phoneBlack from 'images/socials/phone-icon-black.svg';
+import phoneWhite from 'images/socials/phone-icon-white.svg';
 import telegram from 'images/socials/telegram-icon.svg';
 import behance from 'images/socials/behance-icon.svg';
 import facebook from 'images/socials/facebook-icon.svg';
 import instagram from 'images/socials/instagram-icon.svg';
-import twitter from 'images/socials/twitter-icon.svg';
 import vk from 'images/socials/vk-icon.svg';
 import dribbble from 'images/socials/dribbble-icon.svg';
 import youtube from 'images/socials/youtube-icon.svg';
@@ -62,6 +65,8 @@ import deleteIconB from 'images/account/delete-icon_black.svg';
 import deleteIconW from 'images/account/delete-icon_white.svg';
 import reasonIconB from 'images/account/reason-icon_black.svg';
 import reasonIconW from 'images/account/reason-icon_white.svg';
+import rejectHintB from 'images/account/warining-icon_black.svg';
+import rejectHintW from 'images/account/warining-icon_white.svg';
 
 export const langSelectOptions = [
   { label: 'Русский', value: 'ru' },
@@ -117,37 +122,37 @@ export const navigationOptionsList = [
     id: 'updates',
     name: 'Обновления',
     src: { light: updatesWhite, dark: updatesBlack },
-    link: '/',
+    link: '/#/updates',
   },
   {
     id: 'web',
     name: 'Веб приложения',
     src: { light: webWhite, dark: webBlack },
-    link: '/',
+    link: '/#/web',
   },
   {
     id: 'desktop',
     name: 'Десктоп приложения',
     src: { light: desktopWhite, dark: desktopBlack },
-    link: '/',
+    link: '/#/desktop',
   },
   {
     id: 'mobile',
     name: 'Мобильные приложения',
     src: { light: mobileWhite, dark: mobileBlack },
-    link: '/',
+    link: '/#/mobile',
   },
   {
     id: 'articles',
     name: 'Статьи',
     src: { light: articleWhite, dark: articleBlack },
-    link: '/',
+    link: '/#/articles',
   },
   {
-    id: 'manuals',
+    id: 'manual',
     name: 'Руководства',
     src: { light: manualWhite, dark: manualBlack },
-    link: '/',
+    link: '/#/manual',
   },
   {
     id: 'themeToggle',
@@ -160,34 +165,80 @@ export const navigationOptionsList = [
     src: { light: arrowBackWhite, dark: arrowBackBlack },
   },
 ];
+
+export const mainCategory = [
+  {
+    lang: 'ru',
+    category: {
+      desktop: 'десктоп',
+      web: 'веб',
+      mobile: 'телефон',
+      manual: 'руководство',
+    },
+  },
+  {
+    lang: 'en',
+    category: {
+      desktop: 'desktop',
+      web: 'web',
+      mobile: 'mobile',
+      manual: 'manual',
+    },
+  },
+  {
+    lang: 'zh',
+    category: {
+      desktop: '桌面',
+      web: '网络',
+      mobile: '手机',
+      manual: '指南篇',
+    },
+  },
+  {
+    lang: 'es',
+    category: {
+      desktop: 'escritorio',
+      web: 'web',
+      mobile: 'móvil',
+      manual: 'guía',
+    },
+  },
+];
+
 export const mainNavigationOptionsList = [
-  { name: 'Обновления', dark: updatesBlack, light: updatesWhite, link: '' },
-  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: 'web' },
+  {
+    name: 'Обновления',
+    dark: updatesBlack,
+    light: updatesWhite,
+    link: '/#/updates',
+  },
+  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: '/#/web' },
   {
     name: 'Десктоп приложения',
     dark: desktopBlack,
     light: desktopWhite,
-    link: 'desktop',
+    link: '/#/desktop',
   },
   {
     name: 'Мобильные приложения',
     dark: mobileBlack,
     light: mobileWhite,
-    link: 'mobile',
+    link: '/#/mobile',
   },
   {
     name: 'Статьи',
     dark: articleBlack,
     light: articleWhite,
-    link: '',
+    link: '/#/articles',
   },
   {
     name: 'Руководства',
     dark: manualBlack,
     light: manualWhite,
-    link: 'manual',
+    link: '/#/manual',
   },
 ];
+
 export const accountNavigationList = [
   {
     id: 'writeArticle',
@@ -237,7 +288,6 @@ export const adminNavList = [
     id: 'logout',
     name: 'Выйти',
     src: { light: exitWhite, dark: exitBlack },
- 
   },
 ];
 
@@ -251,7 +301,6 @@ export const languageList = [
   { id: 'en', name: 'en', src: enFlag },
   { id: 'es', name: 'es', src: spaFlag },
 ];
-
 
 export const editList = [
   { name: 'menu', dark: dotsIconW, light: dotsIconB },
@@ -298,14 +347,19 @@ export const adminHash = {
   closed: '#/admin/closed',
   closedV: '#/admin/closed/view',
 };
-// SOCIALS //
 
+// SOCIALS //
 export const socialIcons = {
+  default: {
+    light: webBlack,
+    dark: webWhite,
+  },
+  email: { light: emailBlack, dark: emailWhite },
+  phone: { light: phoneBlack, dark: phoneWhite },
   telegram,
   behance,
   dribbble,
   youtube,
-  twitter,
   vk,
   facebook,
   instagram,
@@ -316,32 +370,43 @@ export const socialIcons = {
 
 export const editButton = {
   name: 'edit',
+  tooltip: 'Редактировать',
   dark: editIconB,
   light: editIconW,
 };
 
 export const viewButton = {
   name: 'view',
+  tooltip: 'Посмотреть',
   dark: viewIconB,
   light: viewIconW,
 };
 
 const draftButton = {
   name: 'draft',
+  tooltip: 'В черновик',
   dark: draftIconB,
   light: draftIconW,
 };
 
 const deleteButton = {
   name: 'delete',
+  tooltip: 'Удалить',
   dark: deleteIconB,
   light: deleteIconW,
 };
 
 const reasonButton = {
   name: 'reason',
+  tooltip: 'Причина',
   dark: reasonIconB,
   light: reasonIconW,
+};
+
+export const rejectHint = {
+  name: 'reject hint',
+  dark: rejectHintW,
+  light: rejectHintB,
 };
 
 export const tableButtons = {

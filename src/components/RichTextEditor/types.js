@@ -14,7 +14,7 @@
  */
 
 /**
- * @typedef RichTextEditorProps
+ * @typedef TRteProps
  * @property {string | null} [initialValue] - Html-string for INITIAL view
  * @property {Partial<import('./validation/types').TValidationOptions>} [validationsOptions]
  * @property {TRteOnInputProp} [onInput] - Cb fires with debounce when content
@@ -38,7 +38,7 @@
 
 /**
  * @callback TRichTextEditor
- * @param {RichTextEditorProps} props
+ * @param {TRteProps} props
  */
 
 export {};

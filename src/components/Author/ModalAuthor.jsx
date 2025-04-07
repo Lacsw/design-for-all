@@ -62,7 +62,9 @@ const ModalAuthor = ({ author, isOpen, onClose }) => {
                 />
               </div>
             ) : (
-              <p className="author__socials-text">Контакты отсутствуют</p>
+              <p className="author__socials-text">
+                (здесь будут контакты автора)
+              </p>
             )}
           </div>
         )}

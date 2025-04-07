@@ -34,10 +34,10 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
    */
   const [error, setError] = useState('');
 
-  /** @type {import('react').RefObject<HTMLInputElement>} */
+  /** @type {React.RefObject<HTMLInputElement>} */
   const fileInputRef = useRef(null);
 
-  /** @type {import('react').RefObject<HTMLElement>} */
+  /** @type {React.RefObject<HTMLElement>} */
   const modalRef = useRef(null);
 
   // #region text input change
@@ -57,7 +57,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   };
   const checkURLPatternDbnc = useDebounce(checkURLPattern, 1000, true);
 
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  /** @param {React.ChangeEvent<HTMLInputElement>} evt */
   const handleTextInputChange = (evt) => {
     fileRef.current = null;
     if (fileInputRef.current) {
@@ -71,7 +71,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   // #endregion text input change
 
   // #region file input change
-  /** @param {import('react').ChangeEvent<HTMLInputElement>} evt */
+  /** @param {React.ChangeEvent<HTMLInputElement>} evt */
   const handleFileInputChange = (evt) => {
     const file = evt.target.files[0];
     if (!file) {

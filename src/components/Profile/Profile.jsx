@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './Profile.css';
-import { Button, SocialsBar, InputEditable, Modal } from 'components';
+import {
+  Button,
+  SocialsBar,
+  InputEditable,
+  Modal,
+  ModalSocials,
+} from 'components';
 import { useRef, useState } from 'react';
 import ModalFIO from 'components/Modal/ModalFIO/ModalFIO';
 import ModalLogPass from 'components/Modal/ModalLogPass/ModalLogPass';
@@ -18,35 +24,49 @@ const initialForm = {
   old_password: '',
   fio: '',
   avatar: '',
-  social_media: '',
+  social_media: {},
 };
 
 export default function Profile({ resetSection }) {
+  const inputRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     ...initialForm,
     avatar: currentUser.avatar,
+    social_media:
+      currentUser.social_media && typeof currentUser.social_media === 'object'
+        ? currentUser.social_media
+        : {},
   });
   const [modal, setModal] = useState('');
   const [canAdd, setCanAdd] = useState(false);
-  const inputRef = useRef(null);
-  const isFormReady = Object.keys(formData).some(
-    (key) =>
-      (key === 'avatar' && formData[key] !== currentUser.avatar) ||
-      (key !== 'avatar' && formData[key])
-  );
+  const [editingContact, setEditingContact] = useState(null);
+
+  const isSocialMediaChanged =
+    JSON.stringify(formData.social_media) !==
+    JSON.stringify(currentUser.social_media);
+
+  const isFormReady =
+    (formData.fio && formData.fio.trim().length > 0) ||
+    (formData.login && formData.login.trim().length > 0) ||
+    (formData.password && formData.password.trim().length > 0) ||
+    (formData.avatar && formData.avatar !== currentUser.avatar) ||
+    isSocialMediaChanged;
 
   function handleFormSubmit(evt) {
     evt.preventDefault();
+
     const filledData = Object.keys(formData).reduce((acc, key) => {
       if (
         (key === 'avatar' && formData[key] !== currentUser.avatar) ||
         (key !== 'avatar' && formData[key])
-      )
+      ) {
         acc[key] = formData[key];
+      }
       return acc;
     }, {});
+
     authApi
       .updateUser(filledData)
       .then(() => {
@@ -58,6 +78,7 @@ export default function Profile({ resetSection }) {
           setFormData({
             ...initialForm,
             avatar: formData.avatar,
+            social_media: formData.social_media,
           });
         }
       })
@@ -65,7 +86,16 @@ export default function Profile({ resetSection }) {
   }
 
   function changeForm(data) {
-    setFormData((prev) => ({ ...prev, ...data }));
+    setFormData((prev) => {
+      if (data.social_media) {
+        return {
+          ...prev,
+          ...data,
+          social_media: { ...prev.social_media, ...data.social_media },
+        };
+      }
+      return { ...prev, ...data };
+    });
   }
 
   function handleInput({ target }) {
@@ -80,6 +110,23 @@ export default function Profile({ resetSection }) {
     if (action === 'replace') {
       setModal('avatar');
     }
+  }
+
+  function handleEditSocial(platform, value) {
+    setEditingContact({ type: platform, value });
+    setModal('editSocial');
+  }
+
+  function handleDeleteSocial(platform) {
+    setFormData((prev) => ({
+      ...prev,
+      social_media: Object.keys(prev.social_media).reduce((acc, key) => {
+        if (key !== platform) {
+          acc[key] = prev.social_media[key];
+        }
+        return acc;
+      }, {}),
+    }));
   }
 
   return (
@@ -116,7 +163,15 @@ export default function Profile({ resetSection }) {
 
           <div className="profile__field">
             <span className="profile__sub-title">Социальные сети</span>
-            <SocialsBar />
+            <SocialsBar
+              onOpen={() => {
+                setModal('addSocials');
+                setEditingContact(null);
+              }}
+              socialMediaList={formData.social_media}
+              onEdit={handleEditSocial}
+              onDelete={handleDeleteSocial}
+            />
           </div>
 
           <label className="profile__field">
@@ -149,7 +204,7 @@ export default function Profile({ resetSection }) {
         <Button
           type={'button'}
           disabled={!isFormReady}
-          onClick={() => setFormData(initialForm)}
+          onClick={() => setFormData(currentUser)}
         >
           Отменить
         </Button>
@@ -165,6 +220,16 @@ export default function Profile({ resetSection }) {
         onClose={() => setModal('')}
         onSave={changeForm}
         name={modal === 'password' ? modal : 'login'}
+      />
+      <ModalSocials
+        isOpen={modal === 'addSocials' || modal === 'editSocial'}
+        onClose={() => {
+          setModal('');
+          setEditingContact(null);
+        }}
+        onSave={changeForm}
+        title={modal === 'editSocial' ? 'Редактировать' : 'Добавить контакт'}
+        contact={editingContact}
       />
       <Modal
         title="Ссылка на картинку"
