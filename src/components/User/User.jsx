@@ -17,7 +17,7 @@ export default function User() {
   const theme = useSelector(getCurrentTheme);
   const user = useSelector(getCurrentUser);
   const [isOpen, setIsOpen] = useState(false);
-  const socialList = Object.entries(user.social_media);
+  const socialList = user?.social_media ? Object.entries(user.social_media) : [];
   const shownList = isOpen ? socialList : socialList.slice(0, 4);
 
   const renderSocialMedia = (shownList) => {
