@@ -66,9 +66,10 @@ export default function CatalogArticle() {
         <div className="article__main">
           {imageError ? (
             <ErrorImage
-              className="article__image"
+              className="article__image-placeholder"
               alt="Заглушка для статьи"
               show={true}
+              imageClassName="article__image"
             />
           ) : (
             <img

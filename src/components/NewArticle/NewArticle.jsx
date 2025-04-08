@@ -11,6 +11,7 @@ import {
   RichTextEditor,
   Modal,
   Hint,
+  ErrorImage,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
@@ -45,6 +46,7 @@ export const NewArticle = memo(function NewArticle({
   const [canAdd, setCanAdd] = useState(false);
   const inputRef = useRef(null);
   const editId = useRef('');
+  const [imageError, setImageError] = useState(false);
 
   const isUpdate =
     location.state?.type === 'updated' ||
@@ -147,6 +149,10 @@ export const NewArticle = memo(function NewArticle({
     [isLight]
   );
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <section className="new-article">
       <h2 className="new-article__title">{mainTitle}</h2>
@@ -248,11 +254,23 @@ export const NewArticle = memo(function NewArticle({
             }
           />
           {draft.image && (
-            <img
-              className="new-article__img"
-              src={draft.image}
-              alt="Ваша картинка"
-            />
+            <div className="new-article__image-container">
+              {imageError ? (
+                <ErrorImage
+                  className="new-article__image-placeholder"
+                  alt="Заглушка для статьи"
+                  show={true}
+                  imageClassName="new-article__img"
+                />
+              ) : (
+                <img
+                  className="new-article__img"
+                  src={draft.image}
+                  alt="Ваша картинка"
+                  onError={handleImageError}
+                />
+              )}
+            </div>
           )}
         </label>
 
