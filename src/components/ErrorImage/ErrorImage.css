@@ -1,0 +1,12 @@
+.error-image-placeholder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.error-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}

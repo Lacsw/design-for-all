@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -13,6 +13,7 @@ import {
   AuthorAndReviewers,
   Recommendations,
   RichTextEditor,
+  ErrorImage,
 } from 'components';
 import './CatalogArticle.css';
 
@@ -22,6 +23,7 @@ export default function CatalogArticle() {
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
   const { lang, articleId } = useParams();
+  const [imageError, setImageError] = useState(false);
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
@@ -38,6 +40,10 @@ export default function CatalogArticle() {
   }, [lang, articleId, needToFetch, dispatch]);
 
   useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0));
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   return isBlank ? (
     <div className="blank">
@@ -58,11 +64,20 @@ export default function CatalogArticle() {
           timeUpdate={updateDate}
         />
         <div className="article__main">
-          <img
-            src={article.publication.image}
-            alt="Превью статьи"
-            className="article__image"
-          />
+          {imageError ? (
+            <ErrorImage
+              className="article__image"
+              alt="Заглушка для статьи"
+              show={true}
+            />
+          ) : (
+            <img
+              src={article.publication.image}
+              alt="Превью статьи"
+              className="article__image"
+              onError={handleImageError}
+            />
+          )}
           <RichTextEditor
             className="rte__article"
             initialValue={article.publication.description}
