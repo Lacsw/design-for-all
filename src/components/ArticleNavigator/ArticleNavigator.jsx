@@ -18,7 +18,6 @@ import {
 import { Modal } from './Modal/Modal';
 import { Bar } from './Bar/Bar';
 import './styles.css';
-
 /** @import * as Types from "./types" */
 
 /**
@@ -43,13 +42,13 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     () => document.querySelector(parentSelector),
     [parentSelector]
   );
-  /** @type {TState<HTMLElement | undefined>} */
-  const [targetEl, setTargetEl] = useState();
-  /** @type {TState<HTMLHeadingElement[]>} */
-  const [headings, setHeadings] = useState([]);
 
-  /** @type {React.RefObject<HTMLDivElement>} */
-  const navigatorRef = useRef(null);
+  const [targetEl, setTargetEl] =
+    /** @type {TState<HTMLElement | null | undefined>} */ (useState());
+
+  const [headings, setHeadings] = useState(
+    /** @type {HTMLHeadingElement[]} */ ([])
+  );
 
   /**
    * data - элемент, в котором можно взять инфу по скроллу (см. #1)
@@ -64,13 +63,13 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     data: null,
   });
 
-  const headerElRef = useRef(null);
+  const headerElRef = useRef(/** @type {HTMLElement | null} */ (null));
 
   const [isShowing, setIsShowing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const findTargetEl = useCallback(() => {
-    /** @type {HTMLElement | null} */
+    /** @type {HTMLElement | null | undefined} */
     const res = targetSelector
       ? targetRef.current?.querySelector(targetSelector)
       : targetRef.current;
@@ -127,7 +126,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   // работаем с прокручиваемым элементом
   useEffect(() => {
     const [selector, searchMode] = scrollableElParams;
-    if (searchMode === 'target' && !targetRef.current) {
+    if (searchMode === 'target' || !targetRef.current) {
       return;
     }
     /** @type {HTMLElement | Document | Element | null} */
@@ -147,7 +146,11 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     const key = selector === 'html' ? 'documentElement' : null;
 
     /** @type {Element | HTMLElement} */
-    const elWithScrollData = key ? scrollableEl[key] : scrollableEl;
+    const elWithScrollData = key
+      ? // @ts-ignore
+        scrollableEl[key]
+      : scrollableEl;
+
     scrollableRef.current = { el: scrollableEl, data: elWithScrollData };
 
     if (elWithScrollData instanceof HTMLElement) {
