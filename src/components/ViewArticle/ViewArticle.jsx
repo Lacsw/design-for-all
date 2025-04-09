@@ -1,8 +1,9 @@
-import { RichTextEditor } from 'components';
+import { RichTextEditor, ErrorImage } from 'components';
 import './ViewArticle.css';
 import Recommend from 'components/Recommendations/Recommend';
 import { Link, useLocation } from 'react-router-dom';
 import { langSelectOptions } from 'utils/constants';
+import { useState } from 'react';
 
 function createTitle(type) {
   if (type === 'updated') return 'Обновление статьи';
@@ -12,6 +13,7 @@ function createTitle(type) {
 
 export default function ViewArticle({ original, title, rejectFields }) {
   const location = useLocation();
+  const [imageError, setImageError] = useState(false);
   const lang = langSelectOptions.find(
     (item) => item.value === original.lang
   )?.label;
@@ -19,6 +21,11 @@ export default function ViewArticle({ original, title, rejectFields }) {
   const isUpdate =
     location.state?.type === 'updated' ||
     location.state?.type === 'created_lang';
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <section className="view-article">
       <h2 className="view-article__title">{title || mainTitle}</h2>
@@ -55,11 +62,21 @@ export default function ViewArticle({ original, title, rejectFields }) {
             }view-article__label`}
           >
             <span className="view-article__sub-title">Картинка статьи</span>
-            <img
-              className="view-article__img"
-              src={original.image}
-              alt="Картинка статьи"
-            />
+            {imageError ? (
+              <ErrorImage
+                className="view-article__image-placeholder"
+                alt="Заглушка для статьи"
+                show={true}
+                imageClassName="view-article__img"
+              />
+            ) : (
+              <img
+                className="view-article__img"
+                src={original.image}
+                alt="Картинка статьи"
+                onError={handleImageError}
+              />
+            )}
           </div>
         )}
         {original.title && (

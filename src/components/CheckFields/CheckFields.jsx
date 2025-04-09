@@ -1,4 +1,4 @@
-import { RichTextEditor } from 'components';
+import { RichTextEditor, ErrorImage } from 'components';
 import Recommend from 'components/Recommendations/Recommend';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -30,6 +30,7 @@ function getFields(offer) {
 const CheckFields = ({ offer, title }) => {
   const dispatch = useDispatch();
   const [fields, setFields] = useState(getFields(offer));
+  const [imageError, setImageError] = useState(false);
   const lang = langSelectOptions.find(
     (item) => item.value === offer.lang
   )?.label;
@@ -42,6 +43,10 @@ const CheckFields = ({ offer, title }) => {
       dispatch(setDecision({ uuid: offer.uuid, fields: fieldsUpdate }));
     }
   }
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   return (
     <section className="view-article">
@@ -70,11 +75,21 @@ const CheckFields = ({ offer, title }) => {
               <RadioButtons name="image" onChoice={handleChoice} />
               Картинка статьи
             </div>
-            <img
-              className="view-article__img"
-              src={offer.image}
-              alt="Картинка статьи"
-            />
+            {imageError ? (
+              <ErrorImage
+                className="view-article__image-placeholder"
+                alt="Заглушка для статьи"
+                show={true}
+                imageClassName="view-article__img"
+              />
+            ) : (
+              <img
+                className="view-article__img"
+                src={offer.image}
+                alt="Картинка статьи"
+                onError={handleImageError}
+              />
+            )}
           </div>
         )}
 
