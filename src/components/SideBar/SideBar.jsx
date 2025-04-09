@@ -9,6 +9,7 @@ import {
   selectShouldRemountTree,
   selectTitles,
   setShouldRemountTree,
+  setMainCategory,
 } from 'store/slices/articleSlice';
 import { getCurrentTheme, getLanguage } from 'store/selectors';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
@@ -69,6 +70,11 @@ export default function SideBar({ section, setSection }) {
     setIsOpen(!isOpen);
     setCurrentSection(section);
     if (setSection) setSection(section);
+    
+    // Обновляем mainCategory в Redux
+    if (titles[language] && titles[language][section]) {
+      dispatch(setMainCategory(titles[language][section]));
+    }
   }
 
   // Если внешний пропс section не задан, обновляем раздел по mainCategory  
@@ -81,7 +87,7 @@ export default function SideBar({ section, setSection }) {
 
   // Следим за изменением hash в URL и обновляем раздел, если нужно
   useEffect(() => {
-    const validKeys = ['web', 'desktop', 'mobile', 'manual'];
+    const validKeys = Object.keys(titles[language] || {});
     const rawHash = location.hash ? location.hash.replace(/^#\/?/, '') : '';
     if (rawHash && validKeys.includes(rawHash) && rawHash !== currentSection) {
       setCurrentSection(rawHash);
@@ -89,14 +95,20 @@ export default function SideBar({ section, setSection }) {
         setSection(rawHash);
       }
     }
-  }, [location.hash, currentSection, setSection]);
+  }, [location.hash, currentSection, setSection, titles, language]);
 
   // для корректного построения дерева
   useEffect(() => {
     if (shouldRemountTree) {
+      // Обновляем текущий раздел при изменении mainCategory
+      const newSection = getSection(titles, language, mainCategory);
+      setCurrentSection(newSection);
+      if (setSection) {
+        setSection(newSection);
+      }
       dispatch(setShouldRemountTree(false));
     }
-  }, [shouldRemountTree, dispatch]);
+  }, [shouldRemountTree, dispatch, mainCategory, titles, language, setSection]);
 
   return (
     <nav className="sidebar">
