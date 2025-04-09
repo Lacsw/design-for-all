@@ -3,6 +3,7 @@
     "lib": ["ES2022", "DOM"],
     "jsx": "react",
     "baseUrl": ".",
+    "strict": true,
     "paths": {
       "*": ["./src/*"]
     }
