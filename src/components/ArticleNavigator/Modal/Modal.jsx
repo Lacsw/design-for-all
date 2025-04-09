@@ -3,12 +3,15 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
-import { sxModalRoot } from './styles';
+import { sxRoot } from './styles';
+import './styles.css';
+
+/** @import * as Types from "../types" */
 
 /**
  * Модалка навигатора статей.
  *
- * @type {React.FC<import('./types').TArtNavModalProps>}
+ * @type {React.FC<Types.IArtNavModalProps>}
  */
 export const Modal = ({ isOpen, headings, onClose, id, sx, className }) => {
   const headingsLength = headings.length;
@@ -21,7 +24,7 @@ export const Modal = ({ isOpen, headings, onClose, id, sx, className }) => {
         isOpen && 'opened',
         className
       )}
-      sx={mergeSx(sxModalRoot, sx)}
+      sx={mergeSx(sxRoot, sx)}
     >
       <ol className="article-navigator__list">
         {headings.map((headingEl, idx) => {

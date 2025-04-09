@@ -15,16 +15,16 @@ import {
   targetHeadingsDefault,
 } from './constants';
 
-import { Modal } from './Modal';
-import { Bar } from './Bar';
+import { Modal } from './Modal/Modal';
+import { Bar } from './Bar/Bar';
 import './styles.css';
+
+/** @import * as Types from "./types" */
 
 /**
  * Всплывающее окно для отображения ближайшего заголовка <h1-6 /> статьи.
  *
- * @type {React.NamedExoticComponent<
- *   import('./types').TArticleNavigatorProps
- * >}
+ * @type {React.NamedExoticComponent<Types.IArticleNavigatorProps>}
  */
 export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   flag,
@@ -35,13 +35,10 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   firstShowingOffset = firstShowingOffsetDefault,
   scrollPercent = scrollPercentDefault,
   targetHeadings = targetHeadingsDefault,
-  classNameBar,
-  sxBar,
-  idBar,
-  classNameModal,
-  sxModal,
-  idModal,
+  slotProps,
 }) {
+  const { bar: barProps, modal: modalProps } = slotProps ?? {};
+
   const parentEl = useMemo(
     () => document.querySelector(parentSelector),
     [parentSelector]
@@ -101,7 +98,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     if (evt.detail > 1) return;
   };
 
-  /** @type {import('./dtypes').ICloseArtNavModal} */
+  /** @type {Types.ICloseArtNavModal} */
   const handleModalClosing = (reason, el) => {};
 
   useEffect(() => {
@@ -189,31 +186,33 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     scrollPercent,
   ]);
 
+  const barEl = (
+    <Bar
+      isShowing={isShowing}
+      label={'Ahaha TEST pumba'}
+      index={0}
+      quantity={headings.length}
+      onClick={handleBarClick}
+      {...barProps}
+    />
+  );
+
   const modalEl = (
     <Modal
       isOpen={isExpanded}
       headings={headings}
       onClose={handleModalClosing}
-      id={idModal}
-      className={classNameModal}
-      sx={sxModal}
+      {...modalProps}
     />
   );
 
-  return (
-    <>
-      <Bar
-        isShowing={isShowing}
-        label={''}
-        index={0}
-        quantity={headings.length}
-        onClick={handleBarClick}
-        id={idBar}
-        className={classNameBar}
-        sx={sxBar}
-      />
-
-      {parentEl && createPortal(modalEl, parentEl)}
-    </>
-  );
+  if (parentEl) {
+    return (
+      <>
+        {createPortal(barEl, parentEl)}
+        {createPortal(modalEl, parentEl)}
+      </>
+    );
+  }
+  return null;
 });

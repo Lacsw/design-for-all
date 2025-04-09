@@ -1,0 +1,32 @@
+.article-navigator {
+  --vis-dur: 400ms;
+
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  pointer-events: none;
+
+  color: var(--color-secondary);
+  font-family: Gotham;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0%;
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--vis-dur) 0s,
+    visibility 0s var(--vis-dur);
+}
+
+.article-navigator.visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--vis-dur) var(--vis-dur),
+    visibility 0s 0s;
+}

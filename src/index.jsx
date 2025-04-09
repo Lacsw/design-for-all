@@ -5,14 +5,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { CssBaseline } from '@mui/material';
 import GlobalCssPriority from 'styles/mui/GlobalCssPriority';
 
+import './prepare'; // должен идти до импорта App
 import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
 import { InteractiveManagerProvider } from 'utils/contexts/InteractiveManagerContext';
-import { isTouchDevice } from 'utils/helpers/adaptability/touchScreens';
-
-window.isTouchDevice = isTouchDevice();
-console.log('isTouchDevice', isTouchDevice());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
