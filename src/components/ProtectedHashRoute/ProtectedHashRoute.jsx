@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser } from 'store/slices/user';
 import { useAuthCheck } from 'utils/hooks/useAuthCheck';
 
 export default function ProtectedHashRoute({ children, requiredRole }) {
@@ -9,7 +9,7 @@ export default function ProtectedHashRoute({ children, requiredRole }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentUser = useSelector(getCurrentUser);
   const previousUserRef = useRef(currentUser);
-  
+
   // Используем хук для проверки авторизации
   useAuthCheck();
 
@@ -45,4 +45,4 @@ export default function ProtectedHashRoute({ children, requiredRole }) {
   }
 
   return null;
-} 
+}

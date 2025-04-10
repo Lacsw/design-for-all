@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsCatalogOpen, selectTitles } from 'store/slices/article';
 import UpdatesPage from 'components/Updates/UpdatesPage';
-import { getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/slices/user';
 import ProtectedHashRoute from '../ProtectedHashRoute/ProtectedHashRoute';
 
 const Fork = ({ section, setSection }) => {

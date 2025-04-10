@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setDecision } from 'store/slices';
+import { setDecision } from 'store/slices/user';
 import './AccountsDecision.css';
 import { useEffect } from 'react';
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import authApi from 'utils/api/auth';
 import { useFormValidation } from 'utils/hooks/useFormValidation';
-import { signInStart, signInSuccess, signInFailure } from 'store/slices';
+import { signInStart, signInSuccess, signInFailure } from 'store/slices/user';
 import Input from 'components/Input/Input';
 import defaultAvatar from '../../../images/admin/avatar_default.svg';
 
@@ -39,7 +39,7 @@ function LoginForm({ onClose }) {
       }
 
       dispatch(signInSuccess(userData));
-      
+
       // Проверяем наличие returnUrl и выполняем редирект
       const returnUrl = searchParams.get('returnUrl');
       if (returnUrl) {

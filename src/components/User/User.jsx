@@ -8,7 +8,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { socialIcons } from 'utils/constants';
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
 import defaultAvatar from 'images/admin/avatar_default.svg';
 import { getSocialHref } from 'utils/socials';

@@ -6,7 +6,7 @@ import { langSelectOptions } from 'utils/constants';
 import './CheckFields.css';
 import RadioButtons from 'components/RadioButtons/RadioButtons';
 import { useDispatch } from 'react-redux';
-import { setDecision } from 'store/slices';
+import { setDecision } from 'store/slices/user';
 
 const possibleFields = [
   'sub_category',

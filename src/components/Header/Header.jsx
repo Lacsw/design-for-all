@@ -14,7 +14,7 @@ import {
   HeaderSearchInput,
 } from 'components';
 
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
 
 import {

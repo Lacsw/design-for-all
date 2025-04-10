@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { SlideIframe } from 'components';
 import './MainSlider.css';
 import { useSelector } from 'react-redux';
-import { getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/slices/user';
 import Updates from 'components/Updates/Updates';
 
 export default function MainSlider({ index }) {

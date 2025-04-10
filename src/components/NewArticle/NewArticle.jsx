@@ -14,7 +14,7 @@ import {
   ImageWithFallback,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeDraft } from 'store/slices';
+import { changeDraft } from 'store/slices/user';
 import { getCurrentTheme, getIsThemeLight } from 'store/slices/theme';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/article';

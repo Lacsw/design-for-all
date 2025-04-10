@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInSuccess, signOut } from 'store/slices';
+import { signInSuccess, signOut } from 'store/slices/user';
 
 const LOGOUT_EVENT = 'app:logout';
 
@@ -64,7 +64,7 @@ export const useSyncTabs = () => {
       window.removeEventListener('storage', handleStorageChange); // Удаляем обработчик события изменения localStorage
       window.removeEventListener(LOGOUT_EVENT, handleLogout); // Удаляем обработчик события выхода
     };
-    }, [dispatch, currentUser]);
+  }, [dispatch, currentUser]);
 };
 
 // Экспортируем функцию для отправки события выхода

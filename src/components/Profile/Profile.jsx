@@ -11,7 +11,7 @@ import { useRef, useState } from 'react';
 import ModalFIO from 'components/Modal/ModalFIO/ModalFIO';
 import ModalLogPass from 'components/Modal/ModalLogPass/ModalLogPass';
 import authApi from 'utils/api/auth';
-import { signInSuccess } from 'store/slices';
+import { signInSuccess } from 'store/slices/user';
 import DropdownIcons from 'components/DropdownIcons/DropdownIcons';
 import { imageDropdown } from '../../constants/dropdowns';
 import dotsIcon from 'images/dropdowns/three-dots.svg';

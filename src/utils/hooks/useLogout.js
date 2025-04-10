@@ -2,14 +2,16 @@ import { useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import authApi from 'utils/api/auth';
-import { signOut } from 'store/slices';
+import { signOut } from 'store/slices/user';
 import { broadcastLogout } from './useSyncTabs';
 
 /**
  * Хук для унифицированного выхода из системы
+ *
  * @param {object} options - Опции для выхода
  * @param {Function} [options.resetSection] - Функция для сброса секции
- * @param {Function} [options.onSuccess] - Callback, вызываемый после успешного выхода
+ * @param {Function} [options.onSuccess] - Callback, вызываемый после успешного
+ *   выхода
  * @param {string} [options.redirectTo] - URL для редиректа после выхода
  * @returns {Function} - Функция для выхода из системы
  */
@@ -28,7 +30,7 @@ export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
       resetSection();
     }
     dispatch(signOut());
-    
+
     // Синхронизируем с другими вкладками
     broadcastLogout();
 
@@ -43,7 +45,7 @@ export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
       if (onSuccess) {
         onSuccess();
       }
-      
+
       // Если указан URL для редиректа, перенаправляем
       if (redirectTo) {
         navigate(redirectTo);
@@ -55,4 +57,4 @@ export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
       }, 1000);
     }
   }, [dispatch, navigate, resetSection, onSuccess, redirectTo]);
-} 
+}

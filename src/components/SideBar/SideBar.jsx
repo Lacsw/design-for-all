@@ -11,7 +11,7 @@ import {
   setShouldRemountTree,
   setMainCategory,
 } from 'store/slices/article';
-import { getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
