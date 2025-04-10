@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import authApi from 'utils/api/auth';
 import { useFormValidation } from 'utils/hooks/useFormValidation';
 import { signInStart, signInSuccess, signInFailure } from 'store/slices';
@@ -10,6 +11,7 @@ function LoginForm({ onClose }) {
   // TODO: обработать загрузгу и ошибки валидации/сервера
   // const { loading, error: errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const { values, handleChange, errors, isValid } = useFormValidation();
   const isFormValid =
     values.login !== '' &&
@@ -37,9 +39,17 @@ function LoginForm({ onClose }) {
       }
 
       dispatch(signInSuccess(userData));
-      onClose();
+      
+      // Проверяем наличие returnUrl и выполняем редирект
+      const returnUrl = searchParams.get('returnUrl');
+      if (returnUrl) {
+        // Используем window.location для перехода по хеш-роуту
+        window.location.href = decodeURIComponent(returnUrl);
+      } else {
+        // Если нет returnUrl, просто закрываем модальное окно
+        onClose();
+      }
     } catch (error) {
-      // Используем сообщение об ошибке из обработанного ответа
       dispatch(signInFailure(error.message));
     }
   };

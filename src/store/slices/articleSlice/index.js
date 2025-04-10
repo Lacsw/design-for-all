@@ -75,25 +75,29 @@ const articleSlice = createSlice({
         state.loading = false;
         state.error = '';
       })
-      .addCase(fetchUpdates.pending, (state, action) => {
-        if (action.meta.arg === 1) {
-          state.updates.loading = true;
-          state.updates.error = '';
-        }
-      })
-      .addCase(fetchUpdates.rejected, (state, action) => {
-        if (action.meta.arg === 1) {
-          state.updates.loading = false;
-          state.updates.error = 'Не удалось загрузить данные';
-        }
+      .addCase(fetchUpdates.pending, (state) => {
+        state.updates.loading = true;
+        state.updates.error = '';
       })
       .addCase(fetchUpdates.fulfilled, (state, action) => {
         state.updates.fetchTime = Date.now();
         state.updates.loading = false;
         state.updates.error = '';
+        
+        // Проверяем, что данные существуют
+        if (!action.payload || action.payload.length === 0) {
+          return;
+        }
+        
         if (action.meta.arg === 1) {
           state.updates.cards = action.payload;
-        } else state.updates.cards.push(...action.payload);
+        } else {
+          state.updates.cards = [...state.updates.cards, ...action.payload];
+        }
+      })
+      .addCase(fetchUpdates.rejected, (state, action) => {
+        state.updates.loading = false;
+        state.updates.error = action.error.message;
       });
   },
 });

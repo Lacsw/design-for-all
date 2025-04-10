@@ -1,11 +1,12 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { Main, Catalog, AccountAuthor, AccountAdmin } from 'components';
-import { adminHash } from 'utils/constants';
+import { adminHash, hashPaths } from 'utils/constants';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsCatalogOpen, selectTitles } from 'store/slices/articleSlice';
 import UpdatesPage from 'components/Updates/UpdatesPage';
 import { getLanguage } from 'store/selectors';
+import ProtectedHashRoute from '../ProtectedHashRoute/ProtectedHashRoute';
 
 const Fork = ({ section, setSection }) => {
   const dispatch = useDispatch();
@@ -35,10 +36,12 @@ const Fork = ({ section, setSection }) => {
     }
   }, [rawHash, section, setSection, validKeys]);
 
-  // Если hash соответствует админскому – показываем AccountAdmin
+  // Если hash соответствует админскому – показываем AccountAdmin с защитой
   if (Object.values(adminHash).includes(location.hash)) {
     return (
-      <AccountAdmin hash={location.hash} resetSection={() => setSection('')} />
+      <ProtectedHashRoute requiredRoles={['admin', 'super_admin']}>
+        <AccountAdmin hash={location.hash} resetSection={() => setSection('')} />
+      </ProtectedHashRoute>
     );
   }
 
@@ -54,9 +57,12 @@ const Fork = ({ section, setSection }) => {
     return <Catalog section={rawHash} setSection={setSection} />;
   }
 
-  if (location.hash) {
+  // Если хеш соответствует авторскому – показываем AccountAuthor с защитой
+  if (Object.values(hashPaths).includes(location.hash)) {
     return (
-      <AccountAuthor hash={location.hash} resetSection={() => setSection('')} />
+      <ProtectedHashRoute requiredRole="mentor">
+        <AccountAuthor hash={location.hash} resetSection={() => setSection('')} />
+      </ProtectedHashRoute>
     );
   }
 
