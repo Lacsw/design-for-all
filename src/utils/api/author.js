@@ -112,7 +112,7 @@ export class AuthorApi {
 
   /** @param {number} page */
   async getUpdates(page) {
-    const response = await fetch(`${this._baseUrl}/get_updates/${page}/20`, {
+    const response = await fetch(`${this._baseUrl}/get_updates/${page};20`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
