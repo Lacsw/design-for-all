@@ -1,13 +1,5 @@
 // @ts-check
-import React, {
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { createPortal } from 'react-dom';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   scrollPercentDefault,
@@ -18,6 +10,7 @@ import {
 import { Modal } from './Modal/Modal';
 import { Bar } from './Bar/Bar';
 import './styles.css';
+import './viteCheckerSavior';
 /** @import * as Types from "./types" */
 
 /**
@@ -38,10 +31,10 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 }) {
   const { bar: barProps, modal: modalProps } = slotProps ?? {};
 
-  const parentEl = useMemo(
-    () => document.querySelector(parentSelector),
-    [parentSelector]
-  );
+  // const parentEl = useMemo(
+  //   () => document.querySelector(parentSelector),
+  //   [parentSelector]
+  // );
 
   const [targetEl, setTargetEl] =
     /** @type {TState<HTMLElement | null | undefined>} */ (useState());
@@ -76,21 +69,21 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     return res;
   }, [targetSelector, targetRef]);
 
-  const expand = () => {
-    if (scrollableRef.current.data instanceof HTMLElement) {
-      scrollableRef.current.data.style.overflow = 'hidden';
-    }
-    headerElRef.current?.classList.add('navigator-expanded');
-    setIsExpanded(true);
-  };
+  // const expand = () => {
+  //   if (scrollableRef.current.data instanceof HTMLElement) {
+  //     scrollableRef.current.data.style.overflow = 'hidden';
+  //   }
+  //   headerElRef.current?.classList.add('navigator-expanded');
+  //   setIsExpanded(true);
+  // };
 
-  const collapse = () => {
-    if (scrollableRef.current.data instanceof HTMLElement) {
-      scrollableRef.current.data.style.overflow = 'auto';
-    }
-    headerElRef.current?.classList.remove('navigator-expanded');
-    setIsExpanded(false);
-  };
+  // const collapse = () => {
+  //   if (scrollableRef.current.data instanceof HTMLElement) {
+  //     scrollableRef.current.data.style.overflow = 'auto';
+  //   }
+  //   headerElRef.current?.classList.remove('navigator-expanded');
+  //   setIsExpanded(false);
+  // };
 
   /** @type {React.MouseEventHandler<HTMLDivElement>} */
   const handleBarClick = (evt) => {
@@ -174,7 +167,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       ) {
         setIsShowing(true);
       } else {
-        collapse();
+        // collapse();
         setIsShowing(false);
       }
     }
@@ -188,34 +181,34 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     firstShowingOffset,
     scrollPercent,
   ]);
+  return (
+    <>
+      <Bar
+        parentSelector={parentSelector}
+        isShowing={isShowing}
+        label={'Ahaha TEST pumba'}
+        index={0}
+        quantity={headings.length}
+        onClick={handleBarClick}
+        {...barProps}
+      />
 
-  const barEl = (
-    <Bar
-      isShowing={isShowing}
-      label={'Ahaha TEST pumba'}
-      index={0}
-      quantity={headings.length}
-      onClick={handleBarClick}
-      {...barProps}
-    />
+      <Modal
+        isOpen={isExpanded}
+        headings={headings}
+        onClose={handleModalClosing}
+        {...modalProps}
+      />
+    </>
   );
 
-  const modalEl = (
-    <Modal
-      isOpen={isExpanded}
-      headings={headings}
-      onClose={handleModalClosing}
-      {...modalProps}
-    />
-  );
-
-  if (parentEl) {
-    return (
-      <>
-        {createPortal(barEl, parentEl)}
-        {createPortal(modalEl, parentEl)}
-      </>
-    );
-  }
-  return null;
+  // if (parentEl) {
+  //   return (
+  //     <>
+  //       {createPortal(barEl, parentEl)}
+  //       {createPortal(modalEl, parentEl)}
+  //     </>
+  //   );
+  // }
+  // return null;
 });

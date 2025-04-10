@@ -13,7 +13,7 @@ export interface IArticleNavigatorProps {
    */
   flag: boolean;
   /** Cелектор эл-та, в который будет вставлен эл-т навигатора (абсолютом) */
-  parentSelector: string;
+  parentSelector?: string;
   /**
    * Cелектор для элемента внутри `targetRef`, в котором будут искаться
    * заголовки.
@@ -54,6 +54,7 @@ export interface IArticleNavigatorProps {
 }
 
 export interface IArtNavBarProps extends IBaseProps {
+  parentSelector?: IArticleNavigatorProps['parentSelector'];
   isShowing: boolean;
   label: string;
   /** Номер текущего заголовка */

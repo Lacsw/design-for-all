@@ -81,8 +81,8 @@ export default function CatalogArticle() {
           <div className="article__editor-container">
             <ArticleNavigator
               flag={navigatorFlag}
-              parentSelector="div.main-wrapper"
-              targetSelector=".tiptap.ProseMirror"
+              // parentSelector="body"
+              targetSelector="body div#root .tiptap.ProseMirror"
               targetRef={articleRef}
               scrollableElParams={scrollableElParams}
               targetHeadings={targetHeadings}
