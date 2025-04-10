@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import plusIcon from 'images/plus-icon.svg';
 import plusIconB from 'images/plus-icon_black.svg';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme, getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { Input, Modal } from 'components';
 import authApi from 'utils/api/auth';
 

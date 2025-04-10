@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentTheme, getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import Overlay from 'components/Overlay/Overlay';
 import closeBtn from 'images/close-btn.svg';
 import closeBtnBlack from 'images/close-btn_black.svg';

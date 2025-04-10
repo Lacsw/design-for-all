@@ -1,7 +1,7 @@
 import './LoginButton.css';
 
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import siginInIcon from 'images/siginin-icon.svg';
 import siginInIconWhite from 'images/siginin-icon_white.svg';
 

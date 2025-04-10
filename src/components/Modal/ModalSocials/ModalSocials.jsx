@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Input, Modal } from 'components';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import './ModalSocials.css';
 import {
   emailRegex,

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setTheme } from 'store/middlewares';
+import { setTheme } from './middlewares';
 
 const initialState = {
   currentTheme: 'dark',
@@ -32,5 +32,5 @@ const themeSlice = createSlice({
   },
 });
 
-// export const {} = themeSlice.actions;
-export default themeSlice.reducer;
+export const themeActions = themeSlice.actions;
+export const themeReducer = themeSlice.reducer;

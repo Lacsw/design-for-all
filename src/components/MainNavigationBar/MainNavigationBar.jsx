@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import './MainNavigationBar.css';
 import { NavLink } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export default function MainNavigationBar({
             className="main-navbar__icon"
           />
           <NavLink
-          to={icon.link}
+            to={icon.link}
             className={cn(
               `main-navbar__link main-navbar__link_${
                 theme === 'dark' ? 'light' : 'dark'

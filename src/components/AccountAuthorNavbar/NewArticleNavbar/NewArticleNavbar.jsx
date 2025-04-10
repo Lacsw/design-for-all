@@ -10,7 +10,8 @@ import backIconB from 'images/account/logout-icon_black.svg';
 import { ModalAttention } from 'components';
 import authorApi from 'utils/api/author';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme, getDraft, getOriginal } from 'store/selectors';
+import { getDraft, getOriginal } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authorArticlesTabs, hashPaths } from 'utils/constants';
 

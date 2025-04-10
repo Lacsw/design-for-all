@@ -15,7 +15,7 @@ import {
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
-import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
+import { getCurrentTheme, getIsThemeLight } from 'store/slices/theme';
 import Recommend from 'components/Recommendations/Recommend';
 import { selectTitles } from 'store/slices/articleSlice';
 import { Link, useLocation } from 'react-router-dom';

@@ -14,8 +14,8 @@ import {
   HeaderSearchInput,
 } from 'components';
 
-import { getCurrentTheme, getCurrentUser } from 'store/selectors';
-import { setTheme } from 'store/middlewares';
+import { getCurrentUser } from 'store/selectors';
+import { getCurrentTheme, setTheme } from 'store/slices/theme';
 
 import {
   accountNavigationList,
@@ -52,7 +52,7 @@ export default function Header({ resetSection }) {
     onSuccess: () => {
       // После выхода вызывается окно авторизации.
       openAuthModal();
-    }
+    },
   });
 
   // Функция, которая вызывается по истечении таймаута.

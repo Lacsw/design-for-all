@@ -4,7 +4,7 @@ import './AuthorArticlesList.css';
 import { SearchInput, ModalReasons, Modal, Tooltip } from 'components';
 import { tableButtons, rejectHint } from 'utils/constants';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { useNavigate } from 'react-router-dom';
 import authorApi from 'utils/api/author';
 import { prepareValue } from 'utils/helpers/search';
