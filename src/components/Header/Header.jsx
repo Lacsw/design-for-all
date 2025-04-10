@@ -31,7 +31,7 @@ import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import { selectIsCatalogOpen } from 'store/slices/article/slice';
+import { selectIsCatalogOpen } from 'store/slices/article';
 import { useLogout } from 'utils/hooks/useLogout';
 
 export default function Header({ resetSection }) {

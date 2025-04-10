@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { prepareDraft, resetDraft, addOriginal } from 'store/slices';
 import authorApi from 'utils/api/author';
-import { selectArticle } from 'store/slices/article/slice';
+import { selectArticle } from 'store/slices/article';
 import { NewArticle, ViewArticle } from 'components';
 // import previewImage from 'images/article/preview.png';
 import { langSelectOptions } from 'utils/constants';

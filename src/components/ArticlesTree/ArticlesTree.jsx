@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchTree } from 'store/slices/article/slice';
+import { fetchTree } from 'store/slices/article';
 import { TreeList } from 'components';
 import './ArticlesTree.css';
 

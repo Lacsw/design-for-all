@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { useSelector } from 'react-redux';
-import { selectTitles } from 'store/slices/article/slice';
+import { selectTitles } from 'store/slices/article';
 
 export default function Catalog({ section, setSection }) {
   const catalogRef = useRef();

@@ -3,7 +3,7 @@ import { Main, Catalog, AccountAuthor, AccountAdmin } from 'components';
 import { adminHash, hashPaths } from 'utils/constants';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsCatalogOpen, selectTitles } from 'store/slices/article/slice';
+import { setIsCatalogOpen, selectTitles } from 'store/slices/article';
 import UpdatesPage from 'components/Updates/UpdatesPage';
 import { getLanguage } from 'store/selectors';
 import ProtectedHashRoute from '../ProtectedHashRoute/ProtectedHashRoute';
