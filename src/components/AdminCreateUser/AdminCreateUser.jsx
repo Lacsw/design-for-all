@@ -3,7 +3,7 @@ import './AdminCreateUser.css';
 import { Button, Dropdown, InputEditable, Modal } from 'components';
 import { useState } from 'react';
 import ModalEmail from 'components/Modal/ModalEmail/ModalEmail';
-import { createUser } from 'utils/api/admin';
+import adminApi from 'utils/api/admin';
 
 const initialForm = {
   email: '',
@@ -28,7 +28,8 @@ export default function AdminCreateUser() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    createUser(formData)
+    adminApi
+      .createUser(formData)
       .then(() => {
         setFormData(initialForm);
         setModalSuccess(true);

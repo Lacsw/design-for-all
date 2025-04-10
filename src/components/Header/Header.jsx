@@ -30,10 +30,9 @@ import dropdownIconWhite from 'images/navigation/dropdown-icon-white.svg';
 import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
-import authApi from 'utils/api/auth';
-import { signOut } from 'store/slices';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { selectIsCatalogOpen } from 'store/slices/articleSlice';
+import { useLogout } from 'utils/hooks/useLogout';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();
@@ -49,16 +48,16 @@ export default function Header({ resetSection }) {
   // Условие, при котором срабатывать таймаут:
   const shouldTimeout = isAdmin;
 
+  const handleLogout = useLogout({
+    onSuccess: () => {
+      // После выхода вызывается окно авторизации.
+      openAuthModal();
+    }
+  });
+
   // Функция, которая вызывается по истечении таймаута.
   const handleTimeout = async (dispatch) => {
-    try {
-      await authApi.logout();
-    } catch (error) {
-      console.error('Ошибка при выходе:', error);
-    }
-    dispatch(signOut());
-    // После выхода вызывается окно авторизации.
-    openAuthModal();
+    handleLogout();
   };
 
   // Хук для установки

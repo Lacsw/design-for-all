@@ -84,3 +84,4 @@ export { default as Hint } from './Hint/Hint';
 export { default as Overlay } from './Overlay/Overlay';
 export { default as Tooltip } from './Tooltip/Tooltip';
 export { default as ErrorImage } from './ErrorImage/ErrorImage';
+export { default as ImageWithFallback } from './ImageWithFallback/ImageWithFallback';

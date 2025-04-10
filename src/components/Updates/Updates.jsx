@@ -1,5 +1,5 @@
 import UpdateCard from './UpdateCard';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback, useMemo } from 'react';
 import { fetchUpdates, selectUpdates } from 'store/slices/articleSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'utils/helpers/debounce';
@@ -30,32 +30,40 @@ export default function Updates({ section }) {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    Date.now() - updates.fetchTime > 30000 && !updates.loading && dispatch(fetchUpdates(1));
-  }, [updates, dispatch]);
+    const shouldFetch = Date.now() - updates.fetchTime > 30000 && !updates.loading;
+    if (shouldFetch) {
+      dispatch(fetchUpdates(1));
+    }
+  }, [updates.fetchTime, updates.loading, dispatch]);
 
-  useEffect(() => {
-    const slide = slideRef.current;
-    slide.addEventListener('scroll', scrollWithDelay);
-    return () => slide.removeEventListener('scroll', scrollWithDelay);
-  });
-
-  function handleScroll(evt) {
+  const handleScroll = useCallback((evt) => {
     if (
       evt.target.scrollHeight -
         (evt.target.scrollTop + evt.target.offsetHeight) <
-      100
+      100 && !updates.loading
     ) {
       page.current++;
       dispatch(fetchUpdates(page.current));
     }
-  }
+  }, [updates.loading, dispatch]);
 
-  const scrollWithDelay = debounce(handleScroll, 200);
+  const debouncedScroll = useMemo(
+    () => debounce(handleScroll, 200),
+    [handleScroll]
+  );
+
+  useEffect(() => {
+    const slide = slideRef.current;
+    if (!slide) return;
+    
+    slide.addEventListener('scroll', debouncedScroll);
+    return () => slide.removeEventListener('scroll', debouncedScroll);
+  }, [debouncedScroll]);
 
   return (
     <UpdatesList 
       updates={updates} 
-      onScroll={scrollWithDelay} 
+      onScroll={debouncedScroll} 
       slideRef={slideRef}
     />
   );

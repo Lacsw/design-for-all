@@ -1,12 +1,43 @@
-import sendRequest from './utils';
+// @ts-check
 import { domain } from 'utils/config';
+import { handleResponse } from './responseHandler';
 
-export async function getTree(options) {
-  const endpoint = `tree_${options}.json`;
-  return sendRequest(domain + '/' + endpoint);
+export class TreeApi {
+  /** @type {string} */
+  _baseUrl;
+  /** @type {HeadersInit} */
+  _headers;
+
+  /** @param {{ baseUrl: string; headers: HeadersInit }} options */
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
+
+  /** @param {string} options */
+  async getTree(options) {
+    const response = await fetch(`${this._baseUrl}/tree_${options}.json`, {
+      method: 'GET',
+      headers: this._headers,
+    });
+    return handleResponse(response);
+  }
+
+  /** Получает список заголовков категорий */
+  async getTitles() {
+    const response = await fetch(`${this._baseUrl}/main_categories.json`, {
+      method: 'GET',
+      headers: this._headers,
+    });
+    return handleResponse(response);
+  }
 }
 
-export async function getTitles() {
-  const endpoint = `main_categories.json`;
-  return sendRequest(domain+ '/' +endpoint);
-}
+const treeApi = new TreeApi({
+  baseUrl: domain,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export default treeApi;

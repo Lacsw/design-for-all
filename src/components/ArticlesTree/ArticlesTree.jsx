@@ -6,16 +6,25 @@ import './ArticlesTree.css';
 
 export default function ArticlesTree({ path, catalog, language }) {
   const dispatch = useDispatch();
-  const { tree, fetchTime } = catalog[language][path];
+  
+  // Проверяем существование данных
+  const sectionData = catalog?.[language]?.[path];
+  const tree = sectionData?.tree || [];
+  const fetchTime = sectionData?.fetchTime || 0;
   const fetchPath = `${language}_${path}`;
 
   useEffect(() => {
-    Date.now() - fetchTime > 630000 && dispatch(fetchTree(fetchPath));
-  }, [fetchPath, fetchTime, dispatch]);
+    // Загружаем дерево, если данных нет или они устарели
+    if (!sectionData?.original || Date.now() - fetchTime > 630000) {
+      dispatch(fetchTree(fetchPath));
+    }
+  }, [fetchPath, fetchTime, dispatch, sectionData]);
 
   return (
     <div className="tree">
-      {tree && <TreeList list={tree} language={language} />}
+      {tree && Object.keys(tree).length > 0 && (
+        <TreeList list={tree} language={language} />
+      )}
     </div>
   );
 }

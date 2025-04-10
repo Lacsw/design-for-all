@@ -11,7 +11,7 @@ import {
   RichTextEditor,
   Modal,
   Hint,
-  ErrorImage,
+  ImageWithFallback,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeDraft } from 'store/slices';
@@ -46,7 +46,6 @@ export const NewArticle = memo(function NewArticle({
   const [canAdd, setCanAdd] = useState(false);
   const inputRef = useRef(null);
   const editId = useRef('');
-  const [imageError, setImageError] = useState(false);
 
   const isUpdate =
     location.state?.type === 'updated' ||
@@ -148,10 +147,6 @@ export const NewArticle = memo(function NewArticle({
     }),
     [isLight]
   );
-
-  const handleImageError = () => {
-    setImageError(true);
-  };
 
   return (
     <section className="new-article">
@@ -255,21 +250,13 @@ export const NewArticle = memo(function NewArticle({
           />
           {draft.image && (
             <div className="new-article__image-container">
-              {imageError ? (
-                <ErrorImage
-                  className="new-article__image-placeholder"
-                  alt="Заглушка для статьи"
-                  show={true}
-                  imageClassName="new-article__img"
-                />
-              ) : (
-                <img
-                  className="new-article__img"
-                  src={draft.image}
-                  alt="Ваша картинка"
-                  onError={handleImageError}
-                />
-              )}
+              <ImageWithFallback
+                className="new-article__img"
+                src={draft.image}
+                alt="Ваша картинка"
+                fallbackClassName="new-article__image-placeholder"
+                fallbackAlt="Заглушка для статьи"
+              />
             </div>
           )}
         </label>
