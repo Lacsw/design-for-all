@@ -16,6 +16,11 @@ import './viteCheckerSavior';
 /**
  * Всплывающее окно для отображения ближайшего заголовка <h1-6 /> статьи.
  *
+ * Структурно компонент состоит из двух модальных эл-ов:
+ *
+ * - bar - панель вверху статьи с текущим заголовком;
+ * - modal - список в виде колеса.
+ *
  * @type {React.NamedExoticComponent<Types.IArticleNavigatorProps>}
  */
 export const ArticleNavigator = memo(function ArticleNavigatorRaw({

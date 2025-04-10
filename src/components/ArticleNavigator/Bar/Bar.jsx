@@ -1,10 +1,12 @@
 // @ts-check
 import React, { memo } from 'react';
-import { Box, Modal } from '@mui/material';
+import { Box, Modal, useTheme } from '@mui/material';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
 import './styles.css';
+import { useSelector } from 'react-redux';
+import { getCurrentTheme } from 'store/selectors';
 
 /** @import * as Types from "../types" */
 
@@ -26,26 +28,27 @@ export const Bar = memo(
     className,
     sx,
   }) => {
+    const theme = useSelector(getCurrentTheme);
+    const theme2 = useTheme();
+    console.log('THEME', theme, theme2);
     return (
       <Modal
         open={isShowing}
         disableEnforceFocus
         disableEscapeKeyDown
+        disableAutoFocus
         disableRestoreFocus
         disableScrollLock
         hideBackdrop
         container={() =>
           parentSelector ? document.querySelector(parentSelector) : null
         }
+        sx={mergeSx(sxRoot, sx)}
+        id={id}
+        className={clsx(className)}
       >
         <Box
-          id={id}
-          className={clsx(
-            'article-navigator',
-            isShowing && 'visible',
-            className
-          )}
-          sx={mergeSx(sxRoot, sx)}
+          className={clsx('article-navigator', isShowing && 'visible')}
           onClick={onClick}
         >
           <Box className="article-navigator__container">
