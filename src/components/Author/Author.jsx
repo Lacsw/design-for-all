@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectArticle } from 'store/slices/articleSlice';
+import { selectArticle } from 'store/slices/article';
 import { getCurrentTheme } from 'store/slices/theme';
 import SocialLinks from './SocialLinks';
 import ModalAuthor from './ModalAuthor';

@@ -5,4 +5,4 @@ import _userReducer from './userSlice';
 export const userReducer = _userReducer;
 export * from './userSlice';
 
-export { default as articleReducer } from './articleSlice';
+export { default as articleReducer } from './article';

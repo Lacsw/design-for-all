@@ -6,7 +6,7 @@ import {
   selectArticle,
   selectError,
   selectLoading,
-} from 'store/slices/articleSlice';
+} from 'store/slices/article';
 import {
   NotFoundArticle,
   ArticleHeader,

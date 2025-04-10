@@ -10,7 +10,7 @@ import {
   selectTitles,
   setShouldRemountTree,
   setMainCategory,
-} from 'store/slices/articleSlice';
+} from 'store/slices/article';
 import { getLanguage } from 'store/selectors';
 import { getCurrentTheme } from 'store/slices/theme';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
