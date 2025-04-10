@@ -4,7 +4,7 @@ import { getCurrentTheme } from 'store/selectors';
 import debounce from 'utils/helpers/debounce';
 import './AdminTable.css';
 import '../AuthorArticlesList/AuthorArticlesList.css';
-import { getRequests } from 'utils/api/admin';
+import adminApi from 'utils/api/admin';
 import { useNavigate } from 'react-router-dom';
 import { editButton, viewButton, adminHash } from 'utils/constants';
 
@@ -34,7 +34,8 @@ export default function AdminTable({ hash, pagination }) {
       page.current !== 0
     ) {
       page.current++;
-      getRequests(endPoint, page.current + ';' + pagination)
+      adminApi
+        .getRequests(endPoint, page.current + ';' + pagination)
         .then((data) => setRequestList((prev) => [...prev, ...data]))
         .catch(() => (page.current = 0));
     }
@@ -58,7 +59,8 @@ export default function AdminTable({ hash, pagination }) {
     page.current = 1;
     bodyRef.current.scrollTo(0, 0);
     setLoading(true);
-    getRequests(endPoint, page.current + ';' + pagination)
+    adminApi
+      .getRequests(endPoint, page.current + ';' + pagination)
       .then(setRequestList)
       .catch(() => setRequestList([]))
       .finally(() => setLoading(false));

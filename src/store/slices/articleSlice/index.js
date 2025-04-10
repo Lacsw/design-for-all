@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import createTree from 'utils/helpers/createTree';
-import { getTitles, getTree } from 'utils/api/tree';
+import treeApi from 'utils/api/tree';
 import authorApi from 'utils/api/author';
 import { catalog } from './catalog';
 import previewImage from 'images/error-image_black.jpg';
@@ -102,7 +102,7 @@ export const { setIsCatalogOpen, setMainCategory, setShouldRemountTree } =
   articleSlice.actions;
 
 export const fetchTree = createAsyncThunk('tree/get', async (options) =>
-  getTree(options)
+  treeApi.getTree(options)
 );
 
 export const fetchArticle = createAsyncThunk('article/get', async (options) =>
@@ -114,8 +114,9 @@ export const fetchUpdates = createAsyncThunk('updates/get', async (page) =>
 );
 
 export const fetchTitles = createAsyncThunk('titles/get', async () =>
-  getTitles()
+  treeApi.getTitles()
 );
+
 
 export const {
   selectCatalog,

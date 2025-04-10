@@ -31,12 +31,15 @@ function LoginForm({ onClose }) {
         login: values.login,
         password: values.password,
       });
+
       if (!userData.avatar || userData.avatar.includes('some-site')) {
         userData.avatar = defaultAvatar;
       }
+
       dispatch(signInSuccess(userData));
       onClose();
     } catch (error) {
+      // Используем сообщение об ошибке из обработанного ответа
       dispatch(signInFailure(error.message));
     }
   };
