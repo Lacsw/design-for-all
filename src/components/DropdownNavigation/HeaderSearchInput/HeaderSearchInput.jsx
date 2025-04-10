@@ -10,7 +10,10 @@ import loupeLight from 'images/loupe-icon_white.svg';
 import './HeaderSearchInput.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { NavLink } from 'react-router-dom';
-import { setMainCategory, setShouldRemountTree } from 'store/slices/article';
+import {
+  setMainCategory,
+  setShouldRemountTree,
+} from 'store/slices/article/slice';
 import debounce from 'utils/helpers/debounce';
 import { useServerSearch } from 'utils/hooks/useServerSearch';
 

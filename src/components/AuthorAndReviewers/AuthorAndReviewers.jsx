@@ -2,7 +2,7 @@ import { useIsMobile } from 'utils/hooks/useIsMobile';
 import './AuthorAndReviewers.css';
 import { Author, Overlay, Reviewers } from 'components';
 import { useSelector } from 'react-redux';
-import { selectArticle } from 'store/slices/article';
+import { selectArticle } from 'store/slices/article/slice';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 
 export default function AuthorAndReviewers() {

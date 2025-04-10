@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { languageList } from 'utils/constants';
 import { useSelector } from 'react-redux';
-import { selectArticle } from 'store/slices/article';
+import { selectArticle } from 'store/slices/article/slice';
 import './DropdownLanguage.css';
 
 const DropdownLanguage = () => {

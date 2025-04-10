@@ -1,6 +1,6 @@
 import UpdateCard from './UpdateCard';
 import { useEffect, useRef, useCallback, useMemo } from 'react';
-import { fetchUpdates, selectUpdates } from 'store/slices/article';
+import { fetchUpdates, selectUpdates } from 'store/slices/article/slice';
 import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'utils/helpers/debounce';
 import './Updates.css';

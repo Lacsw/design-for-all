@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
-import { setMainCategory } from 'store/slices/article';
+import { setMainCategory } from 'store/slices/article/slice';
 
 export default function UpdateCard({ update }) {
   const dispatch = useDispatch();

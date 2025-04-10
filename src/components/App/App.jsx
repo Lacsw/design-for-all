@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
 import { NotFound, Layout, Fork } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTitles, selectTitles } from 'store/slices/article';
+import { fetchTitles, selectTitles } from 'store/slices/article/slice';
 import { useSyncTabs } from 'utils/hooks/useSyncTabs';
 
 function App() {

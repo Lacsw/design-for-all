@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectArticle } from 'store/slices/article';
+import { selectArticle } from 'store/slices/article/slice';
 import avatar from 'images/admin/avatar_default.svg';
 import './Reviewers.css';
 import ModalAuthor from 'components/Author/ModalAuthor';
