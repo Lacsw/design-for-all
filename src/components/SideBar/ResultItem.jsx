@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setShouldRemountTree, setMainCategory } from 'store/slices/articleSlice';
+import { setShouldRemountTree, setMainCategory } from 'store/slices/article';
 
 export default function ResultItem({ language, item, onClick }) {
   const dispatch = useDispatch();

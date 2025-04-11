@@ -10,8 +10,9 @@ import {
   selectTitles,
   setShouldRemountTree,
   setMainCategory,
-} from 'store/slices/articleSlice';
-import { getCurrentTheme, getLanguage } from 'store/selectors';
+} from 'store/slices/article';
+import { getLanguage } from 'store/slices/user';
+import { getCurrentTheme } from 'store/slices/theme';
 import searchArticles, { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
 import treeIcon from 'images/tree-menu-icon.svg';
@@ -19,7 +20,6 @@ import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-
 
 import getSection from 'utils/helpers/getSection';
 import { useLocation } from 'react-router-dom';
@@ -40,12 +40,11 @@ export default function SideBar({ section, setSection }) {
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
- 
 
   const { activeComponent, openComponent, closeComponent } =
     useInteractiveManager();
   const isTreeSearchOpen = activeComponent === 'treeSearch';
-  
+
   // Добавляем проверки на существование данных
   const articles = catalog?.[language]?.[currentSection]?.original || [];
 
@@ -72,14 +71,14 @@ export default function SideBar({ section, setSection }) {
     setIsOpen(!isOpen);
     setCurrentSection(section);
     if (setSection) setSection(section);
-    
+
     // Обновляем mainCategory в Redux
     if (titles?.[language]?.[section]) {
       dispatch(setMainCategory(titles[language][section]));
     }
   }
 
-  // Если внешний пропс section не задан, обновляем раздел по mainCategory  
+  // Если внешний пропс section не задан, обновляем раздел по mainCategory
   useEffect(() => {
     if (!section && titles?.[language]) {
       const newSection = getSection(titles, language, mainCategory);

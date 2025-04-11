@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect } from 'react';
 import './Modal.css';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 

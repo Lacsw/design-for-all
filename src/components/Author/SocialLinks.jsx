@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { socialIcons } from 'utils/constants';
 import { getSocialHref } from 'utils/socials';
 

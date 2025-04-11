@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { socialIcons } from 'utils/constants';
 import './SocialsBar.css';
 
@@ -32,8 +32,7 @@ function SocialItem({ type, value, onEdit, onDelete }) {
         className="socials-bar-btn socials-bar-btn-margin"
       >
         <img
-                className="socials-bar-btn-img"
-
+          className="socials-bar-btn-img"
           src={
             (socialIcons[type] && socialIcons[type][theme]) ||
             socialIcons[type] ||

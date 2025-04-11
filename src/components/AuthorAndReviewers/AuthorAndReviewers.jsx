@@ -2,13 +2,14 @@ import { useIsMobile } from 'utils/hooks/useIsMobile';
 import './AuthorAndReviewers.css';
 import { Author, Overlay, Reviewers } from 'components';
 import { useSelector } from 'react-redux';
-import { selectArticle } from 'store/slices/articleSlice';
+import { selectArticle } from 'store/slices/article';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 
 export default function AuthorAndReviewers() {
   const { reviews } = useSelector(selectArticle);
   const isMobile = useIsMobile();
-  const { activeComponent, openComponent, closeComponent } = useInteractiveManager();
+  const { activeComponent, openComponent, closeComponent } =
+    useInteractiveManager();
   const isOpen = activeComponent === 'authorAndReviewers';
 
   const toggleReviewers = () => {

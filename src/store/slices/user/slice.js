@@ -89,5 +89,4 @@ export const {
   signOut,
 } = userSlice.actions;
 
-// export const userReducer = userSlice.reducer;
-export default userSlice.reducer;
+export const userReducer = userSlice.reducer;

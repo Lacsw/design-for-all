@@ -1,14 +1,18 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { prepareDraft, resetDraft, addOriginal } from 'store/slices';
+import {
+  prepareDraft,
+  resetDraft,
+  addOriginal,
+  getDraft,
+} from 'store/slices/user';
 import authorApi from 'utils/api/author';
-import { selectArticle } from 'store/slices/articleSlice';
+import { selectArticle } from 'store/slices/article';
 import { NewArticle, ViewArticle } from 'components';
 // import previewImage from 'images/article/preview.png';
 import { langSelectOptions } from 'utils/constants';
 import './Creation.css';
-import { getDraft } from 'store/selectors';
 import formatRecommends from 'utils/helpers/formatRecommends';
 
 const Creation = () => {

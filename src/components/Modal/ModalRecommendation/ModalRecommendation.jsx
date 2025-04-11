@@ -3,7 +3,7 @@ import './ModalRecommendation.css';
 import { Input, Modal } from 'components';
 import authorApi from 'utils/api/author';
 import { useSelector } from 'react-redux';
-import { getDraft } from 'store/selectors';
+import { getDraft } from 'store/slices/user';
 import { domain } from 'utils/config';
 
 const dfaUrl = new URL(domain);

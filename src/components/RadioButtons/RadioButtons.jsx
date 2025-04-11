@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import './RadioButtons.css';
 
-const RadioButtons = ({name, onChoice}) => {
+const RadioButtons = ({ name, onChoice }) => {
   const theme = useSelector(getCurrentTheme);
   return (
     <div className={'radio-box ' + theme}>

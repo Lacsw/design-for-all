@@ -8,7 +8,7 @@ import facebookIcon from 'images/socials/facebook-icon.svg';
 import vkIcon from 'images/socials/vk-icon.svg';
 import pinterestIcon from 'images/socials/pinterest-icon.svg';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import xBlack from 'images/socials/x-icon_black.svg';
 import xWhite from 'images/socials/x-icon_white.svg';
 

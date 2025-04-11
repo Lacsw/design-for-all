@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInSuccess, signInFailure } from 'store/slices';
+import { signInSuccess, signInFailure } from 'store/slices/user';
 import authorApi from '../api/author';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -20,9 +20,9 @@ export const useAuthCheck = () => {
       try {
         // Проверяем наличие токена в куках
         const response = await fetch('/api/check-auth', {
-          credentials: 'include'
+          credentials: 'include',
         });
-        
+
         if (response.ok) {
           // Если токен валидный, но нет данных пользователя, запрашиваем их
           if (!currentUser) {
@@ -33,13 +33,16 @@ export const useAuthCheck = () => {
           // Если токен невалидный, очищаем состояние
           dispatch(signInFailure('Session expired'));
           dispatch(signInSuccess(null));
-          
+
           // Если текущий хеш требует авторизации, перенаправляем на логин
-          if (location.hash && (
-            location.hash.includes('/author/') || 
-            location.hash.includes('/admin/')
-          )) {
-            const returnUrl = encodeURIComponent(location.pathname + location.hash);
+          if (
+            location.hash &&
+            (location.hash.includes('/author/') ||
+              location.hash.includes('/admin/'))
+          ) {
+            const returnUrl = encodeURIComponent(
+              location.pathname + location.hash
+            );
             setSearchParams({ 'modal-auth': 'login', returnUrl });
           }
         }
@@ -57,4 +60,4 @@ export const useAuthCheck = () => {
       checkAuth();
     }
   }, [dispatch, currentUser, location, setSearchParams]);
-}; 
+};

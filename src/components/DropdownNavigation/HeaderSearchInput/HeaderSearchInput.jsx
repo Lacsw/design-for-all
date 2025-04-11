@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentTheme, getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/slices/user';
+import { getCurrentTheme } from 'store/slices/theme';
 import Overlay from 'components/Overlay/Overlay';
 import closeBtn from 'images/close-btn.svg';
 import closeBtnBlack from 'images/close-btn_black.svg';
@@ -9,10 +10,7 @@ import loupeLight from 'images/loupe-icon_white.svg';
 import './HeaderSearchInput.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { NavLink } from 'react-router-dom';
-import {
-  setMainCategory,
-  setShouldRemountTree,
-} from 'store/slices/articleSlice';
+import { setMainCategory, setShouldRemountTree } from 'store/slices/article';
 import debounce from 'utils/helpers/debounce';
 import { useServerSearch } from 'utils/hooks/useServerSearch';
 

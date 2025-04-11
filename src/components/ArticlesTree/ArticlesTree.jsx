@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchTree } from 'store/slices/articleSlice';
+import { fetchTree } from 'store/slices/article';
 import { TreeList } from 'components';
 import './ArticlesTree.css';
 
 export default function ArticlesTree({ path, catalog, language }) {
   const dispatch = useDispatch();
-  
+
   // Проверяем существование данных
   const sectionData = catalog?.[language]?.[path];
   const tree = sectionData?.tree || [];

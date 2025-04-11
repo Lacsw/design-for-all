@@ -5,7 +5,7 @@ import { IconButton, InputBase, Tooltip } from '@mui/material';
 import { BubbleMenu } from '@tiptap/react';
 import { TextSelection } from '@tiptap/pm/state';
 
-import { getIsThemeLight } from 'store/selectors';
+import { getIsThemeLight } from 'store/slices/theme';
 import { useDebounce } from 'utils/hooks';
 import { validateLink } from 'components/RichTextEditor/extensions/link/link';
 import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config';

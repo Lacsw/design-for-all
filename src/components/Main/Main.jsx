@@ -3,7 +3,7 @@ import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import logo from 'images/logo.svg';
 
 import logoBlack from 'images/logo-black.svg';

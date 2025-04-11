@@ -14,8 +14,8 @@ import {
   HeaderSearchInput,
 } from 'components';
 
-import { getCurrentTheme, getCurrentUser } from 'store/selectors';
-import { setTheme } from 'store/middlewares';
+import { getCurrentUser } from 'store/slices/user';
+import { getCurrentTheme, setTheme } from 'store/slices/theme';
 
 import {
   accountNavigationList,
@@ -31,7 +31,7 @@ import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import { selectIsCatalogOpen } from 'store/slices/articleSlice';
+import { selectIsCatalogOpen } from 'store/slices/article';
 import { useLogout } from 'utils/hooks/useLogout';
 
 export default function Header({ resetSection }) {
@@ -52,7 +52,7 @@ export default function Header({ resetSection }) {
     onSuccess: () => {
       // После выхода вызывается окно авторизации.
       openAuthModal();
-    }
+    },
   });
 
   // Функция, которая вызывается по истечении таймаута.

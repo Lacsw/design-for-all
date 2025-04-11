@@ -83,12 +83,12 @@ const articleSlice = createSlice({
         state.updates.fetchTime = Date.now();
         state.updates.loading = false;
         state.updates.error = '';
-        
+
         // Проверяем, что данные существуют
         if (!action.payload || action.payload.length === 0) {
           return;
         }
-        
+
         if (action.meta.arg === 1) {
           state.updates.cards = action.payload;
         } else {
@@ -121,7 +121,6 @@ export const fetchTitles = createAsyncThunk('titles/get', async () =>
   treeApi.getTitles()
 );
 
-
 export const {
   selectCatalog,
   selectTitles,
@@ -136,4 +135,4 @@ export const selectMainCategory = (state) => state.article.mainCategory;
 export const selectShouldRemountTree = (state) =>
   state.article.shouldRemountTree;
 
-export default articleSlice.reducer;
+export const articleReducer = articleSlice.reducer;

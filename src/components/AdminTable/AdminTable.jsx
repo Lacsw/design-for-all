@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import debounce from 'utils/helpers/debounce';
 import './AdminTable.css';
 import '../AuthorArticlesList/AuthorArticlesList.css';

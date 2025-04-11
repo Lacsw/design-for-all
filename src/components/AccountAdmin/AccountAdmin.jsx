@@ -10,7 +10,7 @@ import Decisions from 'components/Decisions/Decisions';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser } from 'store/slices/user';
 import { adminHash } from 'utils/constants';
 import { useLogout } from 'utils/hooks/useLogout';
 
@@ -19,9 +19,9 @@ export default function AccountAdmin({ hash, resetSection }) {
   const [, setSearchParams] = useSearchParams();
   const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
 
-  const handleLogout = useLogout({ 
+  const handleLogout = useLogout({
     resetSection,
-    redirectTo: '/'
+    redirectTo: '/',
   });
 
   useEffect(() => {

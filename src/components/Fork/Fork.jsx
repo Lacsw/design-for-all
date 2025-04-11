@@ -3,9 +3,9 @@ import { Main, Catalog, AccountAuthor, AccountAdmin } from 'components';
 import { adminHash, hashPaths } from 'utils/constants';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsCatalogOpen, selectTitles } from 'store/slices/articleSlice';
+import { setIsCatalogOpen, selectTitles } from 'store/slices/article';
 import UpdatesPage from 'components/Updates/UpdatesPage';
-import { getLanguage } from 'store/selectors';
+import { getLanguage } from 'store/slices/user';
 import ProtectedHashRoute from '../ProtectedHashRoute/ProtectedHashRoute';
 
 const Fork = ({ section, setSection }) => {
@@ -14,12 +14,12 @@ const Fork = ({ section, setSection }) => {
   const { articleId } = useParams();
   const titles = useSelector(selectTitles);
   const language = useSelector(getLanguage);
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.key]);
 
-  const isCatalogOpen = Boolean( articleId || section);
+  const isCatalogOpen = Boolean(articleId || section);
 
   useEffect(() => {
     dispatch(setIsCatalogOpen(isCatalogOpen));
@@ -40,7 +40,10 @@ const Fork = ({ section, setSection }) => {
   if (Object.values(adminHash).includes(location.hash)) {
     return (
       <ProtectedHashRoute requiredRoles={['admin', 'super_admin']}>
-        <AccountAdmin hash={location.hash} resetSection={() => setSection('')} />
+        <AccountAdmin
+          hash={location.hash}
+          resetSection={() => setSection('')}
+        />
       </ProtectedHashRoute>
     );
   }
@@ -61,7 +64,10 @@ const Fork = ({ section, setSection }) => {
   if (Object.values(hashPaths).includes(location.hash)) {
     return (
       <ProtectedHashRoute requiredRole="mentor">
-        <AccountAuthor hash={location.hash} resetSection={() => setSection('')} />
+        <AccountAuthor
+          hash={location.hash}
+          resetSection={() => setSection('')}
+        />
       </ProtectedHashRoute>
     );
   }

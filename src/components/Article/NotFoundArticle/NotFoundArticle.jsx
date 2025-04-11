@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import './NotFoundArticle.css';
 import { Button } from 'components';
 import notFound404Svg from 'images/404.svg';
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser } from 'store/slices/user';
 
 function NotFoundArcticle() {
   const [, setSearchParams] = useSearchParams();

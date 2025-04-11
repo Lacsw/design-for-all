@@ -14,10 +14,10 @@ import {
   ImageWithFallback,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeDraft } from 'store/slices';
-import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
+import { changeDraft } from 'store/slices/user';
+import { getCurrentTheme, getIsThemeLight } from 'store/slices/theme';
 import Recommend from 'components/Recommendations/Recommend';
-import { selectTitles } from 'store/slices/articleSlice';
+import { selectTitles } from 'store/slices/article';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
