@@ -28,19 +28,18 @@ function useSubCategoryCheck(lang) {
         setUuid(data.uuid);
       }
     } catch (error) {
-      const errorMsg = error.toString();
-      if (errorMsg.includes('404')) {
-        // 404: подкатегория не найдена – очищаем хинт
+      if (error.status === 404) {
+        // 404: подкатегория не найдена – значит она свободна
         setHint('');
-        setUuid(null);
-      } else if (errorMsg.includes('422')) {
+        setUuid(null)
+      } else if (error.status === 422) {
         setHint('Некорректный запрос. Проверьте ввод.');
         setUuid(null);
-      } else if (errorMsg.includes('401')) {
+      } else if (error.status === 401) {
         setHint('Для проверки необходимо авторизоваться.');
         setUuid(null);
       } else {
-        setHint('Ошибка проверки подкатегории.');
+        setHint(error.message || 'Ошибка проверки подкатегории.');
         setUuid(null);
       }
     }
