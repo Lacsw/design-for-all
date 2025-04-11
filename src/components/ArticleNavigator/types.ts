@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { ModalOwnProps } from '@mui/material';
 import type {
   targetHeadingsDefault,
   firstShowingOffsetDefault,
@@ -67,6 +68,7 @@ export interface IArtNavBarProps extends IBaseProps {
   /** Число заголовков */
   quantity: number;
   onClick: React.MouseEventHandler<HTMLDivElement>;
+  slotProps?: ModalOwnProps['slotProps'];
 }
 
 export type TClosingReasons = 'click' | 'esc' | 'backdropClick';

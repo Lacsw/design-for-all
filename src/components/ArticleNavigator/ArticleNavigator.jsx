@@ -93,6 +93,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   /** @type {React.MouseEventHandler<HTMLDivElement>} */
   const handleBarClick = (evt) => {
     if (evt.detail > 1) return;
+    setIsExpanded(true);
   };
 
   /** @type {Types.ICloseArtNavModal} */

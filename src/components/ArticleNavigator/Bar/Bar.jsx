@@ -1,12 +1,11 @@
 // @ts-check
 import React, { memo } from 'react';
-import { Box, Modal, useTheme } from '@mui/material';
+import { Box, Fade, Modal } from '@mui/material';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
 import './styles.css';
-import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/slices/theme';
+import { barSlotProps } from './constants';
 
 /** @import * as Types from "../types" */
 
@@ -27,6 +26,7 @@ export const Bar = memo(
     id,
     className,
     sx,
+    slotProps,
   }) => {
     return (
       <Modal
@@ -42,20 +42,23 @@ export const Bar = memo(
         }
         sx={mergeSx(sxRoot, sx)}
         id={id}
-        className={clsx('!!!!!!!!!!!!!', className)}
+        className={className}
+        slotProps={slotProps ?? barSlotProps}
       >
-        <Box
-          className={clsx('article-navigator', isShowing && 'visible')}
-          onClick={onClick}
-        >
-          <Box className="article-navigator__container">
-            <span className="heading-text">{label}</span>
+        <Fade in={isShowing}>
+          <Box
+            className={clsx('article-navigator', isShowing && 'visible')}
+            onClick={onClick}
+          >
+            <Box className="article-navigator__container">
+              <span className="heading-text">{label}</span>
 
-            <span className="counter">
-              {index + 1}/{quantity || '\u00A0'}
-            </span>
+              <span className="counter">
+                {index + 1}/{quantity || '\u00A0'}
+              </span>
+            </Box>
           </Box>
-        </Box>
+        </Fade>
       </Modal>
     );
   }
