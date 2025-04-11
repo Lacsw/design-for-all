@@ -1,8 +1,5 @@
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import DropdownNavigation from './DropdownNavigation';
-import { signInSuccess } from 'store/slices';
-import authApi from 'utils/api/auth';
+import { useLogout } from 'utils/hooks/useLogout';
 
 export default function UserDropdown({
   resetSection,
@@ -13,18 +10,7 @@ export default function UserDropdown({
   theme,
   titleIcon,
 }) {
-  const dispatch = useDispatch();
-
-  // Обработчик для выхода из аккаунта
-  const handleLogout = useCallback(async () => {
-    try {
-      await authApi.logout();
-      resetSection();
-      dispatch(signInSuccess(null));
-    } catch (err) {
-      console.error('Ошибка при выходе:', err);
-    }
-  }, [dispatch, resetSection]);
+  const handleLogout = useLogout({ resetSection });
 
   if (!currentUser) return null;
 

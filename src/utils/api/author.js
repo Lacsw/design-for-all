@@ -1,11 +1,12 @@
 // @ts-check
 import { apiUrl, domain } from 'utils/config';
+import { handleResponse } from './responseHandler';
 
 export class AuthorApi {
   /** @type {string} */
-  _baseUrl = '';
+  _baseUrl;
   /** @type {HeadersInit} */
-  _headers = {};
+  _headers;
 
   /** @param {{ baseUrl: string; headers: HeadersInit }} options */
   constructor(options) {
@@ -13,15 +14,7 @@ export class AuthorApi {
     this._headers = options.headers;
   }
 
-  /** @param {Response} res */
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.status !== 200 ? res.statusText : res.json();
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
-  }
-
+  /** @param {{ pagination: string; status: string; page?: number }} params */
   async getArticles({ pagination, status, page = 1 }) {
     let path = `user_find_updates/${status}/${page};${pagination}`;
     if (status === 'drafted') path = `user_find_drafts_p/${page};${pagination}`;
@@ -30,21 +23,23 @@ export class AuthorApi {
       headers: this._headers,
       credentials: 'include',
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {{ status: string; pagination: string; text: string }} params */
   async searchByTitles({ status, pagination, text }) {
     const response = await fetch(
-      `${this._baseUrl}/user_updates_fts_p/${status}/1;${pagination}/${text}`,
+      `${this._baseUrl}/user_updates_fts_p/${status}/1/${pagination}/${text}`,
       {
         method: 'GET',
         headers: this._headers,
         credentials: 'include',
       }
     );
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {string} lang @param {string} id */
   async checkRecommend(lang, id) {
     const response = await fetch(
       `${this._baseUrl}/check_recommend/${lang}/${id}`,
@@ -54,21 +49,23 @@ export class AuthorApi {
         credentials: 'include',
       }
     );
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {string} lang @param {string} ids */
   async getRecommends(lang, ids) {
     const response = await fetch(
-      `${this._baseUrl}/user_get_recomm_by_uuids/${lang}/${ids};`,
+      `${this._baseUrl}/user_get_recomm_by_uuids/${lang}/${ids}`,
       {
         method: 'GET',
         headers: this._headers,
         credentials: 'include',
       }
     );
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {string} type @param {object} data */
   async addCreation(type, data) {
     const response = await fetch(`${this._baseUrl}/user_${type}_p`, {
       method: 'POST',
@@ -76,9 +73,10 @@ export class AuthorApi {
       credentials: 'include',
       body: JSON.stringify(data),
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {string} uuid */
   async deleteDraft(uuid) {
     const response = await fetch(`${this._baseUrl}/user_delete_draft_p`, {
       method: 'POST',
@@ -86,18 +84,20 @@ export class AuthorApi {
       credentials: 'include',
       body: JSON.stringify({ uuid }),
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {string} type @param {string} id */
   async getCreation(type, id) {
     const response = await fetch(`${this._baseUrl}/user_find_${type}_p/${id}`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {{ lang: string; articleId: string }} params */
   async getArticleById({ lang, articleId }) {
     const response = await fetch(
       `${this._baseUrl}/get_publication/${lang}/${articleId}`,
@@ -107,18 +107,17 @@ export class AuthorApi {
         credentials: 'include',
       }
     );
-
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /** @param {number} page */
   async getUpdates(page) {
     const response = await fetch(`${this._baseUrl}/get_updates/${page};20`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
     });
-
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
   async profileAuthor() {
@@ -128,7 +127,7 @@ export class AuthorApi {
       credentials: 'include',
     });
 
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
   /**
@@ -158,7 +157,7 @@ export class AuthorApi {
           body: result,
           credentials: 'include',
         })
-          .then(this._checkResponse)
+          .then(handleResponse)
           .then(resolve)
           .catch((err) =>
             reject(
@@ -172,6 +171,7 @@ export class AuthorApi {
     });
   }
 
+  /** @param {string} uuid */
   async getReviewer(uuid) {
     const response = await fetch(
       `${this._baseUrl}/get_user_info_profile/${uuid}`,
@@ -181,9 +181,9 @@ export class AuthorApi {
         credentials: 'include',
       }
     );
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
-
+  /** @param {string} lang @param {string} subCategory */
   async checkSubCategory(lang, subCategory) {
     const url = `${this._baseUrl}/check_sub_category/${encodeURIComponent(
       lang
@@ -193,7 +193,7 @@ export class AuthorApi {
       headers: this._headers,
       credentials: 'include',
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 }
 

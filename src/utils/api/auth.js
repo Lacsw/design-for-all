@@ -1,17 +1,17 @@
+// @ts-check
 import { apiUrl, domain } from 'utils/config';
+import { handleResponse } from './responseHandler';
 
 class AuthApi {
+  /** @type {string} */
+  _baseUrl;
+  /** @type {HeadersInit} */
+  _headers;
+
+  /** @param {{ baseUrl: string; headers: HeadersInit }} options */
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
-  }
-
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.status !== 200 ? res.statusText : res.json();
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
   }
 
   async mainPage() {
@@ -19,15 +19,10 @@ class AuthApi {
       method: 'GET',
       headers: this._headers,
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
-  // login: 'test_account',
-  // password: '00xMgxOASRdsz0RZ'
-
-  // login: super_admin,
-  // password: IgEWMWuh33L5LpOK
-
+  /** @param {{ login: string; password: string }} data */
   async loginAuthor(data) {
     const response = await fetch(`${this._baseUrl}/login`, {
       method: 'POST',
@@ -36,7 +31,7 @@ class AuthApi {
       credentials: 'include',
     });
 
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
   async logout() {
@@ -45,9 +40,17 @@ class AuthApi {
       headers: this._headers,
       credentials: 'include',
     });
-    return this._checkResponse(response);
+    return handleResponse(response);
   }
 
+  /**
+   * @param {{
+   *   login: string;
+   *   password: string;
+   *   email: string;
+   *   name: string;
+   * }} data
+   */
   async regUser(data) {
     const response = await fetch(`${this._baseUrl}/author_create`, {
       method: 'POST',
@@ -56,11 +59,17 @@ class AuthApi {
       credentials: 'include',
     });
 
-    if (response.ok) return response.statusText;
-    const message = await response.json();
-    return Promise.reject(message);
+    return handleResponse(response);
   }
 
+  /**
+   * @param {{
+   *   uuid: string;
+   *   name?: string;
+   *   email?: string;
+   *   password?: string;
+   * }} data
+   */
   async updateUser(data) {
     const response = await fetch(`${this._baseUrl}/user_update`, {
       method: 'POST',
@@ -68,13 +77,13 @@ class AuthApi {
       body: JSON.stringify(data),
       credentials: 'include',
     });
-    return response.ok ? Promise.resolve() : Promise.reject('Выход не удался.');
+    return handleResponse(response);
   }
 
+  /** @param {string} theme */
   async getCaptcha(theme) {
-    return fetch(`${apiUrl}/get_captcha/${theme}`).then(
-      (res) => res.blob()
-    );
+    const response = await fetch(`${apiUrl}/get_captcha/${theme}`);
+    return handleResponse(response);
   }
 }
 

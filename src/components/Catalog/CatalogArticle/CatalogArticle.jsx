@@ -6,7 +6,7 @@ import {
   selectArticle,
   selectError,
   selectLoading,
-} from 'store/slices/articleSlice';
+} from 'store/slices/article';
 import {
   NotFoundArticle,
   ArticleHeader,
@@ -14,6 +14,7 @@ import {
   Recommendations,
   RichTextEditor,
   ArticleNavigator,
+  ImageWithFallback,
 } from 'components';
 import './CatalogArticle.css';
 
@@ -71,11 +72,14 @@ export default function CatalogArticle() {
           timeCreate={createDate}
           timeUpdate={updateDate}
         />
+
         <div ref={articleRef} className="article__main">
-          <img
+          <ImageWithFallback
             src={article.publication.image}
             alt="Превью статьи"
             className="article__image"
+            fallbackClassName="article__image-placeholder"
+            fallbackAlt="Заглушка для статьи"
           />
 
           <div className="article__editor-container">

@@ -11,12 +11,13 @@ import {
   RichTextEditor,
   Modal,
   Hint,
+  ImageWithFallback,
 } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeDraft } from 'store/slices';
-import { getCurrentTheme, getIsThemeLight } from 'store/selectors';
+import { changeDraft } from 'store/slices/user';
+import { getCurrentTheme, getIsThemeLight } from 'store/slices/theme';
 import Recommend from 'components/Recommendations/Recommend';
-import { selectTitles } from 'store/slices/articleSlice';
+import { selectTitles } from 'store/slices/article';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
@@ -248,11 +249,15 @@ export const NewArticle = memo(function NewArticle({
             }
           />
           {draft.image && (
-            <img
-              className="new-article__img"
-              src={draft.image}
-              alt="Ваша картинка"
-            />
+            <div className="new-article__image-container">
+              <ImageWithFallback
+                className="new-article__img"
+                src={draft.image}
+                alt="Ваша картинка"
+                fallbackClassName="new-article__image-placeholder"
+                fallbackAlt="Заглушка для статьи"
+              />
+            </div>
           )}
         </label>
 

@@ -3,22 +3,30 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { TreeList } from 'components';
 import './TreeItem.css';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import findId from './findId';
 
-export default function TreeItem({ title, data, language, status }) {
+export default function TreeItem({
+  title = '',
+  data = null,
+  language,
+  status,
+}) {
   const navigate = useNavigate();
   const { articleId } = useParams();
   const theme = useSelector(getCurrentTheme);
   const [isOpen, setIsOpen] = useState(() => {
     if (status === false) return false;
-    return findId(data, articleId);
+    return data ? findId(data, articleId) : false;
   });
-  const hasChildren = typeof data === 'object';
+
+  const hasChildren = data && typeof data === 'object';
   const id = hasChildren ? data.id : data;
   const isActive = articleId ? articleId === id : false;
-  const newData = { ...data };
-  delete newData.id;
+  const newData = hasChildren ? { ...data } : {};
+  if (hasChildren) {
+    delete newData.id;
+  }
 
   const arrowExtraClass = hasChildren
     ? ' tree-item__arrow_visible_' + theme

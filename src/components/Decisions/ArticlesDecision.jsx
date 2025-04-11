@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setDecision } from 'store/slices';
+import { setDecision } from 'store/slices/user';
 import { ViewArticle } from 'components';
 import previewImage from 'images/article/preview.png';
 import CheckFields from 'components/CheckFields/CheckFields';

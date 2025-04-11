@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import createTree from 'utils/helpers/createTree';
-import { getTitles, getTree } from 'utils/api/tree';
+import treeApi from 'utils/api/tree';
 import authorApi from 'utils/api/author';
 import { catalog } from './catalog';
 import previewImage from 'images/error-image_black.jpg';
@@ -75,25 +75,29 @@ const articleSlice = createSlice({
         state.loading = false;
         state.error = '';
       })
-      .addCase(fetchUpdates.pending, (state, action) => {
-        if (action.meta.arg === 1) {
-          state.updates.loading = true;
-          state.updates.error = '';
-        }
-      })
-      .addCase(fetchUpdates.rejected, (state, action) => {
-        if (action.meta.arg === 1) {
-          state.updates.loading = false;
-          state.updates.error = 'Не удалось загрузить данные';
-        }
+      .addCase(fetchUpdates.pending, (state) => {
+        state.updates.loading = true;
+        state.updates.error = '';
       })
       .addCase(fetchUpdates.fulfilled, (state, action) => {
         state.updates.fetchTime = Date.now();
         state.updates.loading = false;
         state.updates.error = '';
+
+        // Проверяем, что данные существуют
+        if (!action.payload || action.payload.length === 0) {
+          return;
+        }
+
         if (action.meta.arg === 1) {
           state.updates.cards = action.payload;
-        } else state.updates.cards.push(...action.payload);
+        } else {
+          state.updates.cards = [...state.updates.cards, ...action.payload];
+        }
+      })
+      .addCase(fetchUpdates.rejected, (state, action) => {
+        state.updates.loading = false;
+        state.updates.error = action.error.message;
       });
   },
 });
@@ -102,7 +106,7 @@ export const { setIsCatalogOpen, setMainCategory, setShouldRemountTree } =
   articleSlice.actions;
 
 export const fetchTree = createAsyncThunk('tree/get', async (options) =>
-  getTree(options)
+  treeApi.getTree(options)
 );
 
 export const fetchArticle = createAsyncThunk('article/get', async (options) =>
@@ -114,7 +118,7 @@ export const fetchUpdates = createAsyncThunk('updates/get', async (page) =>
 );
 
 export const fetchTitles = createAsyncThunk('titles/get', async () =>
-  getTitles()
+  treeApi.getTitles()
 );
 
 export const {
@@ -131,4 +135,4 @@ export const selectMainCategory = (state) => state.article.mainCategory;
 export const selectShouldRemountTree = (state) =>
   state.article.shouldRemountTree;
 
-export default articleSlice.reducer;
+export const articleReducer = articleSlice.reducer;

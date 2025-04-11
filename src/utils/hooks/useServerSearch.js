@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useReducer, useRef } from 'react';
-import { serverSearch } from 'utils/api/search';
+import searchApi from 'utils/api/search';
 import debounce from 'utils/helpers/debounce';
 
 // Начальное состояние поиска
@@ -60,7 +60,7 @@ export function useServerSearch(language) {
       }
       dispatch({ type: 'SEARCH_START' });
       try {
-        const res = await serverSearch({
+        const res = await searchApi.serverSearch({
           searchText: text,
           lang: language,
           pagination: `${pageNumber};20`,

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import DropdownNavigation from './DropdownNavigation';
-import { getLanguage } from 'store/selectors';
-import { changeLanguage } from 'store/slices';
+import { changeLanguage, getLanguage } from 'store/slices/user';
 
 export default function LanguageDropdown({ options, title, theme }) {
   const dispatch = useDispatch();

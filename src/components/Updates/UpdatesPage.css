@@ -1,0 +1,19 @@
+.updates-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 50px 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.updates-page-container .updates-slide {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .updates-page-container {
+        padding: 0;
+    }
+}

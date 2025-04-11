@@ -9,10 +9,10 @@ import logoutIconW from 'images/account/logout-icon.svg';
 import logoutIconB from 'images/account/logout-icon_black.svg';
 import HashButton from 'components/LinkButton/HashButton';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 import { adminHash } from 'utils/constants';
 
-export default function AdminNavbar() {
+export default function AdminNavbar({ logout }) {
   const theme = useSelector(getCurrentTheme);
   return (
     <nav className="admin-navbar">
@@ -54,8 +54,8 @@ export default function AdminNavbar() {
 
         <li className="admin-navbar__item">
           <HashButton
-            to="/"
             icon={theme === 'dark' ? logoutIconW : logoutIconB}
+            onClick={logout}
           >
             Выйти
           </HashButton>

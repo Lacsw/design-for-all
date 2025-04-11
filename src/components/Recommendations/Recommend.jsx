@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import imgBlack from '../../images/error-image_black.jpg';
 import imgWhite from '../../images/error-image_white.jpg';
 import './Recommend.css';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 
 function cropTitle(title) {
   if (!title) return 'Заголовок отсутствует';

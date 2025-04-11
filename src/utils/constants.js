@@ -75,12 +75,12 @@ export const langSelectOptions = [
   { label: 'Испанский', value: 'es' },
 ];
 
-export const categorySelectOptions = [
-  { label: 'десктоп', value: 'десктоп' },
-  { label: 'телефон', value: 'телефон' },
-  { label: 'веб', value: 'веб' },
-  { label: 'руководство', value: 'руководство' },
-];
+// export const categorySelectOptions = [
+//   { label: 'десктоп', value: 'десктоп' },
+//   { label: 'телефон', value: 'телефон' },
+//   { label: 'веб', value: 'веб' },
+//   { label: 'руководства', value: 'руководства' },
+// ];
 
 export const userRoleSelectOptions = [
   { label: 'Супер админ', value: 'super_admin' },
@@ -173,7 +173,7 @@ export const mainCategory = [
       desktop: 'десктоп',
       web: 'веб',
       mobile: 'телефон',
-      manual: 'руководство',
+      manual: 'руководства',
     },
   },
   {

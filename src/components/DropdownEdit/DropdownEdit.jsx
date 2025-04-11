@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { languageList, editList } from 'utils/constants';
 import { useSelector } from 'react-redux';
-import { selectArticle } from 'store/slices/articleSlice';
+import { selectArticle } from 'store/slices/article';
 import './DropdownEdit.css';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 
 const DropdownEdit = () => {
   const theme = useSelector(getCurrentTheme);
@@ -34,7 +34,12 @@ const DropdownEdit = () => {
               className="edit-list__item"
               onClick={() =>
                 navigate('/#/author/new-article', {
-                  state: { name: 'correct', original: articleId, type: 'updated', lang },
+                  state: {
+                    name: 'correct',
+                    original: articleId,
+                    type: 'updated',
+                    lang,
+                  },
                 })
               }
             >
@@ -50,7 +55,12 @@ const DropdownEdit = () => {
               }`}
               onClick={() =>
                 navigate('/#/author/new-article', {
-                  state: { name: 'translate', original: articleId, type: 'created_lang', lang },
+                  state: {
+                    name: 'translate',
+                    original: articleId,
+                    type: 'created_lang',
+                    lang,
+                  },
                 })
               }
             >

@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { useSelector } from 'react-redux';
-import { selectTitles } from 'store/slices/articleSlice';
+import { selectTitles } from 'store/slices/article';
 
 export default function Catalog({ section, setSection }) {
   const catalogRef = useRef();
@@ -42,7 +42,7 @@ export default function Catalog({ section, setSection }) {
     <div className="catalog__container" ref={catalogRef}>
       {isMobile ? (
         activeComponent === 'mobileSidebar' && (
-          <Overlay onClick={closeSidebar} zIndex={998} disableHover ={ true}>
+          <Overlay onClick={closeSidebar} zIndex={998} disableHover={true}>
             <SideBar section={section} setSection={setSection} />
           </Overlay>
         )

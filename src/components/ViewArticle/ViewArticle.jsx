@@ -1,4 +1,7 @@
-import { RichTextEditor } from 'components';
+import {
+  RichTextEditor,
+  ImageWithFallback,
+} from 'components';
 import './ViewArticle.css';
 import Recommend from 'components/Recommendations/Recommend';
 import { Link, useLocation } from 'react-router-dom';
@@ -19,6 +22,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
   const isUpdate =
     location.state?.type === 'updated' ||
     location.state?.type === 'created_lang';
+
   return (
     <section className="view-article">
       <h2 className="view-article__title">{title || mainTitle}</h2>
@@ -55,10 +59,12 @@ export default function ViewArticle({ original, title, rejectFields }) {
             }view-article__label`}
           >
             <span className="view-article__sub-title">Картинка статьи</span>
-            <img
+            <ImageWithFallback
               className="view-article__img"
               src={original.image}
               alt="Картинка статьи"
+              fallbackClassName="view-article__image-placeholder"
+              fallbackAlt="Заглушка для статьи"
             />
           </div>
         )}

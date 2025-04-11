@@ -1,4 +1,4 @@
-import { RichTextEditor } from 'components';
+import { RichTextEditor, ImageWithFallback } from 'components';
 import Recommend from 'components/Recommendations/Recommend';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { langSelectOptions } from 'utils/constants';
 import './CheckFields.css';
 import RadioButtons from 'components/RadioButtons/RadioButtons';
 import { useDispatch } from 'react-redux';
-import { setDecision } from 'store/slices';
+import { setDecision } from 'store/slices/user';
 
 const possibleFields = [
   'sub_category',
@@ -70,10 +70,12 @@ const CheckFields = ({ offer, title }) => {
               <RadioButtons name="image" onChoice={handleChoice} />
               Картинка статьи
             </div>
-            <img
+            <ImageWithFallback
               className="view-article__img"
               src={offer.image}
               alt="Картинка статьи"
+              fallbackClassName="view-article__image-placeholder"
+              fallbackAlt="Заглушка для статьи"
             />
           </div>
         )}

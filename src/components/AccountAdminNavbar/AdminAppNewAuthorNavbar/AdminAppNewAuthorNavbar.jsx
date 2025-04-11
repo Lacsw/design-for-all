@@ -6,9 +6,10 @@ import rejectIconB from 'images/account/cancel-icon_black.svg';
 import backIconW from 'images/account/logout-icon.svg';
 import backIconB from 'images/account/logout-icon_black.svg';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme, getDecision } from 'store/selectors';
+import { getDecision } from 'store/slices/user';
+import { getCurrentTheme } from 'store/slices/theme';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { sendDecision } from 'utils/api/admin';
+import adminApi from 'utils/api/admin';
 import { Modal } from 'components';
 import './AdminAppNewAuthorNavbar.css';
 import ReasonFields from './ReasonFields';
@@ -79,7 +80,8 @@ export default function AdminAppNewAuthorNavbar() {
       fullData.reason_rejected = inputRef.current.value;
     }
     const endPoint = action + requestPaths[state.type];
-    sendDecision(endPoint, fullData)
+    adminApi
+      .sendDecision(endPoint, fullData)
       .then((link) => {
         if (state.type === 'created_account') {
           navigate(-1);

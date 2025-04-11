@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AccountAuthor.css';
 import {
   AuthorArticlesNav,
@@ -14,17 +14,15 @@ import {
 
 import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import authApi from 'utils/api/auth';
-import { signInSuccess } from 'store/slices';
+import { useLogout } from 'utils/hooks/useLogout';
 
 const authorTabs = ['approve', 'drafted', 'offered', 'rejected', 'deleted'];
 
 export default function AccountAuthor({ hash, resetSection }) {
   const isMobile = useIsMobile();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
   const [, setSearchParams] = useSearchParams();
@@ -40,16 +38,10 @@ export default function AccountAuthor({ hash, resetSection }) {
   const NavBar =
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
-  const handleLogout = useCallback(async () => {
-    try {
-      await authApi.logout();
-      resetSection();
-      dispatch(signInSuccess(null));
-      navigate('/');
-    } catch (err) {
-      console.error('Ошибка при выходе:', err);
-    }
-  }, [dispatch, resetSection, navigate]);
+  const handleLogout = useLogout({ 
+    resetSection,
+    redirectTo: '/'
+  });
 
   useEffect(() => {
     if (!isValid || (user && !access)) return;

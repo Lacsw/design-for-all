@@ -2,12 +2,13 @@ import './ArticleHeader.css';
 import DropdownLanguage from 'components/DropdownLanguage/DropdownLanguage';
 import DropdownEdit from 'components/DropdownEdit/DropdownEdit';
 import { useSelector } from 'react-redux';
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser } from 'store/slices/user';
 
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
   const currentUser = useSelector(getCurrentUser);
-  const isAdmin = currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
-  
+  const isAdmin =
+    currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
+
   return (
     <>
       <div className="article-header">

@@ -21,7 +21,7 @@ export default function Input({
   const [isEmpty, setIsEmpty] = useState(true);
 
   useEffect(() => {
-    const isEmpty = value.trim() === '';
+    const isEmpty = value ? value.trim() === '' : true;
     setIsEmpty(isEmpty);
   }, [value]);
 

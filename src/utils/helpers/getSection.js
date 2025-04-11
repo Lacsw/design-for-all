@@ -28,7 +28,8 @@ import { mainCategory as mainCategoryTable } from 'utils/constants';
 */
 
 export default function getSection(titles, lang, mainCategory) {
-    const validKeys = ['web', 'desktop', 'mobile', 'manual'];
+    const validKeys = Object.keys(titles[lang] || {});
+    
     const rawHash = window.location.hash
       ? window.location.hash.replace(/^#\/?/, '')
       : '';
@@ -55,5 +56,6 @@ export default function getSection(titles, lang, mainCategory) {
       }
     }
   
-    return 'desktop';
+    // Возвращаем первый доступный ключ или 'desktop' как запасной вариант
+    return validKeys.length > 0 ? validKeys[0] : 'desktop';
   }

@@ -1,74 +1,90 @@
+// @ts-check
 import { apiUrl } from 'utils/config';
+import { handleResponse } from './responseHandler';
 
-const headers = {
-  'Content-Type': 'application/json',
-};
+export class AdminApi {
+  /** @type {string} */
+  _baseUrl;
+  /** @type {HeadersInit} */
+  _headers;
 
-export async function createUser(data) {
-  const options = {
-    method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(data),
-  };
-  return fetch(apiUrl + '/admin_create_user', options).then((res) => {
-    if (res.ok) {
-      return res.status !== 200 ? res.statusText : res.json();
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
-  });
+  /** @param {{ baseUrl: string; headers: HeadersInit }} options */
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
+
+  /**
+   * @param {{
+   *   login: string;
+   *   password: string;
+   *   email: string;
+   *   name: string;
+   *   role: string;
+   * }} data
+   */
+  async createUser(data) {
+    const response = await fetch(`${this._baseUrl}/admin_create_user`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    return handleResponse(response);
+  }
+
+  /**
+   * @param {string} endPoint
+   * @param {{ uuid: string; decision: string; reason?: string }} data
+   */
+  async sendDecision(endPoint, data) {
+    const response = await fetch(`${this._baseUrl}/admin_${endPoint}`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    return handleResponse(response);
+  }
+
+  /**
+   * @param {string} endPoint
+   * @param {string} pagination
+   */
+  async getRequests(endPoint, pagination) {
+    const response = await fetch(
+      `${this._baseUrl}/admin_find_${endPoint}/${pagination}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include',
+      }
+    );
+    return handleResponse(response);
+  }
+
+  /**
+   * @param {string} endPoint
+   * @param {string} uuid
+   */
+  async getOneRequest(endPoint, uuid) {
+    const response = await fetch(
+      `${this._baseUrl}/admin_find_${endPoint}/${uuid}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include',
+      }
+    );
+    return handleResponse(response);
+  }
 }
 
-export async function sendDecision(endPoint, data) {
-  const options = {
-    method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(data),
-  };
-  return fetch(apiUrl + '/admin_' + endPoint, options).then((res) => {
-    if (res.ok) {
-      return res.status !== 200 ? res.statusText : res.json();
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
-  });
-}
+const adminApi = new AdminApi({
+  baseUrl: apiUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export async function getRequests(endPoint, pagination) {
-  const options = {
-    method: 'GET',
-    headers,
-    credentials: 'include',
-  };
-  return fetch(
-    apiUrl + '/admin_find_' + endPoint + '/' + pagination,
-    options
-  ).then((res) => {
-    if (res.ok) {
-      return res.status !== 200 ? res.statusText : res.json();
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
-  });
-}
-
-
-export async function getOneRequest(endPoint, uuid) {
-  const options = {
-    method: 'GET',
-    headers,
-    credentials: 'include',
-  };
-  return fetch(
-    apiUrl + '/admin_find_' + endPoint + '/' + uuid,
-    options
-  ).then((res) => {
-    if (res.ok) {
-      return res.status !== 200 ? res.statusText : res.json();
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
-  });
-}
+export default adminApi;

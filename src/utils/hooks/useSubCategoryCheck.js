@@ -1,3 +1,4 @@
+// @ts-check
 import { useState } from 'react';
 import authorApi from 'utils/api/author';
 
@@ -7,12 +8,13 @@ import authorApi from 'utils/api/author';
  * @param {string} lang - Язык (например, "en", "ru" и т.д.).
  * @returns {{
  *   hint: string;
+ *   uuid: string | null;
  *   checkSubCategory: (subCategory: string) => Promise<void>;
  *   clearHint: () => void;
  * }}
- *   hint – сообщение для пользователя; checkSubCategory – функция, которая
- *   принимает подкатегорию и выполняет проверку; clearHint – функция для сброса
- *   сообщения.
+ *   hint – сообщение для пользователя; uuid – идентификатор существующей подкатегории или null;
+ *   checkSubCategory – функция, которая принимает подкатегорию и выполняет проверку;
+ *   clearHint – функция для сброса сообщения.
  */
 function useSubCategoryCheck(lang) {
   const [hint, setHint] = useState('');
@@ -28,19 +30,18 @@ function useSubCategoryCheck(lang) {
         setUuid(data.uuid);
       }
     } catch (error) {
-      const errorMsg = error.toString();
-      if (errorMsg.includes('404')) {
-        // 404: подкатегория не найдена – очищаем хинт
+      if (error.status === 404) {
+        // 404: подкатегория не найдена – значит она свободна
         setHint('');
-        setUuid(null);
-      } else if (errorMsg.includes('422')) {
+        setUuid(null)
+      } else if (error.status === 422) {
         setHint('Некорректный запрос. Проверьте ввод.');
         setUuid(null);
-      } else if (errorMsg.includes('401')) {
+      } else if (error.status === 401) {
         setHint('Для проверки необходимо авторизоваться.');
         setUuid(null);
       } else {
-        setHint('Ошибка проверки подкатегории.');
+        setHint(error.message || 'Ошибка проверки подкатегории.');
         setUuid(null);
       }
     }
