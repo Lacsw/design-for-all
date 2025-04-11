@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { sxRoot } from './styles';
 import './styles.css';
 import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/selectors';
+import { getCurrentTheme } from 'store/slices/theme';
 
 /** @import * as Types from "../types" */
 
@@ -28,9 +28,6 @@ export const Bar = memo(
     className,
     sx,
   }) => {
-    const theme = useSelector(getCurrentTheme);
-    const theme2 = useTheme();
-    console.log('THEME', theme, theme2);
     return (
       <Modal
         open={isShowing}
@@ -45,7 +42,7 @@ export const Bar = memo(
         }
         sx={mergeSx(sxRoot, sx)}
         id={id}
-        className={clsx(className)}
+        className={clsx('!!!!!!!!!!!!!', className)}
       >
         <Box
           className={clsx('article-navigator', isShowing && 'visible')}
@@ -53,6 +50,7 @@ export const Bar = memo(
         >
           <Box className="article-navigator__container">
             <span className="heading-text">{label}</span>
+
             <span className="counter">
               {index + 1}/{quantity || '\u00A0'}
             </span>
