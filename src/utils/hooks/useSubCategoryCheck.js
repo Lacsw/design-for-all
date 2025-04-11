@@ -1,3 +1,4 @@
+// @ts-check
 import { useState } from 'react';
 import authorApi from 'utils/api/author';
 
@@ -7,12 +8,13 @@ import authorApi from 'utils/api/author';
  * @param {string} lang - Язык (например, "en", "ru" и т.д.).
  * @returns {{
  *   hint: string;
+ *   uuid: string | null;
  *   checkSubCategory: (subCategory: string) => Promise<void>;
  *   clearHint: () => void;
  * }}
- *   hint – сообщение для пользователя; checkSubCategory – функция, которая
- *   принимает подкатегорию и выполняет проверку; clearHint – функция для сброса
- *   сообщения.
+ *   hint – сообщение для пользователя; uuid – идентификатор существующей подкатегории или null;
+ *   checkSubCategory – функция, которая принимает подкатегорию и выполняет проверку;
+ *   clearHint – функция для сброса сообщения.
  */
 function useSubCategoryCheck(lang) {
   const [hint, setHint] = useState('');
