@@ -5,7 +5,7 @@ import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
 import './styles.css';
-import { barSlotProps } from './constants';
+import { barSlotProps } from '../constants';
 
 /** @import * as Types from "../types" */
 
@@ -19,7 +19,6 @@ export const Bar = memo(
   ({
     parentSelector,
     isShowing,
-    disableScrollLock,
     label,
     index,
     quantity,

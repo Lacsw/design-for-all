@@ -98,7 +98,6 @@ export interface IArticleNavigatorProps {
 export interface IArtNavBarProps extends IBaseProps {
   parentSelector?: IArticleNavigatorProps['parentSelector'];
   isShowing: boolean;
-  disableScrollLock?: boolean;
   label: string;
   /** Номер текущего заголовка */
   index: number;
@@ -109,7 +108,6 @@ export interface IArtNavBarProps extends IBaseProps {
 }
 
 export type TClosingReasons = 'click' | 'escapeKeyDown' | 'backdropClick';
-
 export interface ICloseArtNavModal {
   (reason: TClosingReasons, el?: HTMLHeadElement): void;
 }

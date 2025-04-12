@@ -224,7 +224,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     <>
       <Bar
         parentSelector={parentSelector}
-        isShowing={isShowing}
+        isShowing={isShowing && !isExpanded}
         label={'Ahaha TEST pumba'}
         index={0}
         quantity={headings.length}

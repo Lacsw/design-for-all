@@ -5,7 +5,7 @@ import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
 import './styles.css';
-import { modalSlotProps } from '../Bar/constants';
+import { modalSlotProps } from '../constants';
 
 /** @import * as Types from "../types" */
 
@@ -36,6 +36,7 @@ export const Modal = ({
       }
       className={className}
       slotProps={slotProps ?? modalSlotProps}
+      disableScrollLock
       onClose={(evt, reason) => onClose(reason)}
     >
       <Fade in={isOpen}>
