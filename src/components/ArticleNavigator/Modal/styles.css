@@ -77,23 +77,3 @@
 .theme-light111 .article-navigator__item .counter {
   color: var(--color-main-disabled);
 }
-
-/* --- --- MEDIA --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
-/* @media (width < 1300px) {
-  .article-navigator__list {
-    width: 60vw;
-  }
-}
-
-@media (width < 900px) {
-  .article-navigator__list {
-    width: 80vw;
-  }
-}
-
-@media (width < 600px) {
-  .article-navigator__list {
-    width: 90vw;
-  }
-} */

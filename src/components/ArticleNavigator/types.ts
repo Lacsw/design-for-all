@@ -54,14 +54,15 @@ export interface IArticleNavigatorProps {
    */
   targetHeadings: number[];
   slotProps?: {
-    bar?: IBaseProps;
-    modal?: IBaseProps;
+    bar?: IBaseProps & { slotProps?: ModalOwnProps['slotProps'] };
+    modal?: IBaseProps & { slotProps?: ModalOwnProps['slotProps'] };
   };
 }
 
 export interface IArtNavBarProps extends IBaseProps {
   parentSelector?: IArticleNavigatorProps['parentSelector'];
   isShowing: boolean;
+  disableScrollLock?: boolean;
   label: string;
   /** Номер текущего заголовка */
   index: number;
@@ -71,14 +72,16 @@ export interface IArtNavBarProps extends IBaseProps {
   slotProps?: ModalOwnProps['slotProps'];
 }
 
-export type TClosingReasons = 'click' | 'esc' | 'backdropClick';
+export type TClosingReasons = 'click' | 'escapeKeyDown' | 'backdropClick';
 
 export interface ICloseArtNavModal {
   (reason: TClosingReasons, el?: HTMLHeadElement): void;
 }
 
 export interface IArtNavModalProps extends IBaseProps {
+  parentSelector?: IArticleNavigatorProps['parentSelector'];
   isOpen: boolean;
   headings: HTMLHeadElement[];
   onClose: ICloseArtNavModal;
+  slotProps?: ModalOwnProps['slotProps'];
 }

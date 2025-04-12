@@ -6,3 +6,10 @@ export const barSlotProps = {
     timeout: 700,
   },
 };
+
+/** @type {import('@mui/material').ModalOwnProps['slotProps']} */
+export const modalSlotProps = {
+  backdrop: {
+    timeout: 700,
+  },
+};

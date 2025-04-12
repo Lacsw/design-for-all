@@ -19,6 +19,7 @@ export const Bar = memo(
   ({
     parentSelector,
     isShowing,
+    disableScrollLock,
     label,
     index,
     quantity,
@@ -42,7 +43,7 @@ export const Bar = memo(
         }
         sx={mergeSx(sxRoot, sx)}
         id={id}
-        className={className}
+        className={clsx('BAR_BAR_BAR', className)}
         slotProps={slotProps ?? barSlotProps}
       >
         <Fade in={isShowing}>

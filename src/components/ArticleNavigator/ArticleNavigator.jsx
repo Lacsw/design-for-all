@@ -36,11 +36,6 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 }) {
   const { bar: barProps, modal: modalProps } = slotProps ?? {};
 
-  // const parentEl = useMemo(
-  //   () => document.querySelector(parentSelector),
-  //   [parentSelector]
-  // );
-
   const [targetEl, setTargetEl] =
     /** @type {TState<HTMLElement | null | undefined>} */ (useState());
 
@@ -54,14 +49,16 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
    * @type {React.MutableRefObject<{
    *   el: Element | HTMLDivElement | Document | null;
    *   data: Element | HTMLElement | null;
+   *   direction: 'ltr' | 'rtl';
    * }>}
    */
   const scrollableRef = useRef({
     el: null,
     data: null,
+    direction: 'ltr',
   });
 
-  const headerElRef = useRef(/** @type {HTMLElement | null} */ (null));
+  // const headerElRef = useRef(/** @type {HTMLElement | null} */ (null));
 
   const [isShowing, setIsShowing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -97,7 +94,9 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   };
 
   /** @type {Types.ICloseArtNavModal} */
-  const handleModalClosing = (reason, el) => {};
+  const handleModalClosing = (reason, el) => {
+    setIsExpanded(false);
+  };
 
   useEffect(() => {
     setTargetEl(findTargetEl());
@@ -137,7 +136,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         : targetRef.current.querySelector(selector);
 
     if (!scrollableEl) {
-      scrollableRef.current = { el: null, data: null };
+      scrollableRef.current = { el: null, data: null, direction: 'ltr' };
       return;
     }
 
@@ -150,13 +149,21 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         scrollableEl[key]
       : scrollableEl;
 
-    scrollableRef.current = { el: scrollableEl, data: elWithScrollData };
+    scrollableRef.current = {
+      el: scrollableEl,
+      data: elWithScrollData,
+      direction: 'ltr',
+    };
+
+    const styles = getComputedStyle(elWithScrollData);
+    // @ts-ignore
+    scrollableRef.current.direction = styles.direction;
 
     if (elWithScrollData instanceof HTMLElement) {
-      elWithScrollData.style.scrollbarGutter = 'stable';
+      // elWithScrollData.style.scrollbarGutter = 'stable';
     }
 
-    headerElRef.current = document.querySelector('header.header') || null;
+    // headerElRef.current = document.querySelector('header.header') || null;
 
     /** @type {(evt: Event) => void} */
     function handleScroll(evt) {
@@ -192,7 +199,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       <Bar
         parentSelector={parentSelector}
         isShowing={isShowing}
-        label={'Ahaha TEST pumbaggg'}
+        label={'Ahaha TEST pumba'}
         index={0}
         quantity={headings.length}
         onClick={handleBarClick}
@@ -200,6 +207,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       />
 
       <Modal
+        parentSelector={parentSelector}
         isOpen={isExpanded}
         headings={headings}
         onClose={handleModalClosing}
@@ -207,14 +215,4 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       />
     </>
   );
-
-  // if (parentEl) {
-  //   return (
-  //     <>
-  //       {createPortal(barEl, parentEl)}
-  //       {createPortal(modalEl, parentEl)}
-  //     </>
-  //   );
-  // }
-  // return null;
 });
