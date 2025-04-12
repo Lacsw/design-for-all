@@ -34,7 +34,7 @@ export const Modal = ({
       container={() =>
         parentSelector ? document.querySelector(parentSelector) : null
       }
-      className={clsx('LIST_LIST_LIST', className)}
+      className={className}
       slotProps={slotProps ?? modalSlotProps}
       onClose={(evt, reason) => onClose(reason)}
     >
@@ -50,7 +50,7 @@ export const Modal = ({
                     onClose('click', headingEl);
                     setTimeout(
                       () => headingEl.scrollIntoView({ behavior: 'smooth' }),
-                      50 // equals to transition delay in ./styles.js .header (see #25-04-01-00-14)
+                      50 // equals to transition delay for .header (see #25-04-01-00-14)
                     );
                   }}
                 >

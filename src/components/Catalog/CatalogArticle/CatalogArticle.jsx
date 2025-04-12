@@ -17,9 +17,22 @@ import {
   ImageWithFallback,
 } from 'components';
 import './CatalogArticle.css';
+import './withNavigator.css';
 
-const scrollableElParams = ['html', 'root'];
+const scrollableElParams = {
+  selector: 'html',
+  searchMode: 'root',
+  flag: true,
+};
 const targetHeadings = [1, 2, 3, 4];
+const artNavSlotProps = {
+  bar: {
+    id: 'catalog-article__navigator-bar',
+  },
+  modal: {
+    id: 'catalog-article__navigator-modal',
+  },
+};
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
@@ -48,6 +61,11 @@ export default function CatalogArticle() {
   }, [lang, articleId, needToFetch, dispatch]);
 
   // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
+
+  const headerElRef = useRef(/** @type {HTMLElement | null} */ (null));
+  useEffect(() => {
+    headerElRef.current = document.querySelector('div#root header.header');
+  }, []);
 
   const [navigatorFlag, setNavigatorFlag] = useState(false);
   const handleEditorCreation = useCallback((editor) => {
@@ -86,10 +104,24 @@ export default function CatalogArticle() {
             <ArticleNavigator
               flag={navigatorFlag}
               // parentSelector="body"
-              targetSelector="body div#root .tiptap.ProseMirror"
               targetRef={articleRef}
+              targetSelector=".tiptap.ProseMirror"
               scrollableElParams={scrollableElParams}
               targetHeadings={targetHeadings}
+              onOpen={(params) => {
+                const header = headerElRef.current;
+                if (!header) {
+                  return;
+                }
+                header.style.setProperty('--scroll-w', params.barWidth + 'px');
+                header.classList.add('article-navigator_expanded');
+              }}
+              onClose={(params) => {
+                headerElRef.current?.classList.remove(
+                  'article-navigator_expanded'
+                );
+              }}
+              slotProps={artNavSlotProps}
             />
 
             <RichTextEditor

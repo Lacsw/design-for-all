@@ -9,8 +9,7 @@ export const sxRoot = (theme) => {
   const isLight = useSelector(getIsThemeLight);
 
   return {
-    '--vis-dur': '400ms',
-
+    right: 'var(--art-nav-right, 0px)',
     pointerEvents: 'none',
     touchAction: 'none',
     zIndex: 100,

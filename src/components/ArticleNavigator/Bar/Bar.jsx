@@ -11,7 +11,7 @@ import { barSlotProps } from './constants';
 
 /**
  * Панель, появляющаяся в верхней части статьи.\
- * При клике в неё рендериится модалка - отдельный компонент.
+ * При клике по бару - рендерится модалка.
  *
  * @type {React.FC<Types.IArtNavBarProps>}
  */
@@ -43,7 +43,7 @@ export const Bar = memo(
         }
         sx={mergeSx(sxRoot, sx)}
         id={id}
-        className={clsx('BAR_BAR_BAR', className)}
+        className={className}
         slotProps={slotProps ?? barSlotProps}
       >
         <Fade in={isShowing}>

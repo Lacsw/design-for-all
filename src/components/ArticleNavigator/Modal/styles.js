@@ -10,6 +10,9 @@ export const sxRoot = (theme) => {
   const isLight = useSelector(getIsThemeLight);
 
   return {
+    right: 'var(--art-nav-right, 0px)',
+    zIndex: 110,
+
     '.article-navigator__modal': {
       position: 'absolute',
       top: '17vh',
