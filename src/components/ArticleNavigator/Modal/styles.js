@@ -48,11 +48,22 @@ export const sxRoot = (theme) => {
       ':focus-visible': {
         outline: '0',
       },
+
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
     },
 
     '.article-navigator__item': {
       margin: '10px 0',
       padding: '0px 13px',
+
+      cursor: 'pointer',
+
+      '&.article-navigator__item_current': {
+        background: 'var(--color-item-active)',
+        borderRadius: '6px',
+      },
     },
 
     [media.down(1300)]: {

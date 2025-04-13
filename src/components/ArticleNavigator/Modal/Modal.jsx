@@ -23,6 +23,10 @@ export const Modal = ({
   className,
   parentSelector,
   slotProps: slotPropsOuter,
+  topMargin,
+  scrollableEl,
+  curHeading,
+  setCurHeading,
 }) => {
   const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
   const headingsLength = headings.length;
@@ -48,12 +52,31 @@ export const Modal = ({
               return (
                 <li
                   key={idx}
-                  className="article-navigator__item"
+                  className={clsx(
+                    'article-navigator__item',
+                    curHeading === headingEl &&
+                      'article-navigator__item_current'
+                  )}
                   onClick={(evt) => {
+                    if (evt.detail > 1) return;
                     onClose('click', headingEl);
                     setTimeout(
-                      () => headingEl.scrollIntoView({ behavior: 'smooth' }),
-                      50 // equals to transition delay for .header (see #25-04-01-00-14)
+                      () => {
+                        const targetY = headingEl.getBoundingClientRect().y;
+                        const curY = curHeading?.getBoundingClientRect().y ?? 0;
+                        const delta = targetY > curY ? 2 : -2;
+
+                        document.documentElement.scrollTo({
+                          top:
+                            headingEl.getBoundingClientRect().y -
+                            (scrollableEl?.getBoundingClientRect().y ?? 0) -
+                            -topMargin +
+                            delta,
+                          left: 0,
+                          behavior: 'smooth',
+                        });
+                      },
+                      50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
                     );
                   }}
                 >

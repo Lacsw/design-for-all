@@ -24,6 +24,7 @@ const scrollableElParams = {
   selector: 'html',
   searchMode: 'root',
   flag: true,
+  intersectionMargin: '-115px 0px 0px 0px',
 };
 const targetHeadings = [1, 2, 3, 4];
 
@@ -106,7 +107,7 @@ export default function CatalogArticle() {
           <div className="article__editor-container">
             <ArticleNavigator
               flag={navigatorFlag}
-              parentSelector="body"
+              // parentSelector="body"
               targetRef={articleRef}
               targetSelector=".tiptap.ProseMirror"
               scrollableElParams={scrollableElParams}

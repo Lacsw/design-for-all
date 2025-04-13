@@ -31,11 +31,16 @@ export function getScrollBarWidth() {
 /**
  * Вернет паддинги элемента в пикселях.
  *
- * @param {CSSStyleDeclaration} value результат `getComputedStyles`
+ * @param {CSSStyleDeclaration | string} value результат `getComputedStyles`
  * @returns {{ t: number; r: number; b: number; l: number }}
  */
 export function extractPaddings(value) {
-  const paddingStr = value.padding;
+  let paddingStr = '';
+  if (typeof value === 'string') {
+    paddingStr = value;
+  } else {
+    paddingStr = value.padding;
+  }
   const paddings = paddingStr.split(' ').map((i) => parseFloat(i));
 
   const res = {

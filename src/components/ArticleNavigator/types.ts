@@ -43,6 +43,13 @@ export interface IScrollableElParams {
    * положение слева-справа или размер.
    */
   flag: boolean;
+  /**
+   * Марджин для прокручиваемого эл-та, который стоит учитывать при расчете
+   * пересечений заголовков.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin
+   */
+  intersectionMargin?: string;
 }
 
 export interface IBarBaseProps extends IBaseProps {
@@ -119,13 +126,21 @@ export interface IArtNavBarProps extends IBarBaseProps {
 
 export type TClosingReasons = 'click' | 'escapeKeyDown' | 'backdropClick';
 export interface ICloseArtNavModal {
-  (reason: TClosingReasons, el?: HTMLHeadElement): void;
+  (reason: TClosingReasons, el?: HTMLHeadingElement): void;
 }
 
 export interface IArtNavModalProps extends IBaseProps {
   parentSelector?: IArticleNavigatorProps['parentSelector'];
   isOpen: boolean;
-  headings: HTMLHeadElement[];
+  headings: HTMLHeadingElement[];
   onClose: ICloseArtNavModal;
+  curHeading: HTMLHeadingElement | null;
+  setCurHeading: React.Dispatch<
+    React.SetStateAction<HTMLHeadingElement | null>
+  >;
   slotProps?: ModalOwnProps['slotProps'];
+  /** intersection observer, rootMargin - top */
+  topMargin: number;
+  /** parent with scroll */
+  scrollableEl: Element | null;
 }

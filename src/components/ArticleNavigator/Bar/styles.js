@@ -29,6 +29,7 @@ export const sxRoot = (theme) => {
     '.article-navigator': {
       pointerEvents: 'all',
       touchAction: 'initial',
+      cursor: 'pointer',
 
       position: 'absolute',
       top: '62px',

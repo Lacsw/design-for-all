@@ -1,5 +1,12 @@
 // @ts-check
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   scrollPercentDefault,
@@ -47,6 +54,9 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 
   const [headings, setHeadings] = useState(
     /** @type {HTMLHeadingElement[]} */ ([])
+  );
+  const [curHeading, setCurHeading] = useState(
+    /** @type {HTMLHeadingElement | null} */ (null)
   );
 
   const scrollableRef = useRef(
@@ -220,12 +230,64 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     ref.barWidth = barW;
   }, [scrollableElParams, targetRef]);
 
+  const topMargin = useMemo(
+    () => extractPaddings(scrollableElParams.intersectionMargin || '').t,
+    [scrollableElParams.intersectionMargin]
+  );
+
+  useEffect(() => {
+    if (!targetEl || !headings.length) {
+      return;
+    }
+
+    let root = null;
+    if (scrollableElParams.selector !== 'html') {
+      const el = document.querySelector(scrollableElParams.selector);
+      if (!el) {
+        throw new Error("Article navigator. Can't find scrollable element!");
+      }
+      root = el;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        const entry = entries[0];
+        if (
+          entry.intersectionRect.y <= -topMargin + 70 &&
+          entry.target?.textContent
+        ) {
+          // @ts-ignore
+          setCurHeading(entry.target);
+        }
+      },
+      {
+        root: root,
+        rootMargin: scrollableElParams.intersectionMargin || '0px 0px 0px 0px',
+        threshold: 1,
+      }
+    );
+
+    headings.forEach((headingEl) => {
+      observer.observe(headingEl);
+    });
+  }, [
+    targetEl,
+    headings,
+    scrollableElParams.selector,
+    scrollableElParams.intersectionMargin,
+    topMargin,
+  ]);
+
   return (
     <>
       <Bar
         parentSelector={parentSelector}
         isShowing={isShowing && !isExpanded}
-        label={'Ahaha TEST pumba'}
+        label={
+          curHeading
+            ? curHeading.textContent || ''
+            : headings[0]?.textContent || ''
+        }
         index={0}
         quantity={headings.length}
         onClick={handleBarClick}
@@ -237,6 +299,10 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         isOpen={isExpanded}
         headings={headings}
         onClose={handleModalClosing}
+        topMargin={topMargin}
+        scrollableEl={scrollableRef.current.data}
+        curHeading={curHeading}
+        setCurHeading={setCurHeading}
         {...modalProps}
       />
     </>
