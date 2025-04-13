@@ -4,7 +4,6 @@ import { Box, Fade, Modal as ModalMui } from '@mui/material';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
-import './styles.css';
 import { defaultModalSlotProps } from '../constants';
 import { deepmerge } from '@mui/utils';
 

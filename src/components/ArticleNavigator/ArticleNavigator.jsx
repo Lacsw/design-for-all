@@ -232,13 +232,13 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         {...barProps}
       />
 
-      {/* <Modal
+      <Modal
         parentSelector={parentSelector}
         isOpen={isExpanded}
         headings={headings}
         onClose={handleModalClosing}
         {...modalProps}
-      /> */}
+      />
     </>
   );
 });

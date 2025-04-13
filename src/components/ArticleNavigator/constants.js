@@ -17,6 +17,7 @@ export const defaultModalSlotProps = {
   },
 };
 
+/** @type {import('./types').IScrollableRefData} */
 export const scrollableRefStub = {
   el: null,
   data: null,

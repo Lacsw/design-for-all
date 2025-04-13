@@ -19,12 +19,15 @@ import {
 import './CatalogArticle.css';
 import './withNavigator.css';
 
+/** @type {import('components/ArticleNavigator/types').IScrollableElParams} */
 const scrollableElParams = {
   selector: 'html',
   searchMode: 'root',
   flag: true,
 };
 const targetHeadings = [1, 2, 3, 4];
+
+/** @type {import('components/ArticleNavigator/types').IArticleNavigatorProps['slotProps']} */
 const artNavSlotProps = {
   bar: {
     id: 'catalog-article__navigator-bar',
@@ -103,7 +106,7 @@ export default function CatalogArticle() {
           <div className="article__editor-container">
             <ArticleNavigator
               flag={navigatorFlag}
-              // parentSelector="body"
+              parentSelector="body"
               targetRef={articleRef}
               targetSelector=".tiptap.ProseMirror"
               scrollableElParams={scrollableElParams}

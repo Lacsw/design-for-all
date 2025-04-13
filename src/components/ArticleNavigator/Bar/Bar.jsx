@@ -1,12 +1,12 @@
 // @ts-check
 import React, { memo, useLayoutEffect, useState } from 'react';
-import { Box, Fade, Popper } from '@mui/material';
+import { Box, Fade } from '@mui/material';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
-import './styles.css';
 import { defaultBarSlotProps as defaultBarBaseProps } from '../constants';
 import { deepmerge } from '@mui/utils';
+import { createPortal } from 'react-dom';
 
 /** @import * as Types from "../types" */
 
@@ -29,61 +29,50 @@ export const Bar = memo(
     const baseProps = deepmerge({ ...defaultBarBaseProps }, basePropsOuter);
     const { id, sx, className, timeout } = baseProps;
 
-    const [anchorEl, setAnchorEl] = /** @type {TState<HTMLElement | null>} */ (
-      useState(null)
+    const [parentEl, setParentEl] = useState(
+      /** @type {Element | null} */ (null)
     );
 
     useLayoutEffect(() => {
       if (parentSelector) {
-        const elem = document.querySelector(parentSelector);
-        if (elem instanceof HTMLElement === false) {
+        const el = document.querySelector(parentSelector);
+        if (el) {
+          setParentEl(el);
+        } else {
           throw new Error(
-            `ArticleNavigator, Bar component:\n
-            Can't find element for appending bar. Passed prop "parentSelector" is ${parentSelector}.`
+            `Article navigator.\n
+            Bar component: can't find element for appending bar.\n
+            Passed prop "parentSelector" is: ${parentSelector}.`
           );
         }
       } else {
-        setAnchorEl(document.body);
+        setParentEl(document.body);
       }
     }, [parentSelector]);
 
-    if (!anchorEl) {
+    const markup = (
+      <Box sx={mergeSx(sxRoot, sx)} id={id} className={className}>
+        <Fade in={isShowing} timeout={timeout}>
+          <Box
+            className={clsx('article-navigator', isShowing && 'visible')}
+            onClick={onClick}
+          >
+            <Box className="article-navigator__container">
+              <span className="heading-text">{label}</span>
+
+              <span className="counter">
+                {index + 1}/{quantity || '\u00A0'}
+              </span>
+            </Box>
+          </Box>
+        </Fade>
+      </Box>
+    );
+
+    if (parentEl) {
+      return createPortal(markup, parentEl);
+    } else {
       return null;
     }
-
-    return (
-      <Popper
-        open={isShowing}
-        container={anchorEl}
-        anchorEl={anchorEl}
-        sx={mergeSx(sxRoot, sx)}
-        id={id}
-        className={className}
-        transition
-        popperOptions={{
-          strategy: 'fixed',
-        }}
-        style={{
-          transform: 'translateY(0px)',
-        }}
-      >
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={timeout}>
-            <Box
-              className={clsx('article-navigator', isShowing && 'visible')}
-              onClick={onClick}
-            >
-              <Box className="article-navigator__container">
-                <span className="heading-text">{label}</span>
-
-                <span className="counter">
-                  {index + 1}/{quantity || '\u00A0'}
-                </span>
-              </Box>
-            </Box>
-          </Fade>
-        )}
-      </Popper>
-    );
   }
 );
