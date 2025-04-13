@@ -38,6 +38,7 @@ export const Modal = ({
       className={className}
       slotProps={slotProps}
       disableScrollLock
+      closeAfterTransition
       onClose={(evt, reason) => onClose(reason)}
     >
       <Fade in={isOpen}>
