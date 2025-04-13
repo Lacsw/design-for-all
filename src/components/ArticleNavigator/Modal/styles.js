@@ -18,6 +18,10 @@ export const sxRoot = (theme) => {
       top: '17vh',
       left: '50%',
       transform: 'translate(-50%)',
+
+      ':focus-visible': {
+        outline: '0',
+      },
     },
 
     '.article-navigator__list': {
@@ -40,6 +44,10 @@ export const sxRoot = (theme) => {
       fontWeight: 400,
       fontSize: '14px',
       lineHeight: '130%',
+
+      ':focus-visible': {
+        outline: '0',
+      },
     },
 
     '.article-navigator__item': {
