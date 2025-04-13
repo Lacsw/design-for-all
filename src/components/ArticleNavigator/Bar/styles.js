@@ -11,14 +11,14 @@ export const sxRoot = (theme) => {
   return {
     position: 'fixed',
     top: 0,
-    left: 0,
-    bottom: 0,
-
-    transform: 'translateY(0px)',
     right: 'var(--art-nav-right, 0px)',
+    bottom: 0,
+    left: 0,
+    transform: 'translateY(0px)',
+    zIndex: 1,
+
     pointerEvents: 'none',
     touchAction: 'none',
-    zIndex: 100,
 
     color: 'var(--color-secondary)',
     fontFamily: 'Gotham',
