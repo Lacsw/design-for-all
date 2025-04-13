@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import './NewArticle.css';
 import plus from 'images/plus-icon.svg';
 import deleteIconW from 'images/delete-icon_white.svg';

@@ -1,5 +1,5 @@
 // @ts-check
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Fade, Modal as ModalMui } from '@mui/material';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
@@ -8,6 +8,12 @@ import { defaultModalSlotProps } from '../constants';
 import { deepmerge } from '@mui/utils';
 
 /** @import * as Types from "../types" */
+
+/**
+ * @param {HTMLLIElement} li
+ * @param {number} idx
+ */
+// const getScale = (li, idx) => {};
 
 /**
  * Модалка навигатора статей.
@@ -31,6 +37,66 @@ export const Modal = ({
   const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
   const headingsLength = headings.length;
 
+  const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
+
+  useEffect(() => {
+    setTimeout(() => {
+      const curLi = olRef.current?.querySelector(
+        '.article-navigator__item_current'
+      );
+      curLi?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    });
+  }, [isOpen]);
+
+  // useEffect(() => {
+  //   const cleanRef = {
+  //     cur: () => null,
+  //   };
+
+  //   const idTime = setTimeout(() => {
+  //     if (!olRef.current) {
+  //       console.log('RETURN');
+  //       return;
+  //     }
+  //     console.log('GOOD');
+
+  //     /** @type {MutationCallback} */
+  //     const cb = (changes, observer) => {
+  //       console.log('changes', changes);
+  //     };
+  //     let observer = new MutationObserver(cb);
+
+  //     cleanRef.cur = () => {
+  //       observer.disconnect();
+  //       // @ts-ignore
+  //       observer = null;
+  //       return null;
+  //     };
+
+  //     const liArr = Array.from(olRef.current.querySelectorAll('li'));
+  //     liArr.forEach((li) => {
+  //       if (!li) {
+  //         console.log('NO LI');
+  //         return;
+  //       }
+
+  //       observer.observe(li, {
+  //         attributes: true,
+  //         characterData: true,
+  //         attributeOldValue: true,
+  //       });
+  //     });
+  //   });
+
+  //   return () => {
+  //     cleanRef.cur();
+  //     clearTimeout(idTime);
+  //   };
+  // }, [headings, isOpen]);
+
   return (
     <ModalMui
       open={isOpen}
@@ -47,7 +113,22 @@ export const Modal = ({
     >
       <Fade in={isOpen}>
         <Box className={clsx('article-navigator__modal')}>
-          <ol className="article-navigator__list">
+          <ol
+            ref={olRef}
+            className="article-navigator__list"
+            // onScroll={(e) => {
+            //   if (!olRef.current) return;
+
+            //   const liEls = Array.from(olRef.current.querySelectorAll('li'));
+
+            //   liEls.forEach((i, idx) => {
+            //     // i.style.transform = getScale(i, idx);
+            //     if (idx === 3) {
+            //       console.log('listIIII', { i });
+            //     }
+            //   });
+            // }}
+          >
             {headings.map((headingEl, idx) => {
               return (
                 <li
@@ -59,7 +140,9 @@ export const Modal = ({
                   )}
                   onClick={(evt) => {
                     if (evt.detail > 1) return;
+
                     onClose('click', headingEl);
+
                     setTimeout(
                       () => {
                         const targetY = headingEl.getBoundingClientRect().y;

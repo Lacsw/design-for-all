@@ -26,7 +26,7 @@ const scrollableElParams = {
   flag: true,
   intersectionMargin: '-115px 0px 0px 0px',
 };
-const targetHeadings = [1, 2, 3, 4];
+const targetHeadings = [1, 2, 3];
 
 /** @type {import('components/ArticleNavigator/types').IArticleNavigatorProps['slotProps']} */
 const artNavSlotProps = {

@@ -249,7 +249,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       root = el;
     }
 
-    const observer = new IntersectionObserver(
+    let observer = new IntersectionObserver(
       (entries, observer) => {
         const entry = entries[0];
         if (
@@ -270,6 +270,12 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     headings.forEach((headingEl) => {
       observer.observe(headingEl);
     });
+
+    return () => {
+      observer.disconnect();
+      // @ts-ignore
+      observer = null;
+    };
   }, [
     targetEl,
     headings,

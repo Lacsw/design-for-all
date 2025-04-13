@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // @ts-check
 
+import { alpha } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { getIsThemeLight } from 'store/slices/theme';
 
@@ -8,6 +9,8 @@ import { getIsThemeLight } from 'store/slices/theme';
 export const sxRoot = (theme) => {
   const media = theme.breakpoints;
   const isLight = useSelector(getIsThemeLight);
+
+  const itemActionBg = isLight ? '#242424' : '#dadada';
 
   return {
     right: 'var(--art-nav-right, 0px)',
@@ -56,14 +59,69 @@ export const sxRoot = (theme) => {
 
     '.article-navigator__item': {
       margin: '10px 0',
-      padding: '0px 13px',
+      borderRadius: '6px',
+      padding: '5px 13px',
+
+      display: 'flex',
+      justifyContent: 'space-between',
 
       cursor: 'pointer',
+      transition: theme.transitions.create(['background', 'color'], {
+        duration: 150,
+      }),
 
       '&.article-navigator__item_current': {
         background: 'var(--color-item-active)',
         borderRadius: '6px',
+
+        '&:hover': {
+          color: isLight ? '#838383' : '#585858',
+          background: 'var(--color-item-active)',
+
+          '.counter': {
+            color: isLight ? '#585858' : '#bcbcbc',
+          },
+        },
       },
+
+      '&:hover': {
+        color: '#fff',
+        background: alpha(itemActionBg, 0.8),
+
+        '.counter': {
+          color: '#fff',
+        },
+      },
+      '&:active': {
+        background: alpha(itemActionBg, 0.95),
+      },
+    },
+
+    '.heading-text': {
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textAlign: 'center',
+
+      userSelect: 'none',
+
+      transition: theme.transitions.create(['color'], {
+        duration: 150,
+      }),
+    },
+
+    '.counter': {
+      color: isLight ? '#585858' : '#bcbcbc',
+      marginLeft: '10px',
+      minWidth: '30px',
+      fontVariantNumeric: 'tabular-nums',
+      textAlign: 'end',
+
+      userSelect: 'none',
+
+      transition: theme.transitions.create(['color'], {
+        duration: 150,
+      }),
     },
 
     [media.down(1300)]: {
