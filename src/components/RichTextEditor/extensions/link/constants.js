@@ -37,17 +37,17 @@ export const RTE_DEF_LINK_PROTO = 'https';
 export const PROTOCOLS_RIGHTS = {
   http: true,
   https: true,
-  ftp: true,
-  ftps: true,
+  ftp: false,
+  ftps: false,
   /**
-   * Разрешенность данного протокола предотвращает авто-создание ссылки,\
+   * Запрещённость данного протокола предотвращает авто-создание ссылки,\
    * только когда явно пишут "mailto:". Если просто написать имя почты,\
    * то будет создана ссылка. Для полной остановки авто-ссылок,\
    * необходимо кастомизировать shouldAutolink в конфиге расширения "ссылки".
    */
   mailto: true,
   tel: true,
-  callto: true,
+  callto: false,
   sms: false,
   cid: false,
   xmpp: false,

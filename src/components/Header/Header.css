@@ -1,10 +1,14 @@
 .header {
-  width: 100%;
-  padding: 13px 20px;
-  border-radius: 0px 0px 12px 12px;
-  background: var(--color-bg-secondary);
   position: fixed;
+  left: 0;
+  right: 0;
   z-index: 999;
+
+  border-radius: 0px 0px 12px 12px;
+  padding: 13px 20px;
+  /* width: 100%; */
+
+  background: var(--color-bg-secondary);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;

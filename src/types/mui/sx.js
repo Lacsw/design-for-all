@@ -5,4 +5,4 @@
  * @returns {import('@mui/material').SxProps}
  */
 
-export const Types = {};
+export const TMuiSx = {};

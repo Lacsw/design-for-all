@@ -40,15 +40,18 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { MenuBar, RteButton } from './components';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
+import {
+  allowedHeadingLevels,
+  cbStub,
+  COMMANDS_NAMES,
+} from './helpers/constants';
 import { RTEBubbleMenu } from './components/BubbleMenu/RTEBubbleMenu';
 
-import { allowedHeadingLevels, COMMANDS_NAMES } from './helpers/constants';
 import { parseOptions } from './validation/constants';
 import { validate } from './validation';
 import { useDebounce } from 'utils/hooks';
 import { useImageExt } from './extensions/image/useImageExt';
 import { useValidation } from './validation/useValidation';
-import { onSelectionUpdate } from './helpers/onSelectionUpdate';
 import { useClickSpy } from './hooks/useClickSpy';
 import { editorProps } from './helpers/editorProps';
 
@@ -156,6 +159,8 @@ const RichTextEditorRaw = memo(function RichTextEditor({
   readOnly = false,
   cancel,
   onInput,
+  onCreate,
+  onRealCreate,
   validationsOptions,
   maxHeight = 'initial',
   id,
@@ -208,8 +213,8 @@ const RichTextEditorRaw = memo(function RichTextEditor({
     // editable: false,
     parseOptions: parseOptions,
     editorProps: editorProps,
-    onUpdate: onUpdate,
-    onSelectionUpdate: onSelectionUpdate,
+    onUpdate: onUpdate ?? cbStub,
+    onCreate: onCreate ?? cbStub, // need stub <--- error when can't call "apply" method for undefined
   });
   // #endregion useEditor
 
@@ -264,6 +269,12 @@ const RichTextEditorRaw = memo(function RichTextEditor({
   } = useImageExt(editor);
 
   const { isMMBPressed, isCtrlPressed } = useClickSpy({ editor });
+
+  useEffect(() => {
+    if (editor && onRealCreate) {
+      onRealCreate(editor);
+    }
+  }, [editor, onRealCreate]);
 
   // #region Bar
   /* Предотвращаем постоянный ререндер кнопок меню. Вызывало фризы при стирании контента */

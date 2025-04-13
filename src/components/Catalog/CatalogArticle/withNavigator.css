@@ -1,0 +1,12 @@
+.header {
+  --scroll-w: 15px;
+  /* prevents header jumping */
+  /* also see #25-04-01-00-14  */
+  /* UDP the delay is no longer necessary  */
+  transition: right 0ms 0ms;
+}
+
+.header.article-navigator_expanded {
+  right: var(--scroll-w);
+  transition: right 0ms 0ms;
+}
