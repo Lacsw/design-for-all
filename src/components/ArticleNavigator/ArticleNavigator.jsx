@@ -288,7 +288,13 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
             ? curHeading.textContent || ''
             : headings[0]?.textContent || ''
         }
-        index={0}
+        index={(() => {
+          if (curHeading) {
+            return headings.indexOf(curHeading);
+          } else {
+            return 1;
+          }
+        })()}
         quantity={headings.length}
         onClick={handleBarClick}
         {...barProps}
