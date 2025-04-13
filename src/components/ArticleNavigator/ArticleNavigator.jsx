@@ -30,8 +30,8 @@ import {
 export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   flag,
   parentSelector,
-  targetSelector,
   targetRef,
+  targetSelector,
   scrollableElParams,
   firstShowingOffset = firstShowingOffsetDefault,
   scrollPercent = scrollPercentDefault,
@@ -97,7 +97,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     styleDecl.paddingRight = /** @type {any} */ (null);
     styleDecl.paddingLeft = /** @type {any} */ (null);
 
-    document.documentElement.style.setProperty('--art-nav-right', '0px');
+    document.documentElement.style.setProperty('--art-nav-right', null);
     setIsExpanded(false);
     onClose?.(ref);
   };
