@@ -14,7 +14,10 @@ export const useValidation = (validationOptionsFromProps) => {
     if (!validationOptionsFromProps) {
       return;
     } else {
-      return deepmerge(defaultValidationOptions, validationOptionsFromProps);
+      return deepmerge(
+        { ...defaultValidationOptions },
+        validationOptionsFromProps
+      );
     }
   }, [validationOptionsFromProps]);
 

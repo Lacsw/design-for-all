@@ -9,6 +9,7 @@ export const sxRoot = (theme) => {
   const isLight = useSelector(getIsThemeLight);
 
   return {
+    transform: 'translateY(0px)',
     right: 'var(--art-nav-right, 0px)',
     pointerEvents: 'none',
     touchAction: 'none',

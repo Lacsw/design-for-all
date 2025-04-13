@@ -5,7 +5,8 @@ import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { sxRoot } from './styles';
 import './styles.css';
-import { modalSlotProps } from '../constants';
+import { defaultModalSlotProps } from '../constants';
+import { deepmerge } from '@mui/utils';
 
 /** @import * as Types from "../types" */
 
@@ -22,8 +23,9 @@ export const Modal = ({
   sx,
   className,
   parentSelector,
-  slotProps,
+  slotProps: slotPropsOuter,
 }) => {
+  const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
   const headingsLength = headings.length;
 
   return (
@@ -35,7 +37,7 @@ export const Modal = ({
         parentSelector ? document.querySelector(parentSelector) : null
       }
       className={className}
-      slotProps={slotProps ?? modalSlotProps}
+      slotProps={slotProps}
       disableScrollLock
       onClose={(evt, reason) => onClose(reason)}
     >

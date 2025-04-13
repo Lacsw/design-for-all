@@ -45,6 +45,17 @@ export interface IScrollableElParams {
   flag: boolean;
 }
 
+export interface IBarBaseProps extends IBaseProps {
+  /** время анимации "тень" */
+  timeout?: number;
+}
+
+/** Пропсы для модалки навигатора статей. */
+export interface IModalProps extends IBaseProps {
+  /** Пропсы слотов внутри модального элемента Mui. */
+  slotProps?: ModalOwnProps['slotProps'];
+}
+
 export interface IArticleNavigatorProps {
   /**
    * Булевый флаг, который отвечает за ререндер.\
@@ -90,12 +101,12 @@ export interface IArticleNavigatorProps {
   onOpen?: (params: IScrollableRefData) => void;
   onClose?: (params: IScrollableRefData) => void;
   slotProps?: {
-    bar?: IBaseProps & { slotProps?: ModalOwnProps['slotProps'] };
-    modal?: IBaseProps & { slotProps?: ModalOwnProps['slotProps'] };
+    bar?: IBarBaseProps;
+    modal?: IModalProps;
   };
 }
 
-export interface IArtNavBarProps extends IBaseProps {
+export interface IArtNavBarProps extends IBarBaseProps {
   parentSelector?: IArticleNavigatorProps['parentSelector'];
   isShowing: boolean;
   label: string;
@@ -104,7 +115,6 @@ export interface IArtNavBarProps extends IBaseProps {
   /** Число заголовков */
   quantity: number;
   onClick: React.MouseEventHandler<HTMLDivElement>;
-  slotProps?: ModalOwnProps['slotProps'];
 }
 
 export type TClosingReasons = 'click' | 'escapeKeyDown' | 'backdropClick';
