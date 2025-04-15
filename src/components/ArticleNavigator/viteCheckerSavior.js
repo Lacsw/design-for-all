@@ -17,7 +17,7 @@ if (element) {
   };
 } else {
   // @ts-ignore
-  if (import.meta.MODE === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     console.warn(
       "Can't find DOM-element for vite-plugin-checker for preventing attribute 'aria-hidden' setting!"
     );
