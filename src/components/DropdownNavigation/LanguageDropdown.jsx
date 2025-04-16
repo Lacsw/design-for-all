@@ -1,17 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
 import DropdownNavigation from './DropdownNavigation';
-import { changeLanguage, getLanguage } from 'store/slices/user';
+import { useLanguageSync } from 'utils/hooks/useLanguageSync';
 
 export default function LanguageDropdown({ options, title, theme }) {
-  const dispatch = useDispatch();
+  const { language, setLanguage } = useLanguageSync();
 
-  const language = useSelector(getLanguage);
   const langSrc = options.find((item) => item.name === language)?.src;
-
   const filteredOptions = options.filter((item) => item.name !== language);
 
   const handleOptionClick = (option) => {
-    dispatch(changeLanguage(option));
+    setLanguage(option);
   };
 
   const updatedOptions = filteredOptions.map((option) => ({

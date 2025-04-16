@@ -4,6 +4,7 @@ import { NotFound, Layout, Fork } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTitles, selectTitles } from 'store/slices/article';
 import { useSyncTabs } from 'utils/hooks/useSyncTabs';
+import { useLanguageSync } from 'utils/hooks/useLanguageSync';
 
 function App() {
   const dispatch = useDispatch();
@@ -12,6 +13,9 @@ function App() {
 
   // Используем хук для синхронизации между вкладками
   useSyncTabs();
+  
+  // Используем хук для синхронизации языка между Redux и i18next
+  useLanguageSync();
 
   useEffect(() => {
     !categories && dispatch(fetchTitles());

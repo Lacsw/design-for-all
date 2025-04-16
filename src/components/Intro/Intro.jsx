@@ -3,8 +3,9 @@
 import './Intro.css';
 import { useEffect, useRef } from 'react';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-
+import { useTranslation } from 'react-i18next';
 export default function Intro() {
+  const { t } = useTranslation();
   const typeRef = useRef(null);
   const isMobile = useIsMobile();
 
@@ -35,7 +36,7 @@ export default function Intro() {
 
   return (
     <div className="intro__container">
-      <h1 className="intro__title">Design for all</h1>
+      <h1 className="intro__title">{t('main_intro_title')}</h1>
       <p className="intro__subtitle" ref={typeRef}></p>
     </div>
   );
