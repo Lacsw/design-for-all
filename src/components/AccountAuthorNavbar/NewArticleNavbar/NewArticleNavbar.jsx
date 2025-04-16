@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import './NewArticleNavbar.css';
 import publishIcon from 'images/account/publish-icon.svg';
@@ -67,6 +68,7 @@ const icons = {
 };
 
 export default function NewArticleNavbar({ onChange }) {
+  const { t } = useTranslation();
   const location = useLocation();
   const theme = useSelector(getCurrentTheme);
   const original = useSelector(getOriginal);
@@ -142,7 +144,9 @@ export default function NewArticleNavbar({ onChange }) {
       <ul className="new-article-navbar__list">
         {location.state?.name === 'view' ? (
           <li>
-            <p className="new-article-navbar__status">Статус: {status}</p>
+            <div className="new-article-navbar__status">
+              {status && t(status)}
+            </div>
           </li>
         ) : (
           <>

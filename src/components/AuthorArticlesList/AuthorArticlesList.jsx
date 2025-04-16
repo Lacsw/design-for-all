@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import authorApi from 'utils/api/author';
 import { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
+import { useTranslation } from 'react-i18next';
 
 export default function AuthorArticlesList({
   articles,
@@ -23,6 +24,7 @@ export default function AuthorArticlesList({
   const [reason, setReason] = useState({});
   const bodyRef = useRef(null);
   const page = useRef(1);
+  const { t } = useTranslation();
 
   useEffect(() => {
     page.current = 1;
@@ -185,7 +187,7 @@ export default function AuthorArticlesList({
                       key={item.name}
                       className="author-articles-list__table-cell-buttons"
                     >
-                      <Tooltip title={item.tooltip} placement="top" arrow>
+                      <Tooltip title={t(item.tooltip)} placement="top" arrow>
                         <button
                           className="author-articles-list__icon-background"
                           onClick={() => handleClick(article, item.name)}

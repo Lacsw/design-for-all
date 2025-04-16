@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './Header.css';
 import {
@@ -33,6 +34,7 @@ import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { selectIsCatalogOpen } from 'store/slices/article';
 import { useLogout } from 'utils/hooks/useLogout';
+import { HEADER } from 'utils/constants/translationKeys';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();
@@ -40,6 +42,7 @@ export default function Header({ resetSection }) {
   const theme = useSelector(getCurrentTheme);
   const isMobile = useIsMobile();
   const isCatalogOpen = useSelector(selectIsCatalogOpen);
+  const { t } = useTranslation();
 
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
@@ -112,7 +115,7 @@ export default function Header({ resetSection }) {
         <Link to="/" className="logo-link" onClick={resetSection}>
           <img
             src={theme === 'dark' ? logo : logoBlack}
-            alt="Логотип"
+            alt={t(HEADER.LOGO)}
             className="header__logo"
           />
         </Link>
@@ -138,7 +141,7 @@ export default function Header({ resetSection }) {
               }
               toggleTheme={toggleTheme}
               theme={theme}
-              title="Меню"
+              title={t(HEADER.MAIN_MENU.TITLE)}
               currentUser={currentUser}
               openAuthModal={openAuthModal}
             />
@@ -147,14 +150,14 @@ export default function Header({ resetSection }) {
             <LanguageDropdown
               options={languageList}
               theme={theme}
-              title="Язык"
+              title={t(HEADER.LANGUAGE.TITLE)}
             />
           </li>
           <li className="header__navigation-item_mobile-second">
             <CurrencyDropdown
               options={currencyList}
               theme={theme}
-              title="Валюта"
+              title={t(HEADER.CURRENCY.TITLE)}
             />
           </li>
           <li className="hide-on-mobile">
@@ -168,7 +171,7 @@ export default function Header({ resetSection }) {
                   theme === 'light' ? dropdownIconBlack : dropdownIconWhite
                 }
                 type="dropdownWithLinks"
-                title="Профиль"
+                title={t(HEADER.USER.TITLE)}
                 currentUser={currentUser}
                 theme={theme}
               />

@@ -7,6 +7,7 @@ import '../AuthorArticlesList/AuthorArticlesList.css';
 import adminApi from 'utils/api/admin';
 import { useNavigate } from 'react-router-dom';
 import { editButton, viewButton, adminHash } from 'utils/constants';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminTable({ hash, pagination }) {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function AdminTable({ hash, pagination }) {
   const page = useRef(1);
   const [requestList, setRequestList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   const button = hash === adminHash.closed ? viewButton : editButton;
   const endPoint =
     hash === adminHash.accounts
@@ -132,6 +134,7 @@ export default function AdminTable({ hash, pagination }) {
                   <button
                     className="author-articles-list__icon-background"
                     onClick={() => handleClick(item)}
+                    title={t(button.tooltip)}
                   >
                     <img
                       src={button[theme]}

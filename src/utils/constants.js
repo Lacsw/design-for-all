@@ -68,11 +68,14 @@ import reasonIconW from 'images/account/reason-icon_white.svg';
 import rejectHintB from 'images/account/warining-icon_black.svg';
 import rejectHintW from 'images/account/warining-icon_white.svg';
 
+// Импортируем ключи переводов
+import { HEADER, COMMON } from './constants/translationKeys';
+
 export const langSelectOptions = [
-  { label: 'Русский', value: 'ru' },
-  { label: 'Английский', value: 'en' },
-  { label: 'Китайский', value: 'zh' },
-  { label: 'Испанский', value: 'es' },
+  { label: HEADER.LANGUAGE.RU, value: 'ru' },
+  { label: HEADER.LANGUAGE.EN, value: 'en' },
+  { label: HEADER.LANGUAGE.ZH, value: 'zh' },
+  { label: HEADER.LANGUAGE.ES, value: 'es' },
 ];
 
 // export const categorySelectOptions = [
@@ -83,10 +86,10 @@ export const langSelectOptions = [
 // ];
 
 export const userRoleSelectOptions = [
-  { label: 'Супер админ', value: 'super_admin' },
-  { label: 'Админ', value: 'admin' },
-  { label: 'Автор', value: 'mentor' },
-  { label: 'Участник', value: 'user', disabled: true },
+  { label: COMMON.ROLES.SUPER_ADMIN, value: 'super_admin' },
+  { label: COMMON.ROLES.ADMIN, value: 'admin' },
+  { label: COMMON.ROLES.AUTHOR, value: 'mentor' },
+  { label: COMMON.ROLES.USER, value: 'user', disabled: true },
 ];
 
 export const accessLvlSelectOptions = [
@@ -104,64 +107,64 @@ export const listRangeOptions = [
 ];
 
 export const authorArticlesTabs = [
-  { name: 'Подтверждено', value: 'approve' },
-  { name: 'Черновик', value: 'drafted' },
-  { name: 'Предложено', value: 'offered' },
-  { name: 'Отклонено', value: 'rejected' },
-  { name: 'Удалено', value: 'deleted' },
+  { name: COMMON.ARTICLE_STATUS.APPROVED, value: 'approve' },
+  { name: COMMON.ARTICLE_STATUS.DRAFT, value: 'drafted' },
+  { name: COMMON.ARTICLE_STATUS.OFFERED, value: 'offered' },
+  { name: COMMON.ARTICLE_STATUS.REJECTED, value: 'rejected' },
+  { name: COMMON.ARTICLE_STATUS.DELETED, value: 'deleted' },
 ];
 
 export const navigationOptionsList = [
   {
     id: 'home',
-    name: 'Главная',
+    name: HEADER.MAIN_MENU.HOME,
     src: { light: mainWhite, dark: mainBlack },
     link: '/',
   },
   {
     id: 'updates',
-    name: 'Обновления',
+    name: HEADER.MAIN_MENU.UPDATES,
     src: { light: updatesWhite, dark: updatesBlack },
     link: '/#/updates',
   },
   {
     id: 'web',
-    name: 'Веб приложения',
+    name: HEADER.MAIN_MENU.WEB_APPS,
     src: { light: webWhite, dark: webBlack },
     link: '/#/web',
   },
   {
     id: 'desktop',
-    name: 'Десктоп приложения',
+    name: HEADER.MAIN_MENU.DESKTOP_APPS,
     src: { light: desktopWhite, dark: desktopBlack },
     link: '/#/desktop',
   },
   {
     id: 'mobile',
-    name: 'Мобильные приложения',
+    name: HEADER.MAIN_MENU.MOBILE_APPS,
     src: { light: mobileWhite, dark: mobileBlack },
     link: '/#/mobile',
   },
   {
     id: 'articles',
-    name: 'Статьи',
+    name: HEADER.MAIN_MENU.ARTICLES,
     src: { light: articleWhite, dark: articleBlack },
     link: '/#/articles',
   },
   {
     id: 'manual',
-    name: 'Руководства',
+    name: HEADER.MAIN_MENU.GUIDES,
     src: { light: manualWhite, dark: manualBlack },
     link: '/#/manual',
   },
   {
     id: 'themeToggle',
-    name: 'Светлая тема',
+    name: COMMON.THEME.LIGHT,
     src: { light: themeBlack, dark: themeWhite },
   },
   {
     id: 'collapse',
-    name: 'Свернуть',
+    name: HEADER.MAIN_MENU.COLLAPSE,
     src: { light: arrowBackWhite, dark: arrowBackBlack },
   },
 ];
@@ -207,32 +210,37 @@ export const mainCategory = [
 
 export const mainNavigationOptionsList = [
   {
-    name: 'Обновления',
+    name: HEADER.MAIN_MENU.UPDATES,
     dark: updatesBlack,
     light: updatesWhite,
     link: '/#/updates',
   },
-  { name: 'Веб приложения', dark: webBlack, light: webWhite, link: '/#/web' },
+  { 
+    name: HEADER.MAIN_MENU.WEB_APPS, 
+    dark: webBlack, 
+    light: webWhite, 
+    link: '/#/web' 
+  },
   {
-    name: 'Десктоп приложения',
+    name: HEADER.MAIN_MENU.DESKTOP_APPS,
     dark: desktopBlack,
     light: desktopWhite,
     link: '/#/desktop',
   },
   {
-    name: 'Мобильные приложения',
+    name: HEADER.MAIN_MENU.MOBILE_APPS,
     dark: mobileBlack,
     light: mobileWhite,
     link: '/#/mobile',
   },
   {
-    name: 'Статьи',
+    name: HEADER.MAIN_MENU.ARTICLES,
     dark: articleBlack,
     light: articleWhite,
     link: '/#/articles',
   },
   {
-    name: 'Руководства',
+    name: HEADER.MAIN_MENU.GUIDES,
     dark: manualBlack,
     light: manualWhite,
     link: '/#/manual',
@@ -242,25 +250,25 @@ export const mainNavigationOptionsList = [
 export const accountNavigationList = [
   {
     id: 'writeArticle',
-    name: 'Написать статью',
+    name: HEADER.USER.WRITE_ARTICLE,
     src: { light: newArticleWhite, dark: newArticleBlack },
     link: '/#/author/new-article',
   },
   {
     id: 'publications',
-    name: 'Публикации',
+    name: HEADER.USER.PUBLICATIONS,
     src: { light: articleWhite, dark: articleBlack },
     link: '/#/author/articles',
   },
   {
     id: 'profile',
-    name: 'Профиль',
+    name: COMMON.AUTH.PROFILE,
     src: { light: profileWhite, dark: profileBlack },
     link: '/#/author/profile',
   },
   {
     id: 'logout',
-    name: 'Выйти',
+    name: COMMON.AUTH.LOGOUT,
     src: { light: exitWhite, dark: exitBlack },
   },
 ];
@@ -268,31 +276,31 @@ export const accountNavigationList = [
 export const adminNavList = [
   {
     id: 'requests',
-    name: 'Заявки',
+    name: HEADER.ADMIN.REQUESTS,
     src: { light: articleWhite, dark: articleBlack },
     link: '/#/admin/creates',
   },
   {
     id: 'createUser',
-    name: 'Создать пользователя',
+    name: HEADER.ADMIN.CREATE_USER,
     src: { light: createUserWhite, dark: createUser },
     link: '/#/admin/create-user',
   },
   {
     id: 'profile',
-    name: 'Профиль',
+    name: COMMON.AUTH.PROFILE,
     src: { light: profileWhite, dark: profileBlack },
     link: '/#/admin/profile',
   },
   {
     id: 'logout',
-    name: 'Выйти',
+    name: COMMON.AUTH.LOGOUT,
     src: { light: exitWhite, dark: exitBlack },
   },
 ];
 
 export const currencyList = [
-  { id: 'USD', name: 'USD', src: { light: usdIconWhite, dark: usdIcon } },
+  { id: 'USD', name: HEADER.CURRENCY.USD, src: { light: usdIconWhite, dark: usdIcon } },
 ];
 
 export const languageList = [
@@ -370,35 +378,35 @@ export const socialIcons = {
 
 export const editButton = {
   name: 'edit',
-  tooltip: 'Редактировать',
+  tooltip: HEADER.EDIT.TOOLTIP,
   dark: editIconB,
   light: editIconW,
 };
 
 export const viewButton = {
   name: 'view',
-  tooltip: 'Посмотреть',
+  tooltip: HEADER.VIEW.TOOLTIP,
   dark: viewIconB,
   light: viewIconW,
 };
 
 const draftButton = {
   name: 'draft',
-  tooltip: 'В черновик',
+  tooltip: HEADER.DRAFT.TOOLTIP,
   dark: draftIconB,
   light: draftIconW,
 };
 
 const deleteButton = {
   name: 'delete',
-  tooltip: 'Удалить',
+  tooltip: HEADER.DELETE.TOOLTIP,
   dark: deleteIconB,
   light: deleteIconW,
 };
 
 const reasonButton = {
   name: 'reason',
-  tooltip: 'Причина',
+  tooltip: HEADER.REASON.TOOLTIP,
   dark: reasonIconB,
   light: reasonIconW,
 };
