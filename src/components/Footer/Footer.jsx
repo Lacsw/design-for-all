@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './Footer.css';
 import telegramIcon from 'images/socials/telegram-icon.svg';
@@ -11,159 +12,162 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import xBlack from 'images/socials/x-icon_black.svg';
 import xWhite from 'images/socials/x-icon_white.svg';
+import { FOOTER } from 'utils/translationConstants/translationKeys';
 
 export default function Footer() {
   const theme = useSelector(getCurrentTheme);
+  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__list-container">
-          <h2 className="footer__title">Основные страницы</h2>
+          <h2 className="footer__title">{t(FOOTER.MAIN_PAGES.TITLE)}</h2>
           <ul className="footer__list">
             <li className="footer__list-item">
               <Link to="/" className="footer__link">
-                Главная
+                {t(FOOTER.MAIN_PAGES.HOME)}
               </Link>
             </li>
             <li className="footer__list-item">
-              <Link to="/updates" className="footer__link">
-                Обновления
+              <Link to="/#/updates" className="footer__link">
+                {t(FOOTER.MAIN_PAGES.UPDATES)}
               </Link>
             </li>
             <li className="footer__list-item">
-              <Link to="/articles/web" className="footer__link">
-                Веб приложения
+              <Link to="/#/web" className="footer__link">
+                {t(FOOTER.MAIN_PAGES.WEB_APPS)}
               </Link>
             </li>
             <li className="footer__list-item">
-              <Link to="/articles/desktop" className="footer__link">
-                Десктоп приложения
+              <Link to="/#/desktop" className="footer__link">
+                {t(FOOTER.MAIN_PAGES.DESKTOP_APPS)}
               </Link>
             </li>
             <li className="footer__list-item">
-              <Link to="/articles/mobiles" className="footer__link">
-                Мобильные приложения
+              <Link to="/#/mobile" className="footer__link">
+                {t(FOOTER.MAIN_PAGES.MOBILE_APPS)}
               </Link>
             </li>
             <li className="footer__list-item">
-              <Link to="/articles" className="footer__link">
-                Статьи
+              <Link to="/#/articles" className="footer__link">
+                {t(FOOTER.MAIN_PAGES.ARTICLES)}
               </Link>
             </li>
             <li className="footer__list-item">
-              <Link to="/guides" className="footer__link">
-                Руководства
+              <Link to="/#/manual" className="footer__link">
+                {t(FOOTER.MAIN_PAGES.GUIDES)}
               </Link>
             </li>
           </ul>
         </div>
         <div className="footer__list-container">
-          <h2 className="footer__title">Контакты</h2>
+          <h2 className="footer__title">{t(FOOTER.CONTACTS.TITLE)}</h2>
           <ul className="footer__list">
             <li className="footer__list-item">
-              <Link to="/" className="footer__link">
-                example@mail.com
-              </Link>
+              <a href="mailto:dfa.service.info@gmail.com" className="footer__link">
+                dfa.service.info@gmail.com
+              </a>
             </li>
             <li className="footer__list-item">
-              <Link to="/" className="footer__link">
-                support@mail.com
-              </Link>
+              <a href="mailto:dfa.info@ya.com" className="footer__link">
+                dfa.info@ya.com
+              </a>
             </li>
             <li className="footer__list-item">
-              <Link to="/" className="footer__link">
-                marketing@mail.com
-              </Link>
+              <a href="https://t.me/dfa_design_for_all" className="footer__link">
+                @dfa_design_for_all
+              </a>
             </li>
           </ul>
         </div>
         <div className="footer__list-container">
-          <h2 className="footer__title">Правовая информация</h2>
+          <h2 className="footer__title">{t(FOOTER.LEGAL.TITLE)}</h2>
           <ul className="footer__list">
             <li className="footer__list-item">
               <Link to="/" className="footer__link">
-                Пользовательское соглашение
+                {t(FOOTER.LEGAL.TERMS)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/" className="footer__link">
-                Пользовательское соглашение
+                {t(FOOTER.LEGAL.PRIVACY)}
               </Link>
             </li>
           </ul>
         </div>
         <div className="footer__list-container footer__list-container_socials">
-          <h2 className="footer__title">Мы в соц. сетях</h2>
+          <h2 className="footer__title">{t(FOOTER.SOCIALS.TITLE)}</h2>
           <ul className="footer__list footer__list_socials">
             <li>
-              <Link
-                to="https://t.me/dfa_design_for_all"
+              <a
+                href="https://t.me/dfa_design_for_all"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
-                <img src={telegramIcon} alt="Иконка телеграмм" />
-              </Link>
+                <img src={telegramIcon} alt={t(FOOTER.SOCIALS.TELEGRAM_ALT)} />
+              </a>
             </li>
             <li>
-              <Link
-                to="https://www.instagram.com/dfa_service/"
+              <a
+                href="https://www.instagram.com/dfa_service/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
-                <img src={instagramIcon} alt="Иконка инстаграмм" />
-              </Link>
+                <img src={instagramIcon} alt={t(FOOTER.SOCIALS.INSTAGRAM_ALT)} />
+              </a>
             </li>
             <li>
-              <Link
-                to="https://www.facebook.com/profile.php?id=100095689982022"
+              <a
+                href="https://www.facebook.com/profile.php?id=100095689982022"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
-                <img src={facebookIcon} alt="Иконка фейсбука" />
-              </Link>
+                <img src={facebookIcon} alt={t(FOOTER.SOCIALS.FACEBOOK_ALT)} />
+              </a>
             </li>
             <li>
-              <Link
-                to="https://vk.com/design_for_all_pub"
+              <a
+                href="https://vk.com/design_for_all_pub"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
-                <img src={vkIcon} alt="Иконка вконтакте" />
-              </Link>
+                <img src={vkIcon} alt={t(FOOTER.SOCIALS.VK_ALT)} />
+              </a>
             </li>
             <li>
-              <Link
-                to="https://ru.pinterest.com/dfaservicemedia/"
+              <a
+                href="https://ru.pinterest.com/dfaservicemedia/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
-                <img src={pinterestIcon} alt="Иконка пинтерест" />
-              </Link>
+                <img src={pinterestIcon} alt={t(FOOTER.SOCIALS.PINTEREST_ALT)} />
+              </a>
             </li>
             <li>
-              <Link
-                to="https://x.com/Ivan1983759"
+              <a
+                href="https://x.com/Ivan1983759"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__link"
               >
                 <img
                   src={theme === 'dark' ? xWhite : xBlack}
-                  alt="Иконка твиттера"
+                  alt={t(FOOTER.SOCIALS.X_ALT)}
                 />
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
       </div>
       <p className="footer__copyright">
-        Copyright ©{new Date().getFullYear()} All rights reserved | DFA |
-        Design for all
+        {t(FOOTER.COPYRIGHT, { year: currentYear })}
       </p>
     </footer>
   );

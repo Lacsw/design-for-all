@@ -1,3 +1,29 @@
 {
-  "main_intro_title": "中文设计"
+  "main_intro_title": "全民设计",
+
+  "footer_main_pages_title": "主要页面",
+  "footer_main_pages_home": "首页",
+  "footer_main_pages_updates": "更新",
+  "footer_main_pages_web_apps": "网络应用",
+  "footer_main_pages_desktop_apps": "桌面应用",
+  "footer_main_pages_mobile_apps": "移动应用",
+  "footer_main_pages_articles": "文章",
+  "footer_main_pages_guides": "指南",
+
+  "footer_contacts_title": "联系方式",
+
+
+  "footer_legal_title": "法律信息",
+  "footer_legal_terms": "服务条款",
+  "footer_legal_privacy": "隐私政策",
+
+  "footer_socials_title": "关注我们",
+  "footer_socials_telegram_alt": "Telegram图标",
+  "footer_socials_instagram_alt": "Instagram图标",
+  "footer_socials_facebook_alt": "Facebook图标",
+  "footer_socials_vk_alt": "VK图标",
+  "footer_socials_pinterest_alt": "Pinterest图标",
+  "footer_socials_x_alt": "X图标",
+
+  "footer_copyright": "版权所有 ©{{year}} | DFA | 全民设计"
 }

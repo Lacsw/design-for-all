@@ -1,3 +1,29 @@
 {
-"main_intro_title": "Diseño para todos"
+"main_intro_title": "Diseño para todos",
+
+"footer_main_pages_title": "Páginas principales",
+"footer_main_pages_home": "Inicio",
+"footer_main_pages_updates": "Actualizaciones",
+"footer_main_pages_web_apps": "Aplicaciones web",
+"footer_main_pages_desktop_apps": "Aplicaciones de escritorio",
+"footer_main_pages_mobile_apps": "Aplicaciones móviles",
+"footer_main_pages_articles": "Artículos",
+"footer_main_pages_guides": "Guías",
+
+"footer_contacts_title": "Contactos",
+
+
+"footer_legal_title": "Información legal",
+"footer_legal_terms": "Términos de servicio",
+"footer_legal_privacy": "Política de privacidad",
+
+"footer_socials_title": "Síguenos",
+"footer_socials_telegram_alt": "Icono de Telegram",
+"footer_socials_instagram_alt": "Icono de Instagram",
+"footer_socials_facebook_alt": "Icono de Facebook",
+"footer_socials_vk_alt": "Icono de VK",
+"footer_socials_pinterest_alt": "Icono de Pinterest",
+"footer_socials_x_alt": "Icono de X",
+
+"footer_copyright": "Copyright ©{{year}} Todos los derechos reservados | DFA | Diseño para todos"
 }

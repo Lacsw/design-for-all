@@ -1,3 +1,28 @@
 {
-"main_intro_title": "Design for all"
+"main_intro_title": "Design for all",
+
+"footer_main_pages_title": "Main Pages",
+"footer_main_pages_home": "Home",
+"footer_main_pages_updates": "Updates",
+"footer_main_pages_web_apps": "Web Applications",
+"footer_main_pages_desktop_apps": "Desktop Applications",
+"footer_main_pages_mobile_apps": "Mobile Applications",
+"footer_main_pages_articles": "Articles",
+"footer_main_pages_guides": "Guides",
+
+"footer_contacts_title": "Contacts",
+
+"footer_legal_title": "Legal Information",
+"footer_legal_terms": "Terms of Service",
+"footer_legal_privacy": "Privacy Policy",
+
+"footer_socials_title": "Follow Us",
+"footer_socials_telegram_alt": "Telegram icon",
+"footer_socials_instagram_alt": "Instagram icon",
+"footer_socials_facebook_alt": "Facebook icon",
+"footer_socials_vk_alt": "VK icon",
+"footer_socials_pinterest_alt": "Pinterest icon",
+"footer_socials_x_alt": "X icon",
+
+"footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all"
 }

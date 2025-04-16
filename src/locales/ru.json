@@ -1,3 +1,29 @@
 {
-  "main_intro_title": "Дизайн для всех"
+  "main_intro_title": "Дизайн для всех",
+
+  "footer_main_pages_title": "Основные страницы",
+  "footer_main_pages_home": "Главная",
+  "footer_main_pages_updates": "Обновления",
+  "footer_main_pages_web_apps": "Веб приложения",
+  "footer_main_pages_desktop_apps": "Десктоп приложения",
+  "footer_main_pages_mobile_apps": "Мобильные приложения",
+  "footer_main_pages_articles": "Статьи",
+  "footer_main_pages_guides": "Руководства",
+
+  "footer_contacts_title": "Контакты",
+
+
+  "footer_legal_title": "Правовая информация",
+  "footer_legal_terms": "Пользовательское соглашение",
+  "footer_legal_privacy": "Политика конфиденциальности",
+
+  "footer_socials_title": "Мы в соц. сетях",
+  "footer_socials_telegram_alt": "Иконка телеграмм",
+  "footer_socials_instagram_alt": "Иконка инстаграмм",
+  "footer_socials_facebook_alt": "Иконка фейсбука",
+  "footer_socials_vk_alt": "Иконка вконтакте",
+  "footer_socials_pinterest_alt": "Иконка пинтерест",
+  "footer_socials_x_alt": "Иконка X",
+
+  "footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all"
 }
