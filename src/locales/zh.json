@@ -7,6 +7,18 @@
   "common_auth_logout": "退出",
   "common_auth_profile": "个人资料",
 
+  "common_roles_super_admin": "超级管理员",
+  "common_roles_admin": "管理员",
+  "common_roles_author": "作者",
+  "common_roles_user": "用户",
+
+  "common_article_status_approved": "已批准",
+  "common_article_status_draft": "草稿",
+  "common_article_status_offered": "已提供",
+  "common_article_status_rejected": "已拒绝",
+  "common_article_status_deleted": "已删除",
+
+  "header_logo_alt": "标志",
   "header_main_menu_title": "主菜单",
   "header_main_menu_home": "首页",
   "header_main_menu_updates": "更新",
@@ -32,10 +44,11 @@
   "header_user_write_article": "写文章",
   "header_user_publications": "出版物",
 
-  "author_navbar_write_article": "写文章",
-  "author_navbar_publications": "出版物",
-  "author_navbar_profile": "个人资料",
-  "author_navbar_logout": "退出",
+  "header_admin_title": "管理员",
+  "header_admin_profile": "个人资料",
+  "header_admin_logout": "退出",
+  "header_admin_requests": "请求",
+  "header_admin_create_user": "创建用户",
 
   "header_search_placeholder": "搜索文章...",
   "header_search_reset_button": "重置按钮",
@@ -45,6 +58,8 @@
   "header_search_error_network": "网络错误。请稍后重试。",
   "header_search_error_server": "服务器错误。请稍后重试。",
   "header_search_error_unknown": "搜索过程中发生错误。请稍后重试。",
+
+  "header_mobile_trees_icon": "移动菜单图标",
 
   "header_edit_tooltip": "编辑",
   "header_view_tooltip": "查看",
@@ -83,10 +98,23 @@
   "updates_title": "更新",
   "updates_article_type_new": "新文章",
   "updates_article_type_translated": "文章翻译",
-
+  "updates_no_more_updates": "您已查看所有更新！🎉",
+  "updates_retry_button": "重试",
+  "updates_error_message": "加载更新时出错。请稍后重试。",
+  
   "article_status_confirmed": "已确认",
   "article_status_draft": "草稿",
   "article_status_proposed": "已提议",
   "article_status_rejected": "已拒绝",
-  "article_status_deleted": "已删除"
+  "article_status_deleted": "已删除",
+
+  "author_navbar_write_article": "写文章",
+  "author_navbar_publications": "出版物",
+  "author_navbar_profile": "个人资料",
+  "author_navbar_logout": "退出",
+
+  "admin_navbar_requests": "请求",
+  "admin_navbar_create_user": "创建用户",
+  "admin_navbar_profile": "个人资料",
+  "admin_navbar_logout": "退出"
 }

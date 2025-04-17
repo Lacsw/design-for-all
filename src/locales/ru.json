@@ -95,7 +95,10 @@
   "updates_title": "Обновления",
   "updates_article_type_new": "Новая статья",
   "updates_article_type_translated": "Перевод статьи",
-
+  "updates_no_more_updates": "Вы просмотрели все обновления!",
+  "updates_retry_button": "Повторить",
+  "updates_error_message": "Ошибка при загрузке обновлений. Пожалуйста, попробуйте снова позже.",
+  
   "article_status_confirmed": "Подтверждено",
   "article_status_draft": "Черновик",
   "article_status_proposed": "Предложено",

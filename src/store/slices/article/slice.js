@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit';
 import createTree from 'utils/helpers/createTree';
 import treeApi from 'utils/api/tree';
 import authorApi from 'utils/api/author';
@@ -13,6 +13,9 @@ export const initialState = {
     error: '',
     fetchTime: 0,
     cards: [],
+    hasMore: true,
+    isEndReached: false,
+    currentPage: 1
   },
   article: null,
   loading: true,
@@ -83,10 +86,23 @@ const articleSlice = createSlice({
         state.updates.fetchTime = Date.now();
         state.updates.loading = false;
         state.updates.error = '';
+        state.updates.currentPage = action.meta.arg;
 
         // Проверяем, что данные существуют
         if (!action.payload || action.payload.length === 0) {
+          state.updates.hasMore = false;
+          state.updates.isEndReached = true;
           return;
+        }
+
+        // Если получили меньше 20 элементов, значит это последняя страница
+        if (action.payload.length < 20) {
+          state.updates.hasMore = false;
+          state.updates.isEndReached = true;
+        } else {
+          // Если получили полную страницу, значит есть ещё данные
+          state.updates.hasMore = true;
+          state.updates.isEndReached = false;
         }
 
         if (action.meta.arg === 1) {
@@ -97,7 +113,16 @@ const articleSlice = createSlice({
       })
       .addCase(fetchUpdates.rejected, (state, action) => {
         state.updates.loading = false;
-        state.updates.error = action.error.message;
+        
+        // action.payload будет содержать errorData из handleResponse
+        const errorData = action.payload || action.error;
+        state.updates.error = errorData.message;
+
+        // Проверяем статус из errorData
+        if (errorData.status === 404) {
+          state.updates.hasMore = false;
+          state.updates.isEndReached = true;
+        }
       });
   },
 });
@@ -134,5 +159,16 @@ export const selectIsCatalogOpen = (state) => state.article.isCatalogOpen;
 export const selectMainCategory = (state) => state.article.mainCategory;
 export const selectShouldRemountTree = (state) =>
   state.article.shouldRemountTree;
+
+export const selectUpdatesError = createSelector(
+  [(state) => state.article.updates.error, 
+   (state) => state.article.updates.isEndReached,
+   (state) => state.article.updates.hasMore],
+  (error, isEndReached, hasMore) => ({
+    error,
+    isEndReached,
+    canRetry: hasMore
+  })
+);
 
 export const articleReducer = articleSlice.reducer;

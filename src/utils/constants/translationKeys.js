@@ -160,4 +160,7 @@ export const UPDATES = {
     NEW: 'updates_article_type_new',
     TRANSLATED: 'updates_article_type_translated', 
   },
+  NO_MORE_UPDATES: 'updates_no_more_updates',
+  ERROR_MESSAGE: 'updates_error_message',
+  RETRY_BUTTON: 'updates_retry_button',
 };

@@ -6,6 +6,18 @@
   "common_auth_logout": "Cerrar sesión",
   "common_auth_profile": "Perfil",
 
+  "common_roles_super_admin": "Super Administrador",
+  "common_roles_admin": "Administrador",
+  "common_roles_author": "Autor",
+  "common_roles_user": "Usuario",
+
+  "common_article_status_approved": "Aprobado",
+  "common_article_status_draft": "Borrador",
+  "common_article_status_offered": "Ofrecido",
+  "common_article_status_rejected": "Rechazado",
+  "common_article_status_deleted": "Eliminado",
+
+  "header_logo_alt": "Logo",
   "header_main_menu_title": "Menú principal",
   "header_main_menu_home": "Inicio",
   "header_main_menu_updates": "Actualizaciones",
@@ -31,10 +43,11 @@
   "header_user_write_article": "Escribir artículo",
   "header_user_publications": "Publicaciones",
 
-  "author_navbar_write_article": "Escribir artículo",
-  "author_navbar_publications": "Publicaciones",
-  "author_navbar_profile": "Perfil",
-  "author_navbar_logout": "Cerrar sesión",
+  "header_admin_title": "Administrador",
+  "header_admin_profile": "Perfil",
+  "header_admin_logout": "Cerrar sesión",
+  "header_admin_requests": "Solicitudes",
+  "header_admin_create_user": "Crear usuario",
 
   "header_search_placeholder": "Buscar artículos...",
   "header_search_reset_button": "Botón de reinicio",
@@ -44,6 +57,8 @@
   "header_search_error_network": "Error de red. Por favor, inténtelo de nuevo más tarde.",
   "header_search_error_server": "Error del servidor. Por favor, inténtelo de nuevo más tarde.",
   "header_search_error_unknown": "Se produjo un error durante la búsqueda. Por favor, inténtelo de nuevo más tarde.",
+
+  "header_mobile_trees_icon": "Icono del menú móvil",
 
   "header_edit_tooltip": "Editar",
   "header_view_tooltip": "Ver",
@@ -79,10 +94,23 @@
   "updates_title": "Actualizaciones",
   "updates_article_type_new": "Nuevo artículo",
   "updates_article_type_translated": "Traducción de artículo",
-
+  "updates_no_more_updates": "¡Has visto todas las actualizaciones! 🎉",
+  "updates_retry_button": "Reintentar",
+  "updates_error_message": "Error al cargar las actualizaciones. Por favor, inténtelo de nuevo más tarde.",
+  
   "article_status_confirmed": "Confirmado",
   "article_status_draft": "Borrador",
   "article_status_proposed": "Propuesto",
   "article_status_rejected": "Rechazado",
-  "article_status_deleted": "Eliminado"
+  "article_status_deleted": "Eliminado",
+
+  "author_navbar_write_article": "Escribir artículo",
+  "author_navbar_publications": "Publicaciones",
+  "author_navbar_profile": "Perfil",
+  "author_navbar_logout": "Cerrar sesión",
+
+  "admin_navbar_requests": "Solicitudes",
+  "admin_navbar_create_user": "Crear usuario",
+  "admin_navbar_profile": "Perfil",
+  "admin_navbar_logout": "Cerrar sesión"
 }

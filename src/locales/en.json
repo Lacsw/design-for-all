@@ -7,6 +7,18 @@
   "common_auth_logout": "Logout",
   "common_auth_profile": "Profile",
 
+  "common_roles_super_admin": "Super Admin",
+  "common_roles_admin": "Admin",
+  "common_roles_author": "Author",
+  "common_roles_user": "User",
+
+  "common_article_status_approved": "Approved",
+  "common_article_status_draft": "Draft",
+  "common_article_status_offered": "Offered",
+  "common_article_status_rejected": "Rejected",
+  "common_article_status_deleted": "Deleted",
+
+  "header_logo_alt": "Logo",
   "header_main_menu_title": "Main menu",
   "header_main_menu_home": "Home",
   "header_main_menu_updates": "Updates",
@@ -32,10 +44,11 @@
   "header_user_write_article": "Write Article",
   "header_user_publications": "Publications",
 
-  "author_navbar_write_article": "Write Article",
-  "author_navbar_publications": "Publications",
-  "author_navbar_profile": "Profile",
-  "author_navbar_logout": "Logout",
+  "header_admin_title": "Admin",
+  "header_admin_profile": "Profile",
+  "header_admin_logout": "Logout",
+  "header_admin_requests": "Requests",
+  "header_admin_create_user": "Create User",
 
   "header_search_placeholder": "Search articles...",
   "header_search_reset_button": "Reset button",
@@ -45,6 +58,8 @@
   "header_search_error_network": "Network error. Please try again later.",
   "header_search_error_server": "Server error. Please try again later.",
   "header_search_error_unknown": "An error occurred during the search. Please try again later.",
+
+  "header_mobile_trees_icon": "Mobile menu icon",
 
   "header_edit_tooltip": "Edit",
   "header_view_tooltip": "View",
@@ -80,10 +95,23 @@
   "updates_title": "Updates",
   "updates_article_type_new": "New article",
   "updates_article_type_translated": "Article translation",
-
+  "updates_no_more_updates": "You've seen all the updates! 🎉",
+  "updates_retry_button": "Retry",
+  "updates_error_message": "Error loading updates. Please try again later.",
+  
   "article_status_confirmed": "Confirmed",
   "article_status_draft": "Draft",
   "article_status_proposed": "Proposed",
   "article_status_rejected": "Rejected",
-  "article_status_deleted": "Deleted"
+  "article_status_deleted": "Deleted",
+
+  "author_navbar_write_article": "Write Article",
+  "author_navbar_publications": "Publications",
+  "author_navbar_profile": "Profile",
+  "author_navbar_logout": "Logout",
+
+  "admin_navbar_requests": "Requests",
+  "admin_navbar_create_user": "Create User",
+  "admin_navbar_profile": "Profile",
+  "admin_navbar_logout": "Logout"
 }
