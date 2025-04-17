@@ -80,6 +80,10 @@
 
   "footer_copyright": "版权所有 ©{{year}} | DFA | 全民设计",
 
+  "updates_title": "更新",
+  "updates_article_type_new": "新文章",
+  "updates_article_type_translated": "文章翻译",
+
   "article_status_confirmed": "已确认",
   "article_status_draft": "草稿",
   "article_status_proposed": "已提议",

@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
 import { setMainCategory } from 'store/slices/article';
+import { UPDATES } from 'utils/constants/translationKeys';
+import { useTranslation } from 'react-i18next';
 
 export default function UpdateCard({ update }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  
   return (
     <li className="update-card">
       <Link
@@ -22,9 +26,9 @@ export default function UpdateCard({ update }) {
         <div className="update-card__info">
           <span className="update-card__others">
             {update.type === 'created'
-              ? 'Новая статья'
+              ? t(UPDATES.ARTICLE_TYPE.NEW)
               : update.type === 'created_lang'
-              ? 'Перевод статьи'
+              ? t(UPDATES.ARTICLE_TYPE.TRANSLATED)
               : ''}
           </span>
           <span className="update-card__others">

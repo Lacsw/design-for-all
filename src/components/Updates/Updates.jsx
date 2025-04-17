@@ -4,14 +4,19 @@ import { fetchUpdates, selectUpdates } from 'store/slices/article';
 import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'utils/helpers/debounce';
 import './Updates.css';
+import { useTranslation } from 'react-i18next';
+import { UPDATES } from 'utils/constants/translationKeys';
 
 // Презентационный компонент
-const UpdatesList = ({ updates, onScroll, slideRef }) => (
-  <section className="updates-slide" ref={slideRef}>
-    <h2 className="updates-slide__title">Обновления</h2>
-    {updates.loading && <span className="preloader" />}
-    {updates.error && updates.error}
-    <ul className="updates-slide__list">
+const UpdatesList = ({ updates, onScroll, slideRef }) => {
+  const { t } = useTranslation();
+
+  return (
+    <section className="updates-slide" ref={slideRef}>
+      <h2 className="updates-slide__title">{t(UPDATES.TITLE)}</h2>
+      {updates.loading && <span className="preloader" />}
+      {updates.error && updates.error}
+      <ul className="updates-slide__list">
       {updates.cards.map((item, index) => (
         <UpdateCard
           update={item}
@@ -19,8 +24,9 @@ const UpdatesList = ({ updates, onScroll, slideRef }) => (
         />
       ))}
     </ul>
-  </section>
-);
+    </section>
+  );
+};
 
 // Компонент-контейнер
 export default function Updates({ section }) {

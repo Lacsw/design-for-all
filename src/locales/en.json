@@ -77,6 +77,10 @@
 
   "footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all",
 
+  "updates_title": "Updates",
+  "updates_article_type_new": "New article",
+  "updates_article_type_translated": "Article translation",
+
   "article_status_confirmed": "Confirmed",
   "article_status_draft": "Draft",
   "article_status_proposed": "Proposed",

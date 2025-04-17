@@ -44,8 +44,6 @@
   "header_user_write_article": "Написать статью",
   "header_user_publications": "Публикации",
 
-
-
   "header_admin_title": "Админ",
   "header_admin_profile": "Профиль",
   "header_admin_logout": "Выйти",
@@ -93,6 +91,10 @@
   "footer_socials_x_alt": "Иконка X",
 
   "footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all",
+
+  "updates_title": "Обновления",
+  "updates_article_type_new": "Новая статья",
+  "updates_article_type_translated": "Перевод статьи",
 
   "article_status_confirmed": "Подтверждено",
   "article_status_draft": "Черновик",

@@ -153,3 +153,11 @@ export const MAIN = {
     TITLE: 'main_intro_title',
   },
 };
+
+export const UPDATES = {
+  TITLE: 'updates_title',
+  ARTICLE_TYPE: {
+    NEW: 'updates_article_type_new',
+    TRANSLATED: 'updates_article_type_translated', 
+  },
+};
