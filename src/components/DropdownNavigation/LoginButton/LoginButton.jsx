@@ -5,7 +5,7 @@ import { getCurrentTheme } from 'store/slices/theme';
 import siginInIcon from 'images/siginin-icon.svg';
 import siginInIconWhite from 'images/siginin-icon_white.svg';
 import { useTranslation } from 'react-i18next';
-import { COMMON } from 'utils/constants/translationKeys';
+import { COMMON } from 'utils/translationKeys';
 
 export default function LoginButton({ openAuthModal }) {
   const theme = useSelector(getCurrentTheme);

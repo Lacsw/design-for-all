@@ -1,5 +1,3 @@
-/** Константы для ключей переводов Структура: {компонент}_{секция}_{элемент} */
-
 // Общие ключи
 export const COMMON = {
   THEME: {
@@ -79,7 +77,7 @@ export const HEADER = {
   MOBILE_TREES: {
     ICON: 'header_mobile_trees_icon',
   },
-  
+
   EDIT: {
     TOOLTIP: 'header_edit_tooltip', // Подсказка для кнопки редактирования
   },
@@ -97,24 +95,69 @@ export const HEADER = {
   },
 };
 
-// Ключи для навбара автора
-export const AUTHOR_NAVBAR = {
-  WRITE_ARTICLE: 'author_navbar_write_article',
-  PUBLICATIONS: 'author_navbar_publications',
-  PROFILE: 'author_navbar_profile',
-  LOGOUT: 'author_navbar_logout',
+// Auth Modal
+export const AUTH = {
+  LOGIN: 'auth_login',
+  SIGNUP: 'auth_signup',
+  LOGIN_BUTTON: 'auth_login_button',
+  LOGIN_BUTTON_ARIA: 'auth_login_button_aria',
+  LOGIN_LABEL: 'auth_login_label',
+  LOGIN_PLACEHOLDER: 'auth_login_placeholder',
+  PASSWORD_LABEL: 'auth_password_label',
+  PASSWORD_PLACEHOLDER: 'auth_password_placeholder',
+  FILL_ALL_FIELDS: 'auth_fill_all_fields',
+  EMAIL_LABEL: 'auth_email_label',
+  EMAIL_PLACEHOLDER: 'auth_email_placeholder',
+  PROJECTS_LABEL: 'auth_projects_label',
+  PROJECTS_PLACEHOLDER: 'auth_projects_placeholder',
+  ADD_PROJECT_ALT: 'auth_add_project_alt',
+  CAPTCHA_LABEL: 'auth_captcha_label',
+  CAPTCHA_PLACEHOLDER: 'auth_captcha_placeholder',
+  EMAIL_EXISTS: 'auth_email_exists',
+  PROJECT_EXISTS: 'auth_project_exists',
+  CHANGE_DATA: 'auth_change_data',
+  CAPTCHA_ERROR: 'auth_captcha_error',
+  POLITICS_TEXT: 'auth_politics_text',
+  PERSONAL_DATA: 'auth_personal_data',
+  TERMS_OF_SERVICE: 'auth_terms_of_service',
+  SIGNUP_BUTTON: 'auth_signup_button',
+  SIGNUP_BUTTON_ARIA: 'auth_signup_button_aria',
+  SUCCESS_TITLE: 'auth_success_title',
+  SUCCESS_MESSAGE: 'auth_success_message',
+  SUCCESS_DESCRIPTION: 'auth_success_description',
+  SUCCESS_WARNING: 'auth_success_warning',
+  GIVE_PERMISSION: 'auth_give_permission',
+  AGREE_WITH: 'auth_agree_with',
+  NOTIFICATION_MESSAGE: 'auth_notification_message',
 };
 
-// Ключи для навбара админа
-export const ADMIN_NAVBAR = {
-    REQUESTS: 'admin_navbar_requests',
-    CREATE_USER: 'admin_navbar_create_user',
-    PROFILE: 'author_navbar_profile',
-    LOGOUT: 'author_navbar_logout',
-  };
+// Ключи для интро
+export const INTRO = {
+  TITLE: 'intro_title',
+  SUBTITLE_MOBILE: 'intro_subtitle_mobile',
+  SUBTITLE_DESKTOP: 'intro_subtitle_desktop',
+};
+
+// Ключи для навигационной панели
+export const NAVBAR = {
+  GO_TO: 'navbar_go_to',
+};
+
+// Обновления
+export const UPDATES = {
+  TITLE: 'updates_title',
+  ARTICLE_TYPE: {
+    NEW: 'updates_article_type_new',
+    TRANSLATED: 'updates_article_type_translated',
+  },
+  NO_MORE_UPDATES: 'updates_no_more_updates',
+  ERROR_MESSAGE: 'updates_error_message',
+  RETRY_BUTTON: 'updates_retry_button',
+};
 
 // Ключи для футера
 export const FOOTER = {
+  // Основные страницы
   MAIN_PAGES: {
     TITLE: 'footer_main_pages_title',
     HOME: 'footer_main_pages_home',
@@ -125,17 +168,20 @@ export const FOOTER = {
     ARTICLES: 'footer_main_pages_articles',
     GUIDES: 'footer_main_pages_guides',
   },
+
+  // Контакты
   CONTACTS: {
     TITLE: 'footer_contacts_title',
-    EXAMPLE: 'footer_contacts_example',
-    SUPPORT: 'footer_contacts_support',
-    MARKETING: 'footer_contacts_marketing',
   },
+
+  // Правовая информация
   LEGAL: {
     TITLE: 'footer_legal_title',
     TERMS: 'footer_legal_terms',
     PRIVACY: 'footer_legal_privacy',
   },
+
+  // Социальные сети
   SOCIALS: {
     TITLE: 'footer_socials_title',
     TELEGRAM_ALT: 'footer_socials_telegram_alt',
@@ -145,22 +191,23 @@ export const FOOTER = {
     PINTEREST_ALT: 'footer_socials_pinterest_alt',
     X_ALT: 'footer_socials_x_alt',
   },
+
+  // Копирайт
   COPYRIGHT: 'footer_copyright',
 };
 
-export const MAIN = {
-  INTRO: {
-    TITLE: 'main_intro_title',
-  },
+// Ключи для навбара автора
+export const AUTHOR_NAVBAR = {
+  WRITE_ARTICLE: 'author_navbar_write_article',
+  PUBLICATIONS: 'author_navbar_publications',
+  PROFILE: 'author_navbar_profile',
+  LOGOUT: 'author_navbar_logout',
 };
 
-export const UPDATES = {
-  TITLE: 'updates_title',
-  ARTICLE_TYPE: {
-    NEW: 'updates_article_type_new',
-    TRANSLATED: 'updates_article_type_translated', 
-  },
-  NO_MORE_UPDATES: 'updates_no_more_updates',
-  ERROR_MESSAGE: 'updates_error_message',
-  RETRY_BUTTON: 'updates_retry_button',
+// Ключи для навбара админа
+export const ADMIN_NAVBAR = {
+  REQUESTS: 'admin_navbar_requests',
+  CREATE_USER: 'admin_navbar_create_user',
+  PROFILE: 'admin_navbar_profile',
+  LOGOUT: 'admin_navbar_logout',
 };

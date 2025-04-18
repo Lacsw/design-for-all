@@ -69,7 +69,7 @@ import rejectHintB from 'images/account/warining-icon_black.svg';
 import rejectHintW from 'images/account/warining-icon_white.svg';
 
 // Импортируем ключи переводов
-import { HEADER, COMMON } from './constants/translationKeys';
+import { HEADER, COMMON } from 'utils/translationKeys';
 
 export const langSelectOptions = [
   { label: HEADER.LANGUAGE.RU, value: 'ru' },

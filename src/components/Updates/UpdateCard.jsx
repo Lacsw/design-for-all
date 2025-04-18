@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
 import { setMainCategory } from 'store/slices/article';
-import { UPDATES } from 'utils/constants/translationKeys';
+import { UPDATES } from 'utils/translationKeys';
 import { useTranslation } from 'react-i18next';
 
 export default function UpdateCard({ update }) {

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'utils/helpers/debounce';
 import './Updates.css';
 import { useTranslation } from 'react-i18next';
-import { UPDATES } from 'utils/constants/translationKeys';
+import { UPDATES } from 'utils/translationKeys';
 import Button from 'components/Button/Button';
 
 // Презентационный компонент

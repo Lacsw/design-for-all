@@ -1,17 +1,17 @@
-// import { useSelector } from 'react-redux';
-// import { getCurrentTheme } from 'store/slices/theme';
 import './Intro.css';
 import { useEffect, useRef } from 'react';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useTranslation } from 'react-i18next';
+import { INTRO } from 'utils/translationKeys';
+
 export default function Intro() {
   const { t } = useTranslation();
   const typeRef = useRef(null);
   const isMobile = useIsMobile();
 
   const slogan = isMobile
-    ? 'Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.'
-    : 'Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.';
+    ? t(INTRO.SUBTITLE_MOBILE)
+    : t(INTRO.SUBTITLE_DESKTOP);
 
   useEffect(() => {
     // При каждом изменении слогана сбрасываем содержимое и запускаем анимацию заново
@@ -36,8 +36,10 @@ export default function Intro() {
 
   return (
     <div className="intro__container">
-      <h1 className="intro__title">{t('main_intro_title')}</h1>
-      <p className="intro__subtitle" ref={typeRef}></p>
+      <h1 className="intro__title">{t(INTRO.TITLE)}</h1>
+      <p className="intro__subtitle" ref={typeRef}>
+        {slogan}
+      </p>
     </div>
   );
 }

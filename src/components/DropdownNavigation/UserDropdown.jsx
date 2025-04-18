@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
 import { useLogout } from 'utils/hooks/useLogout';
-import { COMMON, HEADER } from 'utils/constants/translationKeys';
+import { COMMON, HEADER } from 'utils/translationKeys';
 
 export default function UserDropdown({
   resetSection,

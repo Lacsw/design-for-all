@@ -1,5 +1,9 @@
 {
-  "main_intro_title": "Design for all",
+  "intro_title": "Design for all",
+  "intro_subtitle_mobile": "唯一、最大、/结构化和免费的/IT设计百科全书。",
+  "intro_subtitle_desktop": "唯一、最大、/结构化和免费的/IT设计百科全书。",
+
+  "navbar_go_to": "前往",
 
   "common_theme_light": "浅色主题",
   "common_theme_dark": "深色主题",
@@ -77,9 +81,6 @@
   "footer_main_pages_guides": "指南",
 
   "footer_contacts_title": "联系方式",
-  "footer_contacts_example": "dfa.service.info@gmail.com",
-  "footer_contacts_support": "dfa.info@ya.com",
-  "footer_contacts_marketing": "@dfa_design_for_all",
 
   "footer_legal_title": "法律信息",
   "footer_legal_terms": "服务条款",
@@ -116,5 +117,38 @@
   "admin_navbar_requests": "请求",
   "admin_navbar_create_user": "创建用户",
   "admin_navbar_profile": "个人资料",
-  "admin_navbar_logout": "退出"
+  "admin_navbar_logout": "退出",
+
+  "auth_login": "登录",
+  "auth_signup": "注册",
+  "auth_login_button": "登录",
+  "auth_login_button_aria": "登录按钮",
+  "auth_login_label": "用户名",
+  "auth_login_placeholder": "用户名",
+  "auth_password_label": "密码",
+  "auth_password_placeholder": "密码",
+  "auth_fill_all_fields": "请填写所有字段",
+  "auth_email_label": "电子邮箱",
+  "auth_email_placeholder": "example@domain.com",
+  "auth_projects_label": "你的项目链接",
+  "auth_projects_placeholder": "https://example.com/my-project",
+  "auth_add_project_alt": "添加项目",
+  "auth_captcha_label": "验证码",
+  "auth_captcha_placeholder": "?",
+  "auth_email_exists": "该电子邮箱已在系统中注册。",
+  "auth_project_exists": "该项目链接之前已提交。",
+  "auth_change_data": "请更改数据并重试。",
+  "auth_captcha_error": "验证码可能出错。请重新解决。",
+  "auth_politics_text": "点击\"注册\"按钮即表示您：",
+  "auth_personal_data": "个人数据",
+  "auth_terms_of_service": "服务条款",
+  "auth_signup_button": "注册",
+  "auth_signup_button_aria": "注册按钮",
+  "auth_success_title": "申请已发送！",
+  "auth_success_message": "您的账户注册申请已发送。",
+  "auth_success_description": "每个作者的能力都由管理员根据提供的项目链接手动验证。",
+  "auth_success_warning": "没有经验的参与者不能成为作者",
+  "auth_give_permission": "您同意处理",
+  "auth_agree_with": "您同意",
+  "auth_notification_message": "在您的申请被批准或拒绝后，您将通过电子邮件收到通知"
 }

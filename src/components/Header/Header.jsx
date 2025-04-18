@@ -34,7 +34,7 @@ import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { selectIsCatalogOpen } from 'store/slices/article';
 import { useLogout } from 'utils/hooks/useLogout';
-import { HEADER } from 'utils/constants/translationKeys';
+import { HEADER } from 'utils/translationKeys';
 
 export default function Header({ resetSection }) {
   const dispatch = useDispatch();

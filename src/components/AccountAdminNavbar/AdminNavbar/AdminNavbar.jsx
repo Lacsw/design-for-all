@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import { adminHash } from 'utils/constants';
 import { useTranslation } from 'react-i18next';
-import { ADMIN_NAVBAR } from 'utils/constants/translationKeys';
+import { ADMIN_NAVBAR } from 'utils/translationKeys';
 export default function AdminNavbar({ logout }) {
   const { t } = useTranslation();
   const theme = useSelector(getCurrentTheme);

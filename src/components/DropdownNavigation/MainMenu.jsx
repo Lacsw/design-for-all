@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import { COMMON, HEADER } from 'utils/constants/translationKeys';
+import { COMMON, HEADER } from 'utils/translationKeys';
 
 import siginInIconMobile from 'images/navigation/siginin-icon-mobile.svg';
 import siginInIconWhiteMobile from 'images/navigation/siginin-icon_white-mobile.svg';

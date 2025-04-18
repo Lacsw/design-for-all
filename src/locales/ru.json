@@ -1,5 +1,9 @@
 {
-  "main_intro_title": "Design for all",
+  "intro_title": "Design for all",
+  "intro_subtitle_mobile": "Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.",
+  "intro_subtitle_desktop": "Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.",
+
+  "navbar_go_to": "Перейти",
 
   "common_theme_light": "Светлая тема",
   "common_theme_dark": "Темная тема",
@@ -98,7 +102,7 @@
   "updates_no_more_updates": "Вы просмотрели все обновления!",
   "updates_retry_button": "Повторить",
   "updates_error_message": "Ошибка при загрузке обновлений. Пожалуйста, попробуйте снова позже.",
-  
+
   "article_status_confirmed": "Подтверждено",
   "article_status_draft": "Черновик",
   "article_status_proposed": "Предложено",
@@ -113,5 +117,38 @@
   "admin_navbar_requests": "Заявки",
   "admin_navbar_create_user": "Создать пользователя",
   "admin_navbar_profile": "Профиль",
-  "admin_navbar_logout": "Выйти"
+  "admin_navbar_logout": "Выйти",
+
+  "auth_login": "Авторизация",
+  "auth_signup": "Регистрация",
+  "auth_login_button": "Войти",
+  "auth_login_button_aria": "кнопка входа",
+  "auth_login_label": "Логин",
+  "auth_login_placeholder": "Логин",
+  "auth_password_label": "Пароль",
+  "auth_password_placeholder": "Пароль",
+  "auth_fill_all_fields": "Пожалуйста, заполните все поля",
+  "auth_email_label": "Email",
+  "auth_email_placeholder": "example@domain.com",
+  "auth_projects_label": "Ссылки на ваши проекты",
+  "auth_projects_placeholder": "https://example.com/my-project",
+  "auth_add_project_alt": "добавить проект",
+  "auth_captcha_label": "Капча",
+  "auth_captcha_placeholder": "?",
+  "auth_email_exists": "Указанная почта уже есть в системе.",
+  "auth_project_exists": "Ссылка на проект была прислана ранее.",
+  "auth_change_data": "Измените данные и попробуйте снова.",
+  "auth_captcha_error": "Возможно, ошибка в капче. Решите новую.",
+  "auth_politics_text": "Нажимая кнопку «Зарегистрироваться» вы:",
+  "auth_personal_data": "персональных данных",
+  "auth_terms_of_service": "пользовательским соглашением",
+  "auth_signup_button": "Регистрация",
+  "auth_signup_button_aria": "кнопка входа",
+  "auth_success_title": "Заявка отправлена!",
+  "auth_success_message": "Заявка на регистрацию аккаунта отправлена.",
+  "auth_success_description": "Компетенции каждого автора проверяются администраторами вручную по предоставленным ссылкам на проекты.",
+  "auth_success_warning": "Неопытные участники не могут стать авторами",
+  "auth_give_permission": "Даете право на обработку",
+  "auth_agree_with": "Соглашаетесь с",
+  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email"
 }

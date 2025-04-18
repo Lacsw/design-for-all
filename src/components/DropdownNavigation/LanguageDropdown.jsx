@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
 import { useLanguageSync } from 'utils/hooks/useLanguageSync';
-import { HEADER } from 'utils/constants/translationKeys';
+import { HEADER } from 'utils/translationKeys';
 
 export default function LanguageDropdown({ options, title, theme }) {
   const { language, setLanguage } = useLanguageSync();

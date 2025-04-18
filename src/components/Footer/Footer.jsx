@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import xBlack from 'images/socials/x-icon_black.svg';
 import xWhite from 'images/socials/x-icon_white.svg';
-import { FOOTER } from 'utils/translationConstants/translationKeys';
+import { FOOTER } from 'utils/translationKeys';
 
 export default function Footer() {
   const theme = useSelector(getCurrentTheme);

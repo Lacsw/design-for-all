@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
-import { HEADER } from 'utils/constants/translationKeys';
+import { HEADER } from 'utils/translationKeys';
 
 export default function CurrencyDropdown({ options, theme, title }) {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import { useCallback, useMemo, useReducer, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import searchApi from 'utils/api/search';
 import debounce from 'utils/helpers/debounce';
-import { HEADER } from 'utils/constants/translationKeys';
+import { HEADER } from 'utils/translationKeys';
 
 // Начальное состояние поиска
 const initialState = {

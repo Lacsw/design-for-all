@@ -14,7 +14,7 @@ import { setMainCategory, setShouldRemountTree } from 'store/slices/article';
 import debounce from 'utils/helpers/debounce';
 import { useServerSearch } from 'utils/hooks/useServerSearch';
 import { useTranslation } from 'react-i18next';
-import { HEADER } from 'utils/constants/translationKeys';
+import { HEADER } from 'utils/translationKeys';
 
 export default function HeaderSearchInput({ id, isMobileVisible = false }) {
   const dispatch = useDispatch();

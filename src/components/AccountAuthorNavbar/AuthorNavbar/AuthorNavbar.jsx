@@ -2,7 +2,7 @@ import './AuthorNavbar.css';
 import { useTranslation } from 'react-i18next';
 import HashButton from 'components/LinkButton/HashButton';
 import { hashPaths } from 'utils/constants';
-import { AUTHOR_NAVBAR } from 'utils/constants/translationKeys';
+import { AUTHOR_NAVBAR } from 'utils/translationKeys';
 import newArticleIcon from 'images/account/new-article-icon.svg';
 import articlesIconBlack from 'images/account/articles-black-icon.svg';
 import articlesIconWhite from 'images/account/articles-white-icon.svg';
