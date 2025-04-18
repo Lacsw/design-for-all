@@ -11,7 +11,7 @@ import {
   AuthModal,
   UserDropdown,
   LoginButton,
-  MobileTreesВutton,
+  MobileTreesButton,
   HeaderSearchInput,
 } from 'components';
 
@@ -129,7 +129,7 @@ export default function Header({ resetSection }) {
           </li>
           {isMobile && isCatalogOpen && (
             <li className="header__navigation-item_mobile-fourth">
-              <MobileTreesВutton />
+              <MobileTreesButton />
             </li>
           )}
 
