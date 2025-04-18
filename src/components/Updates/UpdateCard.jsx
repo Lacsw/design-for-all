@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
-import { setMainCategory } from 'store/slices/article';
+import { setMainCategory, setShouldRemountTree } from 'store/slices/article';
 import { UPDATES } from 'utils/translationKeys';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +16,7 @@ export default function UpdateCard({ update }) {
         className="update-card__link"
         onClick={() => {
           dispatch(setMainCategory(update.main_category));
+          dispatch(setShouldRemountTree(true));
         }}
       >
         <div className="update-card__titles">
