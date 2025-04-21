@@ -41,7 +41,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   targetSelector,
   scrollableElParams,
   firstShowingOffset = firstShowingOffsetDefault,
-  lastShowingOffset: scrollPercent = lastShowingOffsetDefault,
+  lastShowingOffset = lastShowingOffsetDefault,
   targetHeadings = targetHeadingsDefault,
   onOpen,
   onClose,
@@ -194,7 +194,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
       if (
         rect.y < -firstShowingOffset &&
         elWithScrollData.scrollHeight - elWithScrollData.scrollTop >
-          scrollPercent
+          lastShowingOffset
       ) {
         setIsShowing(true);
       } else {
@@ -210,7 +210,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     targetRef,
     headings,
     firstShowingOffset,
-    scrollPercent,
+    lastShowingOffset,
   ]);
 
   // #art-nav-2
