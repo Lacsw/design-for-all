@@ -3,7 +3,7 @@ import { ModalOwnProps } from '@mui/material';
 import type {
   targetHeadingsDefault,
   firstShowingOffsetDefault,
-  scrollPercentDefault,
+  lastShowingOffsetDefault,
 } from './constants';
 
 export interface IScrollableRefData {
@@ -94,11 +94,14 @@ export interface IArticleNavigatorProps {
    */
   firstShowingOffset?: number;
   /**
-   * порог для величины прокрутки после которого эл-т скрывается
+   * Порог для величины прокрутки после которого эл-т скрывается.\
    *
-   * Default is {@link scrollPercentDefault}
+   * Если быть точнее, то это значение разницы scrollHeight и scrollTop.\
+   * Если разница окажется меньше указанного значение - эл-т скроется.
+   *
+   * Default is {@link lastShowingOffsetDefault}
    */
-  scrollPercent: number;
+  lastShowingOffset: number;
   /**
    * Какие заголовки искать.
    *
