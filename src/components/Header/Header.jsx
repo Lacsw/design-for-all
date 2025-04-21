@@ -115,7 +115,7 @@ export default function Header({ resetSection }) {
         <Link to="/" className="logo-link" onClick={resetSection}>
           <img
             src={theme === 'dark' ? logo : logoBlack}
-            alt={t(HEADER.LOGO)}
+            alt={t(HEADER.LOGO.ALT)}
             className="header__logo"
           />
         </Link>
