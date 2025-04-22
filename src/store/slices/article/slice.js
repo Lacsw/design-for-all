@@ -19,34 +19,13 @@ export const initialState = {
   },
   article: null,
   loading: true,
-  error: '',
-  isCatalogOpen: false,
-  mainCategory: '',
-  shouldRemountTree: false,
+  error: ''
 };
 
 const articleSlice = createSlice({
   name: 'article',
   initialState,
-  reducers: {
-    setIsCatalogOpen: (state, action) => {
-      state.isCatalogOpen = action.payload;
-    },
-    setMainCategory: (state, action) => {
-      state.mainCategory = action.payload;
-    },
-    setShouldRemountTree: (state, action) => {
-      state.shouldRemountTree = action.payload;
-    },
-  },
-  selectors: {
-    selectCatalog: (state) => state.catalog,
-    selectTitles: (state) => state.titles,
-    selectArticle: (state) => state.article,
-    selectUpdates: (state) => state.updates,
-    selectError: (state) => state.error,
-    selectLoading: (state) => state.loading,
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTree.fulfilled, (state, action) => {
@@ -127,9 +106,6 @@ const articleSlice = createSlice({
   },
 });
 
-export const { setIsCatalogOpen, setMainCategory, setShouldRemountTree } =
-  articleSlice.actions;
-
 export const fetchTree = createAsyncThunk('tree/get', async (options) =>
   treeApi.getTree(options)
 );
@@ -146,19 +122,13 @@ export const fetchTitles = createAsyncThunk('titles/get', async () =>
   treeApi.getTitles()
 );
 
-export const {
-  selectCatalog,
-  selectTitles,
-  selectArticle,
-  selectUpdates,
-  selectError,
-  selectLoading,
-} = articleSlice.selectors;
-
-export const selectIsCatalogOpen = (state) => state.article.isCatalogOpen;
-export const selectMainCategory = (state) => state.article.mainCategory;
-export const selectShouldRemountTree = (state) =>
-  state.article.shouldRemountTree;
+// Селекторы
+export const selectCatalog = (state) => state.article.catalog;
+export const selectTitles = (state) => state.article.titles;
+export const selectArticle = (state) => state.article.article;
+export const selectUpdates = (state) => state.article.updates;
+export const selectError = (state) => state.article.error;
+export const selectLoading = (state) => state.article.loading;
 
 export const selectUpdatesError = createSelector(
   [(state) => state.article.updates.error, 

@@ -17,6 +17,7 @@ import {
 
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
+import { selectIsOpen as selectIsCatalogOpen } from 'store/slices/catalog/slice';
 
 import {
   accountNavigationList,
@@ -32,7 +33,6 @@ import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import { selectIsCatalogOpen } from 'store/slices/article';
 import { useLogout } from 'utils/hooks/useLogout';
 import { HEADER } from 'utils/translationKeys';
 

@@ -424,3 +424,6 @@ export const tableButtons = {
   rejected: [viewButton, draftButton, reasonButton],
   deleted: [reasonButton, null, null],
 };
+
+// Допустимые секции для запросов к API
+export const VALID_SECTIONS = ['web', 'desktop', 'mobile', 'manual'];
