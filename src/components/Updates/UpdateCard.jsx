@@ -1,18 +1,33 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
-import { setMainCategory } from 'store/slices/article';
+import { setMainCategory, setShouldRemountTree } from 'store/slices/catalog/slice';
+import { UPDATES } from 'utils/translationKeys';
+import { useTranslation } from 'react-i18next';
 
 export default function UpdateCard({ update }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  
+  const handleClick = (e) => {
+    e.preventDefault();
+    
+    // Обновляем состояние
+    dispatch(setMainCategory(update.main_category));
+    dispatch(setShouldRemountTree(true));
+    
+    // Используем React Router для навигации
+    navigate(`/${update.lang}/${update.what_update || update.what_create}`);
+  };
+  
   return (
     <li className="update-card">
       <Link
         to={`/${update.lang}/${update.what_update || update.what_create}`}
         className="update-card__link"
-        onClick={() => {
-          dispatch(setMainCategory(update.main_category));
-        }}
+        onClick={handleClick}
       >
         <div className="update-card__titles">
           <h3 className="update-card__section-name">{update.main_category}</h3>
@@ -22,9 +37,9 @@ export default function UpdateCard({ update }) {
         <div className="update-card__info">
           <span className="update-card__others">
             {update.type === 'created'
-              ? 'Новая статья'
+              ? t(UPDATES.ARTICLE_TYPE.NEW)
               : update.type === 'created_lang'
-              ? 'Перевод статьи'
+              ? t(UPDATES.ARTICLE_TYPE.TRANSLATED)
               : ''}
           </span>
           <span className="update-card__others">

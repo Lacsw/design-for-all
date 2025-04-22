@@ -132,7 +132,7 @@ export class AuthorApi {
 
   /**
    * @param {File} file
-   * @returns {Promise}
+   * @returns {Promise<string>}
    */
   async uploadImage(file) {
     return new Promise((resolve, reject) => {

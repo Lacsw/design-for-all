@@ -1,21 +1,22 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
-import { changeLanguage, getLanguage } from 'store/slices/user';
+import { useLanguageSync } from 'utils/hooks/useLanguageSync';
+import { HEADER } from 'utils/translationKeys';
 
 export default function LanguageDropdown({ options, title, theme }) {
-  const dispatch = useDispatch();
+  const { language, setLanguage } = useLanguageSync();
+  const { t } = useTranslation();
 
-  const language = useSelector(getLanguage);
   const langSrc = options.find((item) => item.name === language)?.src;
-
   const filteredOptions = options.filter((item) => item.name !== language);
 
   const handleOptionClick = (option) => {
-    dispatch(changeLanguage(option));
+    setLanguage(option);
   };
 
   const updatedOptions = filteredOptions.map((option) => ({
     ...option,
+    name: t(`header_language_${option.name.toLowerCase()}`),
     onClick: () => handleOptionClick(option.name),
   }));
 
@@ -24,7 +25,7 @@ export default function LanguageDropdown({ options, title, theme }) {
       id="language-menu"
       options={updatedOptions}
       titleIcon={langSrc}
-      title={title}
+      title={t(HEADER.LANGUAGE.TITLE)}
       theme={theme}
       sizeIcon="m"
       customBottomPadding="bottom-padding"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
@@ -17,6 +17,17 @@ export default function Main({ setSection }) {
     name: 'Обновления',
     index: 0,
   });
+
+  const setSectionRef = useRef(setSection);
+  setSectionRef.current = setSection;
+  
+  useEffect(() => {
+    setActiveTab({
+      name: mainNavigationOptionsList[0].name,
+      index: 0,
+    });
+    setSectionRef.current(mainNavigationOptionsList[0].link);
+  }, []);
 
   const handleActiveTab = ({ name, index }) => {
     setActiveTab({ name, index });

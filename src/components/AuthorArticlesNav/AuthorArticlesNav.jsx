@@ -2,12 +2,15 @@ import './AuthorArticlesNav.css';
 import { Link } from 'react-router-dom';
 import { DropdownAmount } from 'components';
 import { listRangeOptions, authorArticlesTabs } from 'utils/constants';
+import { useTranslation } from 'react-i18next';
 
 export default function AuthorArticlesNav({
   handlePagination,
   selected,
   onChange,
 }) {
+  const { t } = useTranslation();
+  
   return (
     <nav className="author-articles-nav">
       <ul className="author-articles-nav__list">
@@ -20,7 +23,7 @@ export default function AuthorArticlesNav({
               }`}
               onClick={() => onChange(tab.value)}
             >
-              {tab.name}
+              {t(tab.name)}
             </Link>
           </li>
         ))}

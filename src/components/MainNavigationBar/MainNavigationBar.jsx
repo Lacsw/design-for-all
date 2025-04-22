@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import './MainNavigationBar.css';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { NAVBAR } from 'utils/translationKeys';
 
 export default function MainNavigationBar({
   navLinksList,
@@ -11,6 +13,8 @@ export default function MainNavigationBar({
   setSection,
 }) {
   const theme = useSelector(getCurrentTheme);
+  const { t } = useTranslation();
+  
   return (
     <ul className="main-navbar">
       {navLinksList.map((icon, i) => (
@@ -36,7 +40,7 @@ export default function MainNavigationBar({
             )}
             onClick={() => setSection(icon.link)}
           >
-            Перейти
+            {t(NAVBAR.GO_TO)}
           </NavLink>
         </li>
       ))}
