@@ -128,7 +128,6 @@ export const AUTH = {
   PROJECTS_PLACEHOLDER: 'auth_projects_placeholder',
   ADD_PROJECT_ALT: 'auth_add_project_alt',
   CAPTCHA_LABEL: 'auth_captcha_label',
-  CAPTCHA_PLACEHOLDER: 'auth_captcha_placeholder',
   EMAIL_EXISTS: 'auth_email_exists',
   PROJECT_EXISTS: 'auth_project_exists',
   CHANGE_DATA: 'auth_change_data',

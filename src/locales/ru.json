@@ -144,7 +144,6 @@
   "auth_projects_placeholder": "https://example.com/my-project",
   "auth_add_project_alt": "добавить проект",
   "auth_captcha_label": "Капча",
-  "auth_captcha_placeholder": "?",
   "auth_email_exists": "Указанная почта уже есть в системе.",
   "auth_project_exists": "Ссылка на проект была прислана ранее.",
   "auth_change_data": "Измените данные и попробуйте снова.",
