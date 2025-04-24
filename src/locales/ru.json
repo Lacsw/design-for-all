@@ -22,6 +22,16 @@
   "common_article_status_rejected": "Отклонено",
   "common_article_status_deleted": "Удалено",
 
+  "not_found_page_not_exists": "Страница не существует",
+  "not_found_role_page_message": "Это страница для {{role}}ов. У вашего аккаунта другая роль.",
+  "not_found_back_button": "Назад",
+  "not_found_home_button": "На главную",
+  "not_found_alt_404": "404",
+
+  "not_found_article_not_created": "Данная статья ещё не создана.",
+  "not_found_article_create_button": "Создать",
+  "not_found_article_alt_404": "404",
+
   "header_logo_alt": "Логотип",
   "header_main_menu_title": "Главное меню",
   "header_main_menu_home": "Главная",

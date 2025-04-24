@@ -24,6 +24,22 @@ export const COMMON = {
   },
 };
 
+// Ключи для страницы 404
+export const NOT_FOUND = {
+  PAGE_NOT_EXISTS: 'not_found_page_not_exists',
+  ROLE_PAGE_MESSAGE: 'not_found_role_page_message',
+  BACK_BUTTON: 'not_found_back_button',
+  HOME_BUTTON: 'not_found_home_button',
+  ALT_404: 'not_found_alt_404',
+};
+
+// Ключи для страницы 404 статьи
+export const NOT_FOUND_ARTICLE = {
+  ARTICLE_NOT_CREATED: 'not_found_article_not_created',
+  CREATE_BUTTON: 'not_found_article_create_button',
+  ALT_404: 'not_found_article_alt_404',
+};
+
 // Ключи для хедера
 export const HEADER = {
   LOGO: {

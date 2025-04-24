@@ -22,6 +22,16 @@
   "common_article_status_rejected": "Rejected",
   "common_article_status_deleted": "Deleted",
 
+  "not_found_page_not_exists": "Page does not exist",
+  "not_found_role_page_message": "This page is for {{role}}s. Your account has a different role.",
+  "not_found_back_button": "Back",
+  "not_found_home_button": "Home",
+  "not_found_alt_404": "404",
+
+  "not_found_article_not_created": "This article has not been created yet.",
+  "not_found_article_create_button": "Create",
+  "not_found_article_alt_404": "404",
+
   "header_logo_alt": "Logo",
   "header_main_menu_title": "Main menu",
   "header_main_menu_home": "Home",
