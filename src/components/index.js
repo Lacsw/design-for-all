@@ -10,9 +10,7 @@ export { default as Intro } from './Intro/Intro';
 export { default as AuthorArticlesList } from './AuthorArticlesList/AuthorArticlesList';
 export { default as AuthorArticlesNav } from './AuthorArticlesNav/AuthorArticlesNav';
 export { default as AuthorAndReviewers } from './AuthorAndReviewers/AuthorAndReviewers';
-export { default as Articles } from './Articles/Articles';
-export { default as Article } from './Article/Article';
-export { default as NotFoundArticle } from './Article/NotFoundArticle/NotFoundArticle';
+export { default as NotFoundArticle } from './NotFoundArticle/NotFoundArticle';
 export { default as ArticleHeader } from './ArticleHeader/ArticleHeader';
 export { NewArticle } from './NewArticle/NewArticle';
 export { default as AuthorNavbar } from './AccountAuthorNavbar/AuthorNavbar/AuthorNavbar';
@@ -26,7 +24,6 @@ export { default as MobileAccountAuthor } from './AccountAuthor/MobileAccountAut
 
 export { default as AccountAdmin } from './AccountAdmin/AccountAdmin';
 export { default as AdminApplicationsNav } from './AdminApplicationsNav/AdminApplicationsNav';
-export { default as AdminApplicationNewAuthor } from './AdminApplicationNewAuthor/AdminApplicationNewAuthor';
 export { default as AdminCreateUser } from './AdminCreateUser/AdminCreateUser';
 export { default as AdminNavbar } from './AccountAdminNavbar/AdminNavbar/AdminNavbar';
 export { default as AdminAppNewAuthorNavbar } from './AccountAdminNavbar/AdminAppNewAuthorNavbar/AdminAppNewAuthorNavbar';

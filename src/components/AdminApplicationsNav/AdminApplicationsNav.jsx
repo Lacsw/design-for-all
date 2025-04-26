@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import { adminHash, listRangeOptions } from 'utils/constants';
 import './AdminApplicationsNav.css';
 import { DropdownAmount } from 'components';
+import { useTranslation } from 'react-i18next';
+import { ADMIN } from 'utils/translationKeys';
 
 export default function AdminApplicationsNav({ hash, setPagination }) {
+  const { t } = useTranslation();
   return (
     <nav className="admin-applications-nav">
       <ul className="admin-applications-nav__list">
@@ -16,7 +19,7 @@ export default function AdminApplicationsNav({ hash, setPagination }) {
                 : ''
             }`}
           >
-            Создание
+            {t(ADMIN.APPLICATIONS_NAVBAR.CREATES)}
           </Link>
         </li>
         <li>
@@ -28,7 +31,7 @@ export default function AdminApplicationsNav({ hash, setPagination }) {
                 : ''
             }`}
           >
-            Обновление
+            {t(ADMIN.APPLICATIONS_NAVBAR.UPDATES)}
           </Link>
         </li>
         <li>
@@ -40,7 +43,7 @@ export default function AdminApplicationsNav({ hash, setPagination }) {
                 : ''
             }`}
           >
-            Аккаунты
+            {t(ADMIN.APPLICATIONS_NAVBAR.ACCOUNTS)}
           </Link>
         </li>
         <li>
@@ -52,7 +55,7 @@ export default function AdminApplicationsNav({ hash, setPagination }) {
                 : ''
             }`}
           >
-            Закрытые
+            {t(ADMIN.APPLICATIONS_NAVBAR.CLOSED)}
           </Link>
         </li>
       </ul>

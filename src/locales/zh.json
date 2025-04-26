@@ -1,7 +1,7 @@
 {
   "intro_title": "Design for all",
-  "intro_subtitle_mobile": "唯一、最大、/结构化和免费的/IT设计百科全书。",
-  "intro_subtitle_desktop": "唯一、最大、/结构化和免费的/IT设计百科全书。",
+  "intro_subtitle_mobile": "唯一最大的，/结构化和免费的/IT设计百科全书。",
+  "intro_subtitle_desktop": "唯一最大的，/结构化和免费的/IT设计百科全书。",
 
   "navbar_go_to": "前往",
 
@@ -21,6 +21,16 @@
   "common_article_status_offered": "已提供",
   "common_article_status_rejected": "已拒绝",
   "common_article_status_deleted": "已删除",
+
+  "not_found_page_not_exists": "页面不存在",
+  "not_found_role_page_message": "此页面适用于{{role}}。您的账户具有不同的角色。",
+  "not_found_back_button": "返回",
+  "not_found_home_button": "首页",
+  "not_found_alt_404": "404",
+
+  "not_found_article_not_created": "该文章尚未创建。",
+  "not_found_article_create_button": "创建",
+  "not_found_article_alt_404": "404",
 
   "header_logo_alt": "标志",
   "header_main_menu_title": "主菜单",

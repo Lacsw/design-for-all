@@ -1,6 +1,6 @@
 { "intro_title": "Design for all",
-  "intro_subtitle_mobile": "La única, más grande,/estructurada y libre enciclopedia/de diseño en IT.",
-  "intro_subtitle_desktop": "La única, más grande,/estructurada y libre/enciclopedia de diseño en IT.",
+  "intro_subtitle_mobile": "La única, la más grande,/estructurada y libre enciclopedia/de diseño en IT.",
+  "intro_subtitle_desktop": "La única, la más grande,/estructurada y libre/enciclopedia de diseño en IT.",
 
   "navbar_go_to": "Ir a",
 
@@ -20,6 +20,16 @@
   "common_article_status_offered": "Ofrecido",
   "common_article_status_rejected": "Rechazado",
   "common_article_status_deleted": "Eliminado",
+
+  "not_found_page_not_exists": "La página no existe",
+  "not_found_role_page_message": "Esta página es para {{role}}s. Tu cuenta tiene un rol diferente.",
+  "not_found_back_button": "Atrás",
+  "not_found_home_button": "Inicio",
+  "not_found_alt_404": "404",
+
+  "not_found_article_not_created": "Este artículo aún no ha sido creado.",
+  "not_found_article_create_button": "Crear",
+  "not_found_article_alt_404": "404",
 
   "header_logo_alt": "Logo",
   "header_main_menu_title": "Menú principal",

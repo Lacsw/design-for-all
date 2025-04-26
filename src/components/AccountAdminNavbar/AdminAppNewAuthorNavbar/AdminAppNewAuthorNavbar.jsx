@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import approveIconW from 'images/account/publish-icon.svg';
+import approveIconW from 'images/account/publish-icon_white.svg';
 import approveIconB from 'images/account/publish-icon_black.svg';
 import rejectIconW from 'images/account/cancel-icon.svg';
 import rejectIconB from 'images/account/cancel-icon_black.svg';
@@ -14,6 +14,8 @@ import { Modal } from 'components';
 import './AdminAppNewAuthorNavbar.css';
 import ReasonFields from './ReasonFields';
 import { domain } from 'utils/config';
+import { useTranslation } from 'react-i18next';
+import { ADMIN } from 'utils/translationKeys';
 
 const requestPaths = {
   created_account: '_statement_author_account',
@@ -45,6 +47,7 @@ function canApprove(state, fields) {
 }
 
 export default function AdminAppNewAuthorNavbar() {
+  const { t } = useTranslation();
   const { state } = useLocation();
   const inputRef = useRef(null);
   const theme = useSelector(getCurrentTheme);
@@ -105,8 +108,9 @@ export default function AdminAppNewAuthorNavbar() {
         {state?.status ? (
           <li>
             <p className="new-article-navbar__status">
-              Статус:{' '}
-              {state.status === 'approve' ? 'Подтверждено' : 'Отклонено'}
+              {t(ADMIN.NEW_AUTHOR_NAVBAR.STATUS, {
+                status: state.status === 'approve' ? t(ADMIN.NEW_AUTHOR_NAVBAR.STATUS_APPROVED) : t(ADMIN.NEW_AUTHOR_NAVBAR.STATUS_REJECTED)
+              })}
             </p>
           </li>
         ) : (
@@ -122,8 +126,8 @@ export default function AdminAppNewAuthorNavbar() {
                 }
                 disabled={approveDisabled}
               >
-                <img src={icons.approve[theme]} alt="Галочка" />
-                Подтвердить
+                <img src={icons.approve[theme]} alt={t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVED_ALT)} />
+                {t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVE_BUTTON)}
               </button>
             </li>
 
@@ -138,22 +142,22 @@ export default function AdminAppNewAuthorNavbar() {
                 }
                 disabled={!state}
               >
-                <img src={icons.reject[theme]} alt="Крестик" />
-                Отклонить
+                <img src={icons.reject[theme]} alt={t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_ALT)} />
+                {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_BUTTON)}
               </button>
             </li>
           </>
         )}
         <li>
           <button className="link-button" onClick={() => navigate(-1)}>
-            <img src={icons.back[theme]} alt="Стрелка назад" />
-            Назад к заявкам
+            <img src={icons.back[theme]} alt={t(ADMIN.NEW_AUTHOR_NAVBAR.BACK_ALT)} />
+            {t(ADMIN.NEW_AUTHOR_NAVBAR.BACK_BUTTON)}
           </button>
         </li>
       </ul>
 
       <Modal
-        title={reasonModal === 'approve' ? 'Причина' : 'Укажите причину'}
+        title={reasonModal === 'approve' ? t(ADMIN.NEW_AUTHOR_NAVBAR.REASON_TITLE) : t(ADMIN.NEW_AUTHOR_NAVBAR.GIVE_REASON_TITLE)}
         isOpen={reasonModal}
         twoBtns
         onConfirm={
@@ -168,7 +172,7 @@ export default function AdminAppNewAuthorNavbar() {
         {reasonModal === 'approve' && <ReasonFields fields={postData.fields} />}
         <textarea
           rows="1"
-          placeholder="Причина отклонения"
+          placeholder={t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_PLACEHOLDER)}
           className="input-reason"
           ref={inputRef}
           onChange={handleInput}
@@ -178,21 +182,25 @@ export default function AdminAppNewAuthorNavbar() {
       <Modal
         title={
           decisionModal === 'reject'
-            ? 'Заявка отклонена'
-            : 'Заявка подтверждена'
+            ? t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_STATUS)
+            : t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVE_STATUS)
         }
         onConfirm={() => navigate(-1)}
         isOpen={decisionModal}
         large
       >
         <p className="small-text">
-          Вы {decisionModal === 'reject' ? 'отклонили' : 'подтвердили'}{' '}
-          предложение {state.type} статьи.
+          {t(ADMIN.NEW_AUTHOR_NAVBAR.DECISION.TEXT, {
+            decision: t(decisionModal === 'reject'
+              ? ADMIN.NEW_AUTHOR_NAVBAR.DECISION.REJECTED
+              : ADMIN.NEW_AUTHOR_NAVBAR.DECISION.APPROVED),
+            type: state.type
+          })}
         </p>
         {decisionModal === 'reject' ? (
           <div className="reject-textbox">
             <p className="reject-text reject-text_center">
-              Автор увидит следующую причину:
+              {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_TITLE)}
             </p>
             {inputRef.current.value.split('\n').map((text, i) => (
               <p key={i} className="reject-text">
@@ -202,7 +210,7 @@ export default function AdminAppNewAuthorNavbar() {
           </div>
         ) : (
           <p className="small-text">
-            Статья доступна по ссылке:
+            {t(ADMIN.NEW_AUTHOR_NAVBAR.ARTICLE_LINK_TITLE)}
             <br />
             {domain + '/' + decisionModal}
           </p>

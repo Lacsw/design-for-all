@@ -8,6 +8,7 @@ import adminApi from 'utils/api/admin';
 import { useNavigate } from 'react-router-dom';
 import { editButton, viewButton, adminHash } from 'utils/constants';
 import { useTranslation } from 'react-i18next';
+import { ADMIN } from 'utils/translationKeys';
 
 export default function AdminTable({ hash, pagination }) {
   const navigate = useNavigate();
@@ -85,13 +86,13 @@ export default function AdminTable({ hash, pagination }) {
       <table className="author-articles-list__table">
         <thead className="author-articles-list__table-head">
           <tr>
-            <th className="author-articles-list__table-header">Тип</th>
-            <th className="author-articles-list__table-header">Категория</th>
-            <th className="author-articles-list__table-header">Статус</th>
-            <th className="author-articles-list__table-header">Язык</th>
-            <th className="author-articles-list__table-header">Создано</th>
-            <th className="author-articles-list__table-header">Закрыто</th>
-            <th className="author-articles-list__table-header">Результат</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_TYPE)}</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_CATEGORY)}</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_STATUS)}</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_LANGUAGE)}</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_CREATED)}</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_CLOSED)}</th>
+            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_RESULT)}</th>
             <th className="author-articles-list__table-header-action"></th>
           </tr>
         </thead>
@@ -112,10 +113,10 @@ export default function AdminTable({ hash, pagination }) {
                 </td>
                 <td className="author-articles-list__table-cell">
                   {item.date_closed
-                    ? 'Закрыто'
+                    ? t(ADMIN.TABLE.CLOSED)
                     : item.who_admin === 'none'
-                    ? 'Открыто'
-                    : 'В работе'}
+                    ? t(ADMIN.TABLE.OPEN)
+                    : t(ADMIN.TABLE.IN_WORK)}
                 </td>
                 <td className="author-articles-list__table-cell">
                   {item.lang}
@@ -147,7 +148,7 @@ export default function AdminTable({ hash, pagination }) {
             ))
           ) : (
             <tr className="preloader-box">
-              <td>Заявок нет.</td>
+              <td>{t(ADMIN.TABLE.NO_REQUESTS)}</td>
             </tr>
           )}
         </tbody>

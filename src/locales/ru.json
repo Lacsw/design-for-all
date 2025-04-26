@@ -3,7 +3,7 @@
   "intro_subtitle_mobile": "Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.",
   "intro_subtitle_desktop": "Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.",
 
-  "navbar_go_to": "Перейти",
+  "main_navbar_go_to": "Перейти",
 
   "common_theme_light": "Светлая тема",
   "common_theme_dark": "Темная тема",
@@ -22,6 +22,16 @@
   "common_article_status_rejected": "Отклонено",
   "common_article_status_deleted": "Удалено",
 
+  "not_found_page_not_exists": "Страница не существует",
+  "not_found_role_page_message": "Это страница для {{role}}ов. У вашего аккаунта другая роль.",
+  "not_found_back_button": "Назад",
+  "not_found_home_button": "На главную",
+  "not_found_alt_404": "404",
+
+  "not_found_article_not_created": "Данная статья ещё не создана.",
+  "not_found_article_create_button": "Создать",
+  "not_found_article_alt_404": "404",
+
   "header_logo_alt": "Логотип",
   "header_main_menu_title": "Главное меню",
   "header_main_menu_home": "Главная",
@@ -32,28 +42,23 @@
   "header_main_menu_articles": "Статьи",
   "header_main_menu_guides": "Руководства",
   "header_main_menu_collapse": "Свернуть",
-
   "header_language_title": "Язык",
   "header_language_ru": "Русский",
   "header_language_en": "Английский",
   "header_language_zh": "Китайский",
   "header_language_es": "Испанский",
-
   "header_currency_title": "Валюта",
   "header_currency_usd": "USD",
-
   "header_user_title": "Пользователь",
   "header_user_profile": "Профиль",
   "header_user_logout": "Выйти",
   "header_user_write_article": "Написать статью",
   "header_user_publications": "Публикации",
-
   "header_admin_title": "Админ",
   "header_admin_profile": "Профиль",
   "header_admin_logout": "Выйти",
   "header_admin_requests": "Заявки",
   "header_admin_create_user": "Создать пользователя",
-
   "header_search_placeholder": "Поиск статей...",
   "header_search_reset_button": "Кнопка сброса",
   "header_search_loading": "Загрузка...",
@@ -62,9 +67,7 @@
   "header_search_error_network": "Ошибка сети. Пожалуйста, попробуйте снова позже.",
   "header_search_error_server": "Ошибка сервера. Пожалуйста, попробуйте снова позже.",
   "header_search_error_unknown": "При выполнении поиска произошла ошибка. Пожалуйста, попробуйте снова позже.",
-
   "header_mobile_trees_icon": "Иконка открытия мобильного дерева статей",
-
   "header_edit_tooltip": "Редактировать",
   "header_view_tooltip": "Посмотреть",
   "header_draft_tooltip": "В черновик",
@@ -79,13 +82,10 @@
   "footer_main_pages_mobile_apps": "Мобильные приложения",
   "footer_main_pages_articles": "Статьи",
   "footer_main_pages_guides": "Руководства",
-
   "footer_contacts_title": "Обратная связь",
-
   "footer_legal_title": "Правовая информация",
   "footer_legal_terms": "Пользовательское соглашение",
   "footer_legal_privacy": "Политика конфиденциальности",
-
   "footer_socials_title": "Мы в соц. сетях",
   "footer_socials_telegram_alt": "Иконка телеграмм",
   "footer_socials_instagram_alt": "Иконка инстаграмм",
@@ -93,7 +93,6 @@
   "footer_socials_vk_alt": "Иконка вконтакте",
   "footer_socials_pinterest_alt": "Иконка пинтерест",
   "footer_socials_x_alt": "Иконка X",
-
   "footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all",
 
   "updates_title": "Обновления",
@@ -113,11 +112,73 @@
   "author_navbar_publications": "Публикации",
   "author_navbar_profile": "Профиль",
   "author_navbar_logout": "Выйти",
+  "author_mobile_placeholder": "Доступ в личный кабинет только с fullscreen",
+
+  "author_new_article_navbar_publish": "Опубликовать",
+  "author_new_article_navbar_save_draft": "Сохранить в черновик",
+  "author_new_article_navbar_back": "Вернуться",
+  "author_new_article_navbar_cancel": "Отменить",
+  "author_new_article_navbar_attention": "Внимание!",
 
   "admin_navbar_requests": "Заявки",
   "admin_navbar_create_user": "Создать пользователя",
   "admin_navbar_profile": "Профиль",
   "admin_navbar_logout": "Выйти",
+  "admin_new_author_navbar_status": "Статус: {{status}}",
+  "admin_new_author_navbar_status_approved": "Подтверждено",
+  "admin_new_author_navbar_status_rejected": "Отклонено",
+  "admin_new_author_navbar_approved_alt": "Галочка",
+  "admin_new_author_navbar_approve_button": "Подтвердить",
+  "admin_new_author_navbar_reject_alt": "Крестик",
+  "admin_new_author_navbar_reject_button": "Отклонить",
+  "admin_new_author_navbar_back_alt": "Стрелка назад",
+  "admin_new_author_navbar_back_button": "Назад к заявкам",
+  "admin_new_author_navbar_reason_title": "Причина",
+  "admin_new_author_navbar_give_reason_title": "Укажите причину",
+  "admin_new_author_navbar_reject_reason_placeholder": "Причина отклонения",
+  "admin_new_author_navbar_reject_status": "Заявка отклонена",
+  "admin_new_author_navbar_approve_status": "Заявка подтверждена",
+  "admin_new_author_navbar_decision_text": "Вы {{decision}} предложение {{type}} статьи.",
+
+  "admin_new_author_navbar_decision_rejected": "отклонили",
+  "admin_new_author_navbar_decision_approved": "подтвердили",
+  "admin_new_author_navbar_reject_reason_title": "Автор увидит следующую причину:",
+  "admin_new_author_navbar_article_link_title": "Статья доступна по ссылке",
+  "admin_new_author_navbar_reason_fields_sub_category": "Подкатегория",
+  "admin_new_author_navbar_reason_fields_title": "Заголовок статьи",
+  "admin_new_author_navbar_reason_fields_image": "Картинка статьи",
+  "admin_new_author_navbar_reason_fields_description": "Контент статьи",
+  "admin_new_author_navbar_reason_fields_recommendations": "Рекомендации авторов",
+  "admin_new_author_navbar_reason_fields_icon_reject": "Красный крестик",
+  "admin_new_author_navbar_reason_fields_icon_approve": "Зелёная галочка",
+
+  "admin_new_author_applications_navbar_creates": "Создание",
+  "admin_new_author_applications_navbar_updates": "Обновление",
+  "admin_new_author_applications_navbar_accounts": "Аккаунты",
+  "admin_new_author_applications_navbar_closed": "Закрытые",
+
+  "admin_create_user_email_input_label": "*Email",
+  "admin_create_user_role_input_label": "*Роль",
+  "admin_create_user_role_input_placeholder": "Выбор",
+  "admin_create_user_access_lvl_input_label": "*Уровень доступа",
+  "admin_create_user_access_lvl_input_placeholder": "Выбор",
+  "admin_create_user_save_button": "Сохранить",
+  "admin_create_user_cancel_button": "Отменить",
+  "admin_create_user_modal_email_title": "Задать Email",
+  "admin_create_user_modal_success_title": "Готово",
+  "admin_create_user_modal_success_description": "Новый пользователь успешно создан. На указанную почту отправлено письмо с данными для авторизации.",
+
+  "admin_table_header_type": "Тип",
+  "admin_table_header_category": "Категория",
+  "admin_table_header_status": "Статус",
+  "admin_table_header_language": "Язык",
+  "admin_table_header_created": "Создано",
+  "admin_table_header_closed": "Закрыто",
+  "admin_table_header_result": "Результат",
+  "admin_table_closed": "Закрыто",
+  "admin_table_open": "Открыто",
+  "admin_table_in_work": "В работе",
+  "admin_table_no_requests": "Заявок нет.",
 
   "auth_login": "Авторизация",
   "auth_signup": "Регистрация",
@@ -134,7 +195,6 @@
   "auth_projects_placeholder": "https://example.com/my-project",
   "auth_add_project_alt": "добавить проект",
   "auth_captcha_label": "Капча",
-  "auth_captcha_placeholder": "?",
   "auth_email_exists": "Указанная почта уже есть в системе.",
   "auth_project_exists": "Ссылка на проект была прислана ранее.",
   "auth_change_data": "Измените данные и попробуйте снова.",
@@ -150,5 +210,8 @@
   "auth_success_warning": "Неопытные участники не могут стать авторами",
   "auth_give_permission": "Даете право на обработку",
   "auth_agree_with": "Соглашаетесь с",
-  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email"
+  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email",
+
+  "article_header_published": "Опубликовано",
+  "article_header_updated": "Обновлено"
 }

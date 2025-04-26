@@ -4,7 +4,7 @@ import { getCurrentTheme } from 'store/slices/theme';
 import './MainNavigationBar.css';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { NAVBAR } from 'utils/translationKeys';
+import { MAIN_NAVBAR } from 'utils/translationKeys';
 
 export default function MainNavigationBar({
   navLinksList,
@@ -14,7 +14,7 @@ export default function MainNavigationBar({
 }) {
   const theme = useSelector(getCurrentTheme);
   const { t } = useTranslation();
-  
+
   return (
     <ul className="main-navbar">
       {navLinksList.map((icon, i) => (
@@ -31,8 +31,7 @@ export default function MainNavigationBar({
           <NavLink
             to={icon.link}
             className={cn(
-              `main-navbar__link main-navbar__link_${
-                theme === 'dark' ? 'light' : 'dark'
+              `main-navbar__link main-navbar__link_${theme === 'dark' ? 'light' : 'dark'
               }`,
               {
                 current: activeTab.name === icon.name,
@@ -40,7 +39,7 @@ export default function MainNavigationBar({
             )}
             onClick={() => setSection(icon.link)}
           >
-            {t(NAVBAR.GO_TO)}
+            {t(MAIN_NAVBAR.GO_TO)}
           </NavLink>
         </li>
       ))}

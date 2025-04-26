@@ -13,8 +13,11 @@ import { useSearchParams } from 'react-router-dom';
 import { getCurrentUser } from 'store/slices/user';
 import { adminHash } from 'utils/constants';
 import { useLogout } from 'utils/hooks/useLogout';
+import { COMMON } from 'utils/translationKeys';
+import { useTranslation } from 'react-i18next';
 
 export default function AccountAdmin({ hash, resetSection }) {
+  const { t } = useTranslation();
   const user = useSelector(getCurrentUser);
   const [, setSearchParams] = useSearchParams();
   const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
@@ -36,6 +39,6 @@ export default function AccountAdmin({ hash, resetSection }) {
       {adminHash.decisions.includes(hash) && <Decisions />}
     </Account>
   ) : user ? (
-    <NotFound resetSection={resetSection} role={'админ'} />
+    <NotFound resetSection={resetSection} role={t(COMMON.ROLES.ADMIN)} />
   ) : null;
 }
