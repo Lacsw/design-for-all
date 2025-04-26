@@ -170,6 +170,18 @@
   "admin_create_user_modal_success_title": "Готово",
   "admin_create_user_modal_success_description": "Новый пользователь успешно создан. На указанную почту отправлено письмо с данными для авторизации.",
 
+  "admin_table_header_type": "Тип",
+  "admin_table_header_category": "Категория",
+  "admin_table_header_status": "Статус",
+  "admin_table_header_language": "Язык",
+  "admin_table_header_created": "Создано",
+  "admin_table_header_closed": "Закрыто",
+  "admin_table_header_result": "Результат",
+  "admin_table_closed": "Закрыто",
+  "admin_table_open": "Открыто",
+  "admin_table_in_work": "В работе",
+  "admin_table_no_requests": "Заявок нет.",
+
   "auth_login": "Авторизация",
   "auth_signup": "Регистрация",
   "auth_login_button": "Войти",

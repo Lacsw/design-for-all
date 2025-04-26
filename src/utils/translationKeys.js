@@ -303,4 +303,18 @@ export const ADMIN = {
       APPROVE: 'admin_new_author_reason_fields_icon_approve',
     },
   },
+
+  TABLE: {
+    HEADER_TYPE: 'admin_table_header_type', // Тип
+    HEADER_CATEGORY: 'admin_table_header_category', // Категория
+    HEADER_STATUS: 'admin_table_header_status', // Статус
+    HEADER_LANGUAGE: 'admin_table_header_language', // Язык
+    HEADER_CREATED: 'admin_table_header_created', // Создано
+    HEADER_CLOSED: 'admin_table_header_closed', // Закрыто
+    HEADER_RESULT: 'admin_table_header_result', // Результат
+    CLOSED: 'admin_table_closed', // Закрыто
+    OPEN: 'admin_table_open', // Открыто
+    IN_WORK: 'admin_table_in_work', // В работе
+    NO_REQUESTS: 'admin_table_no_requests', // Нет запросов
+  },
 };

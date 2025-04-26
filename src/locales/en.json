@@ -174,7 +174,19 @@
   "admin_create_user_access_lvl_input_label": "*Access level",
   "admin_create_user_access_lvl_input_placeholder": "Select",
   "admin_create_user_save_button": "Save",
-  
+
+  "admin_table_header_type": "Type",
+  "admin_table_header_category": "Category",
+  "admin_table_header_status": "Status",
+  "admin_table_header_language": "Language",
+  "admin_table_header_created": "Created",
+  "admin_table_header_closed": "Closed",
+  "admin_table_header_result": "Result",
+  "admin_table_closed": "Closed",
+  "admin_table_open": "Open",
+  "admin_table_in_work": "In work",
+  "admin_table_no_requests": "No requests.",
+
   "auth_login": "Login",
   "auth_signup": "Sign Up",
   "auth_login_button": "Login",
