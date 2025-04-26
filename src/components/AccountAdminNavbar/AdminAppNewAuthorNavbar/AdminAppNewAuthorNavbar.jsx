@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import approveIconW from 'images/account/publish-icon.svg';
+import approveIconW from 'images/account/publish-icon_white.svg';
 import approveIconB from 'images/account/publish-icon_black.svg';
 import rejectIconW from 'images/account/cancel-icon.svg';
 import rejectIconB from 'images/account/cancel-icon_black.svg';
