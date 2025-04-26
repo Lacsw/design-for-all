@@ -124,11 +124,18 @@
   "author_navbar_profile": "Profile",
   "author_navbar_logout": "Logout",
 
+  "author_mobile_placeholder": "Access to the account is only possible in fullscreen",
+  "author_new_article_navbar_publish": "Publish",
+  "author_new_article_navbar_save_draft": "Save as draft",
+  "author_new_article_navbar_back": "Back",
+  "author_new_article_navbar_cancel": "Cancel",
+  "author_new_article_navbar_attention": "Attention!",
+
   "admin_navbar_requests": "Requests",
   "admin_navbar_create_user": "Create User",
   "admin_navbar_profile": "Profile",
   "admin_navbar_logout": "Logout",
-  
+
   "admin_new_author_status": "Status: {{status}}",
   "admin_new_author_status_approved": "Approved",
   "admin_new_author_status_rejected": "Rejected",

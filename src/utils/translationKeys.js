@@ -220,6 +220,20 @@ export const AUTHOR = {
     PROFILE: 'author_navbar_profile', // Профиль
     LOGOUT: 'author_navbar_logout', // Выйти
   },
+
+  MOBILE: {
+    PLACEHOLDER: 'author_mobile_placeholder', // Плейсхолдер для мобильного аккаунта
+  },
+
+  NEW_ARTICLE: {
+    NAVBAR: {
+      PUBLISH: 'author_new_article_navbar_publish', // Опубликовать
+      SAVE_DRAFT: 'author_new_article_navbar_save_draft', // Сохранить в черновик
+      BACK: 'author_new_article_navbar_back', // Вернуться
+      CANCEL: 'author_new_article_navbar_cancel', // Отменить
+      ATTENTION: 'author_new_article_navbar_attention', // Внимание!
+    }
+  }
 };
 
 // Ключи для навбара админа

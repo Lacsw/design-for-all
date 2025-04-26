@@ -42,28 +42,23 @@
   "header_main_menu_articles": "Статьи",
   "header_main_menu_guides": "Руководства",
   "header_main_menu_collapse": "Свернуть",
-
   "header_language_title": "Язык",
   "header_language_ru": "Русский",
   "header_language_en": "Английский",
   "header_language_zh": "Китайский",
   "header_language_es": "Испанский",
-
   "header_currency_title": "Валюта",
   "header_currency_usd": "USD",
-
   "header_user_title": "Пользователь",
   "header_user_profile": "Профиль",
   "header_user_logout": "Выйти",
   "header_user_write_article": "Написать статью",
   "header_user_publications": "Публикации",
-
   "header_admin_title": "Админ",
   "header_admin_profile": "Профиль",
   "header_admin_logout": "Выйти",
   "header_admin_requests": "Заявки",
   "header_admin_create_user": "Создать пользователя",
-
   "header_search_placeholder": "Поиск статей...",
   "header_search_reset_button": "Кнопка сброса",
   "header_search_loading": "Загрузка...",
@@ -72,9 +67,7 @@
   "header_search_error_network": "Ошибка сети. Пожалуйста, попробуйте снова позже.",
   "header_search_error_server": "Ошибка сервера. Пожалуйста, попробуйте снова позже.",
   "header_search_error_unknown": "При выполнении поиска произошла ошибка. Пожалуйста, попробуйте снова позже.",
-
   "header_mobile_trees_icon": "Иконка открытия мобильного дерева статей",
-
   "header_edit_tooltip": "Редактировать",
   "header_view_tooltip": "Посмотреть",
   "header_draft_tooltip": "В черновик",
@@ -89,13 +82,10 @@
   "footer_main_pages_mobile_apps": "Мобильные приложения",
   "footer_main_pages_articles": "Статьи",
   "footer_main_pages_guides": "Руководства",
-
   "footer_contacts_title": "Обратная связь",
-
   "footer_legal_title": "Правовая информация",
   "footer_legal_terms": "Пользовательское соглашение",
   "footer_legal_privacy": "Политика конфиденциальности",
-
   "footer_socials_title": "Мы в соц. сетях",
   "footer_socials_telegram_alt": "Иконка телеграмм",
   "footer_socials_instagram_alt": "Иконка инстаграмм",
@@ -103,7 +93,6 @@
   "footer_socials_vk_alt": "Иконка вконтакте",
   "footer_socials_pinterest_alt": "Иконка пинтерест",
   "footer_socials_x_alt": "Иконка X",
-
   "footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all",
 
   "updates_title": "Обновления",
@@ -123,12 +112,20 @@
   "author_navbar_publications": "Публикации",
   "author_navbar_profile": "Профиль",
   "author_navbar_logout": "Выйти",
+  "author_mobile_placeholder": "Доступ в личный кабинет только с fullscreen",
+
+  "author_new_article_navbar_publish": "Опубликовать",
+  "author_new_article_navbar_save_draft": "Сохранить в черновик",
+  "author_new_article_navbar_back": "Вернуться",
+  "author_new_article_navbar_cancel": "Отменить",
+  "author_new_article_navbar_attention": "Внимание!",
+  
+
 
   "admin_navbar_requests": "Заявки",
   "admin_navbar_create_user": "Создать пользователя",
   "admin_navbar_profile": "Профиль",
   "admin_navbar_logout": "Выйти",
-
   "admin_new_author_status": "Статус: {{status}}",
   "admin_new_author_status_approved": "Подтверждено",
   "admin_new_author_status_rejected": "Отклонено",
@@ -148,7 +145,6 @@
   "admin_new_author_decision_approved": "подтвердили",
   "admin_new_author_reject_reason_title": "Автор увидит следующую причину:",
   "admin_new_author_article_link_title": "Статья доступна по ссылке",
-
   "admin_new_author_reason_fields_sub_category": "Подкатегория",
   "admin_new_author_reason_fields_title": "Заголовок статьи",
   "admin_new_author_reason_fields_image": "Картинка статьи",
@@ -187,24 +183,6 @@
   "auth_success_warning": "Неопытные участники не могут стать авторами",
   "auth_give_permission": "Даете право на обработку",
   "auth_agree_with": "Соглашаетесь с",
-  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email",
+  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email"
 
-  "admin_navbar_status": "Статус",
-  "admin_navbar_approved": "Подтверждено",
-  "admin_navbar_rejected": "Отклонено",
-  "admin_navbar_approve": "Подтвердить",
-  "admin_navbar_reject": "Отклонить",
-  "admin_navbar_back_to_requests": "Назад к заявкам",
-  "admin_navbar_approve_icon": "Галочка",
-  "admin_navbar_reject_icon": "Крестик",
-  "admin_navbar_back_icon": "Стрелка назад",
-  "admin_navbar_reason": "Причина",
-  "admin_navbar_specify_reason": "Укажите причину",
-  "admin_navbar_reject_reason": "Причина отклонения",
-  "admin_navbar_request_rejected": "Заявка отклонена",
-  "admin_navbar_request_approved": "Заявка подтверждена",
-  "admin_navbar_you": "Вы",
-  "admin_navbar_article_proposal": "предложение",
-  "admin_navbar_author_will_see": "Автор увидит следующую причину:",
-  "admin_navbar_article_available": "Статья доступна по ссылке"
 }
