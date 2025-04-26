@@ -1,5 +1,7 @@
 import rejectIcon from 'images/modals/deny-icon.svg';
 import approveIcon from 'images/modals/approve-icon.svg';
+import { useTranslation } from 'react-i18next';
+import { ADMIN } from 'utils/translationKeys';
 
 const possibleFields = [
   'sub_category',
@@ -10,6 +12,7 @@ const possibleFields = [
 ];
 
 const ReasonFields = ({ fields }) => {
+  const { t } = useTranslation();
   const keysInOrder = possibleFields.filter((field) => fields[field]);
 
   return (
@@ -22,15 +25,15 @@ const ReasonFields = ({ fields }) => {
               src={fields[field] === 'reject' ? rejectIcon : approveIcon}
               alt={
                 fields[field] === 'reject'
-                  ? 'Красный крестик'
-                  : 'Зелёная галочка'
+                  ? t(ADMIN.REASON_FIELDS.ICONS.REJECT)
+                  : t(ADMIN.REASON_FIELDS.ICONS.APPROVE)
               }
             />
-            {field === 'sub_category' && 'Подкатегория'}
-            {field === 'title' && 'Заголовок статьи'}
-            {field === 'image' && 'Картинка статьи'}
-            {field === 'description' && 'Контент статьи'}
-            {field === 'recommend_from_creator' && 'Рекомендации авторов'}
+            {field === 'sub_category' && t(ADMIN.REASON_FIELDS.SUB_CATEGORY)}
+            {field === 'title' && t(ADMIN.REASON_FIELDS.TITLE)}
+            {field === 'image' && t(ADMIN.REASON_FIELDS.IMAGE)}
+            {field === 'description' && t(ADMIN.REASON_FIELDS.DESCRIPTION)}
+            {field === 'recommend_from_creator' && t(ADMIN.REASON_FIELDS.RECOMMENDATIONS)}
           </li>
         );
       })}

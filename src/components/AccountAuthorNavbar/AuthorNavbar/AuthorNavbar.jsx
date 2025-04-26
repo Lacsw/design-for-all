@@ -2,7 +2,7 @@ import './AuthorNavbar.css';
 import { useTranslation } from 'react-i18next';
 import HashButton from 'components/LinkButton/HashButton';
 import { hashPaths } from 'utils/constants';
-import { AUTHOR_NAVBAR } from 'utils/translationKeys';
+import { AUTHOR } from 'utils/translationKeys';
 import newArticleIcon from 'images/account/new-article-icon.svg';
 import articlesIconBlack from 'images/account/articles-black-icon.svg';
 import articlesIconWhite from 'images/account/articles-white-icon.svg';
@@ -18,7 +18,7 @@ export default function AuthorNavbar({ logout }) {
       <ul className="author-navbar__list">
         <li>
           <HashButton to={hashPaths.newArticle} icon={newArticleIcon}>
-            {t(AUTHOR_NAVBAR.WRITE_ARTICLE)}
+            {t(AUTHOR.NAVBAR.WRITE_ARTICLE)}
           </HashButton>
         </li>
 
@@ -28,7 +28,7 @@ export default function AuthorNavbar({ logout }) {
             icon={articlesIconWhite}
             activeIcon={articlesIconBlack}
           >
-            {t(AUTHOR_NAVBAR.PUBLICATIONS)}
+            {t(AUTHOR.NAVBAR.PUBLICATIONS)}
           </HashButton>
         </li>
 
@@ -38,13 +38,13 @@ export default function AuthorNavbar({ logout }) {
             icon={profileWhiteIcon}
             activeIcon={profileBlackIcon}
           >
-            {t(AUTHOR_NAVBAR.PROFILE)}
+            {t(AUTHOR.NAVBAR.PROFILE)}
           </HashButton>
         </li>
 
         <li className="author-navbar__item">
           <HashButton onClick={logout} icon={logoutIcon}>
-            {t(AUTHOR_NAVBAR.LOGOUT)}
+            {t(AUTHOR.NAVBAR.LOGOUT)}
           </HashButton>
         </li>
       </ul>
