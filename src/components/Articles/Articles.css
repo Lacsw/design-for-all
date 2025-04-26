@@ -1,8 +1,0 @@
-.articles__container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  width: calc(100% - 240px);
-  margin: 30px auto;
-  flex: 1 0 auto;
-}

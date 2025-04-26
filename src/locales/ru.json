@@ -120,8 +120,6 @@
   "author_new_article_navbar_cancel": "Отменить",
   "author_new_article_navbar_attention": "Внимание!",
 
-
-
   "admin_navbar_requests": "Заявки",
   "admin_navbar_create_user": "Создать пользователя",
   "admin_navbar_profile": "Профиль",
@@ -212,6 +210,8 @@
   "auth_success_warning": "Неопытные участники не могут стать авторами",
   "auth_give_permission": "Даете право на обработку",
   "auth_agree_with": "Соглашаетесь с",
-  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email"
+  "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email",
 
+  "article_header_published": "Опубликовано",
+  "article_header_updated": "Обновлено"
 }

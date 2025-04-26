@@ -318,3 +318,11 @@ export const ADMIN = {
     NO_REQUESTS: 'admin_table_no_requests', // Нет запросов
   },
 };
+
+// Ключи для статьи
+export const ARTICLE = {
+  HEADER: {
+    PUBLISHED: 'article_header_published', // Опубликовано
+    UPDATED: 'article_header_updated', // Обновлено
+  },
+};

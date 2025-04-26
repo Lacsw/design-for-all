@@ -218,5 +218,8 @@
   "auth_success_warning": "Inexperienced participants cannot become authors",
   "auth_give_permission": "You give permission to process",
   "auth_agree_with": "You agree with",
-  "auth_notification_message": "You will receive a notification via email after your application is approved or rejected"
+  "auth_notification_message": "You will receive a notification via email after your application is approved or rejected",
+
+  "article_header_published": "Published",
+  "article_header_updated": "Updated"
 }
