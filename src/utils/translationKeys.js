@@ -232,8 +232,8 @@ export const AUTHOR = {
       BACK: 'author_new_article_navbar_back', // Вернуться
       CANCEL: 'author_new_article_navbar_cancel', // Отменить
       ATTENTION: 'author_new_article_navbar_attention', // Внимание!
-    }
-  }
+    },
+  },
 };
 
 // Ключи для навбара админа
@@ -245,29 +245,53 @@ export const ADMIN = {
     LOGOUT: 'admin_navbar_logout', // Выйти
   },
 
-  NEW_AUTHOR: {
-    STATUS: 'admin_new_author_status', // Статус
-    STATUS_APPROVED: 'admin_new_author_status_approved', // Статус подтверждено
-    STATUS_REJECTED: 'admin_new_author_status_rejected', // Статус отклонено
-    APPROVED_ALT: 'admin_new_author_approved_alt', // Альтернативный текст для подтверждено
-    APPROVE_BUTTON: 'admin_new_author_approve_button', // Кнопка подтвердить
-    REJECT_ALT: 'admin_new_author_reject_alt', // Альтернативный текст для отклонено
-    REJECT_BUTTON: 'admin_new_author_reject_button', // Кнопка отклонить
-    BACK_ALT: 'admin_new_author_back_alt', // Альтернативный текст для стрелка назад
-    BACK_BUTTON: 'admin_new_author_back_button', // Кнопка назад
-    REASON_TITLE: 'admin_new_author_reason_title', // Заголовок для причины
-    GIVE_REASON_TITLE: 'admin_new_author_give_reason_title', // Заголовок для указания причины
-    REJECT_REASON_PLACEHOLDER: 'admin_new_author_reject_reason_placeholder', // Плейсхолдер для причины отклонено
-    REJECT_STATUS: 'admin_new_author_reject_status', // Статус отклонено
-    APPROVE_STATUS: 'admin_new_author_approve_status', // Статус подтверждено
-    DECISION: {
-      TEXT: 'admin_new_author_decision_text',
-      REJECTED: 'admin_new_author_decision_rejected',
-      APPROVED: 'admin_new_author_decision_approved',
+  NEW_AUTHOR_NAVBAR: {
+      STATUS: 'admin_new_author_navbar_status', // Статус
+      STATUS_APPROVED: 'admin_new_author_navbar_status_approved', // Статус подтверждено
+      STATUS_REJECTED: 'admin_new_author_navbar_status_rejected', // Статус отклонено
+      APPROVED_ALT: 'admin_new_author_navbar_approved_alt', // Альтернативный текст для подтверждено
+      APPROVE_BUTTON: 'admin_new_author_navbar_approve_button', // Кнопка подтвердить
+      REJECT_ALT: 'admin_new_author_navbar_reject_alt', // Альтернативный текст для отклонено
+      REJECT_BUTTON: 'admin_new_author_navbar_reject_button', // Кнопка отклонить
+      BACK_ALT: 'admin_new_author_navbar_back_alt', // Альтернативный текст для стрелка назад
+      BACK_BUTTON: 'admin_new_author_navbar_back_button', // Кнопка назад
+      REASON_TITLE: 'admin_new_author_navbar_reason_title', // Заголовок для причины
+      GIVE_REASON_TITLE: 'admin_new_author_navbar_give_reason_title', // Заголовок для указания причины
+      REJECT_REASON_PLACEHOLDER:
+        'admin_new_author_navbar_reject_reason_placeholder', // Плейсхолдер для причины отклонено
+      REJECT_STATUS: 'admin_new_author_navbar_reject_status', // Статус отклонено
+      APPROVE_STATUS: 'admin_new_author_navbar_approve_status', // Статус подтверждено
+      DECISION: {
+        TEXT: 'admin_new_author_navbar_decision_text',
+        REJECTED: 'admin_new_author_navbar_decision_rejected',
+        APPROVED: 'admin_new_author_navbar_decision_approved',
+      },
+      REJECT_REASON_TITLE: 'admin_new_author_navbar_reject_reason_title', // Заголовок для причины отклонено
+      ARTICLE_LINK_TITLE: 'admin_new_author_navbar_article_link_title', // Заголовок для ссылки на статью
     },
-    REJECT_REASON_TITLE: 'admin_new_author_reject_reason_title', // Заголовок для причины отклонено
-    ARTICLE_LINK_TITLE: 'admin_new_author_article_link_title', // Заголовок для ссылки на статью
+
+  APPLICATIONS_NAVBAR: {
+    CREATES: 'admin_new_author_applications_navbar_creates', // Создание
+    UPDATES: 'admin_new_author_applications_navbar_updates', // Обновление
+    ACCOUNTS: 'admin_new_author_applications_navbar_accounts', // Аккаунты
+    CLOSED: 'admin_new_author_applications_navbar_closed', // Закрытые
   },
+
+  CREATE_USER: {
+    EMAIL_INPUT_LABEL: 'admin_create_user_email_input_label', // Лейбл для поля ввода email
+    ROLE_INPUT_LABEL: 'admin_create_user_role_input_label', // Лейбл для поля ввода роли
+    ROLE_INPUT_PLACEHOLDER: 'admin_create_user_role_input_placeholder', // Плейсхолдер для поля ввода роли
+    ACCESS_LVL_INPUT_LABEL: 'admin_create_user_access_lvl_input_label', // Лейбл для поля ввода уровня доступа
+    ACCESS_LVL_INPUT_PLACEHOLDER: 'admin_create_user_access_lvl_input_placeholder', // Плейсхолдер для поля ввода уровня доступа
+    SAVE_BUTTON: 'admin_create_user_save_button', // Кнопка сохранить
+    CANCEL_BUTTON: 'admin_create_user_cancel_button', // Кнопка отменить
+    MODAL_EMAIL_TITLE: 'admin_create_user_modal_email_title', // Заголовок для модального окна email
+    MODAL_SUCCESS_TITLE: 'admin_create_user_modal_success_title', // Заголовок для модального окна успешного создания пользователя
+    MODAL_SUCCESS_DESCRIPTION: 'admin_create_user_modal_success_description', // Описание для модального окна успешного создания пользователя
+
+
+  },
+
   REASON_FIELDS: {
     SUB_CATEGORY: 'admin_new_author_reason_fields_sub_category',
     TITLE: 'admin_new_author_reason_fields_title',
@@ -276,7 +300,7 @@ export const ADMIN = {
     RECOMMENDATIONS: 'admin_new_author_reason_fields_recommendations',
     ICONS: {
       REJECT: 'admin_new_author_reason_fields_icon_reject',
-      APPROVE: 'admin_new_author_reason_fields_icon_approve'
-    }
-  }
+      APPROVE: 'admin_new_author_reason_fields_icon_approve',
+    },
+  },
 };

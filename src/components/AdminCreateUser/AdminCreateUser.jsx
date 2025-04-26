@@ -4,6 +4,8 @@ import { Button, Dropdown, InputEditable, Modal } from 'components';
 import { useState } from 'react';
 import ModalEmail from 'components/Modal/ModalEmail/ModalEmail';
 import adminApi from 'utils/api/admin';
+import { useTranslation } from 'react-i18next';
+import { ADMIN, COMMON } from 'utils/translationKeys';
 
 const initialForm = {
   email: '',
@@ -11,7 +13,27 @@ const initialForm = {
   lvl_access: '',
 };
 
+
+const roleKeyMap = {
+  super_admin: COMMON.ROLES.SUPER_ADMIN,
+  admin: COMMON.ROLES.ADMIN,
+  mentor: COMMON.ROLES.AUTHOR,
+  user: COMMON.ROLES.USER,
+};
+
+
+
 export default function AdminCreateUser() {
+  const { t } = useTranslation();
+
+
+  const userRoleOptions = userRoleSelectOptions.map(role => ({
+    label: t(roleKeyMap[role.value]),
+    value: role.value,
+    disabled: role.value === 'user', // или любая другая логика
+  }));
+
+
   const [formData, setFormData] = useState(initialForm);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
@@ -46,7 +68,7 @@ export default function AdminCreateUser() {
       >
         <fieldset className="admin-create-user__fieldset">
           <label className="admin-create-user__field">
-            <span className="admin-create-user__sub-title">*Email</span>
+            <span className="admin-create-user__sub-title">{t(ADMIN.CREATE_USER.EMAIL_INPUT_LABEL)}</span>
             <InputEditable
               type={'email'}
               value={formData.email}
@@ -55,12 +77,12 @@ export default function AdminCreateUser() {
           </label>
 
           <label className="admin-create-user__field">
-            <span className="admin-create-user__sub-title">*Роль</span>
+            <span className="admin-create-user__sub-title">{t(ADMIN.CREATE_USER.ROLE_INPUT_LABEL)}</span>
             <Dropdown
               id={'role'}
               name={'user-role'}
-              options={userRoleSelectOptions}
-              title={formData.role || 'Выбор'}
+              options={userRoleOptions}
+              title={formData.role || t(ADMIN.CREATE_USER.ROLE_INPUT_PLACEHOLDER)}
               large
               onChange={changeForm}
             />
@@ -68,13 +90,13 @@ export default function AdminCreateUser() {
           {formData.role === 'admin' && (
             <label className="admin-create-user__field">
               <span className="admin-create-user__sub-title">
-                *Уровень доступа
+                {t(ADMIN.CREATE_USER.ACCESS_LVL_INPUT_LABEL)}
               </span>
               <Dropdown
                 id={'lvl_access'}
                 name={'access-lvl'}
                 options={accessLvlSelectOptions}
-                title="Выбор"
+                title={t(ADMIN.CREATE_USER.ACCESS_LVL_INPUT_PLACEHOLDER)}
                 large
                 onChange={changeForm}
               />
@@ -88,30 +110,29 @@ export default function AdminCreateUser() {
           relatedForm={'admin-create-user-form'}
           disabled={!isFormFilled}
         >
-          Сохранить
+          {t(ADMIN.CREATE_USER.SAVE_BUTTON)}
         </Button>
         <Button
           type={'button'}
           disabled={!isFormEdited}
           onClick={() => setFormData(initialForm)}
         >
-          Отменить
+          {t(ADMIN.CREATE_USER.CANCEL_BUTTON)}
         </Button>
       </div>
       <ModalEmail
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onSave={changeForm}
-        title="Задать Email"
+        title={t(ADMIN.CREATE_USER.MODAL_EMAIL_TITLE)}
       />
       <Modal
         isOpen={modalSuccess}
-        title={'Готово'}
+        title={t(ADMIN.CREATE_USER.MODAL_SUCCESS_TITLE)}
         onConfirm={() => setModalSuccess(false)}
       >
         <p>
-          Новый пользователь успешно создан. На указанную почту отправлено
-          письмо с данными для авторизации.
+          {t(ADMIN.CREATE_USER.MODAL_SUCCESS_DESCRIPTION)}
         </p>
       </Modal>
     </>

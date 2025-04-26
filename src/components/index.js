@@ -26,7 +26,6 @@ export { default as MobileAccountAuthor } from './AccountAuthor/MobileAccountAut
 
 export { default as AccountAdmin } from './AccountAdmin/AccountAdmin';
 export { default as AdminApplicationsNav } from './AdminApplicationsNav/AdminApplicationsNav';
-export { default as AdminApplicationNewAuthor } from './AdminApplicationNewAuthor/AdminApplicationNewAuthor';
 export { default as AdminCreateUser } from './AdminCreateUser/AdminCreateUser';
 export { default as AdminNavbar } from './AccountAdminNavbar/AdminNavbar/AdminNavbar';
 export { default as AdminAppNewAuthorNavbar } from './AccountAdminNavbar/AdminAppNewAuthorNavbar/AdminAppNewAuthorNavbar';

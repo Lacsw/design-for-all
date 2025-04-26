@@ -108,8 +108,8 @@ export default function AdminAppNewAuthorNavbar() {
         {state?.status ? (
           <li>
             <p className="new-article-navbar__status">
-              {t(ADMIN.NEW_AUTHOR.STATUS, {
-                status: state.status === 'approve' ? t(ADMIN.NEW_AUTHOR.STATUS_APPROVED) : t(ADMIN.NEW_AUTHOR.STATUS_REJECTED)
+              {t(ADMIN.NEW_AUTHOR_NAVBAR.STATUS, {
+                status: state.status === 'approve' ? t(ADMIN.NEW_AUTHOR_NAVBAR.STATUS_APPROVED) : t(ADMIN.NEW_AUTHOR_NAVBAR.STATUS_REJECTED)
               })}
             </p>
           </li>
@@ -126,8 +126,8 @@ export default function AdminAppNewAuthorNavbar() {
                 }
                 disabled={approveDisabled}
               >
-                <img src={icons.approve[theme]} alt={t(ADMIN.NEW_AUTHOR.APPROVED_ALT)} />
-                {t(ADMIN.NEW_AUTHOR.APPROVE_BUTTON)}
+                <img src={icons.approve[theme]} alt={t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVED_ALT)} />
+                {t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVE_BUTTON)}
               </button>
             </li>
 
@@ -142,22 +142,22 @@ export default function AdminAppNewAuthorNavbar() {
                 }
                 disabled={!state}
               >
-                <img src={icons.reject[theme]} alt={t(ADMIN.NEW_AUTHOR.REJECT_ALT)} />
-                {t(ADMIN.NEW_AUTHOR.REJECT_BUTTON)}
+                <img src={icons.reject[theme]} alt={t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_ALT)} />
+                {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_BUTTON)}
               </button>
             </li>
           </>
         )}
         <li>
           <button className="link-button" onClick={() => navigate(-1)}>
-            <img src={icons.back[theme]} alt={t(ADMIN.NEW_AUTHOR.BACK_ALT)} />
-            {t(ADMIN.NEW_AUTHOR.BACK_BUTTON)}
+            <img src={icons.back[theme]} alt={t(ADMIN.NEW_AUTHOR_NAVBAR.BACK_ALT)} />
+            {t(ADMIN.NEW_AUTHOR_NAVBAR.BACK_BUTTON)}
           </button>
         </li>
       </ul>
 
       <Modal
-        title={reasonModal === 'approve' ? t(ADMIN.NEW_AUTHOR.REASON_TITLE) : t(ADMIN.NEW_AUTHOR.GIVE_REASON_TITLE)}
+        title={reasonModal === 'approve' ? t(ADMIN.NEW_AUTHOR_NAVBAR.REASON_TITLE) : t(ADMIN.NEW_AUTHOR_NAVBAR.GIVE_REASON_TITLE)}
         isOpen={reasonModal}
         twoBtns
         onConfirm={
@@ -172,7 +172,7 @@ export default function AdminAppNewAuthorNavbar() {
         {reasonModal === 'approve' && <ReasonFields fields={postData.fields} />}
         <textarea
           rows="1"
-          placeholder={t(ADMIN.NEW_AUTHOR.REJECT_REASON_PLACEHOLDER)}
+          placeholder={t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_PLACEHOLDER)}
           className="input-reason"
           ref={inputRef}
           onChange={handleInput}
@@ -182,25 +182,25 @@ export default function AdminAppNewAuthorNavbar() {
       <Modal
         title={
           decisionModal === 'reject'
-            ? t(ADMIN.NEW_AUTHOR.REJECT_STATUS)
-            : t(ADMIN.NEW_AUTHOR.APPROVE_STATUS)
+            ? t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_STATUS)
+            : t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVE_STATUS)
         }
         onConfirm={() => navigate(-1)}
         isOpen={decisionModal}
         large
       >
         <p className="small-text">
-          {t(ADMIN.NEW_AUTHOR.DECISION.TEXT, {
+          {t(ADMIN.NEW_AUTHOR_NAVBAR.DECISION.TEXT, {
             decision: t(decisionModal === 'reject'
-              ? ADMIN.NEW_AUTHOR.DECISION.REJECTED
-              : ADMIN.NEW_AUTHOR.DECISION.APPROVED),
+              ? ADMIN.NEW_AUTHOR_NAVBAR.DECISION.REJECTED
+              : ADMIN.NEW_AUTHOR_NAVBAR.DECISION.APPROVED),
             type: state.type
           })}
         </p>
         {decisionModal === 'reject' ? (
           <div className="reject-textbox">
             <p className="reject-text reject-text_center">
-              {t(ADMIN.NEW_AUTHOR.REJECT_REASON_TITLE)}
+              {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_TITLE)}
             </p>
             {inputRef.current.value.split('\n').map((text, i) => (
               <p key={i} className="reject-text">
@@ -210,7 +210,7 @@ export default function AdminAppNewAuthorNavbar() {
           </div>
         ) : (
           <p className="small-text">
-            {t(ADMIN.NEW_AUTHOR.ARTICLE_LINK_TITLE)}
+            {t(ADMIN.NEW_AUTHOR_NAVBAR.ARTICLE_LINK_TITLE)}
             <br />
             {domain + '/' + decisionModal}
           </p>

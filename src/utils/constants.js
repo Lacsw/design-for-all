@@ -86,10 +86,10 @@ export const langSelectOptions = [
 // ];
 
 export const userRoleSelectOptions = [
-  { label: COMMON.ROLES.SUPER_ADMIN, value: 'super_admin' },
-  { label: COMMON.ROLES.ADMIN, value: 'admin' },
-  { label: COMMON.ROLES.AUTHOR, value: 'mentor' },
-  { label: COMMON.ROLES.USER, value: 'user', disabled: true },
+  { value: 'super_admin' },
+  { value: 'admin' },
+  { value: 'mentor' },
+  { value: 'user' },
 ];
 
 export const accessLvlSelectOptions = [
@@ -215,11 +215,11 @@ export const mainNavigationOptionsList = [
     light: updatesWhite,
     link: '/#/updates',
   },
-  { 
-    name: HEADER.MAIN_MENU.WEB_APPS, 
-    dark: webBlack, 
-    light: webWhite, 
-    link: '/#/web' 
+  {
+    name: HEADER.MAIN_MENU.WEB_APPS,
+    dark: webBlack,
+    light: webWhite,
+    link: '/#/web',
   },
   {
     name: HEADER.MAIN_MENU.DESKTOP_APPS,
@@ -300,7 +300,11 @@ export const adminNavList = [
 ];
 
 export const currencyList = [
-  { id: 'USD', name: HEADER.CURRENCY.USD, src: { light: usdIconWhite, dark: usdIcon } },
+  {
+    id: 'USD',
+    name: HEADER.CURRENCY.USD,
+    src: { light: usdIconWhite, dark: usdIcon },
+  },
 ];
 
 export const languageList = [
