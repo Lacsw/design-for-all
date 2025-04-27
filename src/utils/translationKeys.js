@@ -362,3 +362,22 @@ export const CHECK_FIELDS = {
   IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt', // Альтернативный текст для изображения заглушки
 };
 
+export const CREATION = {
+  ORIGINAL_ARTICLE_TITLE: 'creation_original_article_title', // Заголовок для оригинальной статьи
+};
+
+export const VIEW_ARTICLE = {
+  UPDATED_TITLE: 'view_article_updated_title', // Заголовок для обновления
+  CREATED_LANG_TITLE: 'view_article_created_lang_title', // Заголовок для создания перевода
+  CREATED_TITLE: 'view_article_created_title', // Заголовок для создания статьи 
+  LANGUAGE_TITLE: 'view_article_language_title', // Заголовок для языка
+  MAIN_CATEGORY_TITLE: 'view_article_main_category_title', // Заголовок для основной категории
+  SUB_CATEGORY_TITLE: 'view_article_sub_category_title', // Заголовок для подкатегории
+  IMAGE_TITLE: 'view_article_image_title', // Заголовок для изображения
+  ARTICLE_TITLE: 'view_article_article_title', // Заголовок для статьи
+  DESCRIPTION_TITLE: 'view_article_description_title', // Заголовок для описания
+  RECOMMENDATIONS_TITLE: 'view_article_recommendations_title', // Заголовок для рекомендаций
+  RECOMMENDATIONS_EMPTY: 'view_article_recommendations_empty', // Текст для рекомендаций
+  IMAGE_ALT: 'view_article_image_alt', // Альтернативный текст для изображения
+  IMAGE_FALLBACK_ALT: 'view_article_image_fallback_alt', // Альтернативный текст для изображения заглушки
+};

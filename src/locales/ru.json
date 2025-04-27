@@ -239,7 +239,21 @@
   "check_fields_description_title": "Контент статьи",
   "check_fields_recommendations_title": "Рекомендации авторов",
   "check_fields_image_alt": "Картинка статьи",
-  "check_fields_image_fallback_alt": "Картинка статьи заглушка"
+  "check_fields_image_fallback_alt": "Картинка статьи заглушка",
+
+  "creation_original_article_title": "Оригинальная статья",
+
+  "view_article_updated_title": "Обновление статьи",
+  "view_article_created_lang_title": "Перевод статьи",
+  "view_article_created_title": "Создание новой статьи",
+  "view_article_language_title": "Язык",
+  "view_article_main_category_title": "Основная категория",
+  "view_article_sub_category_title": "Подкатегория",
+  "view_article_image_title": "Картинка статьи",
+  "view_article_article_title": "Заголовок статьи",
+  "view_article_description_title": "Контент статьи",
+  "view_article_recommendations_title": "Рекомендации авторов",
+  "view_article_recommendations_empty": "Отсутствуют"
 }
 
 

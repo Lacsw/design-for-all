@@ -14,6 +14,8 @@ import { NewArticle, ViewArticle } from 'components';
 import { langSelectOptions } from 'utils/constants';
 import './Creation.css';
 import formatRecommends from 'utils/helpers/formatRecommends';
+import { t } from 'i18next';
+import { CREATION } from 'utils/translationKeys';
 
 const Creation = () => {
   const location = useLocation();
@@ -145,7 +147,7 @@ const Creation = () => {
       }
     >
       {original.current && (
-        <ViewArticle original={original.current} title={'Оригинал статьи'} />
+        <ViewArticle original={original.current} title={t(CREATION.ORIGINAL_ARTICLE_TITLE)} />
       )}
       {location.state?.name === 'view' ? (
         <ViewArticle original={draft} rejectFields={rejectFields.current} />

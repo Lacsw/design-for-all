@@ -6,18 +6,21 @@ import './ViewArticle.css';
 import Recommend from 'components/Recommendations/Recommend';
 import { Link, useLocation } from 'react-router-dom';
 import { langSelectOptions } from 'utils/constants';
+import { t } from 'i18next';
+import { VIEW_ARTICLE } from 'utils/translationKeys';
 
 function createTitle(type) {
-  if (type === 'updated') return 'Обновление статьи';
-  if (type === 'created_lang') return 'Перевод статьи';
-  return 'Создание новой статьи';
+  if (type === 'updated') return t(VIEW_ARTICLE.UPDATED_TITLE);
+  if (type === 'created_lang') return t(VIEW_ARTICLE.CREATED_LANG_TITLE);
+  return t(VIEW_ARTICLE.CREATED_TITLE);
 }
 
 export default function ViewArticle({ original, title, rejectFields }) {
   const location = useLocation();
-  const lang = langSelectOptions.find(
+  const langKey = langSelectOptions.find(
     (item) => item.value === original.lang
   )?.label;
+  const lang = t(langKey);
   const mainTitle = createTitle(location.state?.type);
   const isUpdate =
     location.state?.type === 'updated' ||
@@ -28,7 +31,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
       <h2 className="view-article__title">{title || mainTitle}</h2>
       <div>
         <div className="view-article__label">
-          <span className="view-article__sub-title">Язык</span>
+          <span className="view-article__sub-title">{t(VIEW_ARTICLE.LANGUAGE_TITLE)}</span>
           <div className="view-article__dropdown">
             <div className="view-article__text">{lang}</div>
           </div>
@@ -36,7 +39,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
 
         {!isUpdate && (
           <div className="view-article__label">
-            <span className="view-article__sub-title">Основная категория</span>
+            <span className="view-article__sub-title">{t(VIEW_ARTICLE.MAIN_CATEGORY_TITLE)}</span>
             <div className="view-article__dropdown">
               <div className="view-article__text">{original.main_category}</div>
             </div>
@@ -44,37 +47,34 @@ export default function ViewArticle({ original, title, rejectFields }) {
         )}
         {original.sub_category && (
           <div
-            className={`${
-              rejectFields?.includes('sub_category') ? 'rejected ' : ''
-            }view-article__label`}
+            className={`${rejectFields?.includes('sub_category') ? 'rejected ' : ''
+              }view-article__label`}
           >
-            <span className="view-article__sub-title">Подкатегория</span>
+            <span className="view-article__sub-title">{t(VIEW_ARTICLE.SUB_CATEGORY_TITLE)}</span>
             <span className="view-article__input">{original.sub_category}</span>
           </div>
         )}
         {original.image && (
           <div
-            className={`${
-              rejectFields?.includes('image') ? 'rejected ' : ''
-            }view-article__label`}
+            className={`${rejectFields?.includes('image') ? 'rejected ' : ''
+              }view-article__label`}
           >
-            <span className="view-article__sub-title">Картинка статьи</span>
+            <span className="view-article__sub-title">{t(VIEW_ARTICLE.IMAGE_TITLE)}</span>
             <ImageWithFallback
               className="view-article__img"
               src={original.image}
-              alt="Картинка статьи"
+              alt={t(VIEW_ARTICLE.IMAGE_ALT)}
               fallbackClassName="view-article__image-placeholder"
-              fallbackAlt="Заглушка для статьи"
+              fallbackAlt={t(VIEW_ARTICLE.IMAGE_FALLBACK_ALT)}
             />
           </div>
         )}
         {original.title && (
           <div
-            className={`${
-              rejectFields?.includes('title') ? 'rejected ' : ''
-            }view-article__label`}
+            className={`${rejectFields?.includes('title') ? 'rejected ' : ''
+              }view-article__label`}
           >
-            <span className="view-article__sub-title">Заголовок статьи</span>
+            <span className="view-article__sub-title">{t(VIEW_ARTICLE.ARTICLE_TITLE)}</span>
             <span className="view-article__input view-article__input_article-header">
               {original.title}
             </span>
@@ -82,11 +82,10 @@ export default function ViewArticle({ original, title, rejectFields }) {
         )}
         {original.description && (
           <div
-            className={`${
-              rejectFields?.includes('description') ? 'rejected ' : ''
-            }view-article__label`}
+            className={`${rejectFields?.includes('description') ? 'rejected ' : ''
+              }view-article__label`}
           >
-            <span className="view-article__sub-title">Контент статьи</span>
+            <span className="view-article__sub-title">{t(VIEW_ARTICLE.DESCRIPTION_TITLE)}</span>
             <RichTextEditor
               initialValue={original.description}
               readOnly={true}
@@ -96,30 +95,29 @@ export default function ViewArticle({ original, title, rejectFields }) {
 
         {original.recommend_from_creator && (
           <div
-            className={`${
-              rejectFields?.includes('recommend_from_creator')
+            className={`${rejectFields?.includes('recommend_from_creator')
                 ? 'rejected '
                 : ''
-            }view-article__label`}
+              }view-article__label`}
           >
             <span className="view-article__sub-title">
-              Рекомендации авторов
+              {t(VIEW_ARTICLE.RECOMMENDATIONS_TITLE)}
             </span>
             <div className="view-article__recommendations">
-              {original.recommend_from_creator.length === 0 ? 'Отсутствуют' :
-              <ul className="recommendations__list">
-                {original.recommend_from_creator.map((item) => (
-                  <li className="recommendations__item" key={item.uuid}>
-                    <Link
-                      to={`${original.lang}/${item.uuid}`}
-                      className="recommendations__link"
-                      target="_blank"
-                    >
-                      <Recommend imageUrl={item.image} title={item.title} />
-                    </Link>
-                  </li>
-                ))}
-              </ul>}
+              {original.recommend_from_creator.length === 0 ? t(VIEW_ARTICLE.RECOMMENDATIONS_EMPTY) :
+                <ul className="recommendations__list">
+                  {original.recommend_from_creator.map((item) => (
+                    <li className="recommendations__item" key={item.uuid}>
+                      <Link
+                        to={`${original.lang}/${item.uuid}`}
+                        className="recommendations__link"
+                        target="_blank"
+                      >
+                        <Recommend imageUrl={item.image} title={item.title} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>}
             </div>
           </div>
         )}

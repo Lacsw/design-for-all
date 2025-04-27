@@ -242,5 +242,19 @@
   "check_fields_description_title": "Article content",
   "check_fields_recommendations_title": "Author recommendations",
   "check_fields_image_alt": "Article image",
-  "check_fields_image_fallback_alt": "Article image placeholder"
+  "check_fields_image_fallback_alt": "Article image placeholder",
+
+  "creation_original_article_title": "Original article",
+
+  "view_article_updated_title": "Update article",
+  "view_article_created_lang_title": "Article translation",
+  "view_article_created_title": "Create new article",
+  "view_article_language_title": "Language",
+  "view_article_main_category_title": "Main category",
+  "view_article_sub_category_title": "Subcategory",
+  "view_article_image_title": "Article image",
+  "view_article_article_title": "Article title",
+  "view_article_description_title": "Article content",
+  "view_article_recommendations_title": "Author recommendations",
+  "view_article_recommendations_empty": "No recommendations"
 }
