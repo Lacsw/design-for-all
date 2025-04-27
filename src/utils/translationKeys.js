@@ -234,6 +234,17 @@ export const AUTHOR = {
       ATTENTION: 'author_new_article_navbar_attention', // Внимание!
     },
   },
+  TABLE: {
+    HEADER_TYPE: 'author_table_header_type', // Тип
+    HEADER_LANGUAGE: 'author_table_header_language', // Язык
+    HEADER_CREATED: 'author_table_header_created', // Создано
+    HEADER_CATEGORY: 'author_table_header_category', // Категория
+    HEADER_SUBCATEGORY: 'author_table_header_subcategory', // Подкатегория
+    HEADER_TITLE: 'author_table_header_title', // Заголовок
+    EMPTY_CATEGORY: 'author_table_empty_category', // Статьи в данной категории отсутствуют
+    DELETE_TITLE: 'author_table_delete_title', // Точно удалить?
+    REASON_TITLE: 'author_table_reason_title', // Причина
+  },
 };
 
 // Ключи для навбара админа
@@ -246,29 +257,29 @@ export const ADMIN = {
   },
 
   NEW_AUTHOR_NAVBAR: {
-      STATUS: 'admin_new_author_navbar_status', // Статус
-      STATUS_APPROVED: 'admin_new_author_navbar_status_approved', // Статус подтверждено
-      STATUS_REJECTED: 'admin_new_author_navbar_status_rejected', // Статус отклонено
-      APPROVED_ALT: 'admin_new_author_navbar_approved_alt', // Альтернативный текст для подтверждено
-      APPROVE_BUTTON: 'admin_new_author_navbar_approve_button', // Кнопка подтвердить
-      REJECT_ALT: 'admin_new_author_navbar_reject_alt', // Альтернативный текст для отклонено
-      REJECT_BUTTON: 'admin_new_author_navbar_reject_button', // Кнопка отклонить
-      BACK_ALT: 'admin_new_author_navbar_back_alt', // Альтернативный текст для стрелка назад
-      BACK_BUTTON: 'admin_new_author_navbar_back_button', // Кнопка назад
-      REASON_TITLE: 'admin_new_author_navbar_reason_title', // Заголовок для причины
-      GIVE_REASON_TITLE: 'admin_new_author_navbar_give_reason_title', // Заголовок для указания причины
-      REJECT_REASON_PLACEHOLDER:
-        'admin_new_author_navbar_reject_reason_placeholder', // Плейсхолдер для причины отклонено
-      REJECT_STATUS: 'admin_new_author_navbar_reject_status', // Статус отклонено
-      APPROVE_STATUS: 'admin_new_author_navbar_approve_status', // Статус подтверждено
-      DECISION: {
-        TEXT: 'admin_new_author_navbar_decision_text',
-        REJECTED: 'admin_new_author_navbar_decision_rejected',
-        APPROVED: 'admin_new_author_navbar_decision_approved',
-      },
-      REJECT_REASON_TITLE: 'admin_new_author_navbar_reject_reason_title', // Заголовок для причины отклонено
-      ARTICLE_LINK_TITLE: 'admin_new_author_navbar_article_link_title', // Заголовок для ссылки на статью
+    STATUS: 'admin_new_author_navbar_status', // Статус
+    STATUS_APPROVED: 'admin_new_author_navbar_status_approved', // Статус подтверждено
+    STATUS_REJECTED: 'admin_new_author_navbar_status_rejected', // Статус отклонено
+    APPROVED_ALT: 'admin_new_author_navbar_approved_alt', // Альтернативный текст для подтверждено
+    APPROVE_BUTTON: 'admin_new_author_navbar_approve_button', // Кнопка подтвердить
+    REJECT_ALT: 'admin_new_author_navbar_reject_alt', // Альтернативный текст для отклонено
+    REJECT_BUTTON: 'admin_new_author_navbar_reject_button', // Кнопка отклонить
+    BACK_ALT: 'admin_new_author_navbar_back_alt', // Альтернативный текст для стрелка назад
+    BACK_BUTTON: 'admin_new_author_navbar_back_button', // Кнопка назад
+    REASON_TITLE: 'admin_new_author_navbar_reason_title', // Заголовок для причины
+    GIVE_REASON_TITLE: 'admin_new_author_navbar_give_reason_title', // Заголовок для указания причины
+    REJECT_REASON_PLACEHOLDER:
+      'admin_new_author_navbar_reject_reason_placeholder', // Плейсхолдер для причины отклонено
+    REJECT_STATUS: 'admin_new_author_navbar_reject_status', // Статус отклонено
+    APPROVE_STATUS: 'admin_new_author_navbar_approve_status', // Статус подтверждено
+    DECISION: {
+      TEXT: 'admin_new_author_navbar_decision_text',
+      REJECTED: 'admin_new_author_navbar_decision_rejected',
+      APPROVED: 'admin_new_author_navbar_decision_approved',
     },
+    REJECT_REASON_TITLE: 'admin_new_author_navbar_reject_reason_title', // Заголовок для причины отклонено
+    ARTICLE_LINK_TITLE: 'admin_new_author_navbar_article_link_title', // Заголовок для ссылки на статью
+  },
 
   APPLICATIONS_NAVBAR: {
     CREATES: 'admin_new_author_applications_navbar_creates', // Создание
@@ -282,14 +293,13 @@ export const ADMIN = {
     ROLE_INPUT_LABEL: 'admin_create_user_role_input_label', // Лейбл для поля ввода роли
     ROLE_INPUT_PLACEHOLDER: 'admin_create_user_role_input_placeholder', // Плейсхолдер для поля ввода роли
     ACCESS_LVL_INPUT_LABEL: 'admin_create_user_access_lvl_input_label', // Лейбл для поля ввода уровня доступа
-    ACCESS_LVL_INPUT_PLACEHOLDER: 'admin_create_user_access_lvl_input_placeholder', // Плейсхолдер для поля ввода уровня доступа
+    ACCESS_LVL_INPUT_PLACEHOLDER:
+      'admin_create_user_access_lvl_input_placeholder', // Плейсхолдер для поля ввода уровня доступа
     SAVE_BUTTON: 'admin_create_user_save_button', // Кнопка сохранить
     CANCEL_BUTTON: 'admin_create_user_cancel_button', // Кнопка отменить
     MODAL_EMAIL_TITLE: 'admin_create_user_modal_email_title', // Заголовок для модального окна email
     MODAL_SUCCESS_TITLE: 'admin_create_user_modal_success_title', // Заголовок для модального окна успешного создания пользователя
     MODAL_SUCCESS_DESCRIPTION: 'admin_create_user_modal_success_description', // Описание для модального окна успешного создания пользователя
-
-
   },
 
   REASON_FIELDS: {
@@ -325,4 +335,30 @@ export const ARTICLE = {
     PUBLISHED: 'article_header_published', // Опубликовано
     UPDATED: 'article_header_updated', // Обновлено
   },
+  AUTHOR: {
+    SOCIALS_TEXT: 'article_author_socials_text', // Текст для социальных сетей
+    AVATAR_ALT: 'article_author_avatar_alt', // Альтернативный текст для аватара
+  },
+  BLANK: {
+    SEARCH_TREE: 'article_blank_search_tree', // Воспользуйтесь поиском по дереву или поиском по заголовкам статей
+  },
+  IMAGE: {
+    ALT: 'article_image_alt', // Альтернативный текст для изображения
+    FALLBACK_ALT: 'article_image_fallback_alt', // Альтернативный текст для изображения заглушки
+  },
+  TITLE: 'article_title', // Заголовок статьи
+  RECOMMENDATIONS: {
+    TITLE: 'article_recommendations_title', // Заголовок рекомендаций
+  },
+
 };
+
+export const CHECK_FIELDS = {
+  IMAGE_TITLE: 'check_fields_image_title', // Заголовок для изображения
+  ARTICLE_TITLE: 'check_fields_article_title', // Заголовок для статьи
+  DESCRIPTION_TITLE: 'check_fields_description_title', // Заголовок для описания
+  RECOMMENDATIONS_TITLE: 'check_fields_recommendations_title', // Заголовок для рекомендаций  
+  IMAGE_ALT: 'check_fields_image_alt', // Альтернативный текст для изображения
+  IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt', // Альтернативный текст для изображения заглушки
+};
+

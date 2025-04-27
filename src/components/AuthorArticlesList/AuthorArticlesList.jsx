@@ -10,6 +10,7 @@ import authorApi from 'utils/api/author';
 import { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
 import { useTranslation } from 'react-i18next';
+import { AUTHOR } from 'utils/translationKeys';
 
 export default function AuthorArticlesList({
   articles,
@@ -118,12 +119,12 @@ export default function AuthorArticlesList({
       <table className="author-articles-list__table">
         <thead className="author-articles-list__table-head">
           <tr>
-            <th className="author-articles-list__table-header">Тип</th>
-            <th className="author-articles-list__table-header">Язык</th>
-            <th className="author-articles-list__table-header">Дата</th>
-            <th className="author-articles-list__table-header">Категория</th>
-            <th className="author-articles-list__table-header">Подкатегория</th>
-            <th className="author-articles-list__table-header">Заголовок</th>
+            <th className="author-articles-list__table-header"> {t(AUTHOR.TABLE.HEADER_TYPE)}</th>
+            <th className="author-articles-list__table-header"> {t(AUTHOR.TABLE.HEADER_LANGUAGE)}</th>
+            <th className="author-articles-list__table-header"> {t(AUTHOR.TABLE.HEADER_CREATED)}</th>
+            <th className="author-articles-list__table-header"> {t(AUTHOR.TABLE.HEADER_CATEGORY)}</th>
+            <th className="author-articles-list__table-header">{t(AUTHOR.TABLE. HEADER_SUBCATEGORY)}</th>
+            <th className="author-articles-list__table-header">{t(AUTHOR.TABLE. HEADER_TITLE)}</th>
             <th className="author-articles-list__table-header-action"></th>
             <th className="author-articles-list__table-header-action"></th>
             <th className="author-articles-list__table-header-action"></th>
@@ -206,13 +207,13 @@ export default function AuthorArticlesList({
             ))
           ) : (
             <tr>
-              <td>Статьи в данной категории отсутствуют.</td>
+              <td>{t(AUTHOR.TABLE.EMPTY_CATEGORY)}</td>
             </tr>
           )}
         </tbody>
       </table>
       <ModalReasons
-        title={'Причина'}
+        title={t(AUTHOR.TABLE.REASON_TITLE)}
         isOpen={showReason}
         onClose={() => toggleReason({})}
         rejFields={reason.rejFields}
@@ -227,7 +228,7 @@ export default function AuthorArticlesList({
         </div>
       </ModalReasons>
       <Modal
-        title={'Точно удалить?'}
+        title={t(AUTHOR.TABLE.DELETE_TITLE)}
         isOpen={deleteOpen}
         onClose={() => setDeleteOpen(false)}
         onConfirm={handleDelete}

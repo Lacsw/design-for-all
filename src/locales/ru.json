@@ -119,6 +119,17 @@
   "author_new_article_navbar_back": "Вернуться",
   "author_new_article_navbar_cancel": "Отменить",
   "author_new_article_navbar_attention": "Внимание!",
+  "author_table_header_type": "Тип",
+  "author_table_header_language": "Язык",
+  "author_table_header_created": "Создано",
+  "author_table_header_category": "Категория",
+  "author_table_header_subcategory": "Подкатегория",
+  "author_table_header_title": "Заголовок",
+  "author_table_empty_category": "Статьи в данной категории отсутствуют.",
+  "author_table_delete_title": "Точно удалить?",
+  "author_table_reason_title": "Причина",
+
+
 
   "admin_navbar_requests": "Заявки",
   "admin_navbar_create_user": "Создать пользователя",
@@ -213,5 +224,22 @@
   "auth_notification_message": "После одобрения или отклонения заявки вы получите уведомление на email",
 
   "article_header_published": "Опубликовано",
-  "article_header_updated": "Обновлено"
+  "article_header_updated": "Обновлено",
+  "article_author_socials_text": "Здесь будут контакты автора",
+  "article_author_avatar_alt": "Аватар",
+  "article_blank_search_tree": "Воспользуйтесь поиском по дереву или поиском по заголовкам статей",
+  "article_image_alt": "Превью статьи",
+  "article_image_fallback_alt": "Заглушка для статьи",
+  "article_title": "Заголовок статьи",
+  "article_recommendations_title": "Рекомендации авторов",
+
+
+  "check_fields_image_title": "Картинка статьи",
+  "check_fields_article_title": "Заголовок статьи",
+  "check_fields_description_title": "Контент статьи",
+  "check_fields_recommendations_title": "Рекомендации авторов",
+  "check_fields_image_alt": "Картинка статьи",
+  "check_fields_image_fallback_alt": "Картинка статьи заглушка"
 }
+
+
