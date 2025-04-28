@@ -290,5 +290,24 @@
   "new_article_modal_recommendations_add_btn_title": "Добавить рекомендацию",
   "new_article_modal_image_title": "Ссылка на картинку",
 
-  "new_article_modal_input_image_placeholder": "https://site.com/image.jpg"
-}
+  "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
+
+  "profile_fio_label": "Фамилия, имя, отчество",
+  "profile_social_label": "Социальные сети",
+  "profile_login_label": "Логин",
+  "profile_password_label": "Пароль",
+  "profile_input_editable_placeholder": "example@domain.com",
+  "profile_input_editable_edit_icon_alt": "Редактировать",
+  "profile_save_btn_label": "Сохранить",
+  "profile_cancel_btn_label": "Отменить",
+  "profile_modal_fio_title": "Изменить ФИО",
+  "profile_modal_edit_social_title": "Редактировать",
+  "profile_modal_add_social_title": "Добавить контакт",
+  "profile_modal_image_title": "Ссылка на картинку",
+  "profile_modal_input_image_placeholder": "https://site.com/image.jpg",
+  "profile_modal_login_title": "Логин",
+  "profile_modal_password_title": "Пароль",
+  "profile_modal_title": "Изменить {{name}}",
+  "profile_modal_old_title": "Старый {{name}}",
+  "profile_modal_new_title": "Новый {{name}}"
+}   

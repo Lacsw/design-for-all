@@ -431,3 +431,31 @@ export const NEW_ARTICLE = {
     INPUT_IMAGE_PLACEHOLDER: 'new_article_modal_input_image_placeholder', // Плейсхолдер для ввода изображения
   },
 };
+
+export const PROFILE = {
+  FIO_LABEL: 'profile_fio_label', // Лейбл для ФИО
+  SOCIAL_LABEL: 'profile_social_label', // Лейбл для социальных сетей
+  LOGIN_LABEL: 'profile_login_label', // Лейбл для логина
+  PASSWORD_LABEL: 'profile_password_label', // Лейбл для пароля
+
+  INPUT_EDITABLE: {
+    PLACEHOLDER: 'profile_input_editable_placeholder', // Плейсхолдер для ввода email
+    EDIT_ICON_ALT: 'profile_input_editable_edit_icon_alt', // Альтернативный текст для кнопки редактирования
+  },
+  SAVE_BTN_LABEL: 'profile_save_btn_label', // Лейбл для кнопки сохранить
+  CANCEL_BTN_LABEL: 'profile_cancel_btn_label', // Лейбл для кнопки отменить
+
+  MODAL: {
+    FIO_TITLE: 'profile_modal_fio_title', // Заголовок для модального окна ФИО
+    EDIT_SOCIAL_TITLE: 'profile_modal_edit_social_title', // Заголовок для модального окна социальных сетей
+    ADD_SOCIAL_TITLE: 'profile_modal_add_social_title', // Заголовок для модального окна добавления социальных сетей
+    IMAGE_TITLE: 'profile_modal_image_title', // Заголовок для модального окна изображения
+    INPUT_IMAGE_PLACEHOLDER: 'profile_modal_input_image_placeholder', // Плейсхолдер для ввода изображения
+    LOGIN_TITLE: 'profile_modal_login_title', // Заголовок для модального окна логина
+    PASSWORD_TITLE: 'profile_modal_password_title', // Заголовок для модального окна пароля
+    TITLE: 'profile_modal_title', // Заголовок для модального окна
+    OLD_TITLE: 'profile_modal_old_title', // Заголовок для модального окна старого значения
+    NEW_TITLE: 'profile_modal_new_title', // Заголовок для модального окна нового значения
+  },
+};
+

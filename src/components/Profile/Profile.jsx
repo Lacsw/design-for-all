@@ -16,6 +16,8 @@ import DropdownIcons from 'components/DropdownIcons/DropdownIcons';
 import { imageDropdown } from '../../constants/dropdowns';
 import dotsIcon from 'images/dropdowns/three-dots.svg';
 import defaultAvatar from 'images/admin/avatar_default.svg';
+import { useTranslation } from 'react-i18next';
+import { PROFILE } from 'utils/translationKeys';
 
 const initialForm = {
   login: '',
@@ -28,6 +30,7 @@ const initialForm = {
 };
 
 export default function Profile({ resetSection }) {
+  const { t } = useTranslation();
   const inputRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -153,7 +156,7 @@ export default function Profile({ resetSection }) {
 
         <fieldset className="profile__fieldset">
           <label className="profile__field">
-            <span className="profile__sub-title">Фамилия, имя, отчество</span>
+            <span className="profile__sub-title">{t(PROFILE.FIO_LABEL)}</span>
             <InputEditable
               type={'text'}
               value={formData.fio || currentUser.fio}
@@ -162,7 +165,7 @@ export default function Profile({ resetSection }) {
           </label>
 
           <div className="profile__field">
-            <span className="profile__sub-title">Социальные сети</span>
+            <span className="profile__sub-title">{t(PROFILE.SOCIAL_LABEL)}</span>
             <SocialsBar
               onOpen={() => {
                 setModal('addSocials');
@@ -175,7 +178,7 @@ export default function Profile({ resetSection }) {
           </div>
 
           <label className="profile__field">
-            <span className="profile__sub-title">Логин</span>
+            <span className="profile__sub-title">{t(PROFILE.LOGIN_LABEL)}</span>
             <InputEditable
               type={'text'}
               value="**********"
@@ -184,7 +187,7 @@ export default function Profile({ resetSection }) {
           </label>
 
           <label className="profile__field">
-            <span className="profile__sub-title">Пароль</span>
+            <span className="profile__sub-title">{t(PROFILE.PASSWORD_LABEL)}</span>
             <InputEditable
               type={'text'}
               value="**********"
@@ -199,21 +202,21 @@ export default function Profile({ resetSection }) {
           relatedForm={'profile-form'}
           disabled={!isFormReady}
         >
-          Сохранить
+          {t(PROFILE.SAVE_BTN_LABEL)}
         </Button>
         <Button
           type={'button'}
           disabled={!isFormReady}
           onClick={() => setFormData(currentUser)}
         >
-          Отменить
+          {t(PROFILE.CANCEL_BTN_LABEL)}
         </Button>
       </div>
       <ModalFIO
         isOpen={modal === 'fio'}
         onClose={() => setModal('')}
         onSave={changeForm}
-        title="Изменить ФИО"
+        title={t(PROFILE.MODAL.FIO_TITLE)}
       />
       <ModalLogPass
         isOpen={modal === 'login' || modal === 'password'}
@@ -228,11 +231,11 @@ export default function Profile({ resetSection }) {
           setEditingContact(null);
         }}
         onSave={changeForm}
-        title={modal === 'editSocial' ? 'Редактировать' : 'Добавить контакт'}
+        title={modal === 'editSocial' ? t(PROFILE.MODAL.EDIT_SOCIAL_TITLE) : t(PROFILE.MODAL.ADD_SOCIAL_TITLE)}
         contact={editingContact}
       />
       <Modal
-        title="Ссылка на картинку"
+        title={t(PROFILE.MODAL.IMAGE_TITLE)}
         isOpen={modal === 'avatar'}
         twoBtns
         onConfirm={() => {
@@ -245,7 +248,7 @@ export default function Profile({ resetSection }) {
       >
         <input
           type="text"
-          placeholder="https://site.com/image.jpg"
+          placeholder={t(PROFILE.MODAL.INPUT_IMAGE_PLACEHOLDER)}
           className="input-reason"
           ref={inputRef}
           onChange={handleInput}

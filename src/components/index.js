@@ -53,9 +53,9 @@ export { default as CurrencyDropdown } from './DropdownNavigation/CurrencyDropdo
 export { default as UserDropdown } from './DropdownNavigation/UserDropdown';
 export { default as LoginButton } from './DropdownNavigation/LoginButton/LoginButton';
 export { default as DropdownAmount } from './DropdownAmount/DropdownAmount';
-export { default as Guides } from './Guides/Guides';
-export { default as GuidesMenu } from './GuidesMenu/GuidesMenu';
-export { default as GuidesArticle } from './GuidesArticle/GuidesArticle';
+// export { default as Guides } from './Guides/Guides';
+// export { default as GuidesMenu } from './GuidesMenu/GuidesMenu';
+// export { default as GuidesArticle } from './GuidesArticle/GuidesArticle';
 export { default as SearchInput } from './SearchInput/SearchInput';
 export { default as HeaderSearchInput } from './DropdownNavigation/HeaderSearchInput/HeaderSearchInput';
 export { default as Reviewers } from './Reviewers/Reviewers';

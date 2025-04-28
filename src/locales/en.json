@@ -296,5 +296,26 @@
   "new_article_modal_recommendations_add_btn_title": "Add recommendation",
   "new_article_modal_image_title": "Image link",
 
-  "new_article_modal_input_image_placeholder": "https://site.com/image.jpg" 
+  "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
+
+  "profile_fio_label": "Full name",
+  "profile_social_label": "Social media",
+  "profile_login_label": "Login",
+  "profile_password_label": "Password",
+  "profile_input_editable_placeholder": "example@domain.com",
+  "profile_input_editable_edit_icon_alt": "Edit",
+  "profile_save_btn_label": "Save",
+  "profile_cancel_btn_label": "Cancel",
+  "profile_modal_fio_title": "Edit full name",
+  
+  "profile_modal_add_social_title": "Add contact",
+  "profile_modal_edit_social_title": "Edit",
+  "profile_modal_image_title": "Image link",
+  "profile_modal_input_image_placeholder": "https://site.com/image.jpg",
+  "profile_modal_login_title": "Login",
+  "profile_modal_password_title": "Password",
+  "profile_modal_title": "Edit {{name}}",
+  "profile_modal_old_title": "Old {{name}}",
+  "profile_modal_new_title": "New {{name}}"
+  
 }
