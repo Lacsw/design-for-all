@@ -395,3 +395,39 @@ export const VIEW_ARTICLE = {
   IMAGE_ALT: 'view_article_image_alt', // Альтернативный текст для изображения
   IMAGE_FALLBACK_ALT: 'view_article_image_fallback_alt', // Альтернативный текст для изображения заглушки
 };
+
+export const DROPDOWN = {
+  AMOUNT: {
+    ARROW_ALT: 'dropdown_amount_arrow_alt', // Альтернативный текст для стрелки
+  },
+};
+
+export const NEW_ARTICLE = {
+  LANG_TITLE: 'new_article_lang_title', // Заголовок для языка
+  CREATED_TITLE: 'new_article_created_title', // Заголовок для создания статьи
+  UPDATED_TITLE: 'new_article_updated_title', // Заголовок для обновления статьи
+  CREATED_LANG_TITLE: 'new_article_created_lang_title', // Заголовок для создания перевода
+  MAIN_CATEGORY_TITLE: 'new_article_main_category_title', // Заголовок для основной категории
+  SUB_CATEGORY_TITLE: 'new_article_sub_category_title', // Заголовок для 
+  CHECK_SUB_CATEGORY_HINT_LINK: 'new_article_sub_category_hint_link', // Ссылка для подсказки на подкатегорию
+  IMAGE_TITLE: 'new_article_image_title', // Заголовок для изображения
+  IMAGE_ALT: 'new_article_image_alt', // Альтернативный текст для изображения
+  IMAGE_FALLBACK_ALT: 'new_article_image_fallback_alt', // Альтернативный текст для изображения заглушки
+  ARTICLE_TITLE: 'new_article_article_title', // Заголовок для статьи
+  TITLE_PLACEHOLDER: 'new_article_title_placeholder', // Плейсхолдер для заголовка
+  CONTENT_TITLE: 'new_article_content_title', // Заголовок для контента
+  RECOMMENDATIONS_TITLE: 'new_article_recommendations_title', // Заголовок для рекомендаций
+  RECOMMENDATIONS_ADD_BTN_TITLE: 'new_article_recommendations_add_btn_title', // Заголовок для кнопки добавления рекомендации
+  RECOMMENDATIONS_EDIT_BTN_TITLE: 'new_article_recommendations_edit_btn_title', // Заголовок для кнопки редактирования рекомендации
+  RECOMMENDATIONS_DELETE_BTN_TITLE: 'new_article_recommendations_delete_btn_title', // Заголовок для кнопки удаления рекомендации
+  RECOMMENDATIONS_ADD_BTN_ALT: 'new_article_recommendations_add_btn_alt', // Альтернативный текст для кнопки добавления рекомендации
+  RECOMMENDATIONS_EDIT_BTN_ALT: 'new_article_recommendations_edit_btn_alt', // Альтернативный текст для кнопки редактирования рекомендации
+  RECOMMENDATIONS_DELETE_BTN_ALT: 'new_article_recommendations_delete_btn_alt', // Альтернативный текст для кнопки удаления рекомендации
+
+  MODAL: {
+    RECOMMENDATIONS_CHANGE_BTN_TITLE: 'new_article_recommendations_change_btn_title', // Заголовок для кнопки изменения рекомендации
+    RECOMMENDATIONS_ADD_BTN_TITLE: 'new_article_recommendations_add_btn_title', // Заголовок для кнопки добавления рекомендации
+    IMAGE_TITLE: 'new_article_modal_image_title', // Заголовок для модального окна изображения
+    INPUT_IMAGE_PLACEHOLDER: 'new_article_modal_input_image_placeholder', // Плейсхолдер для ввода изображения
+  },
+};

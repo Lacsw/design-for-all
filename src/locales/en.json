@@ -268,5 +268,33 @@
   "admin_account_decision_instruction_item_4": "If you are not sure about the author's qualifications, but you like their UI design, lean towards a positive decision, perhaps the author has little experience in UX, but a lot in UI.",
   "admin_account_decision_instruction_item_5": "If the author has a lot of followers/subscribers, it may be worth considering a positive decision, despite the author's qualifications. This can bring many new users to the project.",
   "admin_account_decision_instruction_item_6": "If you are impressed by the author's graphic design from the project/resource link, do not rush to make a positive decision, as the graphic design may belong to other people, for example, the author's colleagues with whom they work.",
-  "admin_account_decision_instruction_item_7": "All author account creations and rejections are logged and checked by more experienced participants, be careful when making decisions."
+  "admin_account_decision_instruction_item_7": "All author account creations and rejections are logged and checked by more experienced participants, be careful when making decisions.",
+
+  "dropdown_amount_arrow_alt": "Arrow",
+
+  "new_article_lang_title": "Language",
+  "new_article_created_title": "Create new article",
+  "new_article_updated_title": "Update article",
+  "new_article_created_lang_title": "Article translation",
+  "new_article_main_category_title": "Main category",
+  "new_article_sub_category_title": "Subcategory",
+  "new_article_sub_category_hint_link": "existing article",
+  "new_article_sub_category_placeholder": "country/city/street/house",
+  "new_article_image_title": "Article image",
+  "new_article_image_alt": "Your image",
+  "new_article_image_fallback_alt": "Article image placeholder",
+
+  "new_article_article_title": "Article title",
+  "new_article_title_placeholder": "Product card in marketplace",
+  "new_article_description_title": "Article content",
+  "new_article_recommendations_title": "Author recommendations",
+  "new_article_recommendations_add_btn_alt": "Add recommendation icon",
+  "new_article_recommendations_add_btn_title": "Add",
+  "new_article_recommendations_edit_btn_alt": "Edit recommendation",
+  "new_article_recommendations_delete_btn_alt": "Delete recommendation",
+  "new_article_modal_recommendations_change_btn_title": "Replace recommendation",
+  "new_article_modal_recommendations_add_btn_title": "Add recommendation",
+  "new_article_modal_image_title": "Image link",
+
+  "new_article_modal_input_image_placeholder": "https://site.com/image.jpg" 
 }
