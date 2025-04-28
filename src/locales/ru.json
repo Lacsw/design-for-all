@@ -289,9 +289,9 @@
   "new_article_modal_recommendations_change_btn_title": "Заменить рекомендацию",
   "new_article_modal_recommendations_add_btn_title": "Добавить рекомендацию",
   "new_article_modal_image_title": "Ссылка на картинку",
-
+  "new_article_modal_attention_title": "Последние изменения не сохранены, сохранить в черновик?",
   "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
-
+  "new_article_modal_attention_text": "Последние изменения не сохранены, сохранить в черновик?",
   "profile_fio_label": "Фамилия, имя, отчество",
   "profile_social_label": "Социальные сети",
   "profile_login_label": "Логин",
@@ -317,5 +317,7 @@
   "profile_modal_socials_socials_title": "Соц. сети",
   "profile_modal_socials_phone_placeholder": "+71234567890",
   "profile_modal_socials_email_placeholder": "example@mail.com",
-  "profile_modal_socials_title": "Редактировать {{name}}"
+  "profile_modal_socials_title": "Редактировать {{name}}",
+
+  "loader_loading_text": "Загрузка. . ."
 }   

@@ -3,7 +3,7 @@
   "intro_subtitle_mobile": "The only, largest,/structured and free encyclopedia/of IT design.",
   "intro_subtitle_desktop": "The only, largest,/structured and free/encyclopedia of IT design.",
 
-  "navbar_go_to": "Go to",
+  "main_navbar_go_to": "Go to",
 
   "common_theme_light": "Light theme",
   "common_theme_dark": "Dark theme",
@@ -297,7 +297,8 @@
   "new_article_modal_image_title": "Image link",
 
   "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
-
+  "new_article_modal_attention_title": "Last changes not saved, save as draft?",
+  
   "profile_fio_label": "Full name",
   "profile_social_label": "Social media",
   "profile_login_label": "Login",
@@ -324,7 +325,7 @@
   "profile_modal_socials_socials_title": "Social media",
   "profile_modal_socials_phone_placeholder": "+71234567890",
   "profile_modal_socials_email_placeholder": "example@mail.com",
-  "profile_modal_socials_title": "Edit {{name}}"
+  "profile_modal_socials_title": "Edit {{name}}",
 
-
+  "loader_loading_text": "Loading. . ."
 }

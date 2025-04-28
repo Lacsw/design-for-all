@@ -430,6 +430,9 @@ export const NEW_ARTICLE = {
     IMAGE_TITLE: 'new_article_modal_image_title', // Заголовок для модального окна изображения
     INPUT_IMAGE_PLACEHOLDER: 'new_article_modal_input_image_placeholder', // Плейсхолдер для ввода изображения
   },
+  MODAL_ATTENTION: {
+    TEXT: 'new_article_modal_attention_text', // Текст для модального окна внимания
+  },
 };
 
 export const PROFILE = {
@@ -466,5 +469,9 @@ export const PROFILE = {
     SOCIALS_SOCIALS_PLACEHOLDER: 'profile_modal_socials_socials_placeholder', // Плейсхолдер для ввода социальные сети
     SOCIALS_TITLE: 'profile_modal_socials_title', // Заголовок для модального окна социальные сети
   },
+};
+
+export const LOADER = {
+  LOADING_TEXT: 'loader_loading_text', // Текст для загрузки
 };
 
