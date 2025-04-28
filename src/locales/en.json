@@ -130,6 +130,15 @@
   "author_new_article_navbar_back": "Back",
   "author_new_article_navbar_cancel": "Cancel",
   "author_new_article_navbar_attention": "Attention!",
+  "author_table_header_type": "Type",
+  "author_table_header_language": "Language",
+  "author_table_header_created": "Created",
+  "author_table_header_category": "Category",
+  "author_table_header_subcategory": "Subcategory",
+  "author_table_header_title": "Title",
+  "author_table_empty_category": "No articles in this category.",
+  "author_table_delete_title": "Are you sure you want to delete this article?",
+  "author_table_reason_title": "Reason",
 
   "admin_navbar_requests": "Requests",
   "admin_navbar_create_user": "Create User",
@@ -221,5 +230,31 @@
   "auth_notification_message": "You will receive a notification via email after your application is approved or rejected",
 
   "article_header_published": "Published",
-  "article_header_updated": "Updated"
+  "article_header_updated": "Updated",
+  "article_author_socials_text": "Here will be author's contacts",
+  "article_author_avatar_alt": "Avatar",
+  "article_blank_search_tree": "Use the tree search or search by article titles",
+  "article_image_alt": "Article preview",
+  "article_image_fallback_alt": "Article placeholder",
+
+  "check_fields_image_title": "Article image",
+  "check_fields_article_title": "Article title",
+  "check_fields_description_title": "Article content",
+  "check_fields_recommendations_title": "Author recommendations",
+  "check_fields_image_alt": "Article image",
+  "check_fields_image_fallback_alt": "Article image placeholder",
+
+  "creation_original_article_title": "Original article",
+
+  "view_article_updated_title": "Update article",
+  "view_article_created_lang_title": "Article translation",
+  "view_article_created_title": "Create new article",
+  "view_article_language_title": "Language",
+  "view_article_main_category_title": "Main category",
+  "view_article_sub_category_title": "Subcategory",
+  "view_article_image_title": "Article image",
+  "view_article_article_title": "Article title",
+  "view_article_description_title": "Article content",
+  "view_article_recommendations_title": "Author recommendations",
+  "view_article_recommendations_empty": "No recommendations"
 }
