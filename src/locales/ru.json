@@ -309,5 +309,13 @@
   "profile_modal_password_title": "Пароль",
   "profile_modal_title": "Изменить {{name}}",
   "profile_modal_old_title": "Старый {{name}}",
-  "profile_modal_new_title": "Новый {{name}}"
+  "profile_modal_new_title": "Новый {{name}}",
+  "profile_modal_socials_error": "Ой, адрес не соответствует выбранной соцсети. Проверьте, пожалуйста, ссылку.",
+  "profile_modal_socials_error_length": "Длина ссылки не должна превышать 400 символов",
+  "profile_modal_socials_phone_title": "Телефон",
+  "profile_modal_socials_email_title": "Email",
+  "profile_modal_socials_socials_title": "Соц. сети",
+  "profile_modal_socials_phone_placeholder": "+71234567890",
+  "profile_modal_socials_email_placeholder": "example@mail.com",
+  "profile_modal_socials_title": "Редактировать {{name}}"
 }   

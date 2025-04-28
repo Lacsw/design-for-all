@@ -456,6 +456,15 @@ export const PROFILE = {
     TITLE: 'profile_modal_title', // Заголовок для модального окна
     OLD_TITLE: 'profile_modal_old_title', // Заголовок для модального окна старого значения
     NEW_TITLE: 'profile_modal_new_title', // Заголовок для модального окна нового значения
+    SOCIALS_ERROR: 'profile_modal_socials_error', // Сообщение об ошибке для социальных сетей
+    SOCIALS_ERROR_LENGTH: 'profile_modal_socials_error_length', // Сообщение об ошибке для социальных сетей
+    SOCIALS_PHONE_TITLE: 'profile_modal_socials_phone_title', // Заголовок для модального окна телефон
+    SOCIALS_EMAIL_TITLE: 'profile_modal_socials_email_title', // Заголовок для модального окна email
+    SOCIALS_SOCIALS_TITLE: 'profile_modal_socials_socials_title', // Заголовок для модального окна социальные сети
+    SOCIALS_PHONE_PLACEHOLDER: 'profile_modal_socials_phone_placeholder', // Плейсхолдер для ввода телефон
+    SOCIALS_EMAIL_PLACEHOLDER: 'profile_modal_socials_email_placeholder', // Плейсхолдер для ввода email
+    SOCIALS_SOCIALS_PLACEHOLDER: 'profile_modal_socials_socials_placeholder', // Плейсхолдер для ввода социальные сети
+    SOCIALS_TITLE: 'profile_modal_socials_title', // Заголовок для модального окна социальные сети
   },
 };
 
