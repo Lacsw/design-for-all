@@ -327,6 +327,20 @@ export const ADMIN = {
     IN_WORK: 'admin_table_in_work', // В работе
     NO_REQUESTS: 'admin_table_no_requests', // Нет запросов
   },
+
+  ACCOUNT_DECISION: {
+    TITLE: 'admin_account_decision_title', // Заголовок для заявки регистрации автора
+    SUBTITLE: 'admin_account_decision_subtitle', // Подзаголовок для заявки регистрации автора
+    INSTRUCTION_TITLE: 'admin_account_decision_instruction_title', // Заголовок для инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_1: 'admin_account_decision_instruction_item_1', // Пункт инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_1_LINK: 'admin_account_decision_instruction_item_1_link', // Ссылка для инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_2: 'admin_account_decision_instruction_item_2', // Пункт инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_3: 'admin_account_decision_instruction_item_3', // Пункт инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_4: 'admin_account_decision_instruction_item_4', // Пункт инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_5: 'admin_account_decision_instruction_item_5', // Пункт инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_6: 'admin_account_decision_instruction_item_6', // Пункт инструкции по проверке квалификации автора
+    INSTRUCTION_ITEM_7: 'admin_account_decision_instruction_item_7', // Пункт инструкции по проверке квалификации автора
+  },
 };
 
 // Ключи для статьи
