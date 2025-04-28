@@ -33,9 +33,10 @@ const CheckFields = ({ offer, title }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [fields, setFields] = useState(getFields(offer));
-  const lang = langSelectOptions.find(
+  const langKey = langSelectOptions.find(
     (item) => item.value === offer.lang
   )?.label;
+  const lang = t(langKey);
 
   function handleChoice({ target }) {
     const { name, value } = target;

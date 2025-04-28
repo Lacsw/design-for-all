@@ -6,10 +6,10 @@ import './ViewArticle.css';
 import Recommend from 'components/Recommendations/Recommend';
 import { Link, useLocation } from 'react-router-dom';
 import { langSelectOptions } from 'utils/constants';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { VIEW_ARTICLE } from 'utils/translationKeys';
 
-function createTitle(type) {
+function createTitle(type, t) {
   if (type === 'updated') return t(VIEW_ARTICLE.UPDATED_TITLE);
   if (type === 'created_lang') return t(VIEW_ARTICLE.CREATED_LANG_TITLE);
   return t(VIEW_ARTICLE.CREATED_TITLE);
@@ -17,11 +17,12 @@ function createTitle(type) {
 
 export default function ViewArticle({ original, title, rejectFields }) {
   const location = useLocation();
+  const { t } = useTranslation();
   const langKey = langSelectOptions.find(
     (item) => item.value === original.lang
   )?.label;
   const lang = t(langKey);
-  const mainTitle = createTitle(location.state?.type);
+  const mainTitle = createTitle(location.state?.type, t);
   const isUpdate =
     location.state?.type === 'updated' ||
     location.state?.type === 'created_lang';

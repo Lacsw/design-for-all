@@ -40,8 +40,6 @@ export { default as SignUpForm } from './AuthModal/SignUpForm/SignUpForm';
 export { default as Input } from './Input/Input';
 export { default as InputEditable } from './InputEditable/InputEditable';
 export { default as Modal } from './Modal/Modal';
-export { default as MenuTree } from './MenuTree/MenuTree';
-export { default as MapList } from './MapList/MapList';
 export { default as SocialsBar } from './SocialsBar/SocialsBar';
 export { default as SocialItem } from './SocialsBar/SocialItem';
 export { default as FieldEditable } from './FieldEditable/FieldEditable';
@@ -53,14 +51,11 @@ export { default as CurrencyDropdown } from './DropdownNavigation/CurrencyDropdo
 export { default as UserDropdown } from './DropdownNavigation/UserDropdown';
 export { default as LoginButton } from './DropdownNavigation/LoginButton/LoginButton';
 export { default as DropdownAmount } from './DropdownAmount/DropdownAmount';
-export { default as Guides } from './Guides/Guides';
-export { default as GuidesMenu } from './GuidesMenu/GuidesMenu';
-export { default as GuidesArticle } from './GuidesArticle/GuidesArticle';
+
 export { default as SearchInput } from './SearchInput/SearchInput';
 export { default as HeaderSearchInput } from './DropdownNavigation/HeaderSearchInput/HeaderSearchInput';
 export { default as Reviewers } from './Reviewers/Reviewers';
 export { default as SideBar } from './SideBar/SideBar';
-export { default as Map } from './Map/Map';
 export { RichTextEditor } from './RichTextEditor';
 export { default as MainNavigationBar } from './MainNavigationBar/MainNavigationBar';
 export { default as MainSlider } from './Main/MainSlider/MainSlider';

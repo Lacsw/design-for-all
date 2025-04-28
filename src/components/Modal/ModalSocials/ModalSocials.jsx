@@ -10,6 +10,8 @@ import {
   detectSocialPlatform,
   detectTitleName,
 } from 'utils/socials';
+import { useTranslation } from 'react-i18next';
+import { PROFILE } from 'utils/translationKeys';
 
 export default function ModalSocials({
   isOpen,
@@ -18,6 +20,7 @@ export default function ModalSocials({
   title,
   contact,
 }) {
+  const { t } = useTranslation();
   const theme = useSelector(getCurrentTheme);
   const isEditMode = Boolean(contact);
   const [selectedOption, setSelectedOption] = useState(
@@ -51,7 +54,7 @@ export default function ModalSocials({
     setInputValue(value);
 
     if (value.length > 400) {
-      setError('Длина ссылки не должна превышать 400 символов');
+      setError(t(PROFILE.MODAL.SOCIALS_ERROR_LENGTH));
       return;
     }
 
@@ -76,7 +79,7 @@ export default function ModalSocials({
     }
 
     if (value && !regex.test(value)) {
-      setError('Введите корректное значение');
+      setError(t(PROFILE.MODAL.SOCIALS_ERROR));
       return;
     }
 
@@ -90,7 +93,7 @@ export default function ModalSocials({
       const detected = detectSocialPlatform(value);
       if (value && detected !== contact.type) {
         setError(
-          'Ой, адрес не соответствует выбранной соцсети. Проверьте, пожалуйста, ссылку.'
+          t(PROFILE.MODAL.SOCIALS_ERROR)
         );
         return;
       }
@@ -126,7 +129,7 @@ export default function ModalSocials({
   };
 
   const modalTitle = isEditMode
-    ? `Редактировать ${detectTitleName(contact.value, contact.type)}`
+    ? t(PROFILE.MODAL.SOCIALS_TITLE, { name: detectTitleName(contact.value, contact.type, t) })
     : title;
 
   return (
@@ -153,7 +156,7 @@ export default function ModalSocials({
               onChange={handleOptionChange}
             />
             <span className="radio-custom" />
-            <span className="radio-text">Телефон</span>
+            <span className="radio-text">{t(PROFILE.MODAL.SOCIALS_PHONE_TITLE)}</span>
           </label>
           <label className="custom-radio">
             <input
@@ -164,7 +167,7 @@ export default function ModalSocials({
               onChange={handleOptionChange}
             />
             <span className="radio-custom" />
-            <span className="radio-text">Email</span>
+            <span className="radio-text">{t(PROFILE.MODAL.SOCIALS_EMAIL_TITLE)}</span>
           </label>
 
           <label className="custom-radio">
@@ -176,7 +179,7 @@ export default function ModalSocials({
               onChange={handleOptionChange}
             />
             <span className="radio-custom" />
-            <span className="radio-text">Соц. сети</span>
+            <span className="radio-text">{t(PROFILE.MODAL.SOCIALS_SOCIALS_TITLE)}</span>
           </label>
         </div>
       )}
@@ -187,10 +190,10 @@ export default function ModalSocials({
           value={inputValue}
           placeholder={
             selectedOption === 'email'
-              ? 'example@mail.com'
+              ? t(PROFILE.MODAL.SOCIALS_EMAIL_PLACEHOLDER)
               : selectedOption === 'phone'
-              ? '+71234567890'
-              : 'https://example.com'
+              ? t(PROFILE.MODAL.SOCIALS_PHONE_PLACEHOLDER)
+              : t(PROFILE.MODAL.SOCIALS_SOCIALS_PLACEHOLDER)
           }
           onChange={handleInputChange}
           errors={error}

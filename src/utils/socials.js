@@ -1,3 +1,5 @@
+import { PROFILE } from 'utils/translationKeys';
+
 export const emailRegex = /^\S+@\S+\.\S+$/;
 export const phoneRegex = /^\+?\d{10,15}$/;
 export const socialsRegex = /^https:\/\/\S+\.\S+$/;
@@ -27,9 +29,9 @@ export function detectSocialPlatform(url) {
   return 'default';
 }
 
-export function detectTitleName(url, selectedOption) {
-  if (selectedOption === 'phone') return 'Номер телефона';
-  if (selectedOption === 'email') return 'Email';
+export function detectTitleName(url, selectedOption, t) {
+  if (selectedOption === 'phone') return t(PROFILE.MODAL.SOCIALS_PHONE_TITLE);
+  if (selectedOption === 'email') return t(PROFILE.MODAL.SOCIALS_EMAIL_TITLE);
 
   const platform = detectSocialPlatform(url);
   const names = {

@@ -63,7 +63,8 @@
   }
 
   .intro__subtitle {
-    min-height: 60px; /* бронируем место под анимированный текст*/
+    min-height: 60px;
+    /* бронируем место под анимированный текст*/
     font-size: 20px;
     line-height: 130%;
   }
@@ -109,6 +110,4 @@
     height: 50px;
     padding: 10px;
   }
-
-
 }

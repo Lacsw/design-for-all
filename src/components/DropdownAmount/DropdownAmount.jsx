@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './DropdownAmount.css';
 
 import arrow from 'images/author/arrow.svg';
+import { useTranslation } from 'react-i18next';
+import { DROPDOWN } from 'utils/translationKeys';
 
 export default function DropdownAmount({
   id,
@@ -9,6 +11,7 @@ export default function DropdownAmount({
   options,
   handlePagination,
 }) {
+  const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState('20');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -31,7 +34,7 @@ export default function DropdownAmount({
     >
       <div className="dropdown-amount__title">
         {selectedOption}
-        <img className="dropdown__image" src={arrow} alt="стрелка" />
+        <img className="dropdown__image" src={arrow} alt={t(DROPDOWN.AMOUNT.ARROW_ALT)} />
       </div>
 
       {isDropdownOpen && (

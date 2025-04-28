@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './ModalLogPass.css';
 import { Input, Modal } from 'components';
+import { useTranslation } from 'react-i18next';
+import { PROFILE } from 'utils/translationKeys';
 
 const logPassValidation = {
   login: /^[А-Яа-яЁё\w-]+$/,
@@ -24,6 +26,7 @@ const initialValues = {
 };
 
 export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
+  const { t } = useTranslation();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
   const isValid =
@@ -31,7 +34,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
     !errors['old_' + name] &&
     values[name] &&
     values['old_' + name];
-  const ruName = name === 'login' ? 'логин' : 'пароль';
+  const modalType = name === 'login' ? t(PROFILE.MODAL.LOGIN_TITLE) : t(PROFILE.MODAL.PASSWORD_TITLE);
 
   function handleInput({ target }) {
     let error =
@@ -49,7 +52,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
 
   return (
     <Modal
-      title={'Изменить ' + ruName}
+      title={t(PROFILE.MODAL.TITLE, { name: modalType })}
       onClose={onClose}
       onConfirm={addData}
       isOpen={isOpen}
@@ -58,7 +61,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
     >
       <label className="modal-reccomendation__label">
         <span className={'modal-reccomendation__span'}>
-          {'Старый ' + ruName}
+          {t(PROFILE.MODAL.OLD_TITLE, { name: modalType })}
         </span>
         <Input
           type={'text'}
@@ -71,7 +74,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
       </label>
       <label className="modal-reccomendation__label">
         <span className={'modal-reccomendation__span'}>
-          {'Новый ' + ruName}
+          {t(PROFILE.MODAL.NEW_TITLE, { name: modalType })}
         </span>
         <Input
           type={'text'}
