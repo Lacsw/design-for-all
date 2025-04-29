@@ -13,8 +13,11 @@ import { getCurrentTheme } from 'store/slices/theme';
 import defaultAvatar from 'images/admin/avatar_default.svg';
 import { getSocialHref } from 'utils/socials';
 import './User.css';
+import { useTranslation } from 'react-i18next'; 
+import { USER } from 'utils/translationKeys';
 
 export default function User() {
+  const { t } = useTranslation();
   const theme = useSelector(getCurrentTheme);
   const user = useSelector(getCurrentUser);
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +64,7 @@ export default function User() {
           {renderSocialMedia(shownList)}
         </div>
       ) : (
-        <p className="user__socials-text">Контакты отсутствуют</p>
+        <p className="user__socials-text">{t(USER.SOCIALS_MISSING)}</p>
       )}
       {socialList.length > 4 && (
         <p
@@ -70,7 +73,7 @@ export default function User() {
           }
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? 'Скрыть' : 'Показать все'}
+          {isOpen ? t(USER.SEE_LESS) : t(USER.SEE_MORE)}
         </p>
       )}
     </div>

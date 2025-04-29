@@ -236,7 +236,21 @@
   "article_blank_search_tree": "Use the tree search or search by article titles",
   "article_image_alt": "Article preview",
   "article_image_fallback_alt": "Article placeholder",
+  "article_reviewers_title": "Reviewers",
+  "article_recommendations_title": "Author recommendations",
+  "article_reviewers_propose_changes": "Propose changes",
+  "article_reviewers_propose_changes_text": "to become a reviewer",
+  "article_reviewers_propose_changes_button": "Propose changes",
+  "article_reviewers_propose_changes_button_alt": "Propose changes icon",
+  "article_reviewers_propose_changes_button_text": "Propose changes",
 
+  "article_modal_reasons_sub_category": "Subcategory",
+  "article_modal_reasons_title": "Article title",
+  "article_modal_reasons_image": "Article image",
+  "article_modal_reasons_description": "Article content",
+  "article_modal_reasons_recommendations": "Author recommendations",
+  "article_modal_reasons_deny": "Red cross",
+  "article_modal_reasons_approve": "Green checkmark",
   "check_fields_image_title": "Article image",
   "check_fields_article_title": "Article title",
   "check_fields_description_title": "Article content",
@@ -298,7 +312,7 @@
 
   "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
   "new_article_modal_attention_title": "Last changes not saved, save as draft?",
-  
+
   "profile_fio_label": "Full name",
   "profile_social_label": "Social media",
   "profile_login_label": "Login",
@@ -318,6 +332,7 @@
   "profile_modal_title": "Edit {{name}}",
   "profile_modal_old_title": "Old {{name}}",
   "profile_modal_new_title": "New {{name}}",
+  "profile_modal_fio_placeholder": "Kruglova Maria",
   "profile_modal_socials_error": "Oops, the address does not match the selected social network. Please check the link.",
   "profile_modal_socials_error_length": "The link length must not exceed 400 characters",
   "profile_modal_socials_phone_title": "Phone",
@@ -326,6 +341,16 @@
   "profile_modal_socials_phone_placeholder": "+71234567890",
   "profile_modal_socials_email_placeholder": "example@mail.com",
   "profile_modal_socials_title": "Edit {{name}}",
+  "profile_modal_socials_placeholder": "https://example.com",
+  "profile_social_bar_add_icon_alt": "Add icon",
+  "loader_loading_text": "Loading. . .",
+  "user_socials_missing": "Contacts missing",
+  "user_see_more": "Show all",
+  "user_see_less": "Hide",
 
-  "loader_loading_text": "Loading. . ."
+  "sidebar_search_input_no_results": "No results found",
+  "new_article_content_title": "Article content",
+
+  "modal_confirm_button": "Confirm",
+  "modal_cancel_button": "Cancel"
 }

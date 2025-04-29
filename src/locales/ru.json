@@ -230,7 +230,20 @@
   "article_image_fallback_alt": "Заглушка для статьи",
   "article_title": "Заголовок статьи",
   "article_recommendations_title": "Рекомендации авторов",
-
+  "article_reviewers_title": "Рецензенты",
+  "article_reviewers_propose_changes": "Предложите правки",
+  "article_reviewers_propose_changes_text": "чтобы стать рецензентом",
+  "article_reviewers_propose_changes_button": "Предложить правки",
+  "article_reviewers_propose_changes_button_alt": "Иконка предложить правки",
+  "article_reviewers_propose_changes_button_text": "Предложить правки",
+  "article_modal_reasons_sub_category": "Подкатегория",
+  "article_modal_reasons_title": "Заголовок статьи",
+  "article_modal_reasons_image": "Картинка статьи",
+  "article_modal_reasons_description": "Контент статьи",
+  "article_modal_reasons_recommendations": "Рекомендации авторов",
+  "article_modal_reasons_deny": "Красный крестик",
+  "article_modal_reasons_approve": "Зелёная галочка",
+  
   "check_fields_image_title": "Картинка статьи",
   "check_fields_article_title": "Заголовок статьи",
   "check_fields_description_title": "Контент статьи",
@@ -292,6 +305,8 @@
   "new_article_modal_attention_title": "Последние изменения не сохранены, сохранить в черновик?",
   "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
   "new_article_modal_attention_text": "Последние изменения не сохранены, сохранить в черновик?",
+  "new_article_content_title": "Контент статьи",
+
   "profile_fio_label": "Фамилия, имя, отчество",
   "profile_social_label": "Социальные сети",
   "profile_login_label": "Логин",
@@ -301,6 +316,7 @@
   "profile_save_btn_label": "Сохранить",
   "profile_cancel_btn_label": "Отменить",
   "profile_modal_fio_title": "Изменить ФИО",
+  "profile_modal_fio_placeholder": "Круглова Мария",
   "profile_modal_edit_social_title": "Редактировать",
   "profile_modal_add_social_title": "Добавить контакт",
   "profile_modal_image_title": "Ссылка на картинку",
@@ -318,6 +334,17 @@
   "profile_modal_socials_phone_placeholder": "+71234567890",
   "profile_modal_socials_email_placeholder": "example@mail.com",
   "profile_modal_socials_title": "Редактировать {{name}}",
+  "profile_modal_socials_placeholder": "https://example.com",
+  "profile_social_bar_add_icon_alt": "Иконка добавления",
 
-  "loader_loading_text": "Загрузка. . ."
+  "loader_loading_text": "Загрузка. . .",
+  "user_socials_missing": "Контакты отсутствуют",
+  "user_see_more": "Показать все",
+  "user_see_less": "Скрыть",
+
+  "sidebar_search_input_no_results": "Ничего не найдено",
+
+  "modal_confirm_button": "Подтвердить",
+  "modal_cancel_button": "Отменить"
+
 }   

@@ -364,6 +364,22 @@ export const ARTICLE = {
   RECOMMENDATIONS: {
     TITLE: 'article_recommendations_title', // Заголовок рекомендаций
   },
+  REVIEWERS: {
+    AVATAR_ALT: 'article_reviewers_avatar_alt', // Альтернативный текст для аватара рецензента
+    PROPOSE_CHANGES_TEXT: 'article_reviewers_propose_changes_text', // Текст для предложения правок
+    TITLE: 'article_reviewers_title', // Заголовок рецензентов
+    PROPOSE_CHANGES: 'article_reviewers_propose_changes', // Предложите правки
+    PROPOSE_CHANGES_BUTTON: 'article_reviewers_propose_changes_button', // Кнопка предложить правки
+    PROPOSE_CHANGES_BUTTON_ALT: 'article_reviewers_propose_changes_button_alt', // Альтернативный текст для кнопки предложить правки
+    PROPOSE_CHANGES_BUTTON_TEXT: 'article_reviewers_propose_changes_button_text', // Текст для кнопки предложить правки
+  },
+  MODAL_REASONS: {
+    SUB_CATEGORY: 'article_modal_reasons_sub_category', // Подкатегория
+    TITLE: 'article_modal_reasons_title', // Заголовок
+    IMAGE: 'article_modal_reasons_image', // Картинка
+    DESCRIPTION: 'article_modal_reasons_description', // Контент
+    RECOMMENDATIONS: 'article_modal_reasons_recommendations', // Рекомендации
+  },
 
 };
 
@@ -450,6 +466,7 @@ export const PROFILE = {
 
   MODAL: {
     FIO_TITLE: 'profile_modal_fio_title', // Заголовок для модального окна ФИО
+    FIO_PLACEHOLDER: 'profile_modal_fio_placeholder', // Плейсхолдер для ввода ФИО
     EDIT_SOCIAL_TITLE: 'profile_modal_edit_social_title', // Заголовок для модального окна социальных сетей
     ADD_SOCIAL_TITLE: 'profile_modal_add_social_title', // Заголовок для модального окна добавления социальных сетей
     IMAGE_TITLE: 'profile_modal_image_title', // Заголовок для модального окна изображения
@@ -466,8 +483,11 @@ export const PROFILE = {
     SOCIALS_SOCIALS_TITLE: 'profile_modal_socials_socials_title', // Заголовок для модального окна социальные сети
     SOCIALS_PHONE_PLACEHOLDER: 'profile_modal_socials_phone_placeholder', // Плейсхолдер для ввода телефон
     SOCIALS_EMAIL_PLACEHOLDER: 'profile_modal_socials_email_placeholder', // Плейсхолдер для ввода email
-    SOCIALS_SOCIALS_PLACEHOLDER: 'profile_modal_socials_socials_placeholder', // Плейсхолдер для ввода социальные сети
+    SOCIALS_PLACEHOLDER: 'profile_modal_socials_placeholder', // Плейсхолдер для ввода социальные сети
     SOCIALS_TITLE: 'profile_modal_socials_title', // Заголовок для модального окна социальные сети
+  },
+  SOCIAL_BAR: {
+    ADD_ICON_ALT: 'profile_social_bar_add_icon_alt', // Альтернативный текст для кнопки добавления социальных сетей
   },
 };
 
@@ -475,3 +495,19 @@ export const LOADER = {
   LOADING_TEXT: 'loader_loading_text', // Текст для загрузки
 };
 
+export const USER = {
+  SOCIALS_MISSING: 'user_socials_missing', // Текст для отсутствия социальных сетей
+  SEE_MORE: 'user_see_more', // Текст для показа всех социальных сетей
+  SEE_LESS: 'user_see_less', // Текст для скрытия социальных сетей
+};
+
+export const SIDE_BAR = {
+  SEARCH_INPUT: {
+    NO_RESULTS: 'sidebar_search_input_no_results', // Текст для отсутствия результатов поиска
+  },
+};
+
+export const MODAL = {
+  CONFIRM_BUTTON: 'modal_confirm_button', // Кнопка подтверждения
+  CANCEL_BUTTON: 'modal_cancel_button', // Кнопка отмены
+};
