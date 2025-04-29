@@ -187,40 +187,33 @@
   "creation_view_article_recommendations_title": "Рекомендации авторов",
   "creation_view_article_recommendations_empty": "Отсутствуют",
 
-
-  "new_article_lang_title": "Язык",
-  "new_article_created_title": "Создание новой статьи",
-  "new_article_updated_title": "Внесение правок",
-  "new_article_created_lang_title": "Перевод статьи",
-  "new_article_main_category_title": "Основная категория",
-  "new_article_sub_category_title": "Подкатегория",
-  "new_article_sub_category_hint_link": "существующей статьи",
-  "new_article_sub_category_placeholder": "страна/город/улица/дом",
-  "new_article_image_title": "Картинка статьи",
-  "new_article_image_alt": "Ваша картинка",
-  "new_article_image_fallback_alt": "Заглушка для картинки статьи",
-
-  "new_article_article_title": "Заголовок статьи",
-  "new_article_title_placeholder": "Карточка товара в маркетплейсе",
-  "new_article_description_title": "Контент статьи",
-  "new_article_recommendations_title": "Рекомендации авторов",
-  "new_article_recommendations_add_btn_alt": "Иконка добавления рекомендации",
-  "new_article_recommendations_add_btn_title": "Добавить",
-  "new_article_recommendations_edit_btn_alt": "Изменить рекомендацию",
-  "new_article_recommendations_delete_btn_alt": "Удалить рекомендацию",
-  "new_article_modal_recommendations_change_btn_title": "Заменить рекомендацию",
-  "new_article_modal_recommendations_add_btn_title": "Добавить рекомендацию",
-  "new_article_modal_image_title": "Ссылка на картинку",
-  "new_article_modal_attention_title": "Последние изменения не сохранены, сохранить в черновик?",
-  "new_article_modal_input_image_placeholder": "https://site.com/image.jpg",
-  "new_article_modal_attention_text": "Последние изменения не сохранены, сохранить в черновик?",
-  "new_article_content_title": "Контент статьи",
-
-
-
-
+  "creation_new_article_created_title": "Создание новой статьи",
+  "creation_new_article_updated_title": "Внесение правок",
+  "creation_new_article_created_lang_title": "Перевод статьи",
+  "creation_new_article_lang_title": "Язык",
+  "creation_new_article_main_category_title": "Основная категория",
+  "creation_new_article_sub_category_title": "Подкатегория",
+  "creation_new_article_sub_category_hint_link": "существующей статьи",
+  "creation_new_article_sub_category_placeholder": "страна/город/улица/дом",
+  "creation_new_article_image_title": "Картинка статьи",
+  "creation_new_article_image_alt": "Ваша картинка",
+  "creation_new_article_image_fallback_alt": "Заглушка для картинки статьи",
+  "creation_new_article_article_title": "Заголовок статьи",
+  "creation_new_article_title_placeholder": "Карточка товара в маркетплейсе",
+  "creation_new_article_content_title": "Контент статьи",
+  "creation_new_article_recommendations_title": "Рекомендации авторов",
+  "creation_new_article_recommendations_add_btn_alt": "Иконка добавления рекомендации",
+  "creation_new_article_recommendations_add_btn_title": "Добавить",
+  "creation_new_article_recommendations_edit_btn_alt": "Изменить рекомендацию",
+  "creation_new_article_recommendations_delete_btn_alt": "Удалить рекомендацию",
   
-
+  "creation_new_article_modal_recommendations_change_btn_title": "Заменить рекомендацию",
+  "creation_new_article_modal_recommendations_add_btn_title": "Добавить рекомендацию",
+  "creation_new_article_modal_recommendations_image_title": "Ссылка на картинку",
+  "creation_new_article_modal_recommendations_input_image_placeholder": "https://site.com/image.jpg",
+  
+  "creation_new_article_modal_attention_title": "Последние изменения не сохранены, сохранить в черновик?",
+ 
   "author_navbar_write_article": "Написать статью",
   "author_navbar_publications": "Публикации",
   "author_navbar_profile": "Профиль",
@@ -324,8 +317,6 @@
   "check_fields_image_fallback_alt": "Картинка статьи заглушка",
 
 
-  
-
   "admin_account_decision_title": "Заявка регистрации автора",
   "admin_account_decision_subtitle": "Ссылки на проекты",
   "admin_account_decision_instruction_title": "Инструкция по проверке квалификации автора",
@@ -339,7 +330,6 @@
   "admin_account_decision_instruction_item_7": "Все создания и отклонения аккаунтов авторов логгируются и проверяются более опытными участниками, будьте внимательны при принятии решений.",
 
   "dropdown_amount_arrow_alt": "Стрелка",
-
 
   "profile_fio_label": "Фамилия, имя, отчество",
   "profile_social_label": "Социальные сети",

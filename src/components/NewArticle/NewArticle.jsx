@@ -23,12 +23,12 @@ import clsx from 'clsx';
 import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
 import debounce from 'utils/helpers/debounce';
 import { useTranslation } from 'react-i18next';
-import { NEW_ARTICLE } from 'utils/translationKeys';
+import { CREATION } from 'utils/translationKeys';
 
 function createTitle(type, t) {
-  if (type === 'updated') return t(NEW_ARTICLE.UPDATED_TITLE);
-  if (type === 'created_lang') return t(NEW_ARTICLE.CREATED_LANG_TITLE);
-  return t(NEW_ARTICLE.CREATED_TITLE);
+  if (type === 'updated') return t(CREATION.NEW_ARTICLE.UPDATED_TITLE);
+  if (type === 'created_lang') return t(CREATION.NEW_ARTICLE.CREATED_LANG_TITLE);
+  return t(CREATION.NEW_ARTICLE.CREATED_TITLE);
 }
 
 export const NewArticle = memo(function NewArticle({
@@ -169,7 +169,7 @@ export const NewArticle = memo(function NewArticle({
               : ' new-article__label_disabled'
             }`}
         >
-          <span className="new-article__sub-title">{t(NEW_ARTICLE.LANG_TITLE)}</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.LANG_TITLE)}</span>
           <Dropdown
             id={'lang'}
             name={'lang'}
@@ -186,7 +186,7 @@ export const NewArticle = memo(function NewArticle({
                 : ' new-article__label_disabled'
               }`}
           >
-            <span className="new-article__sub-title">{t(NEW_ARTICLE.MAIN_CATEGORY_TITLE)}</span>
+            <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.MAIN_CATEGORY_TITLE)}</span>
             <Dropdown
               id={'main_category'}
               name={'category'}
@@ -204,14 +204,14 @@ export const NewArticle = memo(function NewArticle({
               : ' new-article__label_disabled'
             }`}
         >
-          <span className="new-article__sub-title">{t(NEW_ARTICLE.SUB_CATEGORY_TITLE)}</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.SUB_CATEGORY_TITLE)}</span>
           {hint && (
             <Hint>
               <span>
                 {hint}{' '}
                 {uuid && (
                   <Link target="_blank" to={`/${draft.lang}/${uuid}`}>
-                    {t(NEW_ARTICLE.CHECK_SUB_CATEGORY_HINT_LINK)}
+                    {t(CREATION.NEW_ARTICLE.CHECK_SUB_CATEGORY_HINT_LINK)}
                   </Link>
                 )}
               </span>
@@ -221,7 +221,7 @@ export const NewArticle = memo(function NewArticle({
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="sub_category"
-            placeholder={t(NEW_ARTICLE.SUB_CATEGORY_PLACEHOLDER)}
+            placeholder={t(CREATION.NEW_ARTICLE.SUB_CATEGORY_PLACEHOLDER)}
             id="sub_category"
             className="new-article__input"
             size={32}
@@ -237,7 +237,7 @@ export const NewArticle = memo(function NewArticle({
               : ' new-article__label_disabled'
             }`}
         >
-          <span className="new-article__sub-title">{t(NEW_ARTICLE.IMAGE_TITLE)}</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.IMAGE_TITLE)}</span>
           {/*<input
             disabled={draft.main_category && draft.lang ? false : true}
             type="file"
@@ -258,9 +258,9 @@ export const NewArticle = memo(function NewArticle({
               <ImageWithFallback
                 className="new-article__img"
                 src={draft.image}
-                alt={t(NEW_ARTICLE.IMAGE_ALT)}
+                alt={t(CREATION.NEW_ARTICLE.IMAGE_ALT)}
                 fallbackClassName="new-article__image-placeholder"
-                fallbackAlt={t(NEW_ARTICLE.IMAGE_FALLBACK_ALT)}
+                fallbackAlt={t(CREATION.NEW_ARTICLE.IMAGE_FALLBACK_ALT)}
               />
             </div>
           )}
@@ -273,14 +273,14 @@ export const NewArticle = memo(function NewArticle({
               : ' new-article__label_disabled'
             }`}
         >
-          <span className="new-article__sub-title">{t(NEW_ARTICLE.ARTICLE_TITLE)}</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.ARTICLE_TITLE)}</span>
           <input
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="article-title"
             id="article-title"
             className="new-article__input new-article__input_article-header"
-            placeholder={t(NEW_ARTICLE.TITLE_PLACEHOLDER)}
+            placeholder={t(CREATION.NEW_ARTICLE.TITLE_PLACEHOLDER)}
             value={draft.title}
             onChange={(evt) => changeField('title', evt.target.value)}
           />
@@ -293,7 +293,7 @@ export const NewArticle = memo(function NewArticle({
               : ' new-article__label_disabled'
             }`}
         >
-          <span className="new-article__sub-title">{t(NEW_ARTICLE.CONTENT_TITLE)}</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.CONTENT_TITLE)}</span>
         </label>
         <RichTextEditor
           id="article-content"
@@ -315,7 +315,7 @@ export const NewArticle = memo(function NewArticle({
               : ' new-article__label_disabled'
             }`}
         >
-          <span className="new-article__sub-title">{t(NEW_ARTICLE.RECOMMENDATIONS_TITLE)}</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_TITLE)}</span>
           <div className="new-article__recommendations">
             <button
               disabled={draft.main_category && draft.lang ? false : true}
@@ -323,8 +323,8 @@ export const NewArticle = memo(function NewArticle({
               type="button"
               onClick={toggleRecommendation}
             >
-              <img src={plus} alt={t(NEW_ARTICLE.RECOMMENDATIONS_ADD_BTN_ALT)} />
-              <span className="new-article__recommendations-tip">{t(NEW_ARTICLE.RECOMMENDATIONS_ADD_BTN_TITLE)}</span>
+              <img src={plus} alt={t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_ADD_BTN_ALT)} />
+              <span className="new-article__recommendations-tip">{t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_ADD_BTN_TITLE)}</span>
             </button>
             <ul className="recommendations__list">
               {draft.recommend_from_creator.map((item) => (
@@ -337,13 +337,13 @@ export const NewArticle = memo(function NewArticle({
                     <div className="rec-overlay">
                       <img
                         src={theme === 'light' ? editIconB : editIconW}
-                        alt={t(NEW_ARTICLE.RECOMMENDATIONS_EDIT_BTN_ALT)}
+                        alt={t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_EDIT_BTN_ALT)}
                         className="rec-overlay__img"
                         onClick={(evt) => handleEdit(evt, item.uuid)}
                       />
                       <img
                         src={theme === 'light' ? deleteIconB : deleteIconW}
-                        alt={t(NEW_ARTICLE.RECOMMENDATIONS_DELETE_BTN_ALT)}
+                        alt={t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_DELETE_BTN_ALT)}
                         className="rec-overlay__img"
                         onClick={(evt) => handleDelete(evt, item.uuid)}
                       />
@@ -362,12 +362,12 @@ export const NewArticle = memo(function NewArticle({
         onClose={handleClose}
         onSave={changeField}
         title={
-          editId.current ? t(NEW_ARTICLE.MODAL.RECOMMENDATIONS_CHANGE_BTN_TITLE) : t(NEW_ARTICLE.MODAL.RECOMMENDATIONS_ADD_BTN_TITLE)
+          editId.current ? t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.CHANGE_BTN_TITLE) : t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.ADD_BTN_TITLE)
         }
         editId={editId.current}
       />
       <Modal
-        title={t(NEW_ARTICLE.MODAL.IMAGE_TITLE)}
+        title={t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.IMAGE_TITLE)}
         isOpen={imgModal}
         twoBtns
         onConfirm={() => {
@@ -379,8 +379,8 @@ export const NewArticle = memo(function NewArticle({
       >
         <input
           type="text"
-          placeholder={t(NEW_ARTICLE.MODAL.INPUT_IMAGE_PLACEHOLDER)}
-          className="input-reason"
+          placeholder={t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.INPUT_IMAGE_PLACEHOLDER)}
+          className="input-reason"  
           ref={inputRef}
           onChange={handleInput}
         />

@@ -245,7 +245,7 @@ export const CATALOG = {
     TITLE: 'catalog_reviewers_title', // Рецензенты
     SEE_MORE: 'catalog_reviewers_see_more', // Показать больше
     SEE_LESS: 'catalog_reviewers_see_less', // Показать меньше
-    PROPOSE_CHANGES_LINK: 'catalog_reviewers_propose_changes_link', //Предложите правки 
+    PROPOSE_CHANGES_LINK: 'catalog_reviewers_propose_changes_link', //Предложите правки
     PROPOSE_CHANGES_TEXT: 'catalog_reviewers_propose_changes_text', // Тчтобы стать рецензентом
   },
 };
@@ -258,7 +258,6 @@ export const CREATION = {
     CREATED_LANG_TITLE: 'creation_view_article_created_lang_title', // Перевод статьи
     CREATED_TITLE: 'creation_view_article_created_title', // Создание новой статьи
 
-
     LANGUAGE_TITLE: 'creation_view_article_language_title', // Язык
     MAIN_CATEGORY_TITLE: 'creation_view_article_main_category_title', // Основная категория
     SUB_CATEGORY_TITLE: 'creation_view_article_sub_category_title', // Подкатегория
@@ -270,41 +269,43 @@ export const CREATION = {
     RECOMMENDATIONS_TITLE: 'creation_view_article_recommendations_title', // Рекомендации авторов
     RECOMMENDATIONS_EMPTY: 'creation_view_article_recommendations_empty', // Отсутствуют
   },
-};
 
-
-export const NEW_ARTICLE = {
-  LANG_TITLE: 'new_article_lang_title', // Заголовок для языка
-  CREATED_TITLE: 'new_article_created_title', // Заголовок для создания статьи
-  UPDATED_TITLE: 'new_article_updated_title', // Заголовок для обновления статьи
-  CREATED_LANG_TITLE: 'new_article_created_lang_title', // Заголовок для создания перевода
-  MAIN_CATEGORY_TITLE: 'new_article_main_category_title', // Заголовок для основной категории
-  SUB_CATEGORY_TITLE: 'new_article_sub_category_title', // Заголовок для
-  CHECK_SUB_CATEGORY_HINT_LINK: 'new_article_sub_category_hint_link', // Ссылка для подсказки на подкатегорию
-  IMAGE_TITLE: 'new_article_image_title', // Заголовок для изображения
-  IMAGE_ALT: 'new_article_image_alt', // Альтернативный текст для изображения
-  IMAGE_FALLBACK_ALT: 'new_article_image_fallback_alt', // Альтернативный текст для изображения заглушки
-  ARTICLE_TITLE: 'new_article_article_title', // Заголовок для статьи
-  TITLE_PLACEHOLDER: 'new_article_title_placeholder', // Плейсхолдер для заголовка
-  CONTENT_TITLE: 'new_article_content_title', // Заголовок для контента
-  RECOMMENDATIONS_TITLE: 'new_article_recommendations_title', // Заголовок для рекомендаций
-  RECOMMENDATIONS_ADD_BTN_TITLE: 'new_article_recommendations_add_btn_title', // Заголовок для кнопки добавления рекомендации
-  RECOMMENDATIONS_EDIT_BTN_TITLE: 'new_article_recommendations_edit_btn_title', // Заголовок для кнопки редактирования рекомендации
-  RECOMMENDATIONS_DELETE_BTN_TITLE:
-    'new_article_recommendations_delete_btn_title', // Заголовок для кнопки удаления рекомендации
-  RECOMMENDATIONS_ADD_BTN_ALT: 'new_article_recommendations_add_btn_alt', // Альтернативный текст для кнопки добавления рекомендации
-  RECOMMENDATIONS_EDIT_BTN_ALT: 'new_article_recommendations_edit_btn_alt', // Альтернативный текст для кнопки редактирования рекомендации
-  RECOMMENDATIONS_DELETE_BTN_ALT: 'new_article_recommendations_delete_btn_alt', // Альтернативный текст для кнопки удаления рекомендации
-
-  MODAL: {
-    RECOMMENDATIONS_CHANGE_BTN_TITLE:
-      'new_article_recommendations_change_btn_title', // Заголовок для кнопки изменения рекомендации
-    RECOMMENDATIONS_ADD_BTN_TITLE: 'new_article_recommendations_add_btn_title', // Заголовок для кнопки добавления рекомендации
-    IMAGE_TITLE: 'new_article_modal_image_title', // Заголовок для модального окна изображения
-    INPUT_IMAGE_PLACEHOLDER: 'new_article_modal_input_image_placeholder', // Плейсхолдер для ввода изображения
-  },
-  MODAL_ATTENTION: {
-    TEXT: 'new_article_modal_attention_text', // Текст для модального окна внимания
+  NEW_ARTICLE: {
+    CREATED_TITLE: 'creation_new_article_created_title', // Создание новой статьи
+    UPDATED_TITLE: 'creation_new_article_updated_title', //Внесение правок
+    CREATED_LANG_TITLE: 'creation_new_article_created_lang_title', // Перевод статьи
+    LANG_TITLE: 'creation_new_article_lang_title', // Язык
+    MAIN_CATEGORY_TITLE: 'creation_new_article_main_category_title', // Основная категория
+    SUB_CATEGORY_TITLE: 'creation_new_article_sub_category_title', // Подкатегория
+    CHECK_SUB_CATEGORY_HINT_LINK: 'creation_new_article_sub_category_hint_link', //существующей статьи
+    SUB_CATEGORY_PLACEHOLDER: 'creation_new_article_sub_category_placeholder', // страна/город/улица/дом
+    IMAGE_TITLE: 'creation_new_article_image_title', // Картинка статьи
+    IMAGE_ALT: 'creation_new_article_image_alt', // Ваша картинка
+    IMAGE_FALLBACK_ALT: 'creation_new_article_image_fallback_alt', // Заглушка для картинки статьи
+    ARTICLE_TITLE: 'creation_new_article_article_title', // Заголовок статьи
+    TITLE_PLACEHOLDER: 'creation_new_article_title_placeholder', // Карточка товара в маркетплейсе
+    CONTENT_TITLE: 'creation_new_article_content_title', // Заголовок для контента
+    RECOMMENDATIONS_TITLE: 'creation_new_article_recommendations_title', //  Рекомендации авторов
+    RECOMMENDATIONS_ADD_BTN_ALT:
+      'creation_new_article_recommendations_add_btn_alt', // Иконка добавления рекомендации
+    RECOMMENDATIONS_ADD_BTN_TITLE:
+      'creation_new_article_recommendations_add_btn_title', // Добавить
+    RECOMMENDATIONS_EDIT_BTN_ALT:
+      'creation_new_article_recommendations_edit_btn_alt', // Изменить рекомендацию
+    RECOMMENDATIONS_DELETE_BTN_ALT:
+      'creation_new_article_recommendations_delete_btn_alt', // Удалить рекомендацию
+    MODAL_RECOMMENDATIONS: {
+      CHANGE_BTN_TITLE:
+        'creation_new_article_modal_recommendations_change_btn_title', // Заменить рекомендацию
+      ADD_BTN_TITLE:
+        'creation_new_article_modal_recommendations_add_btn_title', // Добавить рекомендацию
+      IMAGE_TITLE: 'creation_new_article_modal_recommendations_image_title', // Ссылка на картинку
+      INPUT_IMAGE_PLACEHOLDER:
+        'creation_new_article_modal_recommendations_input_image_placeholder', // https://site.com/image.jpg
+    },
+    MODAL_ATTENTION: {
+      TEXT: 'creation_new_article_modal_attention_text', // "=Последние изменения не сохранены, сохранить в черновик?
+    },
   },
 };
 
@@ -467,8 +468,6 @@ export const CHECK_FIELDS = {
   IMAGE_ALT: 'check_fields_image_alt', // Альтернативный текст для изображения
   IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt', // Альтернативный текст для изображения заглушки
 };
-
-
 
 export const DROPDOWN = {
   AMOUNT: {
