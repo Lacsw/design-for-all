@@ -29,24 +29,13 @@ export const COMMON = {
     ES: 'common_language_es', // Испанский
   },
   CURRENCY: {
-    USD: 'common_currency_usd', // Доллар
+    USD: 'common_currency_usd', // USD
   },
-};
 
-// Ключи для страницы 404
-export const NOT_FOUND = {
-  PAGE_NOT_EXISTS: 'not_found_page_not_exists', // Страница не существует
-  ROLE_PAGE_MESSAGE: 'not_found_role_page_message', // Сообщение для роли
-  BACK_BUTTON: 'not_found_back_button', // Кнопка назад
-  HOME_BUTTON: 'not_found_home_button', // Кнопка на главную
-  ALT_404: 'not_found_alt_404', // 404
-};
-
-// Ключи для страницы статьи 404
-export const NOT_FOUND_ARTICLE = {
-  ARTICLE_NOT_CREATED: 'not_found_article_not_created', // Статья не создана
-  CREATE_BUTTON: 'not_found_article_create_button', // Создать
-  ALT_404: 'not_found_article_alt_404', // 404
+  MODAL: {
+    CONFIRM_BUTTON: 'common_modal_confirm_button', // Подтвердить
+    CANCEL_BUTTON: 'common_modal_cancel_button', // Отменить
+  },
 };
 
 // Ключи для хедера
@@ -84,7 +73,7 @@ export const HEADER = {
     PLACEHOLDER: 'header_search_placeholder', // Поиск статей...
     RESET_BUTTON: 'header_search_reset_button', // Кнопка сброса
     LOADING: 'header_search_loading', // Загрузка...
-    ICON: 'header_search_icon', // Иконка поиска
+    ICON_ALT: 'header_search_icon_alt', // Иконка поиска
     ERROR: {
       NO_RESULTS: 'header_search_error_no_results', // По вашему запросу ничего не найдено. Попробуйте изменить поисковый запрос.
       NETWORK: 'header_search_error_network', // Ошибка сети. Пожалуйста, попробуйте снова позже.
@@ -93,84 +82,22 @@ export const HEADER = {
     },
   },
   MOBILE_TREES: {
-    ICON: 'header_mobile_trees_icon', // Иконка открытия мобильного дерева статей
+    ICON_ALT: 'header_mobile_trees_icon_alt', // Иконка открытия мобильного дерева статей
   },
-
- 
-};
-
-// Auth Modal
-export const AUTH = {
-  LOGIN: 'auth_login', // Авторизация
-  SIGNUP: 'auth_signup', // Регистрация
-  LOGIN_BUTTON: 'auth_login_button', // Кнопка авторизации
-  LOGIN_BUTTON_ARIA: 'auth_login_button_aria', // Аria-атрибут для кнопки авторизации
-  LOGIN_LABEL: 'auth_login_label', // Лейбл для поля ввода логина
-  LOGIN_PLACEHOLDER: 'auth_login_placeholder', // Плейсхолдер для поля ввода логина
-  PASSWORD_LABEL: 'auth_password_label', // Лейбл для поля ввода пароля
-  PASSWORD_PLACEHOLDER: 'auth_password_placeholder', // Плейсхолдер для поля ввода пароля
-  FILL_ALL_FIELDS: 'auth_fill_all_fields', // Заполнить все поля
-  EMAIL_LABEL: 'auth_email_label', // Лейбл для поля ввода email
-  EMAIL_PLACEHOLDER: 'auth_email_placeholder', // Плейсхолдер для поля ввода email
-  PROJECTS_LABEL: 'auth_projects_label', // Лейбл для поля ввода проектов
-  PROJECTS_PLACEHOLDER: 'auth_projects_placeholder', // Плейсхолдер для поля ввода проектов
-  ADD_PROJECT_ALT: 'auth_add_project_alt', // Альтернативный текст для кнопки добавления проекта
-  CAPTCHA_LABEL: 'auth_captcha_label', // Лейбл для поля ввода капчи
-  EMAIL_EXISTS: 'auth_email_exists', // Email уже существует
-  PROJECT_EXISTS: 'auth_project_exists', // Проект уже существует
-  CHANGE_DATA: 'auth_change_data', // Изменить данные
-  CAPTCHA_ERROR: 'auth_captcha_error', // Ошибка капчи
-  POLITICS_TEXT: 'auth_politics_text', // Текст политики
-  PERSONAL_DATA: 'auth_personal_data', // Персональные данные
-  TERMS_OF_SERVICE: 'auth_terms_of_service', // Условия использования
-  SIGNUP_BUTTON: 'auth_signup_button', // Кнопка регистрации
-  SIGNUP_BUTTON_ARIA: 'auth_signup_button_aria', // Аria-атрибут для кнопки регистрации
-  SUCCESS_TITLE: 'auth_success_title', // Заголовок для успешной регистрации
-  SUCCESS_MESSAGE: 'auth_success_message', // Сообщение для успешной регистрации
-  SUCCESS_DESCRIPTION: 'auth_success_description', // Описание для успешной регистрации
-  SUCCESS_WARNING: 'auth_success_warning', // Предупреждение для успешной регистрации
-  GIVE_PERMISSION: 'auth_give_permission', // Дать разрешение
-  AGREE_WITH: 'auth_agree_with', // Согласиться с
-  NOTIFICATION_MESSAGE: 'auth_notification_message', // Сообщение для уведомления
-};
-
-// Главная страница
-// Ключи для интро
-export const INTRO = {
-  TITLE: 'intro_title', // Заголовок для интро
-  SUBTITLE_MOBILE: 'intro_subtitle_mobile', // Подзаголовок для мобильных устройств
-  SUBTITLE_DESKTOP: 'intro_subtitle_desktop', // Подзаголовок для десктопных устройств
-};
-
-// Ключи для навигационной панели
-export const MAIN_NAVBAR = {
-  GO_TO: 'main_navbar_go_to', // Перейти
-};
-
-// Обновления
-export const UPDATES = {
-  TITLE: 'updates_title', // Заголовок для обновлений
-  ARTICLE_TYPE: {
-    NEW: 'updates_article_type_new', // Новый
-    TRANSLATED: 'updates_article_type_translated', // Переведенный
-  },
-  NO_MORE_UPDATES: 'updates_no_more_updates', // Нет больше обновлений
-  ERROR_MESSAGE: 'updates_error_message', // Сообщение об ошибке
-  RETRY_BUTTON: 'updates_retry_button', // Кнопка повторить
 };
 
 // Ключи для футера
 export const FOOTER = {
   // Основные страницы
-  MAIN_PAGES: {
-    TITLE: 'footer_main_pages_title', // Заголовок для основных страниц
-    HOME: 'footer_main_pages_home', // Главная
-    UPDATES: 'footer_main_pages_updates', // Обновления
-    WEB_APPS: 'footer_main_pages_web_apps', // Веб-приложения
-    DESKTOP_APPS: 'footer_main_pages_desktop_apps', // Десктоп-приложения
-    MOBILE_APPS: 'footer_main_pages_mobile_apps', // Мобильные приложения
-    ARTICLES: 'footer_main_pages_articles', // Статьи
-    GUIDES: 'footer_main_pages_guides', // Руководства
+  NAV: {
+    TITLE: 'footer_nav_title', // Заголовок для основных страниц
+    HOME: 'footer_nav_home', // Главная
+    UPDATES: 'footer_nav_updates', // Обновления
+    WEB_APPS: 'footer_nav_web_apps', // Веб-приложения
+    DESKTOP_APPS: 'footer_nav_desktop_apps', // Десктоп-приложения
+    MOBILE_APPS: 'footer_nav_mobile_apps', // Мобильные приложения
+    ARTICLES: 'footer_nav_articles', // Статьи
+    MANUALS: 'footer_nav_manuals', // Руководства
   },
 
   // Контакты
@@ -198,6 +125,84 @@ export const FOOTER = {
 
   // Копирайт
   COPYRIGHT: 'footer_copyright', // Копирайт
+};
+
+// Ключи для страницы 404
+export const NOT_FOUND = {
+  PAGE_NOT_EXISTS: 'not_found_page_not_exists', // Страница не существует
+  ROLE_PAGE_MESSAGE: 'not_found_role_page_message', //Это страница для {{role}}ов. У вашего аккаунта другая роль.
+  BACK_BUTTON: 'not_found_back_button', // Назад
+  HOME_BUTTON: 'not_found_home_button', // На главную
+  ALT_404: 'not_found_alt_404', // 404
+};
+
+// Ключи для страницы статьи 404
+export const NOT_FOUND_ARTICLE = {
+  ARTICLE_NOT_CREATED: 'not_found_article_not_created', // Данная статья ещё не создана.
+  CREATE_BUTTON: 'not_found_article_create_button', // Создать
+  ALT_404: 'not_found_article_alt_404', // 404
+};
+
+// Главная страница
+// Ключи для интро
+export const INTRO = {
+  TITLE: 'intro_title', // Design for all
+  SUBTITLE_MOBILE: 'intro_subtitle_mobile', // Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.
+  SUBTITLE_DESKTOP: 'intro_subtitle_desktop', //Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.
+};
+
+// Ключи для навигационной панели
+export const MAIN_NAVBAR = {
+  GO_TO: 'main_navbar_go_to', // Перейти
+};
+
+// Обновления
+export const UPDATES = {
+  TITLE: 'updates_title', // Обновления
+  ARTICLE_TYPE: {
+    NEW: 'updates_article_type_new', // Новая статья
+    TRANSLATED: 'updates_article_type_translated', // Перевод статьи
+  },
+  NO_MORE_UPDATES: 'updates_no_more_updates', // Вы просмотрели все обновления!
+  ERROR_MESSAGE: 'updates_error_message', // Ошибка при загрузке обновлений. Пожалуйста, попробуйте снова позже.
+  RETRY_BUTTON: 'updates_retry_button', // Повторить
+};
+
+// Auth Modal
+export const AUTH = {
+  LOGIN: 'auth_login', // Авторизация
+  SIGNUP: 'auth_signup', // Регистрация
+
+  FILL_ALL_FIELDS: 'auth_fill_all_fields', // Пожалуйста, заполните все поля
+  LOGIN_LABEL: 'auth_login_label', // Логин
+  LOGIN_PLACEHOLDER: 'auth_login_placeholder', // Логин
+  PASSWORD_LABEL: 'auth_password_label', // Пароль
+  PASSWORD_PLACEHOLDER: 'auth_password_placeholder', // Пароль
+  LOGIN_BUTTON: 'auth_login_button', // Войти
+  LOGIN_BUTTON_ARIA: 'auth_login_button_aria', // Кнопка входа
+
+  EMAIL_LABEL: 'auth_email_label', // Email
+  EMAIL_PLACEHOLDER: 'auth_email_placeholder', // example@domain.com
+  PROJECTS_LABEL: 'auth_projects_label', // Ссылки на ваши проекты
+  PROJECTS_PLACEHOLDER: 'auth_projects_placeholder', // https://example.com/my-project
+  ADD_PROJECT_ALT: 'auth_add_project_alt', // Добавить проект
+  CAPTCHA_LABEL: 'auth_captcha_label', // Капча
+  EMAIL_EXISTS: 'auth_email_exists', // Указанная почта уже есть в системе.
+  PROJECT_EXISTS: 'auth_project_exists', // Ссылка на проект была прислана ранее.
+  CHANGE_DATA: 'auth_change_data', // Измените данные и попробуйте снова.
+  CAPTCHA_ERROR: 'auth_captcha_error', // Возможно, ошибка в капче. Решите новую.
+  POLITICS_TEXT: 'auth_politics_text', // Нажимая кнопку «Зарегистрироваться» вы:
+  GIVE_PERMISSION: 'auth_give_permission', // Даете право на обработку
+  PERSONAL_DATA: 'auth_personal_data', // персональных данных,
+  AGREE_WITH: 'auth_agree_with', // Соглашаетесь с
+  TERMS_OF_SERVICE: 'auth_terms_of_service', //  пользовательским соглашениемя
+  SIGNUP_BUTTON: 'auth_signup_button', // Регистрация
+  SIGNUP_BUTTON_ARIA: 'auth_signup_button_aria', // Кнопка регистрации
+  SUCCESS_TITLE: 'auth_success_title', // Заявка отправлена!
+  SUCCESS_MESSAGE: 'auth_success_message', // Заявка на регистрацию аккаунта отправлена.
+  SUCCESS_DESCRIPTION: 'auth_success_description', // Компетенции каждого автора проверяются администраторами вручную по предоставленным ссылкам на проекты.
+  SUCCESS_WARNING: 'auth_success_warning', // Неопытные участники не могут стать авторами
+  NOTIFICATION_MESSAGE: 'auth_notification_message', //После одобрения или отклонения заявки вы получите уведомление на email
 };
 
 export const AUTHOR = {
@@ -244,7 +249,7 @@ export const ADMIN = {
     DELETE: 'admin_tooltip_delete', //Удалить
     REASON: 'admin_tooltip_reason', //Причина
   },
-  
+
   NAVBAR: {
     REQUESTS: 'admin_navbar_requests', // Запросы
     CREATE_USER: 'admin_navbar_create_user', // Создать пользователя
@@ -367,7 +372,8 @@ export const ARTICLE = {
     PROPOSE_CHANGES: 'article_reviewers_propose_changes', // Предложите правки
     PROPOSE_CHANGES_BUTTON: 'article_reviewers_propose_changes_button', // Кнопка предложить правки
     PROPOSE_CHANGES_BUTTON_ALT: 'article_reviewers_propose_changes_button_alt', // Альтернативный текст для кнопки предложить правки
-    PROPOSE_CHANGES_BUTTON_TEXT: 'article_reviewers_propose_changes_button_text', // Текст для кнопки предложить правки
+    PROPOSE_CHANGES_BUTTON_TEXT:
+      'article_reviewers_propose_changes_button_text', // Текст для кнопки предложить правки
   },
   MODAL_REASONS: {
     SUB_CATEGORY: 'article_modal_reasons_sub_category', // Подкатегория
@@ -376,14 +382,13 @@ export const ARTICLE = {
     DESCRIPTION: 'article_modal_reasons_description', // Контент
     RECOMMENDATIONS: 'article_modal_reasons_recommendations', // Рекомендации
   },
-
 };
 
 export const CHECK_FIELDS = {
   IMAGE_TITLE: 'check_fields_image_title', // Заголовок для изображения
   ARTICLE_TITLE: 'check_fields_article_title', // Заголовок для статьи
   DESCRIPTION_TITLE: 'check_fields_description_title', // Заголовок для описания
-  RECOMMENDATIONS_TITLE: 'check_fields_recommendations_title', // Заголовок для рекомендаций  
+  RECOMMENDATIONS_TITLE: 'check_fields_recommendations_title', // Заголовок для рекомендаций
   IMAGE_ALT: 'check_fields_image_alt', // Альтернативный текст для изображения
   IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt', // Альтернативный текст для изображения заглушки
 };
@@ -395,7 +400,7 @@ export const CREATION = {
 export const VIEW_ARTICLE = {
   UPDATED_TITLE: 'view_article_updated_title', // Заголовок для обновления
   CREATED_LANG_TITLE: 'view_article_created_lang_title', // Заголовок для создания перевода
-  CREATED_TITLE: 'view_article_created_title', // Заголовок для создания статьи 
+  CREATED_TITLE: 'view_article_created_title', // Заголовок для создания статьи
   LANGUAGE_TITLE: 'view_article_language_title', // Заголовок для языка
   MAIN_CATEGORY_TITLE: 'view_article_main_category_title', // Заголовок для основной категории
   SUB_CATEGORY_TITLE: 'view_article_sub_category_title', // Заголовок для подкатегории
@@ -420,7 +425,7 @@ export const NEW_ARTICLE = {
   UPDATED_TITLE: 'new_article_updated_title', // Заголовок для обновления статьи
   CREATED_LANG_TITLE: 'new_article_created_lang_title', // Заголовок для создания перевода
   MAIN_CATEGORY_TITLE: 'new_article_main_category_title', // Заголовок для основной категории
-  SUB_CATEGORY_TITLE: 'new_article_sub_category_title', // Заголовок для 
+  SUB_CATEGORY_TITLE: 'new_article_sub_category_title', // Заголовок для
   CHECK_SUB_CATEGORY_HINT_LINK: 'new_article_sub_category_hint_link', // Ссылка для подсказки на подкатегорию
   IMAGE_TITLE: 'new_article_image_title', // Заголовок для изображения
   IMAGE_ALT: 'new_article_image_alt', // Альтернативный текст для изображения
@@ -431,13 +436,15 @@ export const NEW_ARTICLE = {
   RECOMMENDATIONS_TITLE: 'new_article_recommendations_title', // Заголовок для рекомендаций
   RECOMMENDATIONS_ADD_BTN_TITLE: 'new_article_recommendations_add_btn_title', // Заголовок для кнопки добавления рекомендации
   RECOMMENDATIONS_EDIT_BTN_TITLE: 'new_article_recommendations_edit_btn_title', // Заголовок для кнопки редактирования рекомендации
-  RECOMMENDATIONS_DELETE_BTN_TITLE: 'new_article_recommendations_delete_btn_title', // Заголовок для кнопки удаления рекомендации
+  RECOMMENDATIONS_DELETE_BTN_TITLE:
+    'new_article_recommendations_delete_btn_title', // Заголовок для кнопки удаления рекомендации
   RECOMMENDATIONS_ADD_BTN_ALT: 'new_article_recommendations_add_btn_alt', // Альтернативный текст для кнопки добавления рекомендации
   RECOMMENDATIONS_EDIT_BTN_ALT: 'new_article_recommendations_edit_btn_alt', // Альтернативный текст для кнопки редактирования рекомендации
   RECOMMENDATIONS_DELETE_BTN_ALT: 'new_article_recommendations_delete_btn_alt', // Альтернативный текст для кнопки удаления рекомендации
 
   MODAL: {
-    RECOMMENDATIONS_CHANGE_BTN_TITLE: 'new_article_recommendations_change_btn_title', // Заголовок для кнопки изменения рекомендации
+    RECOMMENDATIONS_CHANGE_BTN_TITLE:
+      'new_article_recommendations_change_btn_title', // Заголовок для кнопки изменения рекомендации
     RECOMMENDATIONS_ADD_BTN_TITLE: 'new_article_recommendations_add_btn_title', // Заголовок для кнопки добавления рекомендации
     IMAGE_TITLE: 'new_article_modal_image_title', // Заголовок для модального окна изображения
     INPUT_IMAGE_PLACEHOLDER: 'new_article_modal_input_image_placeholder', // Плейсхолдер для ввода изображения
@@ -501,9 +508,4 @@ export const SIDE_BAR = {
   SEARCH_INPUT: {
     NO_RESULTS: 'sidebar_search_input_no_results', // Текст для отсутствия результатов поиска
   },
-};
-
-export const MODAL = {
-  CONFIRM_BUTTON: 'modal_confirm_button', // Кнопка подтверждения
-  CANCEL_BUTTON: 'modal_cancel_button', // Кнопка отмены
 };

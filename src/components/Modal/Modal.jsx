@@ -5,7 +5,7 @@ import { getCurrentTheme } from 'store/slices/theme';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { MODAL } from 'utils/translationKeys';
+import { COMMON } from 'utils/translationKeys';
 
 const Modal = forwardRef(function Modal(
   {
@@ -73,7 +73,7 @@ const Modal = forwardRef(function Modal(
             onClick={onConfirm}
             className="modal__btn modal__btn_confirm"
             type="button"
-            aria-label={t(MODAL.CONFIRM_BUTTON)}
+            aria-label={t(COMMON.MODAL.CONFIRM_BUTTON)}
             disabled={isBlocked}
           />
           {twoBtns && (
@@ -81,7 +81,7 @@ const Modal = forwardRef(function Modal(
               onClick={onClose}
               className="modal__btn modal__btn_cancel"
               type="button"
-              aria-label={t(MODAL.CANCEL_BUTTON)}
+              aria-label={t(COMMON.MODAL.CANCEL_BUTTON)}
             />
           )}
         </div>
