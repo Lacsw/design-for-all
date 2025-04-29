@@ -36,6 +36,10 @@ export const COMMON = {
     CONFIRM_BUTTON: 'common_modal_confirm_button', // Подтвердить
     CANCEL_BUTTON: 'common_modal_cancel_button', // Отменить
   },
+
+  LOADER: {
+    LOADING_TEXT: 'common_loader_loading_text', // Текст для загрузки
+  },
 };
 
 // Ключи для хедера
@@ -195,7 +199,7 @@ export const AUTH = {
   GIVE_PERMISSION: 'auth_give_permission', // Даете право на обработку
   PERSONAL_DATA: 'auth_personal_data', // персональных данных,
   AGREE_WITH: 'auth_agree_with', // Соглашаетесь с
-  TERMS_OF_SERVICE: 'auth_terms_of_service', //  пользовательским соглашениемя
+  TERMS_OF_SERVICE: 'auth_terms_of_service', // пользовательским соглашениемя
   SIGNUP_BUTTON: 'auth_signup_button', // Регистрация
   SIGNUP_BUTTON_ARIA: 'auth_signup_button_aria', // Кнопка регистрации
   SUCCESS_TITLE: 'auth_success_title', // Заявка отправлена!
@@ -203,6 +207,48 @@ export const AUTH = {
   SUCCESS_DESCRIPTION: 'auth_success_description', // Компетенции каждого автора проверяются администраторами вручную по предоставленным ссылкам на проекты.
   SUCCESS_WARNING: 'auth_success_warning', // Неопытные участники не могут стать авторами
   NOTIFICATION_MESSAGE: 'auth_notification_message', //После одобрения или отклонения заявки вы получите уведомление на email
+};
+
+export const ARTICLE = {
+  HEADER: {
+    PUBLISHED: 'article_header_published', // Опубликовано
+    UPDATED: 'article_header_updated', // Обновлено
+  },
+  AUTHOR: {
+    SOCIALS_TEXT: 'article_author_socials_text', // Здесь будут контакты автора
+    AVATAR_ALT: 'article_author_avatar_alt', // Аватар
+  },
+  BLANK: {
+    SEARCH_TREE: 'article_blank_search_tree', // Воспользуйтесь поиском по дереву или поиском по заголовкам стате
+  },
+  IMAGE: {
+    ALT: 'article_image_alt', // Превью статьи
+    FALLBACK_ALT: 'article_image_fallback_alt', // Заглушка для картинки статьи
+  },
+  TITLE: 'article_title', // Заголовок статьи
+
+  RECOMMENDATIONS: {
+    TITLE: 'article_recommendations_title', // Рекомендации авторов
+  },
+
+  REVIEWERS: {
+    AVATAR_ALT: 'article_reviewers_avatar_alt', // Альтернативный текст для аватара рецензента
+    PROPOSE_CHANGES_TEXT: 'article_reviewers_propose_changes_text', // Текст для предложения правок
+    TITLE: 'article_reviewers_title', // Заголовок рецензентов
+    PROPOSE_CHANGES: 'article_reviewers_propose_changes', // Предложите правки
+    PROPOSE_CHANGES_BUTTON: 'article_reviewers_propose_changes_button', // Кнопка предложить правки
+    PROPOSE_CHANGES_BUTTON_ALT: 'article_reviewers_propose_changes_button_alt', // Альтернативный текст для кнопки предложить правки
+    PROPOSE_CHANGES_BUTTON_TEXT:
+      'article_reviewers_propose_changes_button_text', // Текст для кнопки предложить правки
+  },
+
+  MODAL_REASONS: {
+    SUB_CATEGORY: 'article_modal_reasons_sub_category', // Подкатегория
+    TITLE: 'article_modal_reasons_title', // Заголовок
+    IMAGE: 'article_modal_reasons_image', // Картинка
+    DESCRIPTION: 'article_modal_reasons_description', // Контент
+    RECOMMENDATIONS: 'article_modal_reasons_recommendations', // Рекомендации
+  },
 };
 
 export const AUTHOR = {
@@ -345,44 +391,6 @@ export const ADMIN = {
 };
 
 // Ключи для статьи
-export const ARTICLE = {
-  HEADER: {
-    PUBLISHED: 'article_header_published', // Опубликовано
-    UPDATED: 'article_header_updated', // Обновлено
-  },
-  AUTHOR: {
-    SOCIALS_TEXT: 'article_author_socials_text', // Текст для социальных сетей
-    AVATAR_ALT: 'article_author_avatar_alt', // Альтернативный текст для аватара
-  },
-  BLANK: {
-    SEARCH_TREE: 'article_blank_search_tree', // Воспользуйтесь поиском по дереву или поиском по заголовкам статей
-  },
-  IMAGE: {
-    ALT: 'article_image_alt', // Альтернативный текст для изображения
-    FALLBACK_ALT: 'article_image_fallback_alt', // Альтернативный текст для изображения заглушки
-  },
-  TITLE: 'article_title', // Заголовок статьи
-  RECOMMENDATIONS: {
-    TITLE: 'article_recommendations_title', // Заголовок рекомендаций
-  },
-  REVIEWERS: {
-    AVATAR_ALT: 'article_reviewers_avatar_alt', // Альтернативный текст для аватара рецензента
-    PROPOSE_CHANGES_TEXT: 'article_reviewers_propose_changes_text', // Текст для предложения правок
-    TITLE: 'article_reviewers_title', // Заголовок рецензентов
-    PROPOSE_CHANGES: 'article_reviewers_propose_changes', // Предложите правки
-    PROPOSE_CHANGES_BUTTON: 'article_reviewers_propose_changes_button', // Кнопка предложить правки
-    PROPOSE_CHANGES_BUTTON_ALT: 'article_reviewers_propose_changes_button_alt', // Альтернативный текст для кнопки предложить правки
-    PROPOSE_CHANGES_BUTTON_TEXT:
-      'article_reviewers_propose_changes_button_text', // Текст для кнопки предложить правки
-  },
-  MODAL_REASONS: {
-    SUB_CATEGORY: 'article_modal_reasons_sub_category', // Подкатегория
-    TITLE: 'article_modal_reasons_title', // Заголовок
-    IMAGE: 'article_modal_reasons_image', // Картинка
-    DESCRIPTION: 'article_modal_reasons_description', // Контент
-    RECOMMENDATIONS: 'article_modal_reasons_recommendations', // Рекомендации
-  },
-};
 
 export const CHECK_FIELDS = {
   IMAGE_TITLE: 'check_fields_image_title', // Заголовок для изображения
@@ -492,10 +500,6 @@ export const PROFILE = {
   SOCIAL_BAR: {
     ADD_ICON_ALT: 'profile_social_bar_add_icon_alt', // Альтернативный текст для кнопки добавления социальных сетей
   },
-};
-
-export const LOADER = {
-  LOADING_TEXT: 'loader_loading_text', // Текст для загрузки
 };
 
 export const USER = {
