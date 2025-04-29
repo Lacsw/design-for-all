@@ -19,7 +19,7 @@ import {
 import './CatalogArticle.css';
 import './withNavigator.css';
 import { useTranslation } from 'react-i18next';
-import { ARTICLE } from 'utils/translationKeys';
+import { CATALOG } from 'utils/translationKeys';
 
 /** @type {import('components/ArticleNavigator/types').IScrollableElParams} */
 const scrollableElParams = {
@@ -80,7 +80,7 @@ export default function CatalogArticle() {
 
   return isBlank ? (
     <div className="blank">
-      {t(ARTICLE.BLANK.SEARCH_TREE)}
+      {t(CATALOG.ARTICLE.BLANK.SEARCH_TREE)}
     </div>
   ) : isError ? (
     <NotFoundArticle />
@@ -100,10 +100,10 @@ export default function CatalogArticle() {
         <div ref={articleRef} className="article__main">
           <ImageWithFallback
             src={article.publication.image}
-            alt={t(ARTICLE.IMAGE.ALT)}
+            alt={t(CATALOG.ARTICLE.IMAGE.ALT)}
             className="article__image"
             fallbackClassName="article__image-placeholder"
-            fallbackAlt={t(ARTICLE.IMAGE.FALLBACK_ALT)}
+            fallbackAlt={t(CATALOG.ARTICLE.IMAGE.FALLBACK_ALT)}
           />
 
           <div className="article__editor-container">

@@ -5,7 +5,7 @@ import { Modal } from 'components';
 import deny from 'images/modals/deny-icon.svg';
 import approve from 'images/modals/approve-icon.svg';
 import { useTranslation } from 'react-i18next';
-import { ARTICLE } from 'utils/translationKeys';
+import { ADMIN } from 'utils/translationKeys';
 
 export default function ModalReasons({
   children,
@@ -29,7 +29,7 @@ export default function ModalReasons({
                   : 'Зелёная галочка'
               }
             />
-            {t(ARTICLE.MODAL_REASONS.SUB_CATEGORY)}
+            {t(ADMIN.MODAL_REASONS.SUB_CATEGORY)}
           </li>
           <li className="modal__reason">
             <img
@@ -41,7 +41,7 @@ export default function ModalReasons({
                   : 'Зелёная галочка'
               }
             />
-            {t(ARTICLE.MODAL_REASONS.TITLE)}
+            {t(ADMIN.MODAL_REASONS.TITLE)}
           </li>
           <li className="modal__reason">
             <img
@@ -53,7 +53,7 @@ export default function ModalReasons({
                   : 'Зелёная галочка'
               }
             />
-            {t(ARTICLE.MODAL_REASONS.IMAGE)}
+            {t(ADMIN.MODAL_REASONS.IMAGE)}
           </li>
           <li className="modal__reason">
             <img
@@ -61,11 +61,11 @@ export default function ModalReasons({
               src={rejFields.includes('description') ? deny : approve}
               alt={
                 rejFields.includes('description')
-                  ? t(ARTICLE.MODAL_REASONS.DESCRIPTION_DENY)
-                  : t(ARTICLE.MODAL_REASONS.DESCRIPTION_APPROVE)
+                  ? t(ADMIN.MODAL_REASONS.DESCRIPTION_DENY)
+                  : t(ADMIN.MODAL_REASONS.DESCRIPTION_APPROVE)
               }
             />
-              {t(ARTICLE.MODAL_REASONS.DESCRIPTION)}
+              {t(ADMIN.MODAL_REASONS.DESCRIPTION)}
           </li>
           <li className="modal__reason">
             <img
@@ -75,11 +75,11 @@ export default function ModalReasons({
               }
               alt={
                 rejFields.includes('recommend_from_creator')
-                  ? t(ARTICLE.MODAL_REASONS.RECOMMENDATIONS_DENY)
-                  : t(ARTICLE.MODAL_REASONS.RECOMMENDATIONS_APPROVE)
+                  ? t(ADMIN.MODAL_REASONS.DENY)
+                  : t(ADMIN.MODAL_REASONS.APPROVE)
               }
             />
-            {t(ARTICLE.MODAL_REASONS.RECOMMENDATIONS)}
+            {t(ADMIN.MODAL_REASONS.RECOMMENDATIONS)}
           </li>
         </ul>
       )}

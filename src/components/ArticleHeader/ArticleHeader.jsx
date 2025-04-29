@@ -4,7 +4,7 @@ import DropdownEdit from 'components/DropdownEdit/DropdownEdit';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from 'store/slices/user';
 import { useTranslation } from 'react-i18next';
-import { ARTICLE } from 'utils/translationKeys';
+import { CATALOG } from 'utils/translationKeys';
 
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
   const { t } = useTranslation();
@@ -22,8 +22,8 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
         </div>
       </div>
       <div className="article-header__timing-container">
-        <p className="article-header__timing">{t(ARTICLE.HEADER.PUBLISHED)} {timeCreate}</p>
-        <p className="article-header__timing">{t(ARTICLE.HEADER.UPDATED)} {timeUpdate}</p>
+        <p className="article-header__timing">{t(CATALOG.HEADER.PUBLISHED)} {timeCreate}</p>
+        <p className="article-header__timing">{t(CATALOG.HEADER.UPDATED)} {timeUpdate}</p>
       </div>
     </>
   );

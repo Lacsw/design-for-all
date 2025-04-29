@@ -26,7 +26,7 @@ import { useIsMobile } from 'utils/hooks/useIsMobile';
 import getSection from 'utils/helpers/getSection';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { SIDE_BAR } from 'utils/translationKeys';
+import { CATALOG } from 'utils/translationKeys';
   
 const SPECIAL_SECTIONS = ['updates', 'search'];
 
@@ -174,9 +174,9 @@ export default function SideBar({ section, setSection }) {
             )}
             <ul className="sidebar__list">
               {!results ? (
-                <li className="sidebar__item">{t(SIDE_BAR.SEARCH_INPUT.NO_RESULTS)}</li>
+                <li className="sidebar__item">{t(CATALOG.SIDE_BAR.SEARCH_INPUT.NO_RESULTS)}</li>
               ) : results.length === 0 ? (
-                <li className="sidebar__item">{t(SIDE_BAR.SEARCH_INPUT.NO_RESULTS)}</li>
+                <li className="sidebar__item">{t(CATALOG.SIDE_BAR.SEARCH_INPUT.NO_RESULTS)}</li>
               ) : (
                 results.map((item) => (
                   <ResultItem

@@ -6,7 +6,7 @@ import avatar from 'images/admin/avatar_default.svg';
 import './Reviewers.css';
 import ModalAuthor from 'components/Author/ModalAuthor';
 import { useTranslation } from 'react-i18next';
-import { ARTICLE, USER } from 'utils/translationKeys';
+import { CATALOG } from 'utils/translationKeys';
 
 export default function Reviewers() {
   const { lang, articleId } = useParams();
@@ -21,7 +21,7 @@ export default function Reviewers() {
       <img
         key={item.uuid}
         src={item.avatar || avatar}
-        alt={t(ARTICLE.REVIEWERS.AVATAR_ALT)}
+        alt={t(CATALOG.REVIEWERS.AVATAR_ALT)}
         className="reviewers__avatar"
         onClick={() => {
           setIsModal(true);
@@ -33,7 +33,7 @@ export default function Reviewers() {
 
   return (
     <div className="reviewers">
-      <p className="reviewers__title">{t(ARTICLE.REVIEWERS.TITLE)}</p>
+      <p className="reviewers__title">{t(CATALOG.REVIEWERS.TITLE)}</p>
       {reviews.length !== 0 ? (
         <>
           <div className="reviewers__icon-container">
@@ -48,7 +48,7 @@ export default function Reviewers() {
               }
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? t(USER.SEE_LESS) : t(USER.SEE_MORE)}
+              {isOpen ? t(CATALOG.REVIEWERS.SEE_LESS) : t(CATALOG.REVIEWERS.SEE_MORE)}
             </p>
           )}
         </>
@@ -63,9 +63,9 @@ export default function Reviewers() {
               lang,
             }}
           >
-            {t(ARTICLE.REVIEWERS.PROPOSE_CHANGES)}
+            {t(CATALOG.REVIEWERS.PROPOSE_CHANGES_LINK)}
           </Link>
-         {t(ARTICLE.REVIEWERS.PROPOSE_CHANGES_TEXT)}
+         {t(CATALOG.REVIEWERS.PROPOSE_CHANGES_TEXT)}
         </p>
       )}
       <ModalAuthor
