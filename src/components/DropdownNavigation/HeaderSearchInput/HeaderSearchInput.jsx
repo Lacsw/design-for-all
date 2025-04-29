@@ -188,7 +188,7 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
       >
         <img
           src={theme === 'light' ? loupeLight : loupe}
-          alt={t(HEADER.SEARCH.ICON)}
+          alt={t(HEADER.SEARCH.ICON_ALT)}
           className="header__icon"
         />
       </button>

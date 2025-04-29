@@ -5,6 +5,8 @@ import { selectArticle } from 'store/slices/article';
 import avatar from 'images/admin/avatar_default.svg';
 import './Reviewers.css';
 import ModalAuthor from 'components/Author/ModalAuthor';
+import { useTranslation } from 'react-i18next';
+import { CATALOG } from 'utils/translationKeys';
 
 export default function Reviewers() {
   const { lang, articleId } = useParams();
@@ -13,13 +15,13 @@ export default function Reviewers() {
   const [isModal, setIsModal] = useState(false);
   const [reviewer, setReviewer] = useState({});
   const shownList = isOpen ? reviews : reviews.slice(0, 5);
-
+  const { t } = useTranslation();
   const renderReviews = (shownList) => {
     return shownList.map((item) => (
       <img
         key={item.uuid}
         src={item.avatar || avatar}
-        alt="Аватар рецензента"
+        alt={t(CATALOG.REVIEWERS.AVATAR_ALT)}
         className="reviewers__avatar"
         onClick={() => {
           setIsModal(true);
@@ -31,7 +33,7 @@ export default function Reviewers() {
 
   return (
     <div className="reviewers">
-      <p className="reviewers__title">Рецензенты</p>
+      <p className="reviewers__title">{t(CATALOG.REVIEWERS.TITLE)}</p>
       {reviews.length !== 0 ? (
         <>
           <div className="reviewers__icon-container">
@@ -46,7 +48,7 @@ export default function Reviewers() {
               }
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? 'Скрыть' : 'Показать все'}
+              {isOpen ? t(CATALOG.REVIEWERS.SEE_LESS) : t(CATALOG.REVIEWERS.SEE_MORE)}
             </p>
           )}
         </>
@@ -61,9 +63,9 @@ export default function Reviewers() {
               lang,
             }}
           >
-            Предложите правки
+            {t(CATALOG.REVIEWERS.PROPOSE_CHANGES_LINK)}
           </Link>
-          , чтобы стать рецензентом
+         {t(CATALOG.REVIEWERS.PROPOSE_CHANGES_TEXT)}
         </p>
       )}
       <ModalAuthor

@@ -26,7 +26,7 @@ export default function MobileTreesButton() {
     <button onClick={handleClick} className="mobile-trees">
       <img
         src={theme === 'dark' ? mobileTreesIcon : mobileTreesIconWhite}
-        alt={t(HEADER.MOBILE_TREES.ICON)}
+        alt={t(HEADER.MOBILE_TREES.ICON_ALT)}
         className="mobile-trees__img"
       />
     </button>

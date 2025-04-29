@@ -14,7 +14,7 @@ export default function Main({ setSection }) {
 
   const theme = useSelector(getCurrentTheme);
   const [activeTab, setActiveTab] = useState({
-    name: 'Обновления',
+    name: mainNavigationOptionsList[0].id,
     index: 0,
   });
 
@@ -23,7 +23,7 @@ export default function Main({ setSection }) {
   
   useEffect(() => {
     setActiveTab({
-      name: mainNavigationOptionsList[0].name,
+      name: mainNavigationOptionsList[0].id,
       index: 0,
     });
     setSectionRef.current(mainNavigationOptionsList[0].link);

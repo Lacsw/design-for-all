@@ -193,7 +193,7 @@ export default function ModalSocials({
               ? t(PROFILE.MODAL.SOCIALS_EMAIL_PLACEHOLDER)
               : selectedOption === 'phone'
               ? t(PROFILE.MODAL.SOCIALS_PHONE_PLACEHOLDER)
-              : t(PROFILE.MODAL.SOCIALS_SOCIALS_PLACEHOLDER)
+              : t(PROFILE.MODAL.SOCIALS_PLACEHOLDER)
           }
           onChange={handleInputChange}
           errors={error}

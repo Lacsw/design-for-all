@@ -22,41 +22,41 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__list-container">
-          <h2 className="footer__title">{t(FOOTER.MAIN_PAGES.TITLE)}</h2>
+          <h2 className="footer__title">{t(FOOTER.NAV.TITLE)}</h2>
           <ul className="footer__list">
             <li className="footer__list-item">
               <Link to="/" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.HOME)}
+                {t(FOOTER.NAV.HOME)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/#/updates" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.UPDATES)}
+                {t(FOOTER.NAV.UPDATES)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/#/web" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.WEB_APPS)}
+                {t(FOOTER.NAV.WEB_APPS)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/#/desktop" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.DESKTOP_APPS)}
+                {t(FOOTER.NAV.DESKTOP_APPS)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/#/mobile" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.MOBILE_APPS)}
+                {t(FOOTER.NAV.MOBILE_APPS)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/#/articles" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.ARTICLES)}
+                {t(FOOTER.NAV.ARTICLES)}
               </Link>
             </li>
             <li className="footer__list-item">
               <Link to="/#/manual" className="footer__link">
-                {t(FOOTER.MAIN_PAGES.GUIDES)}
+                {t(FOOTER.NAV.MANUALS)}
               </Link>
             </li>
           </ul>

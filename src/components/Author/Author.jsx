@@ -7,7 +7,7 @@ import ModalAuthor from './ModalAuthor';
 import defaultAvatar from 'images/admin/avatar_default.svg';
 import './Author.css';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import { COMMON, ARTICLE } from 'utils/translationKeys';
+import { COMMON, CATALOG } from 'utils/translationKeys';
 import { useTranslation } from 'react-i18next';
 
 export default function Author({ showReviewers }) {
@@ -61,7 +61,7 @@ export default function Author({ showReviewers }) {
           <SocialLinks socialData={author.social_media} cut={!socialOpen} />
         </div>
       ) : (
-        <p className="author__socials-text">{t(ARTICLE.AUTHOR.SOCIALS_TEXT)}</p>
+        <p className="author__socials-text">{t(CATALOG.AUTHOR.SOCIALS_TEXT)}</p>
       )}
       {Object.keys(author.social_media).length > 4 &&
         // Для десктопа кнопка всегда отображается,

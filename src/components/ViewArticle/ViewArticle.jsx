@@ -7,12 +7,12 @@ import Recommend from 'components/Recommendations/Recommend';
 import { Link, useLocation } from 'react-router-dom';
 import { langSelectOptions } from 'utils/constants';
 import { useTranslation } from 'react-i18next';
-import { VIEW_ARTICLE } from 'utils/translationKeys';
+import { CREATION } from 'utils/translationKeys';
 
 function createTitle(type, t) {
-  if (type === 'updated') return t(VIEW_ARTICLE.UPDATED_TITLE);
-  if (type === 'created_lang') return t(VIEW_ARTICLE.CREATED_LANG_TITLE);
-  return t(VIEW_ARTICLE.CREATED_TITLE);
+  if (type === 'updated') return t(CREATION.VIEW_ARTICLE.UPDATED_TITLE);
+  if (type === 'created_lang') return t(CREATION.VIEW_ARTICLE.CREATED_LANG_TITLE);
+  return t(CREATION.VIEW_ARTICLE.CREATED_TITLE);
 }
 
 export default function ViewArticle({ original, title, rejectFields }) {
@@ -32,7 +32,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
       <h2 className="view-article__title">{title || mainTitle}</h2>
       <div>
         <div className="view-article__label">
-          <span className="view-article__sub-title">{t(VIEW_ARTICLE.LANGUAGE_TITLE)}</span>
+          <span className="view-article__sub-title">{t(CREATION.VIEW_ARTICLE.LANGUAGE_TITLE)}</span>
           <div className="view-article__dropdown">
             <div className="view-article__text">{lang}</div>
           </div>
@@ -40,7 +40,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
 
         {!isUpdate && (
           <div className="view-article__label">
-            <span className="view-article__sub-title">{t(VIEW_ARTICLE.MAIN_CATEGORY_TITLE)}</span>
+            <span className="view-article__sub-title">{t(CREATION.VIEW_ARTICLE.MAIN_CATEGORY_TITLE)}</span>
             <div className="view-article__dropdown">
               <div className="view-article__text">{original.main_category}</div>
             </div>
@@ -51,7 +51,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
             className={`${rejectFields?.includes('sub_category') ? 'rejected ' : ''
               }view-article__label`}
           >
-            <span className="view-article__sub-title">{t(VIEW_ARTICLE.SUB_CATEGORY_TITLE)}</span>
+            <span className="view-article__sub-title">{t(CREATION.VIEW_ARTICLE.SUB_CATEGORY_TITLE)}</span>
             <span className="view-article__input">{original.sub_category}</span>
           </div>
         )}
@@ -60,13 +60,13 @@ export default function ViewArticle({ original, title, rejectFields }) {
             className={`${rejectFields?.includes('image') ? 'rejected ' : ''
               }view-article__label`}
           >
-            <span className="view-article__sub-title">{t(VIEW_ARTICLE.IMAGE_TITLE)}</span>
+            <span className="view-article__sub-title">{t(CREATION.VIEW_ARTICLE.IMAGE_TITLE)}</span>
             <ImageWithFallback
               className="view-article__img"
               src={original.image}
-              alt={t(VIEW_ARTICLE.IMAGE_ALT)}
+              alt={t(CREATION.VIEW_ARTICLE.IMAGE_ALT)}
               fallbackClassName="view-article__image-placeholder"
-              fallbackAlt={t(VIEW_ARTICLE.IMAGE_FALLBACK_ALT)}
+              fallbackAlt={t(CREATION.VIEW_ARTICLE.IMAGE_FALLBACK_ALT)}
             />
           </div>
         )}
@@ -75,7 +75,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
             className={`${rejectFields?.includes('title') ? 'rejected ' : ''
               }view-article__label`}
           >
-            <span className="view-article__sub-title">{t(VIEW_ARTICLE.ARTICLE_TITLE)}</span>
+            <span className="view-article__sub-title">{t(CREATION.VIEW_ARTICLE.ARTICLE_TITLE)}</span>
             <span className="view-article__input view-article__input_article-header">
               {original.title}
             </span>
@@ -86,7 +86,7 @@ export default function ViewArticle({ original, title, rejectFields }) {
             className={`${rejectFields?.includes('description') ? 'rejected ' : ''
               }view-article__label`}
           >
-            <span className="view-article__sub-title">{t(VIEW_ARTICLE.DESCRIPTION_TITLE)}</span>
+            <span className="view-article__sub-title">{t(CREATION.VIEW_ARTICLE.DESCRIPTION_TITLE)}</span>
             <RichTextEditor
               initialValue={original.description}
               readOnly={true}
@@ -102,10 +102,10 @@ export default function ViewArticle({ original, title, rejectFields }) {
               }view-article__label`}
           >
             <span className="view-article__sub-title">
-              {t(VIEW_ARTICLE.RECOMMENDATIONS_TITLE)}
+              {t(CREATION.VIEW_ARTICLE.RECOMMENDATIONS_TITLE)}
             </span>
             <div className="view-article__recommendations">
-              {original.recommend_from_creator.length === 0 ? t(VIEW_ARTICLE.RECOMMENDATIONS_EMPTY) :
+              {original.recommend_from_creator.length === 0 ? t(CREATION.VIEW_ARTICLE.RECOMMENDATIONS_EMPTY) :
                 <ul className="recommendations__list">
                   {original.recommend_from_creator.map((item) => (
                     <li className="recommendations__item" key={item.uuid}>

@@ -21,11 +21,11 @@ export default function MainNavigationBar({
         <li
           className="main-navbar__item"
           key={i}
-          onClick={() => onClick({ name: icon.name, index: i })}
+          onClick={() => onClick({ name: icon.id, index: i })}
         >
           <img
             src={icon[theme]}
-            alt={icon.name}
+            alt={icon.id}
             className="main-navbar__icon"
           />
           <NavLink
@@ -34,7 +34,7 @@ export default function MainNavigationBar({
               `main-navbar__link main-navbar__link_${theme === 'dark' ? 'light' : 'dark'
               }`,
               {
-                current: activeTab.name === icon.name,
+                current: activeTab.name === icon.id,
               }
             )}
             onClick={() => setSection(icon.link)}

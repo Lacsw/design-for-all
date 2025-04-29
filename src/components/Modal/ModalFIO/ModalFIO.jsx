@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './ModalFIO.css';
 import { Input, Modal } from 'components';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { PROFILE } from 'utils/translationKeys';
 
 const fioValidation = {
   regex: /^[А-Яа-яЁё\w\s-]+$/,
@@ -19,6 +21,7 @@ const fioValidation = {
 
 export default function ModalFIO({ isOpen, onClose, onSave, title }) {
   const { currentUser } = useSelector((state) => state.user);
+  const { t } = useTranslation();
   const [fio, setFio] = useState('');
   const [error, setError] = useState('');
 
@@ -47,7 +50,7 @@ export default function ModalFIO({ isOpen, onClose, onSave, title }) {
         <Input
           type={'text'}
           value={fio}
-          placeholder={'Круглова Мария'}
+          placeholder={t(PROFILE.MODAL.FIO_PLACEHOLDER)}
           onChange={handleInput}
           errors={error}
         />
