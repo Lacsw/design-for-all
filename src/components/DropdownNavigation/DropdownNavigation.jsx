@@ -68,9 +68,8 @@ export default function DropdownNavigation({
           />
           {showName && (
             <ul
-              className={`dropdown-navigation__items dropdown-navigation__text-items ${
-                isOpen ? 'show' : ''
-              }`}
+              className={`dropdown-navigation__items dropdown-navigation__text-items ${isOpen ? 'show' : ''
+                }`}
             >
               {options.map((option, i) => (
                 <li key={i} className="dropdown-navigation__text-item">

@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
 import { useLogout } from 'utils/hooks/useLogout';
-import { COMMON, HEADER } from 'utils/translationKeys';
 
 export default function UserDropdown({
   resetSection,
@@ -12,22 +11,23 @@ export default function UserDropdown({
   theme,
   titleIcon,
 }) {
-  const handleLogout = useLogout({ resetSection });
   const { t } = useTranslation();
+  const handleLogout = useLogout({ resetSection });
+ 
 
   if (!currentUser) return null;
 
   const enhancedOptions = options.map((option) => {
     const translatedOption = {
       ...option,
-      name: t(option.name),
+      name: t(option.translationKey),
     };
 
-    if (translatedOption.name === t(COMMON.AUTH.LOGOUT)) {
+    if (translatedOption.id === "logout") {
       return { ...translatedOption, onClick: handleLogout };
     }
-    if (translatedOption.name === t(COMMON.AUTH.PROFILE)) {
-      return { ...translatedOption, name: t(COMMON.AUTH.PROFILE) };
+    if (translatedOption.id === "profile") {
+      return { ...translatedOption };
     }
     return translatedOption;
   });
@@ -38,7 +38,7 @@ export default function UserDropdown({
       options={enhancedOptions}
       titleIcon={currentUser.avatar || titleIcon}
       type={type}
-      title={t(HEADER.USER.TITLE)}
+      title={title}
       resetSection={resetSection}
       theme={theme}
       showName={true}

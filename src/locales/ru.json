@@ -1,12 +1,7 @@
 {
-  "intro_title": "Design for all",
-  "intro_subtitle_mobile": "Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.",
-  "intro_subtitle_desktop": "Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.",
-
-  "main_navbar_go_to": "Перейти",
-
   "common_theme_light": "Светлая тема",
   "common_theme_dark": "Темная тема",
+
   "common_auth_login": "Авторизация",
   "common_auth_logout": "Выйти",
   "common_auth_profile": "Профиль",
@@ -22,17 +17,16 @@
   "common_article_status_rejected": "Отклонено",
   "common_article_status_deleted": "Удалено",
 
-  "not_found_page_not_exists": "Страница не существует",
-  "not_found_role_page_message": "Это страница для {{role}}ов. У вашего аккаунта другая роль.",
-  "not_found_back_button": "Назад",
-  "not_found_home_button": "На главную",
-  "not_found_alt_404": "404",
+  "common_language_ru": "Русский",
+  "common_language_en": "Английский",
+  "common_language_zh": "Китайский",
+  "common_language_es": "Испанский",
 
-  "not_found_article_not_created": "Данная статья ещё не создана.",
-  "not_found_article_create_button": "Создать",
-  "not_found_article_alt_404": "404",
+  "common_currency_usd": "USD",
+
 
   "header_logo_alt": "Логотип",
+
   "header_main_menu_title": "Главное меню",
   "header_main_menu_home": "Главная",
   "header_main_menu_updates": "Обновления",
@@ -40,25 +34,21 @@
   "header_main_menu_desktop_apps": "Десктоп приложения",
   "header_main_menu_mobile_apps": "Мобильные приложения",
   "header_main_menu_articles": "Статьи",
-  "header_main_menu_guides": "Руководства",
+  "header_main_menu_manual": "Руководства",
   "header_main_menu_collapse": "Свернуть",
+
   "header_language_title": "Язык",
-  "header_language_ru": "Русский",
-  "header_language_en": "Английский",
-  "header_language_zh": "Китайский",
-  "header_language_es": "Испанский",
+ 
   "header_currency_title": "Валюта",
-  "header_currency_usd": "USD",
+
   "header_user_title": "Пользователь",
   "header_user_profile": "Профиль",
   "header_user_logout": "Выйти",
   "header_user_write_article": "Написать статью",
   "header_user_publications": "Публикации",
-  "header_admin_title": "Админ",
-  "header_admin_profile": "Профиль",
-  "header_admin_logout": "Выйти",
-  "header_admin_requests": "Заявки",
-  "header_admin_create_user": "Создать пользователя",
+  "header_user_requests": "Заявки",
+  "header_user_create_user": "Создать пользователя",
+
   "header_search_placeholder": "Поиск статей...",
   "header_search_reset_button": "Кнопка сброса",
   "header_search_loading": "Загрузка...",
@@ -67,12 +57,10 @@
   "header_search_error_network": "Ошибка сети. Пожалуйста, попробуйте снова позже.",
   "header_search_error_server": "Ошибка сервера. Пожалуйста, попробуйте снова позже.",
   "header_search_error_unknown": "При выполнении поиска произошла ошибка. Пожалуйста, попробуйте снова позже.",
+
   "header_mobile_trees_icon": "Иконка открытия мобильного дерева статей",
-  "header_edit_tooltip": "Редактировать",
-  "header_view_tooltip": "Посмотреть",
-  "header_draft_tooltip": "В черновик",
-  "header_delete_tooltip": "Удалить",
-  "header_reason_tooltip": "Причина",
+
+
 
   "footer_main_pages_title": "Быстрые ссылки",
   "footer_main_pages_home": "Главная",
@@ -94,6 +82,26 @@
   "footer_socials_pinterest_alt": "Иконка пинтерест",
   "footer_socials_x_alt": "Иконка X",
   "footer_copyright": "Copyright ©{{year}} All rights reserved | DFA | Design for all",
+
+
+  "not_found_page_not_exists": "Страница не существует",
+  "not_found_role_page_message": "Это страница для {{role}}ов. У вашего аккаунта другая роль.",
+  "not_found_back_button": "Назад",
+  "not_found_home_button": "На главную",
+  "not_found_alt_404": "404",
+
+  "not_found_article_not_created": "Данная статья ещё не создана.",
+  "not_found_article_create_button": "Создать",
+  "not_found_article_alt_404": "404",
+
+
+
+  "intro_title": "Design for all",
+  "intro_subtitle_mobile": "Единственная, самая большая,/структурированная и свободная энциклопедия/по дизайну в IT.",
+  "intro_subtitle_desktop": "Единственная, самая большая,/структурированная и свободная/энциклопедия по дизайну в IT.",
+
+  "main_navbar_go_to": "Перейти",
+
 
   "updates_title": "Обновления",
   "updates_article_type_new": "Новая статья",
@@ -176,6 +184,12 @@
   "admin_create_user_modal_email_title": "Задать Email",
   "admin_create_user_modal_success_title": "Готово",
   "admin_create_user_modal_success_description": "Новый пользователь успешно создан. На указанную почту отправлено письмо с данными для авторизации.",
+
+  "admin_tooltip_edit": "Редактировать",
+  "admin_tooltip_view": "Посмотреть",
+  "admin_tooltip_draft": "В черновик",
+  "admin_tooltip_delete": "Удалить",
+  "admin_tooltip_reason": "Причина",
 
   "admin_table_header_type": "Тип",
   "admin_table_header_category": "Категория",

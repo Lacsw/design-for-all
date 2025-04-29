@@ -69,21 +69,14 @@ import rejectHintB from 'images/account/warining-icon_black.svg';
 import rejectHintW from 'images/account/warining-icon_white.svg';
 
 // Импортируем ключи переводов
-import { HEADER, COMMON } from 'utils/translationKeys';
+import { HEADER, COMMON, ADMIN } from 'utils/translationKeys';
 
 export const langSelectOptions = [
-  { label: HEADER.LANGUAGE.RU, value: 'ru' },
-  { label: HEADER.LANGUAGE.EN, value: 'en' },
-  { label: HEADER.LANGUAGE.ZH, value: 'zh' },
-  { label: HEADER.LANGUAGE.ES, value: 'es' },
+  { label: COMMON.LANGUAGE.RU, value: 'ru' },
+  { label: COMMON.LANGUAGE.EN, value: 'en' },
+  { label: COMMON.LANGUAGE.ZH, value: 'zh' },
+  { label: COMMON.LANGUAGE.ES, value: 'es' },
 ];
-
-// export const categorySelectOptions = [
-//   { label: 'десктоп', value: 'десктоп' },
-//   { label: 'телефон', value: 'телефон' },
-//   { label: 'веб', value: 'веб' },
-//   { label: 'руководства', value: 'руководства' },
-// ];
 
 export const userRoleSelectOptions = [
   { value: 'super_admin' },
@@ -117,54 +110,54 @@ export const authorArticlesTabs = [
 export const navigationOptionsList = [
   {
     id: 'home',
-    name: HEADER.MAIN_MENU.HOME,
+    translationKey: HEADER.MAIN_MENU.HOME,
     src: { light: mainWhite, dark: mainBlack },
     link: '/',
   },
   {
     id: 'updates',
-    name: HEADER.MAIN_MENU.UPDATES,
+    translationKey: HEADER.MAIN_MENU.UPDATES,
     src: { light: updatesWhite, dark: updatesBlack },
     link: '/#/updates',
   },
   {
     id: 'web',
-    name: HEADER.MAIN_MENU.WEB_APPS,
+    translationKey: HEADER.MAIN_MENU.WEB,
     src: { light: webWhite, dark: webBlack },
     link: '/#/web',
   },
   {
     id: 'desktop',
-    name: HEADER.MAIN_MENU.DESKTOP_APPS,
+    translationKey: HEADER.MAIN_MENU.DESKTOP,
     src: { light: desktopWhite, dark: desktopBlack },
     link: '/#/desktop',
   },
   {
     id: 'mobile',
-    name: HEADER.MAIN_MENU.MOBILE_APPS,
+    translationKey: HEADER.MAIN_MENU.MOBILE,
     src: { light: mobileWhite, dark: mobileBlack },
     link: '/#/mobile',
   },
   {
     id: 'articles',
-    name: HEADER.MAIN_MENU.ARTICLES,
+    translationKey: HEADER.MAIN_MENU.ARTICLES,
     src: { light: articleWhite, dark: articleBlack },
     link: '/#/articles',
   },
   {
     id: 'manual',
-    name: HEADER.MAIN_MENU.GUIDES,
+    translationKey: HEADER.MAIN_MENU.MANUAL,
     src: { light: manualWhite, dark: manualBlack },
     link: '/#/manual',
   },
   {
     id: 'themeToggle',
-    name: COMMON.THEME.LIGHT,
+    translationKey: COMMON.THEME,
     src: { light: themeBlack, dark: themeWhite },
   },
   {
     id: 'collapse',
-    name: HEADER.MAIN_MENU.COLLAPSE,
+    translationKey: HEADER.MAIN_MENU.COLLAPSE,
     src: { light: arrowBackWhite, dark: arrowBackBlack },
   },
 ];
@@ -210,37 +203,43 @@ export const mainCategory = [
 
 export const mainNavigationOptionsList = [
   {
-    name: HEADER.MAIN_MENU.UPDATES,
+    id: 'updates',
+    translationKey: HEADER.MAIN_MENU.UPDATES,
     dark: updatesBlack,
     light: updatesWhite,
     link: '/#/updates',
   },
   {
-    name: HEADER.MAIN_MENU.WEB_APPS,
+    id: 'web',
+    translationKey: HEADER.MAIN_MENU.WEB_APPS,
     dark: webBlack,
     light: webWhite,
     link: '/#/web',
   },
   {
-    name: HEADER.MAIN_MENU.DESKTOP_APPS,
+    id: 'desktop',
+    translationKey: HEADER.MAIN_MENU.DESKTOP_APPS,
     dark: desktopBlack,
     light: desktopWhite,
     link: '/#/desktop',
   },
   {
-    name: HEADER.MAIN_MENU.MOBILE_APPS,
+    id: 'mobile',
+    translationKey: HEADER.MAIN_MENU.MOBILE_APPS,
     dark: mobileBlack,
     light: mobileWhite,
     link: '/#/mobile',
   },
   {
-    name: HEADER.MAIN_MENU.ARTICLES,
+    id: 'articles',
+    translationKey: HEADER.MAIN_MENU.ARTICLES,
     dark: articleBlack,
     light: articleWhite,
     link: '/#/articles',
   },
   {
-    name: HEADER.MAIN_MENU.GUIDES,
+    id: 'manual',
+    translationKey: HEADER.MAIN_MENU.MANUAL,
     dark: manualBlack,
     light: manualWhite,
     link: '/#/manual',
@@ -250,25 +249,25 @@ export const mainNavigationOptionsList = [
 export const accountNavigationList = [
   {
     id: 'writeArticle',
-    name: HEADER.USER.WRITE_ARTICLE,
+    translationKey: HEADER.USER.WRITE_ARTICLE,
     src: { light: newArticleWhite, dark: newArticleBlack },
     link: '/#/author/new-article',
   },
   {
     id: 'publications',
-    name: HEADER.USER.PUBLICATIONS,
+    translationKey: HEADER.USER.PUBLICATIONS,
     src: { light: articleWhite, dark: articleBlack },
     link: '/#/author/articles',
   },
   {
     id: 'profile',
-    name: COMMON.AUTH.PROFILE,
+    translationKey: HEADER.USER.PROFILE,
     src: { light: profileWhite, dark: profileBlack },
     link: '/#/author/profile',
   },
   {
     id: 'logout',
-    name: COMMON.AUTH.LOGOUT,
+    translationKey: HEADER.USER.LOGOUT,
     src: { light: exitWhite, dark: exitBlack },
   },
 ];
@@ -276,25 +275,25 @@ export const accountNavigationList = [
 export const adminNavList = [
   {
     id: 'requests',
-    name: HEADER.ADMIN.REQUESTS,
+    translationKey: HEADER.USER.REQUESTS,
     src: { light: articleWhite, dark: articleBlack },
     link: '/#/admin/creates',
   },
   {
     id: 'createUser',
-    name: HEADER.ADMIN.CREATE_USER,
+    translationKey: HEADER.USER.CREATE_USER,
     src: { light: createUserWhite, dark: createUser },
     link: '/#/admin/create-user',
   },
   {
     id: 'profile',
-    name: COMMON.AUTH.PROFILE,
+    translationKey: HEADER.USER.PROFILE,
     src: { light: profileWhite, dark: profileBlack },
     link: '/#/admin/profile',
   },
   {
     id: 'logout',
-    name: COMMON.AUTH.LOGOUT,
+    translationKey: HEADER.USER.LOGOUT,
     src: { light: exitWhite, dark: exitBlack },
   },
 ];
@@ -302,16 +301,16 @@ export const adminNavList = [
 export const currencyList = [
   {
     id: 'USD',
-    name: HEADER.CURRENCY.USD,
+    translationKey: COMMON.CURRENCY.USD,
     src: { light: usdIconWhite, dark: usdIcon },
   },
 ];
 
 export const languageList = [
-  { id: 'ru', name: 'ru', src: ruFlag },
-  { id: 'zh', name: 'zh', src: chFlag },
-  { id: 'en', name: 'en', src: enFlag },
-  { id: 'es', name: 'es', src: spaFlag },
+  { id: 'ru', translationKey: COMMON.LANGUAGE.RU, src: ruFlag },
+  { id: 'zh', translationKey: COMMON.LANGUAGE.ZH, src: chFlag },
+  { id: 'en', translationKey: COMMON.LANGUAGE.EN, src: enFlag },
+  { id: 'es', translationKey: COMMON.LANGUAGE.ES, src: spaFlag },
 ];
 
 export const editList = [
@@ -382,35 +381,35 @@ export const socialIcons = {
 
 export const editButton = {
   name: 'edit',
-  tooltip: HEADER.EDIT.TOOLTIP,
+  tooltip: ADMIN.TOOLTIP.EDIT,
   dark: editIconB,
   light: editIconW,
 };
 
 export const viewButton = {
   name: 'view',
-  tooltip: HEADER.VIEW.TOOLTIP,
+  tooltip: ADMIN.TOOLTIP.VIEW,
   dark: viewIconB,
   light: viewIconW,
 };
 
 const draftButton = {
   name: 'draft',
-  tooltip: HEADER.DRAFT.TOOLTIP,
+  tooltip: ADMIN.TOOLTIP.DRAFT,
   dark: draftIconB,
   light: draftIconW,
 };
 
 const deleteButton = {
   name: 'delete',
-  tooltip: HEADER.DELETE.TOOLTIP,
+  tooltip: ADMIN.TOOLTIP.DELETE,
   dark: deleteIconB,
   light: deleteIconW,
 };
 
 const reasonButton = {
   name: 'reason',
-  tooltip: HEADER.REASON.TOOLTIP,
+  tooltip: ADMIN.TOOLTIP.REASON,
   dark: reasonIconB,
   light: reasonIconW,
 };

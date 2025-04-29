@@ -37,12 +37,12 @@ import { useLogout } from 'utils/hooks/useLogout';
 import { HEADER } from 'utils/translationKeys';
 
 export default function Header({ resetSection }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useSelector(getCurrentTheme);
   const isMobile = useIsMobile();
   const isCatalogOpen = useSelector(selectIsCatalogOpen);
-  const { t } = useTranslation();
 
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
@@ -53,12 +53,12 @@ export default function Header({ resetSection }) {
 
   const handleLogout = useLogout({
     onSuccess: () => {
-      // После выхода вызывается окно авторизации.
+      // После выхода вызывается окно авторизации
       openAuthModal();
     },
   });
 
-  // Функция, которая вызывается по истечении таймаута.
+  // Функция, которая вызывается по истечении таймаута
   const handleTimeout = async (dispatch) => {
     handleLogout();
   };
@@ -72,9 +72,7 @@ export default function Header({ resetSection }) {
 
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: null });
 
-  /* в шапке сайта при клике на иконку входа по ум. открывается
-  авторизация, а не регистрация */
-
+  //* в шапке сайта при клике на иконку входа по умолчанию открываетсяавторизация
   const openAuthModal = () => {
     setSearchParams({ 'modal-auth': 'login' });
   };
@@ -121,9 +119,8 @@ export default function Header({ resetSection }) {
         </Link>
         <ul className="header__navigation">
           <li
-            className={`header__navigation-item_mobile-third ${
-              !isMobile ? 'header__search' : ''
-            }`}
+            className={`header__navigation-item_mobile-third ${!isMobile ? 'header__search' : ''
+              }`}
           >
             <HeaderSearchInput isMobileVisible={isMobile} id="headerSearch" />
           </li>

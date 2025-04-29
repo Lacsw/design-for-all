@@ -22,6 +22,15 @@ export const COMMON = {
     REJECTED: 'common_article_status_rejected', // Отклонено
     DELETED: 'common_article_status_deleted', // Удалено
   },
+  LANGUAGE: {
+    RU: 'common_language_ru', // Русский
+    EN: 'common_language_en', // Английский
+    ZH: 'common_language_zh', // Китайский
+    ES: 'common_language_es', // Испанский
+  },
+  CURRENCY: {
+    USD: 'common_currency_usd', // Доллар
+  },
 };
 
 // Ключи для страницы 404
@@ -43,72 +52,51 @@ export const NOT_FOUND_ARTICLE = {
 // Ключи для хедера
 export const HEADER = {
   LOGO: {
-    ALT: 'header_logo_alt', // Альтернативный текст для логотипа
+    ALT: 'header_logo_alt', // Логотип
   },
   MAIN_MENU: {
-    TITLE: 'header_main_menu_title', // Заголовок для главного меню
-    HOME: 'header_main_menu_home',
+    TITLE: 'header_main_menu_title', // Главное меню
+    HOME: 'header_main_menu_home', // Главная
     UPDATES: 'header_main_menu_updates',
-    WEB_APPS: 'header_main_menu_web_apps', // Веб-приложения
-    DESKTOP_APPS: 'header_main_menu_desktop_apps', // Десктоп-приложения
-    MOBILE_APPS: 'header_main_menu_mobile_apps', // Мобильные приложения
+    WEB: 'header_main_menu_web_apps', // Веб-приложения
+    DESKTOP: 'header_main_menu_desktop_apps', // Десктоп-приложения
+    MOBILE: 'header_main_menu_mobile_apps', // Мобильные приложения
     ARTICLES: 'header_main_menu_articles', // Статьи
-    GUIDES: 'header_main_menu_guides', // Руководства
+    MANUAL: 'header_main_menu_manual', // Руководства
     COLLAPSE: 'header_main_menu_collapse', // Свернуть
   },
   LANGUAGE: {
-    TITLE: 'header_language_title', // Заголовок для языка
-    RU: 'header_language_ru', // Русский
-    EN: 'header_language_en', // Английский
-    ZH: 'header_language_zh', // Китайский
-    ES: 'header_language_es', // Испанский
+    TITLE: 'header_language_title', // Язык
   },
   CURRENCY: {
-    TITLE: 'header_currency_title', // Заголовок для валюты
-    USD: 'header_currency_usd',
+    TITLE: 'header_currency_title', // Валюта
   },
   USER: {
-    TITLE: 'header_user_title', // Заголовок для пользователя
+    TITLE: 'header_user_title', // Пользователь
     PROFILE: 'header_user_profile', // Профиль
     LOGOUT: 'header_user_logout', // Выйти
     WRITE_ARTICLE: 'header_user_write_article', // Написать статью
     PUBLICATIONS: 'header_user_publications', // Публикации
-  },
-  ADMIN: {
-    REQUESTS: 'header_admin_requests', // Запросы
-    CREATE_USER: 'header_admin_create_user', // Создать пользователя
+    REQUESTS: 'header_user_requests', // Запросы
+    CREATE_USER: 'header_user_create_user', // Создать пользователя
   },
   SEARCH: {
-    PLACEHOLDER: 'header_search_placeholder', // Плейсхолдер для поиска
+    PLACEHOLDER: 'header_search_placeholder', // Поиск статей...
     RESET_BUTTON: 'header_search_reset_button', // Кнопка сброса
-    LOADING: 'header_search_loading', // Загрузка
-    ICON: 'header_search_icon', // Иконка для поиска
+    LOADING: 'header_search_loading', // Загрузка...
+    ICON: 'header_search_icon', // Иконка поиска
     ERROR: {
-      NO_RESULTS: 'header_search_error_no_results', // Нет результатов
-      NETWORK: 'header_search_error_network', // Сеть
-      SERVER: 'header_search_error_server', // Сервер
-      UNKNOWN: 'header_search_error_unknown', // Неизвестно
+      NO_RESULTS: 'header_search_error_no_results', // По вашему запросу ничего не найдено. Попробуйте изменить поисковый запрос.
+      NETWORK: 'header_search_error_network', // Ошибка сети. Пожалуйста, попробуйте снова позже.
+      SERVER: 'header_search_error_server', // Ошибка сервера. Пожалуйста, попробуйте снова позже.
+      UNKNOWN: 'header_search_error_unknown', // При выполнении поиска произошла ошибка. Пожалуйста, попробуйте снова позже.
     },
   },
   MOBILE_TREES: {
-    ICON: 'header_mobile_trees_icon', // Иконка для мобильных деревьев
+    ICON: 'header_mobile_trees_icon', // Иконка открытия мобильного дерева статей
   },
 
-  EDIT: {
-    TOOLTIP: 'header_edit_tooltip', // Подсказка для кнопки редактирования
-  },
-  VIEW: {
-    TOOLTIP: 'header_view_tooltip', // Подсказка для кнопки просмотра
-  },
-  DRAFT: {
-    TOOLTIP: 'header_draft_tooltip', // Подсказка для кнопки перемещения в черновик
-  },
-  DELETE: {
-    TOOLTIP: 'header_delete_tooltip', // Подсказка для кнопки удаления
-  },
-  REASON: {
-    TOOLTIP: 'header_reason_tooltip', // Подсказка для кнопки указания причины
-  },
+ 
 };
 
 // Auth Modal
@@ -249,6 +237,14 @@ export const AUTHOR = {
 
 // Ключи для навбара админа
 export const ADMIN = {
+  TOOLTIP: {
+    EDIT: 'admin_tooltip_edit', //Редактировать
+    VIEW: 'admin_tooltip_view', //Просмотреть
+    DRAFT: 'admin_tooltip_draft', //В черновик
+    DELETE: 'admin_tooltip_delete', //Удалить
+    REASON: 'admin_tooltip_reason', //Причина
+  },
+  
   NAVBAR: {
     REQUESTS: 'admin_navbar_requests', // Запросы
     CREATE_USER: 'admin_navbar_create_user', // Создать пользователя
