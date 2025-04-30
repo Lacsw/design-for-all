@@ -14,6 +14,17 @@ export default defineConfig(() => {
           assetFileNames: `assets/[name].[ext]`,
         },
       },
+      commonjsOptions: {
+        include: [/node_modules/],
+        transformMixedEsModules: true,
+      }
+    },
+    optimizeDeps: {
+      include: [
+        'i18next',
+        'i18next-browser-languagedetector',
+        'i18next-http-backend'
+      ]
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
