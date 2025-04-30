@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import authorApi from 'utils/api/author';
 import { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
+import { formatTimestamp } from 'utils/helpers/timeFormatters.js';
 
 export default function AuthorArticlesList({
   articles,
@@ -150,9 +151,17 @@ export default function AuthorArticlesList({
                 <td className="author-articles-list__table-cell">
                   {article.lang}
                 </td>
-                <td className="author-articles-list__table-cell">
-                  {dateFormatter(article.date_create)}
-                </td>
+
+                <Tooltip
+                  title={formatTimestamp(article.date_create)}
+                  placement="top"
+                  arrow
+                >
+                  <td className="author-articles-list__table-cell">
+                    {dateFormatter(article.date_create)}
+                  </td>
+                </Tooltip>
+
                 <td className="author-articles-list__table-cell">
                   {article.main_category}
                 </td>

@@ -52,13 +52,6 @@ export default function CatalogArticle() {
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
 
-  const createDate = new Date(
-    article?.publication.date_create * 1000
-  ).toLocaleDateString();
-  const updateDate = new Date(
-    article?.publication.last_update * 1000
-  ).toLocaleDateString();
-
   useEffect(() => {
     if (!needToFetch) return;
     dispatch(fetchArticle({ lang, articleId }));
@@ -91,8 +84,8 @@ export default function CatalogArticle() {
       <div className="article">
         <ArticleHeader
           title={article.publication.title}
-          timeCreate={createDate}
-          timeUpdate={updateDate}
+          timeCreate={article?.publication.date_create}
+          timeUpdate={article?.publication.last_update }
         />
 
         <div ref={articleRef} className="article__main">

@@ -2,9 +2,15 @@ import { Link } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
 import { setMainCategory } from 'store/slices/article';
+import { formatTimestamp } from 'utils/helpers/timeFormatters.js';
+import { Tooltip } from 'components';
 
 export default function UpdateCard({ update }) {
   const dispatch = useDispatch();
+  const timestamp = Math.floor(
+    new Date(update.time_action.replace(' ', 'T')).getTime() / 1000
+  );
+
   return (
     <li className="update-card">
       <Link
@@ -27,9 +33,11 @@ export default function UpdateCard({ update }) {
               ? 'Перевод статьи'
               : ''}
           </span>
-          <span className="update-card__others">
-            {update.time_action.split(' ')[0].split('-').reverse().join('.')}
-          </span>
+          <Tooltip title={formatTimestamp(timestamp)} placement="top" arrow>
+            <span className="update-card__others">
+              {update.time_action.split(' ')[0].split('-').reverse().join('.')}
+            </span>
+          </Tooltip>
         </div>
       </Link>
     </li>
