@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './Header.css';
 import {
@@ -10,12 +11,13 @@ import {
   AuthModal,
   UserDropdown,
   LoginButton,
-  MobileTreesВutton,
+  MobileTreesButton,
   HeaderSearchInput,
 } from 'components';
 
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
+import { selectIsOpen as selectIsCatalogOpen } from 'store/slices/catalog/slice';
 
 import {
   accountNavigationList,
@@ -31,10 +33,11 @@ import dropdownIconBlack from 'images/navigation/dropdown-icon-black.svg';
 import logoBlack from 'images/logo-black.svg';
 import { useSessionTimeout } from 'utils/hooks/useSessionTimeout';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-import { selectIsCatalogOpen } from 'store/slices/article';
 import { useLogout } from 'utils/hooks/useLogout';
+import { HEADER } from 'utils/translationKeys';
 
 export default function Header({ resetSection }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useSelector(getCurrentTheme);
@@ -50,12 +53,12 @@ export default function Header({ resetSection }) {
 
   const handleLogout = useLogout({
     onSuccess: () => {
-      // После выхода вызывается окно авторизации.
+      // После выхода вызывается окно авторизации
       openAuthModal();
     },
   });
 
-  // Функция, которая вызывается по истечении таймаута.
+  // Функция, которая вызывается по истечении таймаута
   const handleTimeout = async (dispatch) => {
     handleLogout();
   };
@@ -69,9 +72,7 @@ export default function Header({ resetSection }) {
 
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: null });
 
-  /* в шапке сайта при клике на иконку входа по ум. открывается
-  авторизация, а не регистрация */
-
+  //* в шапке сайта при клике на иконку входа по умолчанию открываетсяавторизация
   const openAuthModal = () => {
     setSearchParams({ 'modal-auth': 'login' });
   };
@@ -112,21 +113,20 @@ export default function Header({ resetSection }) {
         <Link to="/" className="logo-link" onClick={resetSection}>
           <img
             src={theme === 'dark' ? logo : logoBlack}
-            alt="Логотип"
+            alt={t(HEADER.LOGO.ALT)}
             className="header__logo"
           />
         </Link>
         <ul className="header__navigation">
           <li
-            className={`header__navigation-item_mobile-third ${
-              !isMobile ? 'header__search' : ''
-            }`}
+            className={`header__navigation-item_mobile-third ${!isMobile ? 'header__search' : ''
+              }`}
           >
             <HeaderSearchInput isMobileVisible={isMobile} id="headerSearch" />
           </li>
           {isMobile && isCatalogOpen && (
             <li className="header__navigation-item_mobile-fourth">
-              <MobileTreesВutton />
+              <MobileTreesButton />
             </li>
           )}
 
@@ -138,7 +138,7 @@ export default function Header({ resetSection }) {
               }
               toggleTheme={toggleTheme}
               theme={theme}
-              title="Меню"
+              title={t(HEADER.MAIN_MENU.TITLE)}
               currentUser={currentUser}
               openAuthModal={openAuthModal}
             />
@@ -147,14 +147,14 @@ export default function Header({ resetSection }) {
             <LanguageDropdown
               options={languageList}
               theme={theme}
-              title="Язык"
+              title={t(HEADER.LANGUAGE.TITLE)}
             />
           </li>
           <li className="header__navigation-item_mobile-second">
             <CurrencyDropdown
               options={currencyList}
               theme={theme}
-              title="Валюта"
+              title={t(HEADER.CURRENCY.TITLE)}
             />
           </li>
           <li className="hide-on-mobile">
@@ -168,7 +168,7 @@ export default function Header({ resetSection }) {
                   theme === 'light' ? dropdownIconBlack : dropdownIconWhite
                 }
                 type="dropdownWithLinks"
-                title="Профиль"
+                title={t(HEADER.USER.TITLE)}
                 currentUser={currentUser}
                 theme={theme}
               />

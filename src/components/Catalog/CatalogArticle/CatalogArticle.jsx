@@ -18,6 +18,8 @@ import {
 } from 'components';
 import './CatalogArticle.css';
 import './withNavigator.css';
+import { useTranslation } from 'react-i18next';
+import { CATALOG } from 'utils/translationKeys';
 
 /** @type {import('components/ArticleNavigator/types').IScrollableElParams} */
 const scrollableElParams = {
@@ -40,7 +42,7 @@ const artNavSlotProps = {
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const { lang, articleId } = useParams();
 
   const article = useSelector(selectArticle);
@@ -71,7 +73,7 @@ export default function CatalogArticle() {
 
   return isBlank ? (
     <div className="blank">
-      Воспользуйтесь поиском по дереву <br /> или поиском по заголовкам статей
+      {t(CATALOG.ARTICLE.BLANK.SEARCH_TREE)}
     </div>
   ) : isError ? (
     <NotFoundArticle />
@@ -91,10 +93,10 @@ export default function CatalogArticle() {
         <div ref={articleRef} className="article__main">
           <ImageWithFallback
             src={article.publication.image}
-            alt="Превью статьи"
+            alt={t(CATALOG.ARTICLE.IMAGE.ALT)}
             className="article__image"
             fallbackClassName="article__image-placeholder"
-            fallbackAlt="Заглушка для статьи"
+            fallbackAlt={t(CATALOG.ARTICLE.IMAGE.FALLBACK_ALT)}
           />
 
           <div className="article__editor-container">

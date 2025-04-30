@@ -4,6 +4,8 @@ import './ModalReasons.css';
 import { Modal } from 'components';
 import deny from 'images/modals/deny-icon.svg';
 import approve from 'images/modals/approve-icon.svg';
+import { useTranslation } from 'react-i18next';
+import { ADMIN } from 'utils/translationKeys';
 
 export default function ModalReasons({
   children,
@@ -12,6 +14,7 @@ export default function ModalReasons({
   title,
   rejFields,
 }) {
+  const { t } = useTranslation();
   return (
     <Modal large isOpen={isOpen} onConfirm={onClose} title={title}>
       {rejFields && (
@@ -26,7 +29,7 @@ export default function ModalReasons({
                   : 'Зелёная галочка'
               }
             />
-            Подкатегория
+            {t(ADMIN.MODAL_REASONS.SUB_CATEGORY)}
           </li>
           <li className="modal__reason">
             <img
@@ -38,7 +41,7 @@ export default function ModalReasons({
                   : 'Зелёная галочка'
               }
             />
-            Заголовок статьи
+            {t(ADMIN.MODAL_REASONS.TITLE)}
           </li>
           <li className="modal__reason">
             <img
@@ -50,7 +53,7 @@ export default function ModalReasons({
                   : 'Зелёная галочка'
               }
             />
-            Картинка статьи
+            {t(ADMIN.MODAL_REASONS.IMAGE)}
           </li>
           <li className="modal__reason">
             <img
@@ -58,11 +61,11 @@ export default function ModalReasons({
               src={rejFields.includes('description') ? deny : approve}
               alt={
                 rejFields.includes('description')
-                  ? 'Красный крестик'
-                  : 'Зелёная галочка'
+                  ? t(ADMIN.MODAL_REASONS.DESCRIPTION_DENY)
+                  : t(ADMIN.MODAL_REASONS.DESCRIPTION_APPROVE)
               }
             />
-            Контент статьи
+              {t(ADMIN.MODAL_REASONS.DESCRIPTION)}
           </li>
           <li className="modal__reason">
             <img
@@ -72,11 +75,11 @@ export default function ModalReasons({
               }
               alt={
                 rejFields.includes('recommend_from_creator')
-                  ? 'Красный крестик'
-                  : 'Зелёная галочка'
+                  ? t(ADMIN.MODAL_REASONS.DENY)
+                  : t(ADMIN.MODAL_REASONS.APPROVE)
               }
             />
-            Рекомендованые статьи
+            {t(ADMIN.MODAL_REASONS.RECOMMENDATIONS)}
           </li>
         </ul>
       )}

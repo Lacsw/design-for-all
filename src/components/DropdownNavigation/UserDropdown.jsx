@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import DropdownNavigation from './DropdownNavigation';
 import { useLogout } from 'utils/hooks/useLogout';
 
@@ -10,13 +11,26 @@ export default function UserDropdown({
   theme,
   titleIcon,
 }) {
+  const { t } = useTranslation();
   const handleLogout = useLogout({ resetSection });
+ 
 
   if (!currentUser) return null;
 
-  const enhancedOptions = options.map((option) =>
-    option.name === 'Выйти' ? { ...option, onClick: handleLogout } : option
-  );
+  const enhancedOptions = options.map((option) => {
+    const translatedOption = {
+      ...option,
+      name: t(option.translationKey),
+    };
+
+    if (translatedOption.id === "logout") {
+      return { ...translatedOption, onClick: handleLogout };
+    }
+    if (translatedOption.id === "profile") {
+      return { ...translatedOption };
+    }
+    return translatedOption;
+  });
 
   return (
     <DropdownNavigation

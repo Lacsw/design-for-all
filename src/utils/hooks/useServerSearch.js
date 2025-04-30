@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useReducer, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import searchApi from 'utils/api/search';
 import debounce from 'utils/helpers/debounce';
+import { HEADER } from 'utils/translationKeys';
 
 // Начальное состояние поиска
 const initialState = {
@@ -47,6 +49,7 @@ function searchReducer(state, action) {
 export function useServerSearch(language) {
   // Управление состоянием поиска
   const [state, dispatch] = useReducer(searchReducer, initialState);
+  const { t } = useTranslation();
 
   // Номер страницы для подгрузки результатов
   const pageRef = useRef(1);
@@ -67,12 +70,17 @@ export function useServerSearch(language) {
         });
         dispatch({ type: 'SEARCH_SUCCESS', payload: res, page: pageNumber });
       } catch (err) {
-        let errorMsg =
-          'При выполнении поиска произошла ошибка. Пожалуйста, попробуйте снова позже.';
-        if (err === 404) {
-          errorMsg =
-            'По вашему запросу ничего не найдено. Попробуйте изменить поисковый запрос.';
+        let errorMsg = t(HEADER.SEARCH.ERROR.UNKNOWN);
+        
+        // Проверяем статус ошибки
+        if (err.status === 404 || err.response?.status === 404) {
+          errorMsg = t(HEADER.SEARCH.ERROR.NO_RESULTS);
+        } else if (err.message && err.message.includes('network')) {
+          errorMsg = t(HEADER.SEARCH.ERROR.NETWORK);
+        } else if (err.message && err.message.includes('server')) {
+          errorMsg = t(HEADER.SEARCH.ERROR.SERVER);
         }
+        
         // Передаем номер страницы, чтобы знать, нужно ли очищать результаты
         dispatch({
           type: 'SEARCH_FAILURE',
@@ -81,7 +89,7 @@ export function useServerSearch(language) {
         });
       }
     },
-    [language]
+    [language, t]
   );
 
   // При изменении текста запроса срабатывает через 500 мс

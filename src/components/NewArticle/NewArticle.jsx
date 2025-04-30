@@ -22,11 +22,13 @@ import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
 import debounce from 'utils/helpers/debounce';
+import { useTranslation } from 'react-i18next';
+import { CREATION } from 'utils/translationKeys';
 
-function createTitle(type) {
-  if (type === 'updated') return 'Внесение правок';
-  if (type === 'created_lang') return 'Перевод статьи';
-  return 'Создание новой статьи';
+function createTitle(type, t) {
+  if (type === 'updated') return t(CREATION.NEW_ARTICLE.UPDATED_TITLE);
+  if (type === 'created_lang') return t(CREATION.NEW_ARTICLE.CREATED_LANG_TITLE);
+  return t(CREATION.NEW_ARTICLE.CREATED_TITLE);
 }
 
 export const NewArticle = memo(function NewArticle({
@@ -36,6 +38,7 @@ export const NewArticle = memo(function NewArticle({
 }) {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const theme = useSelector(getCurrentTheme);
   const isLight = useSelector(getIsThemeLight);
@@ -51,7 +54,7 @@ export const NewArticle = memo(function NewArticle({
     location.state?.type === 'updated' ||
     location.state?.type === 'created_lang';
 
-  const mainTitle = createTitle(location.state?.type);
+  const mainTitle = createTitle(location.state?.type, t);
 
   const titlesList = useMemo(() => {
     if (!draft.lang) return [];
@@ -62,6 +65,14 @@ export const NewArticle = memo(function NewArticle({
     }));
     return titlesForDropdown;
   }, [draft.lang, categories]);
+
+  // Создаем переведенные опции для выпадающего списка языков
+  const translatedLangsList = useMemo(() => {
+    return langsList.map(lang => ({
+      ...lang,
+      label: t(lang.label)
+    }));
+  }, [langsList, t]);
 
   const toggleRecommendation = () => {
     setIsShownAddRec(!isShownAddRec);
@@ -153,17 +164,16 @@ export const NewArticle = memo(function NewArticle({
       <h2 className="new-article__title">{mainTitle}</h2>
       <form action="">
         <label
-          className={`new-article__label${
-            location.state?.name === 'translate' || !location.state
+          className={`new-article__label${location.state?.name === 'translate' || !location.state
               ? ''
               : ' new-article__label_disabled'
-          }`}
+            }`}
         >
-          <span className="new-article__sub-title">Язык</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.LANG_TITLE)}</span>
           <Dropdown
             id={'lang'}
             name={'lang'}
-            options={langsList}
+            options={translatedLangsList}
             title={draft.lang || 'Выбор'}
             onChange={changeField}
           />
@@ -171,13 +181,12 @@ export const NewArticle = memo(function NewArticle({
 
         {!isUpdate && (
           <label
-            className={`new-article__label${
-              draft.lang && location.state?.name !== 'edit'
+            className={`new-article__label${draft.lang && location.state?.name !== 'edit'
                 ? ''
                 : ' new-article__label_disabled'
-            }`}
+              }`}
           >
-            <span className="new-article__sub-title">Основная категория</span>
+            <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.MAIN_CATEGORY_TITLE)}</span>
             <Dropdown
               id={'main_category'}
               name={'category'}
@@ -189,22 +198,20 @@ export const NewArticle = memo(function NewArticle({
         )}
 
         <label
-          className={`${
-            rejectFields.includes('sub_category') ? 'rejected ' : ''
-          }new-article__label${
-            draft.main_category && draft.lang
+          className={`${rejectFields.includes('sub_category') ? 'rejected ' : ''
+            }new-article__label${draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
-          }`}
+            }`}
         >
-          <span className="new-article__sub-title">Подкатегория</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.SUB_CATEGORY_TITLE)}</span>
           {hint && (
             <Hint>
               <span>
                 {hint}{' '}
                 {uuid && (
                   <Link target="_blank" to={`/${draft.lang}/${uuid}`}>
-                    существующей статьи
+                    {t(CREATION.NEW_ARTICLE.CHECK_SUB_CATEGORY_HINT_LINK)}
                   </Link>
                 )}
               </span>
@@ -214,7 +221,7 @@ export const NewArticle = memo(function NewArticle({
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="sub_category"
-            placeholder="страна/город/улица/дом"
+            placeholder={t(CREATION.NEW_ARTICLE.SUB_CATEGORY_PLACEHOLDER)}
             id="sub_category"
             className="new-article__input"
             size={32}
@@ -224,15 +231,13 @@ export const NewArticle = memo(function NewArticle({
         </label>
 
         <label
-          className={`${
-            rejectFields.includes('image') ? 'rejected ' : ''
-          }new-article__label${
-            draft.main_category && draft.lang
+          className={`${rejectFields.includes('image') ? 'rejected ' : ''
+            }new-article__label${draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
-          }`}
+            }`}
         >
-          <span className="new-article__sub-title">Картинка статьи</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.IMAGE_TITLE)}</span>
           {/*<input
             disabled={draft.main_category && draft.lang ? false : true}
             type="file"
@@ -253,46 +258,42 @@ export const NewArticle = memo(function NewArticle({
               <ImageWithFallback
                 className="new-article__img"
                 src={draft.image}
-                alt="Ваша картинка"
+                alt={t(CREATION.NEW_ARTICLE.IMAGE_ALT)}
                 fallbackClassName="new-article__image-placeholder"
-                fallbackAlt="Заглушка для статьи"
+                fallbackAlt={t(CREATION.NEW_ARTICLE.IMAGE_FALLBACK_ALT)}
               />
             </div>
           )}
         </label>
 
         <label
-          className={`${
-            rejectFields.includes('title') ? 'rejected ' : ''
-          }new-article__label${
-            draft.main_category && draft.lang
+          className={`${rejectFields.includes('title') ? 'rejected ' : ''
+            }new-article__label${draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
-          }`}
+            }`}
         >
-          <span className="new-article__sub-title">Заголовок статьи</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.ARTICLE_TITLE)}</span>
           <input
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="article-title"
             id="article-title"
             className="new-article__input new-article__input_article-header"
-            placeholder="Карточка товара в маркетплейсе"
+            placeholder={t(CREATION.NEW_ARTICLE.TITLE_PLACEHOLDER)}
             value={draft.title}
             onChange={(evt) => changeField('title', evt.target.value)}
           />
         </label>
 
         <label
-          className={`${
-            rejectFields.includes('description') ? 'rejected ' : ''
-          }new-article__label${
-            draft.main_category && draft.lang
+          className={`${rejectFields.includes('description') ? 'rejected ' : ''
+            }new-article__label${draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
-          }`}
+            }`}
         >
-          <span className="new-article__sub-title">Контент статьи</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.CONTENT_TITLE)}</span>
         </label>
         <RichTextEditor
           id="article-content"
@@ -308,15 +309,13 @@ export const NewArticle = memo(function NewArticle({
         />
 
         <div
-          className={`${
-            rejectFields.includes('recommend_from_creator') ? 'rejected ' : ''
-          }new-article__label${
-            draft.main_category && draft.lang
+          className={`${rejectFields.includes('recommend_from_creator') ? 'rejected ' : ''
+            }new-article__label${draft.main_category && draft.lang
               ? ''
               : ' new-article__label_disabled'
-          }`}
+            }`}
         >
-          <span className="new-article__sub-title">Рекомендации авторов</span>
+          <span className="new-article__sub-title">{t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_TITLE)}</span>
           <div className="new-article__recommendations">
             <button
               disabled={draft.main_category && draft.lang ? false : true}
@@ -324,8 +323,8 @@ export const NewArticle = memo(function NewArticle({
               type="button"
               onClick={toggleRecommendation}
             >
-              <img src={plus} alt="Иконка добавления рекомендации" />
-              <span className="new-article__recommendations-tip">Добавить</span>
+              <img src={plus} alt={t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_ADD_BTN_ALT)} />
+              <span className="new-article__recommendations-tip">{t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_ADD_BTN_TITLE)}</span>
             </button>
             <ul className="recommendations__list">
               {draft.recommend_from_creator.map((item) => (
@@ -338,13 +337,13 @@ export const NewArticle = memo(function NewArticle({
                     <div className="rec-overlay">
                       <img
                         src={theme === 'light' ? editIconB : editIconW}
-                        alt="Изменить рекомендацию"
+                        alt={t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_EDIT_BTN_ALT)}
                         className="rec-overlay__img"
                         onClick={(evt) => handleEdit(evt, item.uuid)}
                       />
                       <img
                         src={theme === 'light' ? deleteIconB : deleteIconW}
-                        alt="Удалить рекомендацию"
+                        alt={t(CREATION.NEW_ARTICLE.RECOMMENDATIONS_DELETE_BTN_ALT)}
                         className="rec-overlay__img"
                         onClick={(evt) => handleDelete(evt, item.uuid)}
                       />
@@ -363,12 +362,12 @@ export const NewArticle = memo(function NewArticle({
         onClose={handleClose}
         onSave={changeField}
         title={
-          editId.current ? 'Заменить рекомендацию' : 'Добавить рекомендацию'
+          editId.current ? t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.CHANGE_BTN_TITLE) : t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.ADD_BTN_TITLE)
         }
         editId={editId.current}
       />
       <Modal
-        title="Ссылка на картинку"
+        title={t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.IMAGE_TITLE)}
         isOpen={imgModal}
         twoBtns
         onConfirm={() => {
@@ -380,8 +379,8 @@ export const NewArticle = memo(function NewArticle({
       >
         <input
           type="text"
-          placeholder="https://site.com/image.jpg"
-          className="input-reason"
+          placeholder={t(CREATION.NEW_ARTICLE.MODAL_RECOMMENDATIONS.INPUT_IMAGE_PLACEHOLDER)}
+          className="input-reason"  
           ref={inputRef}
           onChange={handleInput}
         />

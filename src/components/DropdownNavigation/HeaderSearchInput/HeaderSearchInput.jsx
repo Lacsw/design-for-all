@@ -10,9 +10,11 @@ import loupeLight from 'images/loupe-icon_white.svg';
 import './HeaderSearchInput.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { NavLink } from 'react-router-dom';
-import { setMainCategory, setShouldRemountTree } from 'store/slices/article';
+import { setMainCategory, setShouldRemountTree } from 'store/slices/catalog/slice';
 import debounce from 'utils/helpers/debounce';
 import { useServerSearch } from 'utils/hooks/useServerSearch';
+import { useTranslation } from 'react-i18next';
+import { HEADER } from 'utils/translationKeys';
 
 export default function HeaderSearchInput({ id, isMobileVisible = false }) {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
   const resultsRef = useRef(null);
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
+  const { t } = useTranslation();
 
   // Локальное состояние для мгновенного отображения введенного текста
   const [localQuery, setLocalQuery] = useState('');
@@ -122,7 +125,7 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
         <div className="header-search-input">
           <input
             type="text"
-            placeholder="Поиск статей..."
+            placeholder={t(HEADER.SEARCH.PLACEHOLDER)}
             value={localQuery}
             className="header-search-input__field"
             ref={inputRef}
@@ -139,13 +142,12 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
           >
             <img
               src={theme === 'light' ? closeBtnBlack : closeBtn}
-              alt="Кнопка сброса"
+              alt={t(HEADER.SEARCH.RESET_BUTTON)}
             />
           </button>
           <ul
-            className={`header-search__results ${
-              shouldHideResults ? 'hide' : ''
-            }`}
+            className={`header-search__results ${shouldHideResults ? 'hide' : ''
+              }`}
             ref={resultsRef}
           >
             {results.map((item) => (
@@ -168,7 +170,7 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
             ))}
             {showLoading && (
               <li className="header-search__result">
-                <p className="header-search__result-text">Загрузка...</p>
+                <p className="header-search__result-text">{t(HEADER.SEARCH.LOADING)}</p>
               </li>
             )}
             {showError && (
@@ -180,14 +182,13 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
         </div>
       </div>
       <button
-        className={`header-search-input__loupe ${
-          isShown && !isMobileVisible ? 'header-search-input-hide' : ''
-        }`}
+        className={`header-search-input__loupe ${isShown && !isMobileVisible ? 'header-search-input-hide' : ''
+          }`}
         onClick={isShown ? handleCloseClick : handleLoupeClick}
       >
         <img
           src={theme === 'light' ? loupeLight : loupe}
-          alt="Иконка лупы"
+          alt={t(HEADER.SEARCH.ICON_ALT)}
           className="header__icon"
         />
       </button>

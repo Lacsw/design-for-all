@@ -7,8 +7,11 @@ import ModalAuthor from './ModalAuthor';
 import defaultAvatar from 'images/admin/avatar_default.svg';
 import './Author.css';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
+import { COMMON, CATALOG } from 'utils/translationKeys';
+import { useTranslation } from 'react-i18next';
 
 export default function Author({ showReviewers }) {
+  const { t } = useTranslation();
   const theme = useSelector(getCurrentTheme);
   const { author } = useSelector(selectArticle);
   // const [isOpen, setIsOpen] = useState(false);
@@ -40,15 +43,14 @@ export default function Author({ showReviewers }) {
         />
         <div className="author__titles">
           <p
-            className={`author__name ${
-              showReviewers && isMobile
+            className={`author__name ${showReviewers && isMobile
                 ? 'author__name-no-cut'
                 : 'author__name-cut'
-            }`}
+              }`}
           >
             {author.fio}
           </p>
-          <p className="author__role">Автор</p>
+          <p className="author__role">{t(COMMON.ROLES.AUTHOR)}</p>
         </div>
       </div>
       {author.social_media ? (
@@ -59,7 +61,7 @@ export default function Author({ showReviewers }) {
           <SocialLinks socialData={author.social_media} cut={!socialOpen} />
         </div>
       ) : (
-        <p className="author__socials-text">(здесь будут контакты автора)</p>
+        <p className="author__socials-text">{t(CATALOG.AUTHOR.SOCIALS_TEXT)}</p>
       )}
       {Object.keys(author.social_media).length > 4 &&
         // Для десктопа кнопка всегда отображается,

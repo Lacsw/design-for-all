@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import plusIcon from 'images/plus-icon.svg';
 import plusIconB from 'images/plus-icon_black.svg';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { getLanguage } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
 import { Input, Modal } from 'components';
 import authApi from 'utils/api/auth';
+import { AUTH } from 'utils/translationKeys';
 
 const emailValidation = {
   regex: /^\S+@\S+\.\S+$/,
@@ -23,6 +25,7 @@ const emailValidation = {
 export default function SignUpForm({ onClose }) {
   const lang = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     lang,
     email: '',
@@ -85,11 +88,11 @@ export default function SignUpForm({ onClose }) {
         onSubmit={handleSubmit}
       >
         <label className="auth-modal__field">
-          *Email
+          *{t(AUTH.EMAIL_LABEL)}
           <Input
             type="text"
             value={form.email}
-            placeholder="example@domain.com"
+            placeholder={t(AUTH.EMAIL_PLACEHOLDER)}
             onChange={handleInput}
             name="email"
             errors={errors.email}
@@ -97,12 +100,12 @@ export default function SignUpForm({ onClose }) {
         </label>
 
         <label className="auth-modal__field">
-          *Ссылки на ваши проекты
+          *{t(AUTH.PROJECTS_LABEL)}
           <div className="auth-modal__input-projects">
             <Input
               type="text"
               value={form.link_projects}
-              placeholder="https://example.com/my-project"
+              placeholder={t(AUTH.PROJECTS_PLACEHOLDER)}
               onChange={handleInput}
               name="link_projects"
               errors={errors.link_projects}
@@ -110,14 +113,14 @@ export default function SignUpForm({ onClose }) {
             <button type="button" className="auth-modal__input-projects-btn">
               <img
                 src={theme === 'dark' ? plusIcon : plusIconB}
-                alt="добавить проект"
+                alt={t(AUTH.ADD_PROJECT)}
               />
             </button>
           </div>
         </label>
         {captcha && (
           <label className="auth-modal__field">
-            *Капча
+            *{t(AUTH.CAPTCHA_LABEL)}
             <div className="auth-modal__input-projects">
               <input
                 type="text"
@@ -138,36 +141,36 @@ export default function SignUpForm({ onClose }) {
         )}
         {response && (
           <div className="auth-modal__errors">
-            {response.email && <p>Указанная почта уже есть в системе.</p>}
+            {response.email && <p>{t(AUTH.EMAIL_EXISTS)}</p>}
             {response.link_projects?.length > 0 && (
-              <p>Ссылка на проект была прислана ранее.</p>
+              <p>{t(AUTH.PROJECT_LINK_EXISTS)}</p>
             )}
             {response.link_projects ? (
-              <p>Измените данные и попробуйте снова.</p>
+              <p>{t(AUTH.CHANGE_DATA)}</p>
             ) : (
-              <p>Возможно, ошибка в капче. Решите новую.</p>
+              <p>{t(AUTH.CAPTCHA_ERROR)}</p>
             )}
           </div>
         )}
         <p className="auth-modal__politics">
-          Нажимая кнопку «Зарегистрироваться» вы:
-          <br /> Даете право на обработку{' '}
+          {t(AUTH.POLITICS_TEXT)}
+          <br /> {t(AUTH.GIVE_PERMISSION)}{' '}
           <a
             href="personal"
             target="_blank"
             rel="noreferrer"
             className="auth-modal__link"
           >
-            персональных данных
+            {t(AUTH.PERSONAL_DATA)}
           </a>{' '}
-          Соглашаетесь с{' '}
+          {t(AUTH.AGREE_WITH)}{' '}
           <a
             href="terms-of-service"
             target="_blank"
             rel="noreferrer"
             className="auth-modal__link"
           >
-            пользовательским соглашением
+            {t(AUTH.TERMS_OF_SERVICE)}
           </a>
         </p>
 
@@ -176,31 +179,27 @@ export default function SignUpForm({ onClose }) {
             isFormValid ? 'auth-modal__main-btn_active' : ''
           }`}
           type="submit"
-          aria-label="кнопка входа"
+          aria-label={t(AUTH.SIGNUP_BUTTON_ARIA)}
           disabled={!isFormValid}
         >
-          Регистрация
+          {t(AUTH.SIGNUP_BUTTON)}
         </button>
       </form>
       {success && (
         <Modal
-          title="Заявка отправлена!"
+          title={t(AUTH.SUCCESS_TITLE)}
           onConfirm={() => onClose()}
           isOpen
           large
         >
           <p className="small-text">
-            Заявка на регистрацию аккаунта отправлена.
+            {t(AUTH.SUCCESS_MESSAGE)}
           </p>
           <p className="small-text">
-            Компетенции каждого автора проверяются администраторами вручную по
-            предоставленным ссылкам на проекты.
-            <br />
-            Неопытные участники к авторству не допускаются.
+            {t(AUTH.SUCCESS_DESCRIPTION)}
           </p>
           <p className="small-text">
-            После отклонения или одобрения заявки, вы получите уведомление на
-            почту: {form.email}
+            {t(AUTH.SUCCESS_WARNING, { email: form.email })}
           </p>
         </Modal>
       )}

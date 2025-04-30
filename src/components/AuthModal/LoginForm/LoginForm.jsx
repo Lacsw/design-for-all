@@ -1,11 +1,13 @@
 import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import authApi from 'utils/api/auth';
 import { useFormValidation } from 'utils/hooks/useFormValidation';
 import { signInStart, signInSuccess, signInFailure } from 'store/slices/user';
 import Input from 'components/Input/Input';
 import defaultAvatar from '../../../images/admin/avatar_default.svg';
+import { AUTH } from 'utils/translationKeys';
 
 function LoginForm({ onClose }) {
   // TODO: обработать загрузгу и ошибки валидации/сервера
@@ -13,6 +15,7 @@ function LoginForm({ onClose }) {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { values, handleChange, errors, isValid } = useFormValidation();
+  const { t } = useTranslation();
   const isFormValid =
     values.login !== '' &&
     values.password !== '' &&
@@ -24,7 +27,7 @@ function LoginForm({ onClose }) {
     evt.preventDefault();
 
     if (!values.login || !values.password) {
-      return dispatch(signInFailure('Please fill out all fields'));
+      return dispatch(signInFailure(t(AUTH.FILL_ALL_FIELDS)));
     }
 
     try {
@@ -57,12 +60,12 @@ function LoginForm({ onClose }) {
   return (
     <form className="auth-modal__container" onSubmit={handleSubmit}>
       <label className="auth-modal__field">
-        Логин
+        {t(AUTH.LOGIN_LABEL)}
         <Input
           type="text"
           name="login"
           className="auth-modal__input"
-          placeholder="Логин"
+          placeholder={t(AUTH.LOGIN_PLACEHOLDER)}
           value={values.login}
           onChange={handleChange}
           isValid={isValid}
@@ -72,12 +75,12 @@ function LoginForm({ onClose }) {
       </label>
 
       <label className="auth-modal__field">
-        Пароль
+        {t(AUTH.PASSWORD_LABEL)}
         <Input
           name="password"
           type="password"
           className="auth-modal__input"
-          placeholder="Пароль"
+          placeholder={t(AUTH.PASSWORD_PLACEHOLDER)}
           value={values.password}
           onChange={handleChange}
           isValid={isValid}
@@ -91,10 +94,10 @@ function LoginForm({ onClose }) {
           isFormValid ? 'auth-modal__main-btn_active' : ''
         }`}
         type="submit"
-        aria-label="кнопка входа"
+        aria-label={t(AUTH.LOGIN_BUTTON_ARIA)}
         disabled={!isFormValid}
       >
-        Войти
+        {t(AUTH.LOGIN_BUTTON)}
       </button>
     </form>
   );

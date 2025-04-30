@@ -10,8 +10,10 @@ const DropdownLanguage = () => {
   const { lang, articleId } = useParams();
   const { languages } = useSelector(selectArticle);
   const [isOpen, setIsOpen] = useState(false);
-  const flag = languageList.find((item) => item.name === lang);
-  const otherFlags = languageList.filter((item) => item.name !== lang);
+
+  const flag = languageList.find((item) => item.id === lang);
+  console.log(flag);
+  const otherFlags = languageList.filter((item) => item.id !== lang);
   const flagList = isOpen ? [flag, ...otherFlags] : [flag];
 
   return (
@@ -23,14 +25,14 @@ const DropdownLanguage = () => {
       >
         <ul className="flag-list">
           {flagList.map((flag) => {
-            const extraClass = !languages.includes(flag.name)
+            const extraClass = !languages.includes(flag.id)
               ? ' flag-list__item_disabled'
               : '';
             return (
               <li
                 className={'flag-list__item' + extraClass}
                 key={flag.name}
-                onClick={() => navigate(`/${flag.name}/${articleId}`)}
+                onClick={() => navigate(`/${flag.id}/${articleId}`)}
               >
                 <img className="flag" src={flag.src} alt={flag.name} />
               </li>

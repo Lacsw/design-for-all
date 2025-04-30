@@ -11,8 +11,10 @@ import HashButton from 'components/LinkButton/HashButton';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import { adminHash } from 'utils/constants';
-
+import { useTranslation } from 'react-i18next';
+import { ADMIN } from 'utils/translationKeys';
 export default function AdminNavbar({ logout }) {
+  const { t } = useTranslation();
   const theme = useSelector(getCurrentTheme);
   return (
     <nav className="admin-navbar">
@@ -26,7 +28,7 @@ export default function AdminNavbar({ logout }) {
               theme === 'dark' ? articlesIconBlack : articlesIconWhite
             }
           >
-            Заявки
+            {t(ADMIN.NAVBAR.REQUESTS)}
           </HashButton>
         </li>
 
@@ -38,7 +40,7 @@ export default function AdminNavbar({ logout }) {
               theme === 'dark' ? newAuthorBlackIcon : newAuthorWhiteIcon
             }
           >
-            Создать пользователя
+            {t(ADMIN.NAVBAR.CREATE_USER)}
           </HashButton>
         </li>
 
@@ -48,7 +50,7 @@ export default function AdminNavbar({ logout }) {
             icon={theme === 'dark' ? profileWhiteIcon : profileBlackIcon}
             activeIcon={theme === 'dark' ? profileBlackIcon : profileWhiteIcon}
           >
-            Профиль
+            {t(ADMIN.NAVBAR.PROFILE)}
           </HashButton>
         </li>
 
@@ -57,7 +59,7 @@ export default function AdminNavbar({ logout }) {
             icon={theme === 'dark' ? logoutIconW : logoutIconB}
             onClick={logout}
           >
-            Выйти
+            {t(ADMIN.NAVBAR.LOGOUT)}
           </HashButton>
         </li>
       </ul>

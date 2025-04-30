@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
@@ -14,9 +14,20 @@ export default function Main({ setSection }) {
 
   const theme = useSelector(getCurrentTheme);
   const [activeTab, setActiveTab] = useState({
-    name: 'Обновления',
+    name: mainNavigationOptionsList[0].id,
     index: 0,
   });
+
+  const setSectionRef = useRef(setSection);
+  setSectionRef.current = setSection;
+  
+  useEffect(() => {
+    setActiveTab({
+      name: mainNavigationOptionsList[0].id,
+      index: 0,
+    });
+    setSectionRef.current(mainNavigationOptionsList[0].link);
+  }, []);
 
   const handleActiveTab = ({ name, index }) => {
     setActiveTab({ name, index });
@@ -41,7 +52,6 @@ export default function Main({ setSection }) {
           activeTab={activeTab}
           setSection={setSection}
         />
-        {/* <div className="beauty" /> */}
       </div>
 
       <div className="main__content">

@@ -1,10 +1,8 @@
 import DropdownNavigation from './DropdownNavigation';
 
 export default function CurrencyDropdown({ options, theme, title }) {
-  const language = 'USD';
-  const currencySrc = options.find((item) => item.name === language)?.src[
-    theme
-  ];
+  const currency = 'USD';
+  const currencySrc = options.find((item) => item.id === currency)?.src[theme];
 
   return (
     <DropdownNavigation

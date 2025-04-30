@@ -7,6 +7,8 @@ import './CheckFields.css';
 import RadioButtons from 'components/RadioButtons/RadioButtons';
 import { useDispatch } from 'react-redux';
 import { setDecision } from 'store/slices/user';
+import { useTranslation } from 'react-i18next';
+import { CHECK_FIELDS } from 'utils/translationKeys';
 
 const possibleFields = [
   'sub_category',
@@ -28,11 +30,13 @@ function getFields(offer) {
 }
 
 const CheckFields = ({ offer, title }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [fields, setFields] = useState(getFields(offer));
-  const lang = langSelectOptions.find(
+  const langKey = langSelectOptions.find(
     (item) => item.value === offer.lang
   )?.label;
+  const lang = t(langKey);
 
   function handleChoice({ target }) {
     const { name, value } = target;
@@ -68,14 +72,14 @@ const CheckFields = ({ offer, title }) => {
           <div className={`view-article__label`}>
             <div className="check-fields__sub-title">
               <RadioButtons name="image" onChoice={handleChoice} />
-              Картинка статьи
+              {t(CHECK_FIELDS.IMAGE_TITLE)}
             </div>
             <ImageWithFallback
               className="view-article__img"
               src={offer.image}
-              alt="Картинка статьи"
+              alt={t(CHECK_FIELDS.IMAGE_ALT)}
               fallbackClassName="view-article__image-placeholder"
-              fallbackAlt="Заглушка для статьи"
+              fallbackAlt={t(CHECK_FIELDS.IMAGE_FALLBACK_ALT)}
             />
           </div>
         )}
@@ -84,7 +88,7 @@ const CheckFields = ({ offer, title }) => {
           <div className={`view-article__label`}>
             <div className="check-fields__sub-title">
               <RadioButtons name="title" onChoice={handleChoice} />
-              Заголовок статьи
+              {t(CHECK_FIELDS.ARTICLE_TITLE)} 
             </div>
             <span className="view-article__input view-article__input_article-header">
               {offer.title}
@@ -96,7 +100,7 @@ const CheckFields = ({ offer, title }) => {
           <div className={`view-article__label`}>
             <div className="check-fields__sub-title">
               <RadioButtons name="description" onChoice={handleChoice} />
-              Контент статьи
+              {t(CHECK_FIELDS.DESCRIPTION_TITLE)}
             </div>
             <RichTextEditor initialValue={offer.description} readOnly={true} />
           </div>
@@ -109,7 +113,7 @@ const CheckFields = ({ offer, title }) => {
                 name="recommend_from_creator"
                 onChoice={handleChoice}
               />
-              Рекомендации авторов
+              {t(CHECK_FIELDS.RECOMMENDATIONS_TITLE)}
             </div>
             <div className="view-article__recommendations">
               <ul className="recommendations__list">

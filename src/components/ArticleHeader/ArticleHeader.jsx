@@ -8,8 +8,11 @@ import {
   formatUpdatedAt,
 } from 'utils/helpers/timeFormatters.js';
 import { Tooltip } from 'components';
+import { useTranslation } from 'react-i18next';
+import { CATALOG } from 'utils/translationKeys';
 
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
+  const { t } = useTranslation();
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
@@ -28,10 +31,10 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
       </div>
       <div className="article-header__timing-container">
         <Tooltip title={formatTimestamp(timeCreate)} placement="top" arrow>
-          <p className="article-header__timing">Опубликовано {createDate}</p>
+          <p className="article-header__timing">{t(CATALOG.HEADER.PUBLISHED)} {createDate}</p>
         </Tooltip>
         <Tooltip title={formatUpdatedAt(timeUpdate)} placement="top" arrow>
-          <p className="article-header__timing">Обновлено {updateDate}</p>
+          <p className="article-header__timing">{t(CATALOG.HEADER.UPDATED)} {updateDate}</p>
         </Tooltip>
       </div>
     </>

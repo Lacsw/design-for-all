@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
 
 import './AuthModal.css';
 import { LoginForm, SignUpForm } from 'components';
 import { modalRoot } from 'utils/modal';
+import { AUTH } from 'utils/translationKeys';
 
 /**
  * modalMode - 'login' (по ум.) | 'signUp'
  */
 const AuthModal = ({ isOpen, onChange, modalMode = 'login' }) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (isOpen) {
       const closeByEsc = (evt) => {
@@ -47,7 +51,7 @@ const AuthModal = ({ isOpen, onChange, modalMode = 'login' }) => {
           }
           onClick={handleLoginTabClick}
         >
-          Авторизация
+          {t(AUTH.LOGIN)}
         </button>
         <button
           className={
@@ -57,7 +61,7 @@ const AuthModal = ({ isOpen, onChange, modalMode = 'login' }) => {
           }
           onClick={handleSignUpTabClick}
         >
-          Регистрация
+          {t(AUTH.SIGNUP)}
         </button>
       </div>
       {modalMode === 'login' ? (

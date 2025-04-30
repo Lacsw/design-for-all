@@ -1,6 +1,8 @@
 import './SocialsBar.css';
 import { SocialItem } from 'components';
 import plusBigIcon from 'images/author/plus-icon.svg';
+import { useTranslation } from 'react-i18next';
+import { PROFILE } from 'utils/translationKeys';
 
 export default function SocialsBar({
   onOpen,
@@ -8,6 +10,7 @@ export default function SocialsBar({
   onEdit,
   onDelete,
 }) {
+  const { t } = useTranslation();
   const renderSocialMedia = () => {
     const entries = Object.entries(socialMediaList || {});
     if (entries.length === 0) {
@@ -29,7 +32,7 @@ export default function SocialsBar({
     <div className="socials-bar">
       {renderSocialMedia()}
       <button type="button" className="socials-bar-btn" onClick={onOpen}>
-        <img src={plusBigIcon} alt="Иконка добавить" />
+        <img src={plusBigIcon} alt={t(PROFILE.SOCIAL_BAR.ADD_ICON_ALT)} />
       </button>
     </div>
   );

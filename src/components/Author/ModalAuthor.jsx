@@ -6,8 +6,11 @@ import { useCallback, useEffect, useState } from 'react';
 import Preloader from 'components/Preloader/Preloader';
 import authorApi from 'utils/api/author';
 import SocialLinks from './SocialLinks';
+import { useTranslation } from 'react-i18next'; 
+import { CATALOG } from 'utils/translationKeys';
 
 const ModalAuthor = ({ author, isOpen, onClose }) => {
+  const { t } = useTranslation();
   const [reviewer, setReviewer] = useState({});
   const closeModal = useCallback(() => {
     onClose();
@@ -43,7 +46,7 @@ const ModalAuthor = ({ author, isOpen, onClose }) => {
       >
         <img
           src={author.avatar || defaultAvatar}
-          alt="Аватар"
+          alt={t(CATALOG.AUTHOR.AVATAR_ALT)}
           className="modal-content__avatar"
         />
         {!author.fio && !reviewer.fio ? (
@@ -63,7 +66,7 @@ const ModalAuthor = ({ author, isOpen, onClose }) => {
               </div>
             ) : (
               <p className="author__socials-text">
-                (здесь будут контакты автора)
+                {t(CATALOG.AUTHOR.SOCIALS_TEXT)}
               </p>
             )}
           </div>

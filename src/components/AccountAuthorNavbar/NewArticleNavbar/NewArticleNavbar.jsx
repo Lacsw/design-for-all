@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import './NewArticleNavbar.css';
-import publishIcon from 'images/account/publish-icon.svg';
-import saveDraftIcon from 'images/account/save-draft-icon.svg';
+import publishIconWhite from 'images/account/publish-icon_white.svg';
+import publishIconBlack from 'images/account/publish-icon_black.svg';
+import saveDraftIconWhite from 'images/account/save-draft-icon_white.svg';
+import saveDraftIconBlack from 'images/account/save-draft-icon_black.svg';
 import cancelIconW from 'images/account/cancel-icon.svg';
 import cancelIconB from 'images/account/cancel-icon_black.svg';
 import backIconW from 'images/account/logout-icon.svg';
@@ -14,6 +17,7 @@ import { getDraft, getOriginal } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authorArticlesTabs, hashPaths } from 'utils/constants';
+import { AUTHOR } from 'utils/translationKeys';
 
 function defineNames(state) {
   if (!state) return ['create_new', 'create_draft'];
@@ -67,6 +71,7 @@ const icons = {
 };
 
 export default function NewArticleNavbar({ onChange }) {
+  const { t } = useTranslation();
   const location = useLocation();
   const theme = useSelector(getCurrentTheme);
   const original = useSelector(getOriginal);
@@ -142,7 +147,9 @@ export default function NewArticleNavbar({ onChange }) {
       <ul className="new-article-navbar__list">
         {location.state?.name === 'view' ? (
           <li>
-            <p className="new-article-navbar__status">Статус: {status}</p>
+            <div className="new-article-navbar__status">
+              {status && t(status)}
+            </div>
           </li>
         ) : (
           <>
@@ -153,8 +160,8 @@ export default function NewArticleNavbar({ onChange }) {
                 onClick={handleSave}
                 disabled={publishDisabled}
               >
-                <img src={publishIcon} alt="" />
-                Опубликовать
+                <img src={theme === 'dark' ? publishIconWhite : publishIconBlack} alt="" />
+                {t(AUTHOR.NEW_ARTICLE.NAVBAR.PUBLISH)}
               </button>
             </li>
 
@@ -165,23 +172,24 @@ export default function NewArticleNavbar({ onChange }) {
                 onClick={handleSave}
                 disabled={draftDisabled}
               >
-                <img src={saveDraftIcon} alt="Сохранить" />
-                Сохранить в черновик
+                <img src={theme === 'dark' ? saveDraftIconWhite : saveDraftIconBlack} alt="" />
+                {t(AUTHOR.NEW_ARTICLE.NAVBAR.SAVE_DRAFT)}
               </button>
             </li>
           </>
         )}
         <li>
           <button className="link-button" onClick={() => navigate(-1)}>
-            <img src={icon} alt="Вернуться" />
-            {location.state?.name === 'view' ? 'Назад' : 'Отменить'}
+            <img src={icon} alt={
+              t(AUTHOR.NEW_ARTICLE.NAVBAR.BACK)} />
+            {location.state?.name === 'view' ? t(AUTHOR.NEW_ARTICLE.NAVBAR.BACK) : t(AUTHOR.NEW_ARTICLE.NAVBAR.CANCEL)}
           </button>
         </li>
       </ul>
       <ModalAttention
         isOpen={isOpenModal}
         onClose={handleCancelClick}
-        title="Внимание!"
+        title={t(AUTHOR.NEW_ARTICLE.NAVBAR.ATTENTION)}
       />
     </nav>
   );

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchTree } from 'store/slices/article';
 import { TreeList } from 'components';
+import { VALID_SECTIONS } from 'utils/constants';
 import './ArticlesTree.css';
 
 export default function ArticlesTree({ path, catalog, language }) {
@@ -15,10 +16,11 @@ export default function ArticlesTree({ path, catalog, language }) {
 
   useEffect(() => {
     // Загружаем дерево, если данных нет или они устарели
-    if (!sectionData?.original || Date.now() - fetchTime > 630000) {
+    // Проверяем, что path является допустимой секцией
+    if ((!sectionData?.original || Date.now() - fetchTime > 630000) && VALID_SECTIONS.includes(path)) {
       dispatch(fetchTree(fetchPath));
     }
-  }, [fetchPath, fetchTime, dispatch, sectionData]);
+  }, [fetchPath, fetchTime, dispatch, sectionData, path]);
 
   return (
     <div className="tree">

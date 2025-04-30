@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 
 import {
-  scrollPercentDefault,
+  lastShowingOffsetDefault,
   firstShowingOffsetDefault,
   targetHeadingsDefault,
   scrollableRefStub,
@@ -41,7 +41,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   targetSelector,
   scrollableElParams,
   firstShowingOffset = firstShowingOffsetDefault,
-  scrollPercent = scrollPercentDefault,
+  lastShowingOffset = lastShowingOffsetDefault,
   targetHeadings = targetHeadingsDefault,
   onOpen,
   onClose,
@@ -193,8 +193,8 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 
       if (
         rect.y < -firstShowingOffset &&
-        elWithScrollData.scrollTop / elWithScrollData.scrollHeight <
-          scrollPercent / 100
+        elWithScrollData.scrollHeight - elWithScrollData.scrollTop >
+          lastShowingOffset
       ) {
         setIsShowing(true);
       } else {
@@ -210,7 +210,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     targetRef,
     headings,
     firstShowingOffset,
-    scrollPercent,
+    lastShowingOffset,
   ]);
 
   // #art-nav-2

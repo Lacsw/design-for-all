@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
+import { COMMON } from 'utils/translationKeys';
 
 const Modal = forwardRef(function Modal(
   {
@@ -20,6 +22,7 @@ const Modal = forwardRef(function Modal(
   ref
 ) {
   const theme = useSelector(getCurrentTheme);
+  const { t } = useTranslation();
   useEffect(() => {
     if (isOpen) {
       const closeByEsc = (evt) => {
@@ -70,7 +73,7 @@ const Modal = forwardRef(function Modal(
             onClick={onConfirm}
             className="modal__btn modal__btn_confirm"
             type="button"
-            aria-label="кнопка подтверждения"
+            aria-label={t(COMMON.MODAL.CONFIRM_BUTTON)}
             disabled={isBlocked}
           />
           {twoBtns && (
@@ -78,7 +81,7 @@ const Modal = forwardRef(function Modal(
               onClick={onClose}
               className="modal__btn modal__btn_cancel"
               type="button"
-              aria-label="кнопка закрытия"
+              aria-label={t(COMMON.MODAL.CANCEL_BUTTON)}
             />
           )}
         </div>
