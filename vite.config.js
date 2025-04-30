@@ -13,14 +13,7 @@ export default defineConfig(() => {
           entryFileNames: `assets/[name].js`,
           assetFileNames: `assets/[name].[ext]`,
           format: 'es',
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
-            i18next: ['i18next', 'i18next-browser-languagedetector', 'i18next-http-backend']
-          }
         },
-        input: {
-          main: 'index.html'
-        }
       },
       commonjsOptions: {
         include: [/node_modules/],
@@ -32,11 +25,11 @@ export default defineConfig(() => {
       include: [
         'i18next',
         'i18next-browser-languagedetector',
-        'i18next-http-backend'
+        'i18next-http-backend',
+        'cross-fetch'
       ],
       esbuildOptions: {
-        target: 'esnext',
-        format: 'esm'
+        target: 'esnext'
       }
     },
     define: {
