@@ -15,24 +15,25 @@ export default defineConfig(() => {
           format: 'es',
           manualChunks: {
             vendor: ['react', 'react-dom'],
-            i18next: ['i18next', 'i18next-browser-languagedetector', 'i18next-http-backend']
+            i18next: ['i18next', 'i18next-browser-languagedetector']
           }
         }
       },
       commonjsOptions: {
         include: [/node_modules/],
         transformMixedEsModules: true,
-        defaultIsModuleExports: 'auto'
+        defaultIsModuleExports: 'auto',
+        esmExternals: true
       }
     },
     optimizeDeps: {
       include: [
         'i18next',
-        'i18next-browser-languagedetector',
-        'i18next-http-backend'
+        'i18next-browser-languagedetector'
       ],
       esbuildOptions: {
-        target: ['es2015', 'edge88', 'firefox78', 'chrome87', 'safari13']
+        target: ['es2015', 'edge88', 'firefox78', 'chrome87', 'safari13'],
+        format: 'esm'
       }
     },
     define: {
