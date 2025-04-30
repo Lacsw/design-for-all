@@ -8,32 +8,9 @@ export default defineConfig(() => {
     base: '/',
     build: {
       outDir: 'build',
-      rollupOptions: {
-        output: {
-          entryFileNames: `assets/[name].js`,
-          assetFileNames: `assets/[name].[ext]`,
-          format: 'es',
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
-            i18next: ['i18next', 'i18next-browser-languagedetector']
-          }
-        }
-      },
       commonjsOptions: {
         include: [/node_modules/],
         transformMixedEsModules: true,
-        defaultIsModuleExports: 'auto',
-        esmExternals: true
-      }
-    },
-    optimizeDeps: {
-      include: [
-        'i18next',
-        'i18next-browser-languagedetector'
-      ],
-      esbuildOptions: {
-        target: ['es2015', 'edge88', 'firefox78', 'chrome87', 'safari13'],
-        format: 'esm'
       }
     },
     define: {

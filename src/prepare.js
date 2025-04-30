@@ -12,3 +12,7 @@
 import { isTouchDevice } from 'utils/helpers/adaptability/touchScreens';
 
 window.isTouchDevice = isTouchDevice();
+
+// Добавляем глобальную переменную, необходимую для работы i18next
+// @ts-ignore
+window.global = window;
