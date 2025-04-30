@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './UpdateCard.css';
 import { useDispatch } from 'react-redux';
+import { formatTimestamp } from 'utils/helpers/timeFormatters.js';
+import { Tooltip } from 'components';
 import { setMainCategory, setShouldRemountTree } from 'store/slices/catalog/slice';
 import { UPDATES } from 'utils/translationKeys';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +12,9 @@ export default function UpdateCard({ update }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const timestamp = Math.floor(
+    new Date(update.time_action.replace(' ', 'T')).getTime() / 1000
+  );
   
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,7 +26,6 @@ export default function UpdateCard({ update }) {
     // Используем React Router для навигации
     navigate(`/${update.lang}/${update.what_update || update.what_create}`);
   };
-  
   return (
     <li className="update-card">
       <Link
@@ -42,9 +46,11 @@ export default function UpdateCard({ update }) {
               ? t(UPDATES.ARTICLE_TYPE.TRANSLATED)
               : ''}
           </span>
-          <span className="update-card__others">
-            {update.time_action.split(' ')[0].split('-').reverse().join('.')}
-          </span>
+          <Tooltip title={formatTimestamp(timestamp)} placement="top" arrow>
+            <span className="update-card__others">
+              {update.time_action.split(' ')[0].split('-').reverse().join('.')}
+            </span>
+          </Tooltip>
         </div>
       </Link>
     </li>

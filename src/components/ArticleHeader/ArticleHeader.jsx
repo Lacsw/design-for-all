@@ -3,6 +3,11 @@ import DropdownLanguage from 'components/DropdownLanguage/DropdownLanguage';
 import DropdownEdit from 'components/DropdownEdit/DropdownEdit';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from 'store/slices/user';
+import {
+  formatTimestamp,
+  formatUpdatedAt,
+} from 'utils/helpers/timeFormatters.js';
+import { Tooltip } from 'components';
 import { useTranslation } from 'react-i18next';
 import { CATALOG } from 'utils/translationKeys';
 
@@ -11,6 +16,9 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
+
+  const createDate = new Date(timeCreate * 1000).toLocaleDateString();
+  const updateDate = new Date(timeUpdate * 1000).toLocaleDateString();
 
   return (
     <>
@@ -22,8 +30,12 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
         </div>
       </div>
       <div className="article-header__timing-container">
-        <p className="article-header__timing">{t(CATALOG.HEADER.PUBLISHED)} {timeCreate}</p>
-        <p className="article-header__timing">{t(CATALOG.HEADER.UPDATED)} {timeUpdate}</p>
+        <Tooltip title={formatTimestamp(timeCreate)} placement="top" arrow>
+          <p className="article-header__timing">{t(CATALOG.HEADER.PUBLISHED)} {createDate}</p>
+        </Tooltip>
+        <Tooltip title={formatUpdatedAt(timeUpdate)} placement="top" arrow>
+          <p className="article-header__timing">{t(CATALOG.HEADER.UPDATED)} {updateDate}</p>
+        </Tooltip>
       </div>
     </>
   );
