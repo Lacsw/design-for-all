@@ -15,69 +15,31 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    // Временные локальные переводы для разработки
-    resources: USE_BACKEND ? undefined : {
-        ru: { translation: ru },
-        en: { translation: en },
-        zh: { translation: zh },
-        es: { translation: es },
+    resources: {
+      ru: { translation: ru },
+      en: { translation: en },
+      zh: { translation: zh },
+      es: { translation: es },
     },
-
-    // Поддерживаемые языки интерфейса
     supportedLngs: ['ru', 'en', 'zh', 'es'],
     fallbackLng: 'ru',
-
-    // Настройки для загрузки переводов с бэкенда
-    backend: USE_BACKEND ? {
-      // Формируем URL для загрузки переводов
-      loadPath: 'https://design-for-all.net/interface_{{lng}}.json',
-      
-      // Добавляем кэширование на 24 часа + небольшой запас
-      cacheTTL: 86400 + 3600, // 25 часов в секундах
-      
-      // Проверяем статус ответа
-      allowEmpty: false,
-      
-      // Можно добавить обработку ошибок
-      customHeaders: {
-        'Cache-Control': 'max-age=86400'
-      },
-    } : undefined,
-
-    // Настройки определения языка
     detection: {
-      order: [
-        'querystring',
-        'localStorage',
-        'navigator',
-      ],
-      lookupQuerystring: 'lng',
+      order: ['localStorage', 'navigator'],
       lookupLocalStorage: 'i18nextLng',
       caches: ['localStorage'],
     },
-
-    // Настройки интерполяции
     interpolation: {
       escapeValue: false,
     },
-
-    // Настройки для React
     react: {
-      useSuspense: true,
+      useSuspense: false,
     },
-
-    // Включаем отладку только в режиме разработки
     debug: process.env.NODE_ENV === 'development',
-  })
-  .catch((error) => {
-    console.error('Error initializing i18next:', error);
   });
 
 // Функция для получения текущего языка интерфейса
 // Используется для API запросов, поиска и других операций
-export const getCurrentLanguage = () => {
-  return i18n.language;
-};
+export const getCurrentLanguage = () => i18n.language;
 
 // Функция для проверки необходимости обновления переводов
 export const checkTranslationsUpdate = async () => {
