@@ -20,7 +20,9 @@ export default defineConfig(() => {
         include: [/node_modules/],
         transformMixedEsModules: true,
         esmExternals: true,
-      }
+      },
+      cssCodeSplit: false,
+      minify: 'esbuild',
     },
     optimizeDeps: {
       include: [
