@@ -6,10 +6,7 @@ import Backend from 'i18next-http-backend';
 // Автоматически определяет язык пользователя на основе настроек браузера
 import LanguageDetector from 'i18next-browser-languagedetector';
 // Временно импортируем локальные переводы для разработки
-import ru from './locales/ru.json';
-import en from './locales/en.json';
-import zh from './locales/zh.json';
-import es from './locales/es.json';
+import { ru, en, zh, es } from './utils/locales';
 // Флаг для переключения между локальными и серверными переводами
 const USE_BACKEND = false; // изменить на true когда бэкенд будет готов
 
