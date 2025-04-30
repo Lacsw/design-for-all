@@ -12,19 +12,25 @@ export default defineConfig(() => {
         output: {
           entryFileNames: `assets/[name].js`,
           assetFileNames: `assets/[name].[ext]`,
+          format: 'es',
         },
       },
       commonjsOptions: {
         include: [/node_modules/],
         transformMixedEsModules: true,
+        defaultIsModuleExports: 'auto'
       }
     },
     optimizeDeps: {
       include: [
         'i18next',
         'i18next-browser-languagedetector',
-        'i18next-http-backend'
-      ]
+        'i18next-http-backend',
+        'cross-fetch'
+      ],
+      esbuildOptions: {
+        target: 'esnext'
+      }
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
