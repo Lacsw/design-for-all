@@ -61,22 +61,14 @@ const Fork = ({ section, setSection }) => {
     return <UpdatesPage section={rawHash} setSection={setSection} />;
   }
 
-  if (rawHash && validKeys.includes(rawHash)) {
-    return <Catalog section={rawHash} setSection={setSection} />;
-  }
-
   if (rawHash === 'articles') {
     return (
      <NotFound resetSection={() => setSection('')}/>
     );
   }
 
-  if (articleId) {
-    return <Catalog section={section} setSection={setSection} />;
-  }
-
-  if (rawHash && validKeys.includes(rawHash)) {
-    return <Catalog section={rawHash} setSection={setSection} />;
+  if (articleId || (rawHash && validKeys.includes(rawHash))) {
+    return <Catalog section={articleId ? section : rawHash} setSection={setSection} />;
   }
 
   if (Object.values(hashPaths).includes(location.hash)) {
@@ -99,12 +91,7 @@ const Fork = ({ section, setSection }) => {
       return <NotFound resetSection={() => setSection('')} />;
     }
 
-    
-  // return isCatalogOpen ? (
-  //   <Catalog section={section} setSection={setSection} />
-  // ) : (
-  //   <Main setSection={setSection} />
-  // );
+
 };
 
 export default Fork;
