@@ -18,11 +18,11 @@ export default defineConfig(() => {
       },
       commonjsOptions: {
         include: [/node_modules/],
-        transformMixedEsModules: true,
-        esmExternals: true,
+        // transformMixedEsModules: true,
+        // esmExternals: true,
       },
-      cssCodeSplit: false,
-      minify: 'esbuild',
+      // cssCodeSplit: false,
+      // minify: 'esbuild',
     },
     optimizeDeps: {
       include: [
