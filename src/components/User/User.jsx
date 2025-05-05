@@ -69,7 +69,9 @@ export default function User() {
       {socialList.length > 4 && (
         <p
           className={
-            isOpen ? 'user__see-more user__see-more_opened' : 'user__see-more'
+            isOpen 
+              ? `user__see-more user__see-more_opened ${theme}` 
+              : `user__see-more ${theme}`
           }
           onClick={() => setIsOpen(!isOpen)}
         >
