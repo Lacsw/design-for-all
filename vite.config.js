@@ -15,46 +15,30 @@ export default defineConfig(() => {
           format: 'es',
           exports: 'named',
         },
+        external: [/assets\/index2\.(css|js)$/],
       },
+
       commonjsOptions: {
         include: [/node_modules/],
-        transformMixedEsModules: true,
-        esmExternals: true,
-        // transformMixedEsModules: true,
-        // esmExternals: true,
       },
-      cssCodeSplit: false,
-      minify: 'esbuild',
-      // cssCodeSplit: false,
-      // minify: 'esbuild',
     },
     optimizeDeps: {
       include: [
         'i18next',
         'i18next-browser-languagedetector',
         'i18next-http-backend',
-        'cross-fetch'
+        'cross-fetch',
       ],
       esbuildOptions: {
         target: 'esnext',
-        format: 'esm'
-      }
+        format: 'esm',
+      },
     },
     define: {
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     },
     plugins: [
       react(),
-      // Простой плагин исключения index2.css/js
-      {
-        name: 'exclude-iframe-assets',
-        enforce: 'pre',
-        resolveId(id) {
-          if (id.includes('index2.css') || id.includes('index2.js')) {
-            return { id, external: true };
-          }
-        }
-      },
       alias({
         entries: {
           /* При изменениях alias не забудьте соответствующе обновить:
