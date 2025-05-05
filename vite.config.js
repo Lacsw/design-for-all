@@ -10,10 +10,30 @@ export default defineConfig(() => {
       outDir: 'build',
       rollupOptions: {
         output: {
-          entryFileNames: `assets/[name].js`,
-          assetFileNames: `assets/[name].[ext]`,
+          // Uncomment to return back names without hashes. Delete manualChunks.
+          // entryFileNames: `assets/[name].js`,
+          // assetFileNames: `assets/[name].[ext]`,
           format: 'es',
           exports: 'named',
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react')) return 'react';
+              if (id.includes('redux')) return 'redux';
+              if (id.includes('i18next')) return 'i18n';
+              if (
+                id.includes('@mui') ||
+                id.includes('@emotion') ||
+                id.includes('clsx') ||
+                id.includes('merge-sx')
+              )
+                return 'mui';
+              if (id.includes('@tiptap')) return 'tiptap';
+              if (id.includes('rc-tree') || id.includes('treeview'))
+                return 'tree';
+              return 'vendor';
+            }
+          },
+          chunkFileNames: 'assets/chunk-[name]-[hash].js',
         },
         external: [/assets\/index2\.(css|js)$/],
       },
