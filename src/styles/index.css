@@ -3,6 +3,11 @@
 @import url(./vars.css);
 @import url(./mui/overrides/components/index.css);
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .body {
   background: var(--color-bg-main);
 }
