@@ -15,23 +15,19 @@ export default defineConfig(() => {
           format: 'es',
           exports: 'named',
         },
-        external: [
-          /\/assets\/index2\.css$/,
-          /\/assets\/index2\.js$/
-        ]
       },
       commonjsOptions: {
         include: [/node_modules/],
+        transformMixedEsModules: true,
+        esmExternals: true,
         // transformMixedEsModules: true,
         // esmExternals: true,
       },
+      cssCodeSplit: false,
+      minify: 'esbuild',
       // cssCodeSplit: false,
       // minify: 'esbuild',
     },
-    assetsInclude: [
-      '!**/assets/index2.css',
-      '!**/assets/index2.js'
-    ],
     optimizeDeps: {
       include: [
         'i18next',
@@ -42,14 +38,14 @@ export default defineConfig(() => {
       esbuildOptions: {
         target: 'esnext',
         format: 'esm'
-      },
-      exclude: ['assets/index2.js', 'assets/index2.css']
+      }
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     },
     plugins: [
       react(),
+      // Простой плагин исключения index2.css/js
       {
         name: 'exclude-iframe-assets',
         enforce: 'pre',
