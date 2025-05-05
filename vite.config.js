@@ -15,6 +15,10 @@ export default defineConfig(() => {
           format: 'es',
           exports: 'named',
         },
+        external: [
+          /\/assets\/index2\.css$/,
+          /\/assets\/index2\.js$/
+        ]
       },
       commonjsOptions: {
         include: [/node_modules/],
@@ -24,6 +28,10 @@ export default defineConfig(() => {
       // cssCodeSplit: false,
       // minify: 'esbuild',
     },
+    assetsInclude: [
+      '!**/assets/index2.css',
+      '!**/assets/index2.js'
+    ],
     optimizeDeps: {
       include: [
         'i18next',
@@ -34,13 +42,23 @@ export default defineConfig(() => {
       esbuildOptions: {
         target: 'esnext',
         format: 'esm'
-      }
+      },
+      exclude: ['assets/index2.js', 'assets/index2.css']
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     },
     plugins: [
       react(),
+      {
+        name: 'exclude-iframe-assets',
+        enforce: 'pre',
+        resolveId(id) {
+          if (id.includes('index2.css') || id.includes('index2.js')) {
+            return { id, external: true };
+          }
+        }
+      },
       alias({
         entries: {
           /* При изменениях alias не забудьте соответствующе обновить:
