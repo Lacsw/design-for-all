@@ -21,7 +21,7 @@ import { selectTitles } from 'store/slices/article';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
-import debounce from 'utils/helpers/debounce';
+import { useDebounce } from 'utils/hooks/useDebounce';
 import { useTranslation } from 'react-i18next';
 import { CREATION } from 'utils/translationKeys';
 
@@ -90,27 +90,29 @@ export const NewArticle = memo(function NewArticle({
     draft.lang
   );
 
-  // Обработчик с задержка 500 мс
-  const debouncedCheckSubCategory = useMemo(
-    () =>
-      debounce((value) => {
-        if (value.trim() !== '') {
-          checkSubCategory(value.trim());
-        }
-      }, 500),
-    [checkSubCategory]
-  );
+  // Создаем callback для проверки
+  const checkCallback = useCallback((value) => {
+    if (value.trim() !== '') {
+      checkSubCategory(value.trim());
+    }
+  }, [checkSubCategory]);
 
-  // Обработчик onChange для  подкатегории:
-  const handleSubCategoryChange = (evt) => {
-    const value = evt.target.value;
-    // Обновляем значение поля
-    changeField('sub_category', value);
-    // Сбрасываем предыдущий hint сразу при изменении
-    clearHint();
-    // Запускаем проверку с задержкой
-    debouncedCheckSubCategory(value);
-  };
+  // Используем существующий хук useDebounce
+  const debouncedCheckSubCategory = useDebounce(checkCallback, 500, true);
+
+  // Обработчик onChange для подкатегории:
+  const handleSubCategoryChange = useCallback(
+    (evt) => {
+      const value = evt.target.value;
+      // Обновляем значение поля
+      changeField('sub_category', value);
+      // Сбрасываем предыдущий hint сразу при изменении
+      clearHint();
+      // Запускаем проверку с задержкой через debounced-колбэк
+      debouncedCheckSubCategory(value);
+    },
+    [changeField, clearHint, debouncedCheckSubCategory]
+  );
 
   function handleInput({ target }) {
     if (/^https:\/\/\S+\.\S+$/.test(target.value) && !canAdd) setCanAdd(true);
