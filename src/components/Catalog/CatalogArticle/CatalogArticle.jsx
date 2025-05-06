@@ -20,6 +20,18 @@ import './CatalogArticle.css';
 import './withNavigator.css';
 import { useTranslation } from 'react-i18next';
 import { CATALOG } from 'utils/translationKeys';
+import { getLanguage } from 'store/slices/user';
+import tutorialRu from 'videos/tutorial_ru.mp4';
+import tutorialEn from 'videos/tutorial_en.mp4';
+import tutorialEs from 'videos/tutorial_es.mp4';
+import tutorialZh from 'videos/tutorial_zh.mp4';
+
+const tutorialVideos = {
+  ru: tutorialRu,
+  en: tutorialEn,
+  es: tutorialEs,
+  zh: tutorialZh
+};
 
 /** @type {import('components/ArticleNavigator/types').IScrollableElParams} */
 const scrollableElParams = {
@@ -44,7 +56,7 @@ export default function CatalogArticle() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { lang, articleId } = useParams();
-
+  const language = useSelector(getLanguage);
   const article = useSelector(selectArticle);
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
@@ -61,7 +73,7 @@ export default function CatalogArticle() {
 
   // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
 
-  const headerElRef = useRef(/** @type {HTMLElement | null} */ (null));
+  const headerElRef = useRef(/** @type {HTMLElement | null} */(null));
   useEffect(() => {
     headerElRef.current = document.querySelector('div#root header.header');
   }, []);
@@ -71,9 +83,26 @@ export default function CatalogArticle() {
     setNavigatorFlag((prev) => !prev);
   }, []);
 
+
   return isBlank ? (
     <div className="blank">
-      {t(CATALOG.ARTICLE.BLANK.SEARCH_TREE)}
+      <p className="blank__text">{t(CATALOG.ARTICLE.BLANK.SEARCH_TREE)}</p>
+      <video
+        key={language}
+        autoPlay
+        muted
+        playsInline
+        loop
+        preload="auto"
+        width="100%"
+        height="auto"
+        style={{ maxWidth: '800px', margin: '0 auto', display: 'block' }}
+      >
+        <source 
+          src={tutorialVideos[language] || tutorialRu} 
+          type="video/mp4"
+        />
+      </video>
     </div>
   ) : isError ? (
     <NotFoundArticle />
@@ -87,7 +116,7 @@ export default function CatalogArticle() {
         <ArticleHeader
           title={article.publication.title}
           timeCreate={article?.publication.date_create}
-          timeUpdate={article?.publication.last_update }
+          timeUpdate={article?.publication.last_update}
         />
 
         <div ref={articleRef} className="article__main">

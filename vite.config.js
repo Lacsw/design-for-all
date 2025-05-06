@@ -59,6 +59,7 @@ export default defineConfig(() => {
           store: '/src/store',
           components: '/src/components',
           images: '/src/images',
+          videos: '/src/videos',
           styles: '/src/styles',
           types: '/src/types',
           node_modules: '/node_modules',
