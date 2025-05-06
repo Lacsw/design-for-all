@@ -228,7 +228,9 @@ export const CATALOG = {
 
   ARTICLE: {
     BLANK: {
-      SEARCH_TREE: 'catalog_article_blank_search_tree', // Воспользуйтесь поиском по дереву или поиском по заголовкам стате
+      SEARCH_TREE: 'catalog_article_blank_search_tree', // Воспользуйтесь {{tree}} или {{header}} статей
+      TREE: 'catalog_article_blank_search_tree_tree', // поиском по дереву
+      HEADER: 'catalog_article_blank_search_tree_header' // поиском по заголовкам
     },
     IMAGE: {
       ALT: 'catalog_article_image_alt', // Превью статьи
@@ -519,4 +521,10 @@ export const USER = {
   SOCIALS_MISSING: 'user_socials_missing', // Текст для отсутствия социальных сетей
   SEE_MORE: 'user_see_more', // Текст для показа всех социальных сетей
   SEE_LESS: 'user_see_less', // Текст для скрытия социальных сетей
+};
+
+export const SEARCH_INPUT = {
+  PLACEHOLDER: 'search_input_placeholder', // Поиск...
+  RESET_BUTTON: 'search_input_reset_button', // Кнопка сброса
+  ICON_ALT: 'search_input_icon_alt', // Иконка поиска
 };
