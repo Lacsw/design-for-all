@@ -18,13 +18,14 @@ import {
 } from 'components';
 import './CatalogArticle.css';
 import './withNavigator.css';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { CATALOG } from 'utils/translationKeys';
 import { getLanguage } from 'store/slices/user';
 import tutorialRu from 'videos/tutorial_ru.mp4';
 import tutorialEn from 'videos/tutorial_en.mp4';
 import tutorialEs from 'videos/tutorial_es.mp4';
 import tutorialZh from 'videos/tutorial_zh.mp4';
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 
 const tutorialVideos = {
   ru: tutorialRu,
@@ -61,6 +62,7 @@ export default function CatalogArticle() {
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
   const articleRef = useRef(null);
+  const { openComponent} = useInteractiveManager();
 
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
@@ -83,10 +85,25 @@ export default function CatalogArticle() {
     setNavigatorFlag((prev) => !prev);
   }, []);
 
+  const handleTreeSearch = () => {
+    openComponent('treeSearch');
+  };
+
+  const handleHeaderSearch = () => {
+    openComponent('headerSearch');
+  };
 
   return isBlank ? (
     <div className="blank">
-      <p className="blank__text">{t(CATALOG.ARTICLE.BLANK.SEARCH_TREE)}</p>
+      <p className="blank__text">
+        <Trans
+          i18nKey={CATALOG.ARTICLE.BLANK.SEARCH_TREE}
+          components={{
+            tree: <button className="blank__link" onClick={handleTreeSearch} />,
+            header: <button className="blank__link" onClick={handleHeaderSearch} />
+          }}
+        />
+      </p>
       <video
         key={language}
         autoPlay
@@ -98,8 +115,8 @@ export default function CatalogArticle() {
         height="auto"
         style={{ maxWidth: '800px', margin: '0 auto', display: 'block' }}
       >
-        <source 
-          src={tutorialVideos[language] || tutorialRu} 
+        <source
+          src={tutorialVideos[language] || tutorialRu}
           type="video/mp4"
         />
       </video>

@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
-
+import { useTranslation } from 'react-i18next';
+import { SEARCH_INPUT } from 'utils/translationKeys';
 import './SearchInput.css';
 import closeBtn from 'images/close-btn.svg';
 import closeBtnBlack from 'images/close-btn_black.svg';
@@ -16,25 +17,18 @@ export default function SearchInput({
   onResults,
   onOpen,
 }) {
-  const [isShown, setIsShown] = useState(false);
   const inputRef = useRef();
   const theme = useSelector(getCurrentTheme);
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (isShown) {
+    if (isInput && inputRef.current) {
       inputRef.current.focus();
-    }
-  }, [isShown]);
-
-  useEffect(() => {
-    if (!isInput) {
-      setIsShown(false);
     }
   }, [isInput]);
 
   const handleLoupeClick = () => {
-    setIsShown(true);
     onSearch && onSearch(true);
     if (!isMobile) {
       onOpen && onOpen(false);
@@ -42,7 +36,6 @@ export default function SearchInput({
   };
 
   const handleCloseClick = () => {
-    setIsShown(false);
     onSearch && onSearch(false);
     onResults && onResults(null);
   };
@@ -54,43 +47,48 @@ export default function SearchInput({
       onChange && onChange({ target: { value: '' } });
       return;
     }
-
     handleCloseClick();
   };
 
   return (
     <>
-      <div className={`search-input ${!isShown && `hide`}`}>
+      <div className={`search-input ${!isInput && `hide`}`}>
         <input
           className="search-input__field"
           ref={inputRef}
           onChange={onChange}
+          placeholder={t(SEARCH_INPUT.PLACEHOLDER)}
+          aria-label={t(SEARCH_INPUT.PLACEHOLDER)}
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
               handleCloseClick();
             }
           }}
-        ></input>
+        />
         <button
           className="search-input__close-btn"
           onClick={handleClearAndClose}
+          aria-label={t(SEARCH_INPUT.RESET_BUTTON)}
         >
           <img
             src={theme === 'light' ? closeBtnBlack : closeBtn}
-            alt="Кнопка сброса"
+            alt={t(SEARCH_INPUT.RESET_BUTTON)}
           />
         </button>
       </div>
-      <button
-        className={`search-input__loupe ${isShown && `hide`}`}
-        onClick={isShown ? handleCloseClick : handleLoupeClick}
-      >
-        <img
-          src={theme === 'light' ? loupeLight : loupe}
-          alt="Иконка лупы"
-          className="header__icon"
-        />
-      </button>
+      {!isInput && (
+        <button
+          className="search-input__loupe"
+          onClick={handleLoupeClick}
+          aria-label={t(SEARCH_INPUT.ICON_ALT)}
+        >
+          <img
+            src={theme === 'light' ? loupeLight : loupe}
+            alt={t(SEARCH_INPUT.ICON_ALT)}
+            className="header__icon"
+          />
+        </button>
+      )}
     </>
   );
 }
