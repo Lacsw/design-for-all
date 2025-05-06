@@ -8,6 +8,7 @@ export default defineConfig(() => {
     base: '/',
     build: {
       outDir: 'build',
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           // Uncomment to return back names without hashes. Delete manualChunks.
@@ -17,16 +18,7 @@ export default defineConfig(() => {
           exports: 'named',
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('react')) return 'react';
-              if (id.includes('redux')) return 'redux';
               if (id.includes('i18next')) return 'i18n';
-              if (
-                id.includes('@mui') ||
-                id.includes('@emotion') ||
-                id.includes('clsx') ||
-                id.includes('merge-sx')
-              )
-                return 'mui';
               if (id.includes('@tiptap')) return 'tiptap';
               if (id.includes('rc-tree') || id.includes('treeview'))
                 return 'tree';
@@ -37,7 +29,6 @@ export default defineConfig(() => {
         },
         external: [/assets\/index2\.(css|js)$/],
       },
-
       commonjsOptions: {
         include: [/node_modules/],
       },
@@ -62,7 +53,7 @@ export default defineConfig(() => {
       alias({
         entries: {
           /* При изменениях alias не забудьте соответствующе обновить:
-          settings → import/resolver → alias в eslintrc.json */
+        settings → import/resolver → alias в eslintrc.json */
           utils: '/src/utils',
           contexts: '/src/contexts',
           store: '/src/store',
