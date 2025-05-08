@@ -26,6 +26,7 @@ import tutorialEn from 'videos/tutorial_en.mp4';
 import tutorialEs from 'videos/tutorial_es.mp4';
 import tutorialZh from 'videos/tutorial_zh.mp4';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
 
 const tutorialVideos = {
   ru: tutorialRu,
@@ -63,7 +64,7 @@ export default function CatalogArticle() {
   const loading = useSelector(selectLoading);
   const articleRef = useRef(null);
   const { openComponent} = useInteractiveManager();
-
+  const isMobile = useIsMobile();
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
@@ -86,7 +87,11 @@ export default function CatalogArticle() {
   }, []);
 
   const handleTreeSearch = () => {
-    openComponent('treeSearch');
+    if (isMobile) {
+      openComponent('mobileSidebar', { activateSearch: true });
+    } else {
+      openComponent('treeSearch');
+    }
   };
 
   const handleHeaderSearch = () => {

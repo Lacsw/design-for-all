@@ -52,8 +52,9 @@ export default function SideBar({ section, setSection }) {
   const [results, setResults] = useState(null);
   const [treeKey, setTreeKey] = useState(currentSection);
 
-  const { activeComponent, openComponent, closeComponent } = useInteractiveManager();
+  const { activeComponent, componentOptions, openComponent, closeComponent } = useInteractiveManager();
   const isTreeSearchOpen = activeComponent === 'treeSearch';
+  const isMobileSidebarOpen = activeComponent === 'mobileSidebar';
 
   const titlesList = useMemo(() => 
     Object.keys(titles?.[language] || {}).filter(
@@ -116,6 +117,12 @@ export default function SideBar({ section, setSection }) {
       dispatch(setShouldRemountTree(false));
     }
   }, [shouldRemountTree, titles, language, mainCategory, updateSection, dispatch]);
+
+  useEffect(() => {
+    if (isMobile && isMobileSidebarOpen && componentOptions?.activateSearch) {
+      setIsInput(true);
+    }
+  }, [isMobileSidebarOpen, isMobile, componentOptions]);
 
   return (
     <nav className="sidebar">

@@ -30,12 +30,6 @@ const Fork = ({ section, setSection }) => {
     window.scrollTo(0, 0);
   }, [location.key]);
 
-  const isCatalogOpen = Boolean(articleId || section);
-
-  useEffect(() => {
-    dispatch(setIsOpen(isCatalogOpen));
-  }, [isCatalogOpen, dispatch]);
-
   const rawHash = location.hash ? location.hash.replace(/^#\/?/, '') : '';
   const validKeys = Object.keys(titles?.[language] || {});
 
@@ -45,7 +39,15 @@ const Fork = ({ section, setSection }) => {
     }
   }, [rawHash, section, validKeys, updateSection]);
 
-  
+  const isCatalogOpen = Boolean(
+    articleId || 
+    (rawHash && validKeys.includes(rawHash) && !SPECIAL_SECTIONS.includes(rawHash))
+  );
+
+  useEffect(() => {
+    dispatch(setIsOpen(isCatalogOpen));
+  }, [isCatalogOpen, dispatch]);
+
   if (Object.values(adminHash).includes(location.hash)) {
     return (
       <ProtectedHashRoute requiredRoles={['admin', 'super_admin']}>
