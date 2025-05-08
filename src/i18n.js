@@ -1,45 +1,50 @@
+import { domain } from 'utils/config';
 import i18n from 'i18next';
 // Связывает i18next с React, предоставляет хуки useTranslation
 import { initReactI18next } from 'react-i18next';
 // Позволяет загружать переводы асинхронно по требованию
-// import Backend from 'i18next-http-backend';
+import Backend from 'i18next-http-backend';
 // // Автоматически определяет язык пользователя на основе настроек браузера
 import LanguageDetector from 'i18next-browser-languagedetector';
-// Временно импортируем локальные переводы для разработки
-import { ru, en, zh, es } from './utils/locales';
-// Флаг для переключения между локальными и серверными переводами
-const USE_BACKEND = false; // изменить на true когда бэкенд будет готов
 
 const initI18n = async () => {
   try {
     await i18n
+      .use(Backend)
       .use(LanguageDetector)
       .use(initReactI18next)
       .init({
-        resources: {
-          ru: { translation: ru },
-          en: { translation: en },
-          zh: { translation: zh },
-          es: { translation: es },
+        backend: {
+          loadPath: `${domain}/interface_{{lng}}.json`,
+          requestOptions: {
+            cache: 'no-store'
+          },
+          reloadInterval: false,
+          crossDomain: true,
+          withCredentials: false,
         },
         supportedLngs: ['ru', 'en', 'zh', 'es'],
         fallbackLng: 'ru',
         detection: {
-          order: ['querystring', 'localStorage', 'navigator'],
-          lookupQuerystring: 'lng',
+          order: ['localStorage', 'navigator'],
           lookupLocalStorage: 'i18nextLng',
           caches: ['localStorage'],
         },
-        interpolation: {
-          escapeValue: false,
-        },
         react: {
-          useSuspense: true,
+          useSuspense: false,
+          transEmptyNodeValue: '',
+          transSupportBasicHtmlNodes: true,
+          transKeepBasicHtmlNodesFor: ['br', 'strong', 'i', 'p'],
         },
-        debug: process.env.NODE_ENV === 'development',
+        debug: true,
+        load: 'all',
+        ns: ['translation'],
+        defaultNS: 'translation',
       });
+
+    console.log('i18n initialized with language:', i18n.language);
   } catch (error) {
-    console.error('Error initializing i18next:', error);
+    console.error('Error initializing i18n:', error);
   }
 };
 
@@ -51,49 +56,14 @@ export const getCurrentLanguage = () => {
   return i18n.language;
 };
 
-// Функция для проверки необходимости обновления переводов
-export const checkTranslationsUpdate = async () => {
-  // Проверяем обновления только если используется бэкенд
-  if (!USE_BACKEND) return;
-
-  const lastUpdate = localStorage.getItem('translationsLastUpdate');
-  const now = Date.now();
-  
-  if (!lastUpdate || (now - parseInt(lastUpdate)) > 86400000) {
-    try {
-      await i18n.reloadResources();
-      localStorage.setItem('translationsLastUpdate', now.toString());
-    } catch (error) {
-      console.error('Failed to update translations:', error);
-      // В случае ошибки продолжаем использовать кэшированные переводы
-    }
-  }
-};
-
-// Функция для переключения между локальными и серверными переводами
-// Только для разработки
-export const toggleTranslationSource = async () => {
-  if (process.env.NODE_ENV === 'development') {
-    const newValue = !USE_BACKEND;
-    // Перезагружаем i18next с новыми настройками
-    await i18n.init({
-      ...i18n.options,
-      resources: newValue ? undefined : {
-        ru: { translation: ru },
-        en: { translation: en },
-        zh: { translation: zh },
-        es: { translation: es },
-      },
-      backend: newValue ? {
-        loadPath: 'https://design-for-all.net/interface_{{lng}}.json',
-        cacheTTL: 86400 + 3600,
-        allowEmpty: false,
-        customHeaders: {
-          'Cache-Control': 'max-age=86400'
-        },
-      } : undefined,
-    });
-    console.log(`Switched to ${newValue ? 'backend' : 'local'} translations`);
+// Функция для изменения языка
+export const changeLanguage = async (lng) => {
+  try {
+    console.log('Changing language to:', lng);
+    await i18n.changeLanguage(lng);
+    console.log('Language changed to:', lng);
+  } catch (error) {
+    console.error('Error changing language:', error);
   }
 };
 
