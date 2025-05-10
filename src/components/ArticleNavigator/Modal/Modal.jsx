@@ -6,8 +6,26 @@ import clsx from 'clsx';
 import { sxRoot } from './styles';
 import { defaultModalSlotProps } from '../constants';
 import { deepmerge } from '@mui/utils';
+import debounce from 'utils/helpers/debounce';
 
 /** @import * as Types from "../types" */
+
+/**
+ * @param {React.RefObject<HTMLOListElement>} scrollableRef
+ * @param {number} step
+ */
+function scrollDiscretely(scrollableRef, step) {
+  if (!scrollableRef.current) {
+    return;
+  }
+  const scrollTop = scrollableRef.current.scrollTop;
+  // const scrollHeight = scrollableRef.current.data.scrollHeight;
+
+  const desiredStep = Math.round(scrollTop / step);
+  scrollableRef.current.scrollTo({ behavior: 'smooth', top: desiredStep });
+}
+
+const scrollDiscretelyDebounced = debounce(scrollDiscretely, 500);
 
 /**
  * @param {HTMLLIElement} li
@@ -116,6 +134,14 @@ export const Modal = ({
           <ol
             ref={olRef}
             className="article-navigator__list"
+            onScroll={() => {
+              if (!olRef.current) return;
+
+              const firstHeading = headings[0];
+              const rect = firstHeading.getBoundingClientRect();
+
+              scrollDiscretelyDebounced(olRef, rect.height + 10);
+            }}
             // onScroll={(e) => {
             //   if (!olRef.current) return;
 
@@ -149,6 +175,7 @@ export const Modal = ({
                         const curY = curHeading?.getBoundingClientRect().y ?? 0;
                         const delta = targetY > curY ? 2 : -2;
 
+                        // TODO: обращаться к прокручиваемому элементы через пропсы, потому что сейчас хардкод
                         document.documentElement.scrollTo({
                           top:
                             headingEl.getBoundingClientRect().y -
