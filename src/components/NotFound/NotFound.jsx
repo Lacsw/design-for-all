@@ -1,12 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentSection } from 'store/slices/catalog/slice';
 import { useTranslation } from 'react-i18next';
-
 import './NotFound.css';
 import notFound404Svg from 'images/404.svg';
 import { NOT_FOUND } from 'utils/translationKeys';
 
-function NotFound({ resetSection, role }) {
+function NotFound({ role }) {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const resetSection = () => {
+    dispatch(setCurrentSection(''));
+  };
 
   return (
     <section className="not-found">

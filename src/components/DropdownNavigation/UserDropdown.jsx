@@ -3,7 +3,6 @@ import DropdownNavigation from './DropdownNavigation';
 import { useLogout } from 'utils/hooks/useLogout';
 
 export default function UserDropdown({
-  resetSection,
   options,
   type,
   title,
@@ -12,9 +11,8 @@ export default function UserDropdown({
   titleIcon,
 }) {
   const { t } = useTranslation();
-  const handleLogout = useLogout({ resetSection });
+  const handleLogout = useLogout();
  
-
   if (!currentUser) return null;
 
   const enhancedOptions = options.map((option) => {
@@ -39,7 +37,6 @@ export default function UserDropdown({
       titleIcon={currentUser.avatar || titleIcon}
       type={type}
       title={title}
-      resetSection={resetSection}
       theme={theme}
       showName={true}
     />

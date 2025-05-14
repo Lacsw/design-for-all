@@ -10,7 +10,9 @@ export const catalogListener = createListenerMiddleware();
 catalogListener.startListening({
   actionCreator: setCurrentSection,
   effect: async (action, listenerApi) => {
-    const { language } = listenerApi.getState().user;
+    const state = listenerApi.getState();
+    const { language } = state.user;
+    const { catalog } = state.article;
     const section = action.payload;
 
     if (!VALID_SECTIONS.includes(section)) {
@@ -21,7 +23,15 @@ catalogListener.startListening({
     if (currentHash !== section) {
       window.history.pushState({}, '', `#${section}`);
     }
-    listenerApi.dispatch(fetchTree(`${language}_${section}`));
+    
+    // Проверяем наличие данных и их свежесть
+    const sectionData = catalog?.[language]?.[section];
+    const fetchTime = sectionData?.fetchTime || 0;
+    
+    // Загружаем данные только если их нет или они устарели (старше 10.5 минут)
+    if (!sectionData?.original || Date.now() - fetchTime > 630000) {
+      listenerApi.dispatch(fetchTree(`${language}_${section}`));
+    }
   },
 });
 
@@ -29,7 +39,8 @@ catalogListener.startListening({
 catalogListener.startListening({
   actionCreator: setCurrentCategory,
   effect: async (action, listenerApi) => {
-    const { language, titles } = listenerApi.getState().article;
+    const state = listenerApi.getState();
+    const { language, titles } = state.article;
     const category = action.payload;
 
     // Находим соответствующую секцию для категории
@@ -55,7 +66,7 @@ catalogListener.startListening({
     const hash = window.location.hash.replace(/^#\/?/, '');
 
     if (hash && VALID_SECTIONS.includes(hash)) {
-      const currentState = listenerApi.getState(); // <--- добавили эту строку
+      const currentState = listenerApi.getState();
 
       if (currentState.catalog.currentSection !== hash) {
         listenerApi.dispatch(setCurrentSection(hash));

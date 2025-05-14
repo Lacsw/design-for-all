@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect } from 'react';
 import { NotFound, Layout, Fork } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTitles, selectTitles } from 'store/slices/article';
@@ -8,7 +8,6 @@ import { useLanguageSync } from 'utils/hooks/useLanguageSync';
 
 function App() {
   const dispatch = useDispatch();
-  const [section, setSection] = useState('');
   const categories = useSelector(selectTitles);
 
   // Используем хук для синхронизации между вкладками
@@ -18,28 +17,24 @@ function App() {
   useLanguageSync();
 
   useEffect(() => {
-    !categories && dispatch(fetchTitles());
-  });
+    if (!categories) {
+      dispatch(fetchTitles());
+    }
+  }, [categories, dispatch]);
+
 
   return (
-    <Layout resetSection={() => setSection('')}>
-      {categories && (
-        <Routes>
-          <Route
-            path="/"
-            element={<Fork section={section} setSection={setSection} />}
-          />
-          <Route
-            path="/:lang/:articleId"
-            element={<Fork section={section} setSection={setSection} />}
-          />
-          <Route
-            path="*"
-            element={<NotFound resetSection={() => setSection('')} />}
-          />
-        </Routes>
-      )}
-    </Layout>
+    <div className="app">
+      <Layout >
+        {categories && (
+          <Routes>
+            <Route path="/" element={<Fork />} />
+            <Route path="/:lang/:articleId" element={<Fork />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
+      </Layout>
+    </div>
   );
 }
 

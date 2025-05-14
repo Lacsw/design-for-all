@@ -12,6 +12,8 @@ import {
   selectShouldRemountTree,
   setShouldRemountTree,
   setMainCategory,
+  setCurrentSection,
+  selectCurrentSection,
 } from 'store/slices/catalog/slice';
 import { getLanguage } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
@@ -30,7 +32,7 @@ import { CATALOG } from 'utils/translationKeys';
   
 const SPECIAL_SECTIONS = ['updates', 'search'];
 
-export default function SideBar({ section, setSection }) {
+export default function SideBar({ section }) {
   const { t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -41,11 +43,7 @@ export default function SideBar({ section, setSection }) {
   const titles = useSelector(selectTitles);
   const mainCategory = useSelector(selectMainCategory);
   const shouldRemountTree = useSelector(selectShouldRemountTree);
-  
-  const [currentSection, setCurrentSection] = useState(() => {
-    const initialSection = section || getSection(titles, language, mainCategory);
-    return initialSection.replace(/^\//, '');
-  });
+  const currentSection = useSelector(selectCurrentSection);
   
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -65,14 +63,11 @@ export default function SideBar({ section, setSection }) {
 
   const updateSection = useCallback((newSection) => {
     const cleanSection = newSection.replace(/^\//, '');
-    setCurrentSection(cleanSection);
-    if (setSection) {
-      setSection(cleanSection);
-    }
+    dispatch(setCurrentSection(cleanSection));
     if (titles?.[language]?.[cleanSection]) {
       dispatch(setMainCategory(titles[language][cleanSection]));
     }
-  }, [setSection, titles, language, dispatch]);
+  }, [titles, language, dispatch]);
 
   useEffect(() => {
     setIsInput(isTreeSearchOpen);

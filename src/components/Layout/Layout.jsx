@@ -1,10 +1,10 @@
 import { Header, Footer } from 'components';
 import './Layout.css';
 
-export default function Layout({ resetSection, children }) {
+export default function Layout({ children }) {
   return (
     <div className="page">
-      <Header resetSection={resetSection} />
+      <Header />
       <div className="main-wrapper">
         <main className="main">{children}</main>
       </div>

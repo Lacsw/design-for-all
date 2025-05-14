@@ -1,33 +1,31 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { mainNavigationOptionsList } from 'utils/constants';
 import { Intro, MainNavigationBar, MainSlider } from 'components';
 import './Main.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
+import { setCurrentSection } from 'store/slices/catalog/slice';
 import logo from 'images/logo.svg';
-
 import logoBlack from 'images/logo-black.svg';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 
-export default function Main({ setSection }) {
+export default function Main() {
+  const dispatch = useDispatch();
   const isMobile = useIsMobile();
-
   const theme = useSelector(getCurrentTheme);
+  
   const [activeTab, setActiveTab] = useState({
     name: mainNavigationOptionsList[0].id,
     index: 0,
   });
-
-  const setSectionRef = useRef(setSection);
-  setSectionRef.current = setSection;
   
   useEffect(() => {
     setActiveTab({
       name: mainNavigationOptionsList[0].id,
       index: 0,
     });
-    setSectionRef.current(mainNavigationOptionsList[0].link);
-  }, []);
+    dispatch(setCurrentSection(mainNavigationOptionsList[0].link));
+  }, [dispatch]);
 
   const handleActiveTab = ({ name, index }) => {
     setActiveTab({ name, index });
@@ -50,7 +48,6 @@ export default function Main({ setSection }) {
           navLinksList={mainNavigationOptionsList}
           onClick={handleActiveTab}
           activeTab={activeTab}
-          setSection={setSection}
         />
       </div>
 
