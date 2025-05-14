@@ -7,7 +7,7 @@ import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext'
 import { useSelector } from 'react-redux';
 import { selectTitles } from 'store/slices/article';
 
-export default function Catalog({ section, setSection }) {
+export default function Catalog({ section }) {
   const catalogRef = useRef();
   const { lang, articleId } = useParams();
   const titles = useSelector(selectTitles);
@@ -43,11 +43,11 @@ export default function Catalog({ section, setSection }) {
       {isMobile ? (
         activeComponent === 'mobileSidebar' && (
           <Overlay onClick={closeSidebar} zIndex={998} disableHover={true}>
-            <SideBar section={section} setSection={setSection} />
+            <SideBar section={section} />
           </Overlay>
         )
       ) : (
-        <SideBar section={section} setSection={setSection} />
+        <SideBar section={section} />
       )}
       <CatalogArticle />
     </div>

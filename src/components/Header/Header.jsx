@@ -17,7 +17,7 @@ import {
 
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
-import { selectIsOpen as selectIsCatalogOpen } from 'store/slices/catalog/slice';
+import { selectIsOpen as selectIsCatalogOpen, setCurrentSection } from 'store/slices/catalog/slice';
 
 import {
   accountNavigationList,
@@ -36,7 +36,7 @@ import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useLogout } from 'utils/hooks/useLogout';
 import { HEADER } from 'utils/translationKeys';
 
-export default function Header({ resetSection }) {
+export default function Header() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,19 +48,24 @@ export default function Header({ resetSection }) {
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
 
+  const resetSection = () => {
+    dispatch(setCurrentSection(''));
+  };
+
   // Условие, при котором срабатывать таймаут:
   const shouldTimeout = isAdmin;
 
-  const handleLogout = useLogout({
-    onSuccess: () => {
-      // После выхода вызывается окно авторизации
-      openAuthModal();
-    },
-  });
+  const handleLogout = useLogout();
+  
+  // Переопределяем функцию handleLogout для открытия окна авторизации
+  const handleLogoutWithModal = () => {
+    openAuthModal();
+    handleLogout();
+  };
 
   // Функция, которая вызывается по истечении таймаута
   const handleTimeout = async (dispatch) => {
-    handleLogout();
+    handleLogoutWithModal();
   };
 
   // Хук для установки
@@ -162,7 +167,6 @@ export default function Header({ resetSection }) {
               <LoginButton openAuthModal={openAuthModal} />
             ) : (
               <UserDropdown
-                resetSection={resetSection}
                 options={isAdmin ? adminNavList : accountNavigationList}
                 titleIcon={
                   theme === 'light' ? dropdownIconBlack : dropdownIconWhite
