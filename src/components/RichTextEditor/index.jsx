@@ -37,6 +37,8 @@ import React, {
   useState,
 } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useTranslation } from 'react-i18next';
+import { RTE } from 'utils/translationKeys';
 
 import { MenuBar, RteButton } from './components';
 import { TextTypeSelector } from './components/selectors/TextTypeSelector/TextTypeSelector';
@@ -127,9 +129,9 @@ const extensions = [
   TextAlign.configure({
     types: ['heading', 'paragraph', customHeadingNodeName],
   }),
-  Placeholder.configure({
-    placeholder: 'Введите текст',
-  }),
+  // Placeholder.configure({
+  //   placeholder: 'Введите текст',
+  // }),
   // ImgTiptap,
   ListItemCustom,
   CustomImageExtension.configure({
@@ -167,6 +169,7 @@ const RichTextEditorRaw = memo(function RichTextEditor({
   className,
   classes = defaultClasses,
 }) {
+  const { t } = useTranslation();
   const _validationsOptions = useValidation(validationsOptions);
 
   /** @type {React.RefObject<HTMLElement>} */
@@ -207,7 +210,12 @@ const RichTextEditorRaw = memo(function RichTextEditor({
    */
   const editor = useEditor({
     enableContentCheck: true, // не работает?
-    extensions: extensions,
+    extensions: [
+      ...extensions,
+      Placeholder.configure({
+        placeholder: t(RTE.PLACEHOLDER),
+      }),
+    ],
     content: initialValue,
     editable: !readOnly,
     // editable: false,

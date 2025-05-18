@@ -315,6 +315,29 @@ export const CREATION = {
     MODAL_ATTENTION: {
       TEXT: 'creation_new_article_modal_attention_text', // "=Последние изменения не сохранены, сохранить в черновик?
     },
+    DROPDOWN: {
+      SELECT: 'creation_new_article_dropdown_select',
+    },
+    SUB_CATEGORY: {
+      OCCUPIED: 'creation_new_article_sub_category_occupied',
+      UPDATE_HINT: 'creation_new_article_sub_category_update_hint',
+      OCCUPIED_WITH_HINT: 'creation_new_article_sub_category_occupied_with_hint',
+      INVALID_REQUEST: 'creation_new_article_sub_category_invalid_request',
+      AUTH_REQUIRED: 'creation_new_article_sub_category_auth_required',
+      CHECK_ERROR: 'creation_new_article_sub_category_check_error'
+    },
+  },
+  RECOMMENDATION: {
+    BASE_ERROR: 'creation_recommendation_base_error',
+    FULL_ERROR: 'creation_recommendation_full_error',
+    FETCH_ERROR: 'creation_recommendation_fetch_error',
+    DOUBLE_ERROR: 'creation_recommendation_double_error',
+    LANG_ERROR: 'creation_recommendation_lang_error',
+    SELF_ERROR: 'creation_recommendation_self_error',
+    CHECKING: 'creation_recommendation_checking',
+    EXISTS: 'creation_recommendation_exists',
+    ENTER_URL: 'creation_recommendation_enter_url',
+    PLACEHOLDER: 'creation_recommendation_placeholder',
   },
 };
 
@@ -328,7 +351,8 @@ export const AUTHOR = {
   },
 
   MOBILE: {
-    PLACEHOLDER: 'author_mobile_placeholder', // Плейсхолдер для мобильного аккаунта
+    PLACEHOLDER: 'author_mobile_placeholder',
+    LOGOUT_BUTTON: 'author_mobile_logout_button'
   },
 
   NEW_ARTICLE: {
@@ -471,12 +495,14 @@ export const ADMIN = {
 // Ключи для статьи
 
 export const CHECK_FIELDS = {
-  IMAGE_TITLE: 'check_fields_image_title', // Заголовок для изображения
-  ARTICLE_TITLE: 'check_fields_article_title', // Заголовок для статьи
-  DESCRIPTION_TITLE: 'check_fields_description_title', // Заголовок для описания
-  RECOMMENDATIONS_TITLE: 'check_fields_recommendations_title', // Заголовок для рекомендаций
-  IMAGE_ALT: 'check_fields_image_alt', // Альтернативный текст для изображения
-  IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt', // Альтернативный текст для изображения заглушки
+  LANGUAGE_TITLE: 'check_fields_language_title',
+  SUB_CATEGORY_TITLE: 'check_fields_sub_category_title',
+  IMAGE_TITLE: 'check_fields_image_title',
+  ARTICLE_TITLE: 'check_fields_article_title',
+  DESCRIPTION_TITLE: 'check_fields_description_title',
+  RECOMMENDATIONS_TITLE: 'check_fields_recommendations_title',
+  IMAGE_ALT: 'check_fields_image_alt',
+  IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt'
 };
 
 export const DROPDOWN = {
@@ -535,4 +561,31 @@ export const SEARCH_INPUT = {
   PLACEHOLDER: 'search_input_placeholder', // Поиск...
   RESET_BUTTON: 'search_input_reset_button', // Кнопка сброса
   ICON_ALT: 'search_input_icon_alt', // Иконка поиска
+};
+
+export const RTE = {
+  BUTTON: {
+    PARAGRAPH: 'rte_button_paragraph',
+    HEADING1: 'rte_button_heading1',
+    HEADING2: 'rte_button_heading2',
+    HEADING3: 'rte_button_heading3',
+    HEADING4: 'rte_button_heading4',
+    HEADING5: 'rte_button_heading5',
+    HEADING6: 'rte_button_heading6',
+    ITALIC: 'rte_button_italic',
+    BOLD: 'rte_button_bold',
+    UNDERLINE: 'rte_button_underline',
+    CODE: 'rte_button_code',
+    CODE_BLOCK: 'rte_button_code_block',
+    ALIGN_LEFT: 'rte_button_align_left',
+    ALIGN_CENTER: 'rte_button_align_center',
+    ALIGN_RIGHT: 'rte_button_align_right',
+    ALIGN_JUSTIFY: 'rte_button_align_justify',
+    BULLET_LIST: 'rte_button_bullet_list',
+    ORDERED_LIST: 'rte_button_ordered_list',
+    SUBSCRIPT: 'rte_button_subscript',
+    SUPERSCRIPT: 'rte_button_superscript',
+    IMAGE: 'rte_button_image'
+  },
+  PLACEHOLDER: 'rte_placeholder', // Плейсхолдер для редактора
 };

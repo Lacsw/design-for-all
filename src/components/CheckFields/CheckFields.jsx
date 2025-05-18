@@ -52,7 +52,7 @@ const CheckFields = ({ offer, title }) => {
       <h2 className="view-article__title">{title}</h2>
       <div>
         <div className="view-article__label">
-          <span className="view-article__sub-title">Язык</span>
+          <span className="view-article__sub-title">{t(CHECK_FIELDS.LANGUAGE_TITLE)}</span>
           <div className="view-article__dropdown">
             <div className="view-article__text">{lang}</div>
           </div>
@@ -62,7 +62,7 @@ const CheckFields = ({ offer, title }) => {
           <div className={`view-article__label`}>
             <div className="check-fields__sub-title">
               <RadioButtons name="sub_category" onChoice={handleChoice} />
-              Подкатегория
+              {t(CHECK_FIELDS.SUB_CATEGORY_TITLE)}
             </div>
             <span className="view-article__input">{offer.sub_category}</span>
           </div>

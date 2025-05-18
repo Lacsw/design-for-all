@@ -8,6 +8,7 @@ import {
 } from '../helpers';
 import { buttonsHeadings } from '../helpers/constants';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 /**
  * @callback TDRteButtonOnClickProp
@@ -42,6 +43,8 @@ export function RteButton({
   onClick,
   mode = 'direct',
 }) {
+  const { t } = useTranslation();
+  
   const handleClick = useCallback(
     (/** @type {React.MouseEvent} */ evt) => {
       const directCb = tiptapCommands[name];
@@ -65,7 +68,7 @@ export function RteButton({
   const isDisabled = checkIsCommandDisabled(name, editor);
 
   return (
-    <Tooltip title={buttonsHeadings[name]}>
+    <Tooltip title={t(buttonsHeadings[name])}>
       <span>
         <IconButton
           onClick={handleClick}
