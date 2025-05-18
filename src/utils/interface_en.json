@@ -35,6 +35,11 @@
   "common_article_type_updated": "Update",
   "common_article_type_created_lang": "Translation",
 
+  "common_validation_incorrect": "Incorrect",
+  "common_validation_email_message": "Incorrect email format. Allowed characters: numbers, Latin letters, underscore, hyphen, @ sign and dot",
+  "common_validation_name_message": "Incorrect name format. Allowed characters: 2-50 characters, space, hyphen, Cyrillic and Latin letters",
+  "common_validation_password_message": "Password must be 6 characters long, contain upper and lower case letters, space, hyphen",
+
   "header_logo_alt": "Logo",
 
   "header_main_menu_title": "Main menu",

@@ -46,6 +46,12 @@ export const COMMON = {
     LOADING_TEXT: 'common_loader_loading_text', // Текст для загрузки
   },
   IMAGE_FALLBACK_TEXT: 'common_image_fallback_text', // Альтернативный текст для изображения заглушки
+  VALIDATION: {
+    INCORRECT: 'common_validation_incorrect',
+    EMAIL_MESSAGE: 'common_validation_email_message',
+    NAME_MESSAGE: 'common_validation_name_message',
+    PASSWORD_MESSAGE: 'common_validation_password_message',
+  },
 };
 
 // Ключи для хедера

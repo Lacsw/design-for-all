@@ -35,6 +35,11 @@
   "common_article_type_updated": "Обновление",
   "common_article_type_created_lang": "Перевод",
 
+  "common_validation_incorrect": "Некорректно",
+  "common_validation_email_message": "Некорректно введено e-mail. Допустимые символы для ввода: только цифры, латинские буквы, нижнее подчеркивание, дефис, знак @ и точка",
+  "common_validation_name_message": "Некорректно введено Имя. Допустимые символы для ввода: от 2 до 50 символов, пробел, дефис, кириллические, латинские буквы",
+  "common_validation_password_message": "Пароль должен состоять из 6 символов, буквы в верхнем и нижнем регистре, пробел, дефис",
+
   "header_logo_alt": "Логотип",
 
   "header_main_menu_title": "Главное меню",

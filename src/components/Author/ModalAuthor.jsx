@@ -7,7 +7,7 @@ import Preloader from 'components/Preloader/Preloader';
 import authorApi from 'utils/api/author';
 import SocialLinks from './SocialLinks';
 import { useTranslation } from 'react-i18next'; 
-import { CATALOG } from 'utils/translationKeys';
+import { CATALOG, COMMON } from 'utils/translationKeys';
 
 const ModalAuthor = ({ author, isOpen, onClose }) => {
   const { t } = useTranslation();
@@ -55,7 +55,7 @@ const ModalAuthor = ({ author, isOpen, onClose }) => {
           <div className="modal-content__info">
             <div className="author__titles">
               <p className="author__name">{author.fio || reviewer.fio}</p>
-              <p className="author__role">Автор</p>
+              <p className="author__role">{t(COMMON.ROLES.AUTHOR)}</p>
             </div>
             {Object.keys(author.social_media || {}).length ||
             Object.keys(reviewer.social_media || {}).length ? (

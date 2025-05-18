@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './ModalLogPass.css';
 import { Input, Modal } from 'components';
 import { useTranslation } from 'react-i18next';
-import { PROFILE } from 'utils/translationKeys';
+import { PROFILE, COMMON } from 'utils/translationKeys';
 
 const logPassValidation = {
   login: /^[А-Яа-яЁё\w-]+$/,
@@ -40,7 +40,7 @@ export default function ModalLogPass({ isOpen, onClose, onSave, name }) {
     let error =
       !target.value || logPassValidation.check(name, target.value)
         ? ''
-        : 'Некорректно';
+        : t(COMMON.VALIDATION_INCORRECT);
     setErrors((prev) => ({ ...prev, [target.name]: error }));
     setValues((prev) => ({ ...prev, [target.name]: target.value }));
   }
