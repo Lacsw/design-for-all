@@ -22,6 +22,11 @@ export const COMMON = {
     REJECTED: 'common_article_status_rejected', // Отклонено
     DELETED: 'common_article_status_deleted', // Удалено
   },
+  ARTICLE_TYPE: {
+    CREATED: 'common_article_type_created', // Создание
+    UPDATED: 'common_article_type_updated', // Обновление
+    CREATED_LANG: 'common_article_type_created_lang', // Перевод
+  },
   LANGUAGE: {
     RU: 'common_language_ru', // Русский
     EN: 'common_language_en', // Английский
@@ -224,6 +229,8 @@ export const CATALOG = {
   AUTHOR: {
     SOCIALS_TEXT: 'catalog_author_socials_text', // Здесь будут контакты автора
     AVATAR_ALT: 'catalog_author_avatar_alt', // Аватар
+    SHOW_ALL: 'catalog_author_show_all', // Показать все
+    HIDE_ALL: 'catalog_author_hide_all', // Скрыть
   },
 
   ARTICLE: {
@@ -343,6 +350,7 @@ export const AUTHOR = {
     EMPTY_CATEGORY: 'author_table_empty_category', // Статьи в данной категории отсутствуют
     DELETE_TITLE: 'author_table_delete_title', // Точно удалить?
     REASON_TITLE: 'author_table_reason_title', // Причина
+    PARTIALLY_REJECTED: 'author_table_partially_rejected', // Частично отклонено
   },
 };
 

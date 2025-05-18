@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import './AuthorArticlesList.css';
 import { SearchInput, ModalReasons, Modal, Tooltip } from 'components';
-import { tableButtons, rejectHint } from 'utils/constants';
+import { tableButtons, rejectHint, articleTypeOptions } from 'utils/constants';
 import { useSelector } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,8 @@ import { prepareValue } from 'utils/helpers/search';
 import debounce from 'utils/helpers/debounce';
 import { formatTimestamp } from 'utils/helpers/timeFormatters.js';
 import { useTranslation } from 'react-i18next';
-import { AUTHOR } from 'utils/translationKeys';
+import { AUTHOR, COMMON } from 'utils/translationKeys';
+import { getLanguage } from 'store/slices/user';
 
 export default function AuthorArticlesList({
   articles,
@@ -21,6 +22,7 @@ export default function AuthorArticlesList({
 }) {
   const navigate = useNavigate();
   const theme = useSelector(getCurrentTheme);
+  const language = useSelector(getLanguage);
   const [showReason, setShowReason] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [reason, setReason] = useState({});
@@ -140,9 +142,9 @@ export default function AuthorArticlesList({
                 className="author-articles-list__table-row"
               >
                 <td className="author-articles-list__table-cell">
-                  {article.type}
+                  {t(articleTypeOptions.find(option => option.value === article.type)?.translationKey || '')}
                   {article.rejected_fields && (
-                    <Tooltip title="Частично отклонено" placement="top" arrow>
+                    <Tooltip title={t(AUTHOR.TABLE.PARTIALLY_REJECTED)} placement="top" arrow>
                       <img
                         src={rejectHint[theme]}
                         alt={rejectHint.name}
@@ -152,11 +154,11 @@ export default function AuthorArticlesList({
                   )}
                 </td>
                 <td className="author-articles-list__table-cell">
-                  {article.lang}
+                  {article.lang && t(COMMON.LANGUAGE[article.lang.toUpperCase()])}
                 </td>
 
                 <Tooltip
-                  title={formatTimestamp(article.date_create)}
+                  title={formatTimestamp(article.date_create, language)}
                   placement="top"
                   arrow
                 >

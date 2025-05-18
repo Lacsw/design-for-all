@@ -83,7 +83,7 @@ export default function Author({ showReviewers }) {
               }
             }}
           >
-            {socialOpen ? 'Скрыть' : 'Показать все'}
+            {socialOpen ? t(CATALOG.AUTHOR.HIDE_ALL) : t(CATALOG.AUTHOR.SHOW_ALL)}
           </p>
         )}
       <ModalAuthor
