@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Dropdown.css';
+import { useTranslation } from 'react-i18next';
+import { DROPDOWN } from 'utils/translationKeys';
 
 import arrow from 'images/author/arrow.svg';
 import largeArrow from 'images/admin/arrow-large.svg';
@@ -12,6 +14,7 @@ export default function Dropdown({
   large,
   onChange,
 }) {
+  const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -39,7 +42,7 @@ export default function Dropdown({
         <img
           className="dropdown__image"
           src={large ? largeArrow : arrow}
-          alt="стрелка"
+          alt={t(DROPDOWN.AMOUNT.ARROW_ALT)}
         />
       </div>
 

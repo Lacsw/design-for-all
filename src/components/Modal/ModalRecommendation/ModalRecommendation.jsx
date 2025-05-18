@@ -5,6 +5,8 @@ import authorApi from 'utils/api/author';
 import { useSelector } from 'react-redux';
 import { getDraft } from 'store/slices/user';
 import { domain } from 'utils/config';
+import { useTranslation } from 'react-i18next';
+import { CREATION } from 'utils/translationKeys';
 
 const dfaUrl = new URL(domain);
 const hostname = dfaUrl.hostname; // "dev.design-for-all.net" или "design-for-all.net"
@@ -14,12 +16,19 @@ export const fullRegex = new RegExp(
   `^https:\\/\\/${hostname}\\/(en|es|ru|zh)\\/[a-z0-9]{32}$`
 );
 const pathRegex = /[a-z]{2}\/[a-z0-9]{32}/;
-const baseError = 'Вставьте ссылку с этого сайта';
-const fullError = 'Ссылка не является адресом статьи';
-const fetchError = 'Статья не существует';
-const doubleError = 'Статья уже добавлена';
-const langError = 'Нельзя добавить статью на другом языке';
-const selfError = 'Вы не можете ссылаться на эту статью';
+
+const ERROR_KEYS = {
+  BASE: CREATION.RECOMMENDATION.BASE_ERROR,
+  FULL: CREATION.RECOMMENDATION.FULL_ERROR,
+  FETCH: CREATION.RECOMMENDATION.FETCH_ERROR,
+  DOUBLE: CREATION.RECOMMENDATION.DOUBLE_ERROR,
+  LANG: CREATION.RECOMMENDATION.LANG_ERROR,
+  SELF: CREATION.RECOMMENDATION.SELF_ERROR,
+  CHECKING: CREATION.RECOMMENDATION.CHECKING,
+  EXISTS: CREATION.RECOMMENDATION.EXISTS,
+  ENTER_URL: CREATION.RECOMMENDATION.ENTER_URL,
+  PLACEHOLDER: CREATION.RECOMMENDATION.PLACEHOLDER
+};
 
 export default function ModalRecommendation({
   isOpen,
@@ -28,18 +37,21 @@ export default function ModalRecommendation({
   title,
   editId,
 }) {
+  const { t } = useTranslation();
   const draft = useSelector(getDraft);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const recommendRef = useRef(null);
+
   const comment = loading
-    ? 'Проверка статьи...'
+    ? t(ERROR_KEYS.CHECKING)
     : error
     ? error
     : recommendRef.current
-    ? 'Статья существует'
-    : 'Введите URL';
+    ? t(ERROR_KEYS.EXISTS)
+    : t(ERROR_KEYS.ENTER_URL);
+    
   const colorClass = error
     ? ' span-error'
     : recommendRef.current
@@ -54,15 +66,15 @@ export default function ModalRecommendation({
       (item) => item.uuid === splitPath[1]
     );
     if (isDouble) {
-      setError(doubleError);
+      setError(t(ERROR_KEYS.DOUBLE));
       return;
     }
     if (splitPath[0] !== draft.lang) {
-      setError(langError);
+      setError(t(ERROR_KEYS.LANG));
       return;
     }
     if (splitPath[1] === draft.what_update) {
-      setError(selfError);
+      setError(t(ERROR_KEYS.SELF));
       return;
     }
     setLoading(true);
@@ -71,17 +83,17 @@ export default function ModalRecommendation({
       .then(({ image, title }) => {
         recommendRef.current = { image, title, uuid: splitPath[1] };
       })
-      .catch(() => setError(fetchError))
+      .catch(() => setError(t(ERROR_KEYS.FETCH)))
       .finally(() => setLoading(false));
-  }, [inputValue, error, draft]);
+  }, [inputValue, error, draft, t]);
 
   function handleInput({ target }) {
     let error =
       !target.value || fullRegex.test(target.value)
         ? ''
         : baseRegex.test(target.value)
-        ? fullError
-        : baseError;
+        ? t(ERROR_KEYS.FULL)
+        : t(ERROR_KEYS.BASE);
     recommendRef.current = null;
     setError(error);
     setInputValue(target.value);
@@ -123,7 +135,7 @@ export default function ModalRecommendation({
           <Input
             type={'text'}
             value={inputValue}
-            placeholder={'Ссылка на статью сайта DFA'}
+            placeholder={t(ERROR_KEYS.PLACEHOLDER)}
             onChange={handleInput}
             errors={error}
             disabled={loading}

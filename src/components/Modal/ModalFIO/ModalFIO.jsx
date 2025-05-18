@@ -3,7 +3,7 @@ import './ModalFIO.css';
 import { Input, Modal } from 'components';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { PROFILE } from 'utils/translationKeys';
+import { PROFILE, COMMON } from 'utils/translationKeys';
 
 const fioValidation = {
   regex: /^[А-Яа-яЁё\w\s-]+$/,
@@ -27,7 +27,7 @@ export default function ModalFIO({ isOpen, onClose, onSave, title }) {
 
   function handleInput({ target }) {
     let error =
-      currentUser.fio !== target.value && fioValidation.check(target.value) ? '' : 'Некорректно';
+      currentUser.fio !== target.value && fioValidation.check(target.value) ? '' : t(COMMON.VALIDATION_INCORRECT);
     setError(error);
     setFio(target.value);
   }

@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { COMMON } from 'utils/translationKeys';
 
 const initialValues = {
   email: '',
@@ -6,30 +8,24 @@ const initialValues = {
   login: '',
 };
 
-const errorMessages = {
-  email:
-    'Некорректно введено e-mail. Допустимые символы для ввода: только цифры, латинские буквы, нижнее подчеркивание, дефис, знак @ и точка',
-  name: 'Некорректно введено Имя. Допустимые символы для ввода: от 2 до 50 символов, пробел, дефис, кириллические, латинские буквы',
-  password:
-    'Пароль должен состоять из 6 символов, буквы в верхнем и нижнем регистре, пробел, дефис',
-};
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const NAME_REGEX = /^[А-Яа-яЁё\w-]{8,32}$/;
+const PASSWORD_REGEX = /^[А-Яа-яЁё\w-]{8,32}$/;
 
-function validateEmail(value) {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return regex.test(value) ? '' : errorMessages.email;
+function validateEmail(value, errorMessage) {
+  return EMAIL_REGEX.test(value) ? '' : errorMessage;
 }
 
-function validateName(value) {
-  const regex = /^[А-Яа-яЁё\w-]{8,32}$/;
-  return regex.test(value) ? '' : errorMessages.name;
+function validateName(value, errorMessage) {
+  return NAME_REGEX.test(value) ? '' : errorMessage;
 }
 
-function validatePassword(value) {
-  const regex = /^[А-Яа-яЁё\w-]{8,32}$/;
-  return regex.test(value) ? '' : errorMessages.password;
+function validatePassword(value, errorMessage) {
+  return PASSWORD_REGEX.test(value) ? '' : errorMessage;
 }
 
 export function useFormValidation() {
+  const { t } = useTranslation();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
   const [isValid, setIsValid] = useState(false);
@@ -44,13 +40,16 @@ export function useFormValidation() {
       if (value.trim() !== '') {
         switch (name) {
           case 'email':
-            error = validateEmail(value);
+            error = validateEmail(value, t(COMMON.VALIDATION.EMAIL_MESSAGE));
             break;
           case 'login':
-            error = validateName(value);
+            error = validateName(value, t(COMMON.VALIDATION.NAME_MESSAGE));
             break;
           case 'password':
-            error = validatePassword(value);
+            error = validatePassword(
+              value,
+              t(COMMON.VALIDATION.PASSWORD_MESSAGE)
+            );
             break;
           default:
             break;
@@ -64,7 +63,7 @@ export function useFormValidation() {
         setIsValid(form.checkValidity());
       }
     },
-    [errors, values]
+    [errors, values, t]
   );
 
   return { values, handleChange, errors, isValid };

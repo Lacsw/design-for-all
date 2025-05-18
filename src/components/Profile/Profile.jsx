@@ -149,7 +149,7 @@ export default function Profile({ resetSection }) {
           </div>
           <img
             src={formData.avatar || defaultAvatar}
-            alt="Аватар"
+            alt={t(PROFILE.MODAL.IMAGE_TITLE)}
             className="profile__avatar"
           />
         </div>

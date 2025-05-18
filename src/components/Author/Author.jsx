@@ -38,7 +38,7 @@ export default function Author({ showReviewers }) {
       >
         <img
           src={author.avatar || defaultAvatar}
-          alt="Аватар"
+          alt={t(CATALOG.AUTHOR.AVATAR_ALT)}
           className="author__avatar"
         />
         <div className="author__titles">
@@ -83,7 +83,7 @@ export default function Author({ showReviewers }) {
               }
             }}
           >
-            {socialOpen ? 'Скрыть' : 'Показать все'}
+            {socialOpen ? t(CATALOG.AUTHOR.HIDE_ALL) : t(CATALOG.AUTHOR.SHOW_ALL)}
           </p>
         )}
       <ModalAuthor

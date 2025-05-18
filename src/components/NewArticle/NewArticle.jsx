@@ -182,7 +182,7 @@ export const NewArticle = memo(function NewArticle({
             id={'lang'}
             name={'lang'}
             options={translatedLangsList}
-            title={draft.lang || 'Выбор'}
+            title={draft.lang || t(CREATION.NEW_ARTICLE.DROPDOWN.SELECT)}
             onChange={changeField}
           />
         </label>
@@ -199,7 +199,7 @@ export const NewArticle = memo(function NewArticle({
               id={'main_category'}
               name={'category'}
               options={titlesList}
-              title={draft.main_category || 'Выбор'}
+              title={draft.main_category || t(CREATION.NEW_ARTICLE.DROPDOWN.SELECT)}
               onChange={changeField}
             />
           </label>

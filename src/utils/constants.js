@@ -79,10 +79,10 @@ export const langSelectOptions = [
 ];
 
 export const userRoleSelectOptions = [
-  { value: 'super_admin' },
-  { value: 'admin' },
-  { value: 'mentor' },
-  { value: 'user' },
+  { value: 'super_admin', translationKey: COMMON.ROLES.SUPER_ADMIN },
+  { value: 'admin', translationKey: COMMON.ROLES.ADMIN },
+  { value: 'mentor', translationKey: COMMON.ROLES.AUTHOR },
+  { value: 'user', translationKey: COMMON.ROLES.USER },
 ];
 
 export const accessLvlSelectOptions = [
@@ -430,3 +430,9 @@ export const tableButtons = {
 
 // Допустимые секции для запросов к API
 export const VALID_SECTIONS = ['web', 'desktop', 'mobile', 'manual'];
+
+export const articleTypeOptions = [
+  { value: 'created', translationKey: COMMON.ARTICLE_TYPE.CREATED },
+  { value: 'updated', translationKey: COMMON.ARTICLE_TYPE.UPDATED },
+  { value: 'created_lang', translationKey: COMMON.ARTICLE_TYPE.CREATED_LANG },
+];
