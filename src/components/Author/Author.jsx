@@ -38,7 +38,7 @@ export default function Author({ showReviewers }) {
       >
         <img
           src={author.avatar || defaultAvatar}
-          alt="Аватар"
+          alt={t(CATALOG.AUTHOR.AVATAR_ALT)}
           className="author__avatar"
         />
         <div className="author__titles">

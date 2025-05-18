@@ -45,7 +45,7 @@ export const COMMON = {
   LOADER: {
     LOADING_TEXT: 'common_loader_loading_text', // Текст для загрузки
   },
-  IMAGE_FALLBACK_TEXT: 'image_fallback_alt', // Альтернативный текст для изображения заглушки
+  IMAGE_FALLBACK_TEXT: 'common_image_fallback_text', // Альтернативный текст для изображения заглушки
 };
 
 // Ключи для хедера
@@ -588,4 +588,15 @@ export const RTE = {
     IMAGE: 'rte_button_image'
   },
   PLACEHOLDER: 'rte_placeholder', // Плейсхолдер для редактора
+  IMAGE: {
+    ERRORS: {
+      FILE_SIZE: 'rte_image_errors_file_size', // Вес файла больше 23 Мб
+      FILE_TYPE: 'rte_image_errors_file_type', // Неверный формат файла
+      NO_IMAGE_ON_URL: 'rte_image_errors_no_image_on_url', // Не удалось получить изображение по указанной ссылке
+      BROKEN_URL: 'rte_image_errors_broken_url', // Неккоректный URL-адрес
+      FILE_READING: 'rte_image_errors_file_reading', // Ошибка при чтении файла
+      ON_HOSTING_LOADING: 'rte_image_errors_on_hosting_loading', // Не удалось загрузить файл на хостинг
+      FROM_LINK_LOADING: 'rte_image_errors_from_link_loading' // Не удалось загрузить файл по указанной ссылке
+    }
+  }
 };

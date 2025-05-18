@@ -31,6 +31,10 @@
 
   "common_image_fallback_text": "Image temporarily unavailable",
 
+  "common_article_type_created": "Creation",
+  "common_article_type_updated": "Update",
+  "common_article_type_created_lang": "Translation",
+
   "header_logo_alt": "Logo",
 
   "header_main_menu_title": "Main menu",
@@ -158,6 +162,7 @@
   "catalog_article_blank_search_tree": "Use <tree>tree search</tree> or <header>header search</header> articles",
   "catalog_article_blank_search_tree_tree": "tree search",
   "catalog_article_blank_search_tree_header": "header search",
+  "catalog_article_blank_title": "No title",
   "catalog_article_image_alt": "Article preview",
   "catalog_article_image_fallback_alt": "Article image fallback",
   "catalog_article_title": "Article title",
@@ -212,8 +217,25 @@
   "creation_new_article_modal_recommendations_add_btn_title": "Add recommendation",
   "creation_new_article_modal_recommendations_image_title": "Article image link",
   "creation_new_article_modal_recommendations_input_image_placeholder": "https://site.com/image.jpg",
-
   "creation_new_article_modal_attention_title": "Last changes are not saved, save to draft?",
+
+  "creation_new_article_dropdown_select": "Select",
+  "creation_new_article_sub_category_occupied": "Subcategory is occupied!",
+  "creation_new_article_sub_category_update_hint": "Specify the current one or suggest an update",
+  "creation_new_article_sub_category_occupied_with_hint": "Subcategory is occupied! Specify the current one or suggest an update",
+  "creation_new_article_sub_category_invalid_request": "Invalid request. Please check your input.",
+  "creation_new_article_sub_category_auth_required": "Authentication required for verification.",
+  "creation_new_article_sub_category_check_error": "Error checking subcategory.",
+  "creation_recommendation_base_error": "Please insert a link from this site",
+  "creation_recommendation_full_error": "The link is not an article address",
+  "creation_recommendation_fetch_error": "Article does not exist",
+  "creation_recommendation_double_error": "Article is already added",
+  "creation_recommendation_lang_error": "Cannot add an article in a different language",
+  "creation_recommendation_self_error": "You cannot reference this article",
+  "creation_recommendation_checking": "Checking article...",
+  "creation_recommendation_exists": "Article exists",
+  "creation_recommendation_enter_url": "Enter URL",
+  "creation_recommendation_placeholder": "Link to DFA site article",
 
   "author_navbar_write_article": "Write article",
   "author_navbar_publications": "Publications",
@@ -323,14 +345,12 @@
   "admin_account_decision_instruction_title": "Author qualification check instructions",
   "admin_account_decision_instruction_item_1": "If you are unsure about the safety of the links, do not open them or open them in \"Incognito\" mode of the browser, this will protect your data from possible malicious actions by hackers. This also applies to shortened links like: <u>{{link}}</u>, and other.",
   "admin_account_decision_instruction_item_1_link": "https://go.gl/k12jh3k1j2h",
-  "admin_account_decision_instruction_item_2": "Spend no more than 30-60 seconds checking 1 link. The system automatically does not allow duplicate links to projects and author accounts, so they cannot be duplicated.",  
+  "admin_account_decision_instruction_item_2": "Spend no more than 30-60 seconds checking 1 link. The system automatically does not allow duplicate links to projects and author accounts, so they cannot be duplicated.",
   "admin_account_decision_instruction_item_3": "Pay attention to the quality of the author's account, if there is a link to the author's social network. If on a project, for example in Figma, pay attention to the presence of key sections such as UI-kit, section's, component's, name space's and other.",
   "admin_account_decision_instruction_item_4": "If you are unsure about the author's competence, but you like their UI design, lean towards a positive decision, possibly the author has little experience in UX, but a lot in UI.",
   "admin_account_decision_instruction_item_5": "If the author has many followers/subscribers, it may be worth considering a positive decision, despite the author's competence. This can bring many new users to the project.",
   "admin_account_decision_instruction_item_6": "If you are impressed by the author's graphic design by the link to the project/resource, do not rush to take a positive decision, as the graphic design may be of other people, for example, the author's colleagues with whom he works.",
   "admin_account_decision_instruction_item_7": "All author account creations and rejections are logged and checked by more experienced participants, be careful when making decisions.",
-
-  "dropdown_amount_arrow_alt": "Arrow",
 
   "profile_fio_label": "Last name, first name, patronymic",
   "profile_social_label": "Social networks",
@@ -379,7 +399,7 @@
   "rte_button_paragraph": "Normal text",
   "rte_button_heading1": "Heading 1",
   "rte_button_heading2": "Heading 2",
-  "rte_button_heading3": "Heading 3", 
+  "rte_button_heading3": "Heading 3",
   "rte_button_heading4": "Heading 4",
   "rte_button_heading5": "Heading 5",
   "rte_button_heading6": "Heading 6",
@@ -398,26 +418,17 @@
   "rte_button_superscript": "Superscript",
   "rte_button_image": "Insert image",
 
+  "rte_image_errors_file_size": "File size exceeds 23 MB",
+  "rte_image_errors_file_type": "Invalid file format",
+  "rte_image_errors_no_image_on_url": "Could not get image from the specified link",
+  "rte_image_errors_broken_url": "Invalid URL address",
+  "rte_image_errors_file_reading": "Error reading file",
+  "rte_image_errors_on_hosting_loading": "Failed to upload file to hosting",
+  "rte_image_errors_from_link_loading": "Failed to load file from the specified link",
+  "rte_placeholder": "Enter text",
+
   "check_fields_language_title": "Language",
   "check_fields_sub_category_title": "Subcategory",
-
-  "creation_new_article_dropdown_select": "Select",
-  "creation_new_article_sub_category_occupied": "Subcategory is occupied!",
-  "creation_new_article_sub_category_update_hint": "Specify the current one or suggest an update",
-  "creation_new_article_sub_category_occupied_with_hint": "Subcategory is occupied! Specify the current one or suggest an update",
-  "creation_new_article_sub_category_invalid_request": "Invalid request. Please check your input.",
-  "creation_new_article_sub_category_auth_required": "Authentication required for verification.",
-  "creation_new_article_sub_category_check_error": "Error checking subcategory.",
-  "creation_recommendation_base_error": "Please insert a link from this site",
-  "creation_recommendation_full_error": "The link is not an article address",
-  "creation_recommendation_fetch_error": "Article does not exist",
-  "creation_recommendation_double_error": "Article is already added",
-  "creation_recommendation_lang_error": "Cannot add an article in a different language",
-  "creation_recommendation_self_error": "You cannot reference this article",
-  "creation_recommendation_checking": "Checking article...",
-  "creation_recommendation_exists": "Article exists",
-  "creation_recommendation_enter_url": "Enter URL",
-  "creation_recommendation_placeholder": "Link to DFA site article",
-
-  "rte_placeholder": "Enter text"
+  
+  "dropdown_amount_arrow_alt": "Arrow"
 }

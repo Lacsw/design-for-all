@@ -31,6 +31,10 @@
 
   "common_image_fallback_text": "Изображение временно недоступно",
 
+  "common_article_type_created": "Создание",
+  "common_article_type_updated": "Обновление",
+  "common_article_type_created_lang": "Перевод",
+
   "header_logo_alt": "Логотип",
 
   "header_main_menu_title": "Главное меню",
@@ -158,6 +162,7 @@
   "catalog_article_blank_search_tree": "Воспользуйтесь <tree>поиском по дереву</tree> или <header>поиском по заголовкам</header> статей",
   "catalog_article_blank_search_tree_tree": "поиском по дереву",
   "catalog_article_blank_search_tree_header": "поиском по заголовкам",
+  "catalog_article_blank_title": "Заголовок отсутствует",
   "catalog_article_image_alt": "Превью статьи",
   "catalog_article_image_fallback_alt": "Заглушка для картинки статьи",
   "catalog_article_title": "Заголовок статьи",
@@ -212,8 +217,25 @@
   "creation_new_article_modal_recommendations_add_btn_title": "Добавить рекомендацию",
   "creation_new_article_modal_recommendations_image_title": "Ссылка на картинку",
   "creation_new_article_modal_recommendations_input_image_placeholder": "https://site.com/image.jpg",
-
   "creation_new_article_modal_attention_title": "Последние изменения не сохранены, сохранить в черновик?",
+
+  "creation_new_article_dropdown_select": "Выбор",
+  "creation_new_article_sub_category_occupied": "Подкатегория занята!",
+  "creation_new_article_sub_category_update_hint": "Уточните текущую или предложите обновление",
+  "creation_new_article_sub_category_occupied_with_hint": "Подкатегория занята! Уточните текущую или предложите обновление",
+  "creation_new_article_sub_category_invalid_request": "Некорректный запрос. Проверьте ввод.",
+  "creation_new_article_sub_category_auth_required": "Для проверки необходимо авторизоваться.",
+  "creation_new_article_sub_category_check_error": "Ошибка проверки подкатегории.",
+  "creation_recommendation_base_error": "Вставьте ссылку с этого сайта",
+  "creation_recommendation_full_error": "Ссылка не является адресом статьи",
+  "creation_recommendation_fetch_error": "Статья не существует",
+  "creation_recommendation_double_error": "Статья уже добавлена",
+  "creation_recommendation_lang_error": "Нельзя добавить статью на другом языке",
+  "creation_recommendation_self_error": "Вы не можете ссылаться на эту статью",
+  "creation_recommendation_checking": "Проверка статьи...",
+  "creation_recommendation_exists": "Статья существует",
+  "creation_recommendation_enter_url": "Введите URL",
+  "creation_recommendation_placeholder": "Ссылка на статью сайта DFA",
 
   "author_navbar_write_article": "Написать статью",
   "author_navbar_publications": "Публикации",
@@ -311,6 +333,25 @@
   "admin_modal_reasons_deny": "Красный крестик",
   "admin_modal_reasons_approve": "Зелёная галочка",
 
+  "check_fields_image_title": "Картинка статьи",
+  "check_fields_article_title": "Заголовок статьи",
+  "check_fields_description_title": "Контент статьи",
+  "check_fields_recommendations_title": "Рекомендации авторов",
+  "check_fields_image_alt": "Картинка статьи",
+  "check_fields_image_fallback_alt": "Заглушка для картинки статьи",
+
+  "admin_account_decision_title": "Заявка на регистрацию автора",
+  "admin_account_decision_subtitle": "Ссылки на проекты",
+  "admin_account_decision_instruction_title": "Инструкция по проверке квалификации автора",
+  "admin_account_decision_instruction_item_1": "Если вы не уверены в безопасности ссылок, не открывайте их или открывайте в режиме \"Инкогнито\" браузера, это защитит ваши данные от возможных вредоносных действий хакеров. Это также относится к сокращенным ссылкам, таким как: <u>{{link}}</u>, и другим.",
+  "admin_account_decision_instruction_item_1_link": "https://go.gl/k12jh3k1j2h",
+  "admin_account_decision_instruction_item_2": "Проверяйте не более 30-60 секунд на 1 ссылку. Система автоматически не позволяет дублировать ссылки на проекты и аккаунты авторов, поэтому они не могут быть дублированы.",
+  "admin_account_decision_instruction_item_3": "Обратите внимание на качество аккаунта автора, если есть ссылка на социальную сеть автора. Если на проекте, например в Figma, обратите внимание на наличие ключевых разделов, таких как UI-kit, section's, component's, name space's и других.",
+  "admin_account_decision_instruction_item_4": "Если вы не уверены в компетенции автора, но вам нравится их UI-дизайн, положитесь на положительное решение, возможно, автор имеет небольшой опыт в UX, но много в UI.",
+  "admin_account_decision_instruction_item_5": "Если у автора много подписчиков/подписчиков, стоит рассмотреть положительное решение, несмотря на его компетенцию. Это может привести к множеству новых пользователей на проект.",
+  "admin_account_decision_instruction_item_6": "Если вас впечатляет графический дизайн автора по ссылке на проект/ресурс, не торопитесь принимать положительное решение, так как графический дизайн может быть другими людьми, например, коллегами автора, с которыми он работает.",
+  "admin_account_decision_instruction_item_7": "Все создания и отклонения аккаунтов авторов записываются и проверяются более опытными участниками, будьте осторожны при принятии решений.",
+
   "profile_fio_label": "Фамилия, имя, отчество",
   "profile_social_label": "Социальные сети",
   "profile_login_label": "Логин",
@@ -357,7 +398,7 @@
 
   "rte_button_paragraph": "Обычный текст",
   "rte_button_heading1": "Заголовок 1",
-  "rte_button_heading2": "Заголовок 2", 
+  "rte_button_heading2": "Заголовок 2",
   "rte_button_heading3": "Заголовок 3",
   "rte_button_heading4": "Заголовок 4",
   "rte_button_heading5": "Заголовок 5",
@@ -376,24 +417,18 @@
   "rte_button_subscript": "Нижний индекс",
   "rte_button_superscript": "Верхний индекс",
   "rte_button_image": "Вставить изображение",
+  "rte_placeholder": "Введите текст",
 
-  "creation_new_article_dropdown_select": "Выбор",
-  "creation_new_article_sub_category_occupied": "Подкатегория занята!",
-  "creation_new_article_sub_category_update_hint": "Уточните текущую или предложите обновление",
-  "creation_new_article_sub_category_occupied_with_hint": "Подкатегория занята! Уточните текущую или предложите обновление",
-  "creation_new_article_sub_category_invalid_request": "Некорректный запрос. Проверьте ввод.",
-  "creation_new_article_sub_category_auth_required": "Для проверки необходимо авторизоваться.",
-  "creation_new_article_sub_category_check_error": "Ошибка проверки подкатегории.",
-  "creation_recommendation_base_error": "Вставьте ссылку с этого сайта",
-  "creation_recommendation_full_error": "Ссылка не является адресом статьи",
-  "creation_recommendation_fetch_error": "Статья не существует",
-  "creation_recommendation_double_error": "Статья уже добавлена",
-  "creation_recommendation_lang_error": "Нельзя добавить статью на другом языке",
-  "creation_recommendation_self_error": "Вы не можете ссылаться на эту статью",
-  "creation_recommendation_checking": "Проверка статьи...",
-  "creation_recommendation_exists": "Статья существует",
-  "creation_recommendation_enter_url": "Введите URL",
-  "creation_recommendation_placeholder": "Ссылка на статью сайта DFA",
+  "rte_image_errors_file_size": "Вес файла больше 23 Мб",
+  "rte_image_errors_file_type": "Неверный формат файла",
+  "rte_image_errors_no_image_on_url": "Не удалось получить изображение по указанной ссылке",
+  "rte_image_errors_broken_url": "Неккоректный URL-адрес",
+  "rte_image_errors_file_reading": "Ошибка при чтении файла",
+  "rte_image_errors_on_hosting_loading": "Не удалось загрузить файл на хостинг",
+  "rte_image_errors_from_link_loading": "Не удалось загрузить файл по указанной ссылке",
 
-  "rte_placeholder": "Введите текст"
+  "check_fields_language_title": "Язык",
+  "check_fields_sub_category_title": "Подкатегория",
+
+  "dropdown_amount_arrow_alt": "Стрелка"
 }

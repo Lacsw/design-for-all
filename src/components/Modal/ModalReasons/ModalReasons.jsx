@@ -25,8 +25,8 @@ export default function ModalReasons({
               src={rejFields.includes('sub_category') ? deny : approve}
               alt={
                 rejFields.includes('sub_category')
-                  ? 'Красный крестик'
-                  : 'Зелёная галочка'
+                  ? t(ADMIN.MODAL_REASONS.DENY)
+                  : t(ADMIN.MODAL_REASONS.APPROVE)
               }
             />
             {t(ADMIN.MODAL_REASONS.SUB_CATEGORY)}
@@ -37,8 +37,8 @@ export default function ModalReasons({
               src={rejFields.includes('title') ? deny : approve}
               alt={
                 rejFields.includes('title')
-                  ? 'Красный крестик'
-                  : 'Зелёная галочка'
+                  ? t(ADMIN.MODAL_REASONS.DENY)
+                  : t(ADMIN.MODAL_REASONS.APPROVE)
               }
             />
             {t(ADMIN.MODAL_REASONS.TITLE)}
@@ -49,8 +49,8 @@ export default function ModalReasons({
               src={rejFields.includes('image') ? deny : approve}
               alt={
                 rejFields.includes('image')
-                  ? 'Красный крестик'
-                  : 'Зелёная галочка'
+                  ? t(ADMIN.MODAL_REASONS.DENY)
+                  : t(ADMIN.MODAL_REASONS.APPROVE)
               }
             />
             {t(ADMIN.MODAL_REASONS.IMAGE)}
