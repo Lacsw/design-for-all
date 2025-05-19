@@ -27,7 +27,11 @@ const Modal = forwardRef(function Modal(
     if (isOpen) {
       const closeByEsc = (evt) => {
         if (evt.key === 'Escape') {
-          twoBtns ? onClose() : onConfirm();
+          if (twoBtns || onConfirm === null) {
+            onClose();
+          } else if (onConfirm) {
+            onConfirm();
+          }
         }
       };
       document.addEventListener('keydown', closeByEsc);
@@ -37,9 +41,17 @@ const Modal = forwardRef(function Modal(
 
   const closeByOver = (evt) => {
     if (evt.target.classList.contains('modal')) {
-      twoBtns ? onClose() : onConfirm();
+      if (twoBtns || onConfirm === null) {
+        onClose();
+      } else if (onConfirm) {
+        onConfirm();
+      }
     }
   };
+
+  // Проверяем, нужно ли отображать кнопки
+  const showConfirmButton = onConfirm !== null && onConfirm !== undefined;
+  const showButtons = showConfirmButton || twoBtns;
 
   return (
     <Box
@@ -68,23 +80,27 @@ const Modal = forwardRef(function Modal(
 
         {children}
 
-        <div className="modal__btns">
-          <button
-            onClick={onConfirm}
-            className="modal__btn modal__btn_confirm"
-            type="button"
-            aria-label={t(COMMON.MODAL.CONFIRM_BUTTON)}
-            disabled={isBlocked}
-          />
-          {twoBtns && (
-            <button
-              onClick={onClose}
-              className="modal__btn modal__btn_cancel"
-              type="button"
-              aria-label={t(COMMON.MODAL.CANCEL_BUTTON)}
-            />
-          )}
-        </div>
+        {showButtons && (
+          <div className="modal__btns">
+            {showConfirmButton && (
+              <button
+                onClick={onConfirm}
+                className="modal__btn modal__btn_confirm"
+                type="button"
+                aria-label={t(COMMON.MODAL.CONFIRM_BUTTON)}
+                disabled={isBlocked}
+              />
+            )}
+            {twoBtns && (
+              <button
+                onClick={onClose}
+                className="modal__btn modal__btn_cancel"
+                type="button"
+                aria-label={t(COMMON.MODAL.CANCEL_BUTTON)}
+              />
+            )}
+          </div>
+        )}
       </Box>
     </Box>
   );
