@@ -12,7 +12,6 @@ const DropdownLanguage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const flag = languageList.find((item) => item.id === lang);
-  console.log(flag);
   const otherFlags = languageList.filter((item) => item.id !== lang);
   const flagList = isOpen ? [flag, ...otherFlags] : [flag];
 
@@ -31,7 +30,7 @@ const DropdownLanguage = () => {
             return (
               <li
                 className={'flag-list__item' + extraClass}
-                key={flag.name}
+                key={flag.id}
                 onClick={() => navigate(`/${flag.id}/${articleId}`)}
               >
                 <img className="flag" src={flag.src} alt={flag.name} />
