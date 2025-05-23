@@ -7,6 +7,7 @@ import kofiLogo from '../../images/donationPlarform/kofi_symbol.svg';
 import donationAlertsLogo from '../../images/donationPlarform/da_alert.svg';
 import donattyLogo from '../../images/donationPlarform/donatty_mark_white.svg';
 import './DonationModal.css';
+import { HEADER } from 'utils/translationKeys';
 
 const DonationModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
@@ -28,43 +29,44 @@ const DonationModal = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={t('Пожертвования')}
+      title={t(HEADER.DONATION_MODAL.TITLE)}
       onConfirm={null}
       large
     >
       <div className={`donation-container ${theme}`}>
+        <p className="donation-description">{t(HEADER.DONATION_MODAL.TEXT)}</p>
         <div className="donation-cards">
           <div className="donation-card" onClick={openKofi}>
             <div className="donation-logo">
               <img 
                 src={kofiLogo} 
-                alt="Ko-fi" 
+                alt={t(HEADER.DONATION_MODAL.KOFI)}
                 className="donation-logo-img" 
               />
             </div>
-            <span className="donation-text">Ko-fi</span>
+            <span className="donation-text">{t(HEADER.DONATION_MODAL.KOFI)}</span>
           </div>
           
           <div className="donation-card" onClick={openDonatty}>
             <div className="donation-logo">
               <img 
                 src={donattyLogo} 
-                alt="Donatty" 
+                alt={t(HEADER.DONATION_MODAL.DONATTY)}
                 className="donation-logo-img" 
               />
             </div>
-            <span className="donation-text">Donatty</span>
+            <span className="donation-text">{t(HEADER.DONATION_MODAL.DONATTY)}</span>
           </div>
           
           <div className="donation-card" onClick={openDonationAlerts}>
             <div className="donation-logo">
               <img 
                 src={donationAlertsLogo} 
-                alt="DonationAlerts" 
+                alt={t(HEADER.DONATION_MODAL.DONATION_ALERTS)}
                 className="donation-logo-img" 
               />
             </div>
-            <span className="donation-text">DonationAlerts</span>
+            <span className="donation-text">{t(HEADER.DONATION_MODAL.DONATION_ALERTS)}</span>
           </div>
         </div>
       </div>
