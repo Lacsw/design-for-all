@@ -29,7 +29,7 @@ const initialForm = {
   social_media: {},
 };
 
-export default function Profile({ resetSection }) {
+export default function Profile() {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
@@ -74,7 +74,6 @@ export default function Profile({ resetSection }) {
       .updateUser(filledData)
       .then(() => {
         if (filledData.login || filledData.password) {
-          resetSection();
           dispatch(signInSuccess(null));
         } else {
           dispatch(signInSuccess({ ...currentUser, ...filledData }));

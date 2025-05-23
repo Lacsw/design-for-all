@@ -14,16 +14,14 @@ import {
 
 import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useLogout } from 'utils/hooks/useLogout';
-import { setCurrentSection } from 'store/slices/catalog/slice';
 
 const authorTabs = ['approve', 'drafted', 'offered', 'rejected', 'deleted'];
 
 export default function AccountAuthor({ hash }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = useLogout();
   const isMobile = useIsMobile();
@@ -41,9 +39,7 @@ export default function AccountAuthor({ hash }) {
   const NavBar =
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
-  const resetSection = () => {
-    dispatch(setCurrentSection(''));
-  };
+
 
   useEffect(() => {
     if (!isValid || (user && !access)) return;
@@ -85,7 +81,7 @@ export default function AccountAuthor({ hash }) {
         {hash === hashPaths.newArticle ? (
           <Creation />
         ) : hash === hashPaths.profile ? (
-          <Profile resetSection={resetSection} />
+          <Profile />
         ) : (
           <div className="account-author__articles">
             <AuthorArticlesNav

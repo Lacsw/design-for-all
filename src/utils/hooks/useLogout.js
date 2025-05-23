@@ -1,9 +1,9 @@
 import { useCallback, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import authApi from 'utils/api/auth';
 import { signOut } from 'store/slices/user';
-import { setCurrentSection, selectIsOpen } from 'store/slices/catalog/slice';
+// import {selectIsOpen } from 'store/slices/catalog/slice';
 import { broadcastLogout } from './useSyncTabs';
 import { adminHash, hashPaths } from 'utils/constants';
 
@@ -17,7 +17,7 @@ export function useLogout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const isCatalogOpen = useSelector(selectIsOpen);
+  // const isCatalogOpen = useSelector(selectIsOpen);
   const logoutInProgress = useRef(false);
 
   return useCallback(async () => {
@@ -33,10 +33,10 @@ export function useLogout() {
     const isAuthorRoute = Object.values(hashPaths).includes(currentHash);
     const isProtectedRoute = isAdminRoute || isAuthorRoute;
 
-    // Очищаем UI только если не в каталоге
-    if (!isCatalogOpen) {
-      dispatch(setCurrentSection(''));
-    }
+    // // Очищаем UI только если не в каталоге
+    // if (!isCatalogOpen) {
+    //   dispatch(setCurrentSection(''));
+    // }
     
     dispatch(signOut());
 
@@ -61,5 +61,5 @@ export function useLogout() {
         logoutInProgress.current = false;
       }, 1000);
     }
-  }, [dispatch, navigate, location, isCatalogOpen]);
+  }, [dispatch, navigate, location]);
 }

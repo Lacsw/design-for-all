@@ -4,15 +4,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const catalogSlice = createSlice({
   name: 'catalog',
   initialState: {
-    currentSection: '',
     currentCategory: '',
     isOpen: false,
     shouldRemountTree: false,
   },
   reducers: {
-    setCurrentSection: (state, action) => {
-      state.currentSection = action.payload;
-    },
     setCurrentCategory: (state, action) => {
       state.currentCategory = action.payload;
     },
@@ -28,15 +24,10 @@ const catalogSlice = createSlice({
   },
 });
 
-export const {
-  setCurrentSection,
-  setCurrentCategory,
-  setIsOpen,
-  setShouldRemountTree,
-} = catalogSlice.actions;
+export const { setCurrentCategory, setIsOpen, setShouldRemountTree } =
+  catalogSlice.actions;
 
 // Селекторы
-export const selectCurrentSection = (state) => state.catalog.currentSection;
 export const selectCurrentCategory = (state) => state.catalog.currentCategory;
 export const selectCurrentHash = (state) => state.catalog.currentHash;
 export const selectIsOpen = (state) => state.catalog.isOpen;

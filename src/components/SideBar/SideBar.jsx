@@ -12,8 +12,7 @@ import {
   selectShouldRemountTree,
   setShouldRemountTree,
   setMainCategory,
-  setCurrentSection,
-  selectCurrentSection,
+  selectCurrentCategory,
 } from 'store/slices/catalog/slice';
 import { getLanguage } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
@@ -43,7 +42,7 @@ export default function SideBar({ section }) {
   const titles = useSelector(selectTitles);
   const mainCategory = useSelector(selectMainCategory);
   const shouldRemountTree = useSelector(selectShouldRemountTree);
-  const currentSection = useSelector(selectCurrentSection);
+  const currentSection = useSelector(selectCurrentCategory);
   
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +62,7 @@ export default function SideBar({ section }) {
 
   const updateSection = useCallback((newSection) => {
     const cleanSection = newSection.replace(/^\//, '');
-    dispatch(setCurrentSection(cleanSection));
+    // dispatch(setCurrentSection(cleanSection));
     if (titles?.[language]?.[cleanSection]) {
       dispatch(setMainCategory(titles[language][cleanSection]));
     }

@@ -17,7 +17,7 @@ import {
 
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
-import { selectIsOpen as selectIsCatalogOpen, setCurrentSection } from 'store/slices/catalog/slice';
+import { selectIsOpen as selectIsCatalogOpen } from 'store/slices/catalog/slice';
 
 import {
   accountNavigationList,
@@ -48,15 +48,11 @@ export default function Header() {
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
 
-  const resetSection = () => {
-    dispatch(setCurrentSection(''));
-  };
-
   // Условие, при котором срабатывать таймаут:
   const shouldTimeout = isAdmin;
 
   const handleLogout = useLogout();
-  
+
   // Переопределяем функцию handleLogout для открытия окна авторизации
   const handleLogoutWithModal = () => {
     openAuthModal();
@@ -115,7 +111,7 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <Link to="/" className="logo-link" onClick={resetSection}>
+        <Link to="/" className="logo-link" >
           <img
             src={theme === 'dark' ? logo : logoBlack}
             alt={t(HEADER.LOGO.ALT)}
