@@ -2,7 +2,7 @@ import './ArticleHeader.css';
 import DropdownLanguage from 'components/DropdownLanguage/DropdownLanguage';
 import DropdownEdit from 'components/DropdownEdit/DropdownEdit';
 import { useSelector } from 'react-redux';
-import { getCurrentUser } from 'store/slices/user';
+import { getCurrentUser, getLanguage } from 'store/slices/user';
 import {
   formatTimestamp,
   formatUpdatedAt,
@@ -14,6 +14,7 @@ import { CATALOG } from 'utils/translationKeys';
 export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
   const { t } = useTranslation();
   const currentUser = useSelector(getCurrentUser);
+  const language = useSelector(getLanguage);
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
 
@@ -30,10 +31,10 @@ export default function ArticleHeader({ title, timeCreate, timeUpdate }) {
         </div>
       </div>
       <div className="article-header__timing-container">
-        <Tooltip title={formatTimestamp(timeCreate)} placement="top" arrow>
+        <Tooltip title={formatTimestamp(timeCreate, language)} placement="top" arrow>
           <p className="article-header__timing">{t(CATALOG.HEADER.PUBLISHED)} {createDate}</p>
         </Tooltip>
-        <Tooltip title={formatUpdatedAt(timeUpdate)} placement="top" arrow>
+        <Tooltip title={formatUpdatedAt(timeUpdate, language)} placement="top" arrow>
           <p className="article-header__timing">{t(CATALOG.HEADER.UPDATED)} {updateDate}</p>
         </Tooltip>
       </div>

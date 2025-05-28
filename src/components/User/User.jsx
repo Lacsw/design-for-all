@@ -7,14 +7,14 @@
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { socialIcons } from 'utils/constants';
+import { socialIcons, userRoleSelectOptions } from 'utils/constants';
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
 import defaultAvatar from 'images/admin/avatar_default.svg';
 import { getSocialHref } from 'utils/socials';
 import './User.css';
 import { useTranslation } from 'react-i18next'; 
-import { USER } from 'utils/translationKeys';
+import { USER, COMMON } from 'utils/translationKeys';
 
 export default function User() {
   const { t } = useTranslation();
@@ -57,7 +57,9 @@ export default function User() {
       />
       <div className="user__titles">
         <p className="user__name">{user.fio}</p>
-        <p className="user__role">{user.role || 'user'}</p>
+        <p className="user__role">
+          {t(userRoleSelectOptions.find(option => option.value === (user.role))?.translationKey || COMMON.ROLES.USER)}
+        </p>
       </div>
       {user.social_media ? (
         <div className="user__socials-container">

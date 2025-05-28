@@ -1,5 +1,6 @@
 // @ts-check
 import { defaultAligningClass } from './constants';
+import { RTE } from 'utils/translationKeys';
 
 /**
  * @typedef TImgErrors
@@ -13,23 +14,26 @@ import { defaultAligningClass } from './constants';
  *   | 'fromLinkLoading'}
  */
 
-/** @param {TImgErrors} errorKind */
-export const getErrorText = (errorKind) => {
+/** 
+ * @param {TImgErrors} errorKind 
+ * @param {import('i18next').TFunction} t
+ */
+export const getErrorText = (errorKind, t) => {
   switch (errorKind) {
     case 'fileSize':
-      return 'Вес файла больше 23 Мб';
+      return t(RTE.IMAGE.ERRORS.FILE_SIZE);
     case 'fileType':
-      return 'Неверный формат файла';
+      return t(RTE.IMAGE.ERRORS.FILE_TYPE);
     case 'noImgOnUrl':
-      return 'Не удалось получить изображение по указанной ссылке';
+      return t(RTE.IMAGE.ERRORS.NO_IMAGE_ON_URL);
     case 'brokenUrl':
-      return 'Неккоректный URL-адрес';
+      return t(RTE.IMAGE.ERRORS.BROKEN_URL);
     case 'fileReading':
-      return 'Ошибка при чтении файла';
+      return t(RTE.IMAGE.ERRORS.FILE_READING);
     case 'onHostingLoading':
-      return 'Не удалось загрузить файл на хостинг';
+      return t(RTE.IMAGE.ERRORS.ON_HOSTING_LOADING);
     case 'fromLinkLoading':
-      return 'Не удалось загрузить файл по указанной ссылке';
+      return t(RTE.IMAGE.ERRORS.FROM_LINK_LOADING);
     default:
       return null;
   }

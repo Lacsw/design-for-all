@@ -14,8 +14,10 @@ import { MAX_SIZE_IMG_B64_BYTES } from './constants';
 import { getErrorText, getImgByURL } from './helpers';
 import authorApi from 'utils/api/author';
 import { useDebounce } from 'utils/hooks';
+import { useTranslation } from 'react-i18next';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
+  const { t } = useTranslation();
   const [value, setValue] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isDragHover, setIsDragHover] = useState(false);
@@ -289,7 +291,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       </Box>
 
       <Typography className="text-error" color="error">
-        {error ? getErrorText(error) : '\u00a0'}
+        {error ? getErrorText(error, t) : '\u00a0'}
       </Typography>
     </Modal>
   );

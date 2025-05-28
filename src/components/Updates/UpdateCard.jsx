@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './UpdateCard.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { formatTimestamp } from 'utils/helpers/timeFormatters.js';
 import { Tooltip } from 'components';
 import { setMainCategory, setShouldRemountTree } from 'store/slices/catalog/slice';
 import { UPDATES } from 'utils/translationKeys';
 import { useTranslation } from 'react-i18next';
+import { getLanguage } from 'store/slices/user';
 
 export default function UpdateCard({ update }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
   const timestamp = Math.floor(
     new Date(update.time_action.replace(' ', 'T')).getTime() / 1000
   );
@@ -46,7 +48,7 @@ export default function UpdateCard({ update }) {
               ? t(UPDATES.ARTICLE_TYPE.TRANSLATED)
               : ''}
           </span>
-          <Tooltip title={formatTimestamp(timestamp)} placement="top" arrow>
+          <Tooltip title={formatTimestamp(timestamp, language)} placement="top" arrow>
             <span className="update-card__others">
               {update.time_action.split(' ')[0].split('-').reverse().join('.')}
             </span>

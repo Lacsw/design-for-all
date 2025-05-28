@@ -14,16 +14,19 @@ import {
 
 import authorApi from 'utils/api/author';
 import { hashPaths } from 'utils/constants';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useLogout } from 'utils/hooks/useLogout';
+import { setCurrentSection } from 'store/slices/catalog/slice';
 
 const authorTabs = ['approve', 'drafted', 'offered', 'rejected', 'deleted'];
 
-export default function AccountAuthor({ hash, resetSection }) {
-  const isMobile = useIsMobile();
+export default function AccountAuthor({ hash }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleLogout = useLogout();
+  const isMobile = useIsMobile();
   const user = useSelector((state) => state.user.currentUser);
   const [, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
@@ -38,10 +41,9 @@ export default function AccountAuthor({ hash, resetSection }) {
   const NavBar =
     hash === hashPaths.newArticle ? NewArticleNavbar : AuthorNavbar;
 
-  const handleLogout = useLogout({ 
-    resetSection,
-    redirectTo: '/'
-  });
+  const resetSection = () => {
+    dispatch(setCurrentSection(''));
+  };
 
   useEffect(() => {
     if (!isValid || (user && !access)) return;
@@ -63,12 +65,12 @@ export default function AccountAuthor({ hash, resetSection }) {
 
   // Если hash недопустим, возвращаем NotFound
   if (!isValid) {
-    return <NotFound resetSection={resetSection} />;
+    return <NotFound />;
   }
 
   // Если пользователь существует, но не имеет доступа, тоже NotFound с ролью
   if (user && !access) {
-    return <NotFound resetSection={resetSection} role="автор" />;
+    return <NotFound role="автор" />;
   }
 
   // Если доступ есть и устройство мобильное, возвращаем мобильную версию

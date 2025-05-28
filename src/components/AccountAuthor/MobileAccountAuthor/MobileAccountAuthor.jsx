@@ -26,7 +26,7 @@ export default function MobileAccountAuthor({ handleLogout }) {
           onClick={handleLogout}
           extraClass="mobile-account-author__button"
         >
-          Выйти
+          {t(AUTHOR.MOBILE.LOGOUT_BUTTON)}
         </Button>
       </div>
     </div>

@@ -1,23 +1,23 @@
 import { useCallback, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import authApi from 'utils/api/auth';
 import { signOut } from 'store/slices/user';
+import { setCurrentSection, selectIsOpen } from 'store/slices/catalog/slice';
 import { broadcastLogout } from './useSyncTabs';
+import { adminHash, hashPaths } from 'utils/constants';
 
 /**
  * Хук для унифицированного выхода из системы
+ * Очищает состояние, выходит на сервере и перенаправляет на главную страницу только если пользователь на защищенных маршрутах
  *
- * @param {object} options - Опции для выхода
- * @param {Function} [options.resetSection] - Функция для сброса секции
- * @param {Function} [options.onSuccess] - Callback, вызываемый после успешного
- *   выхода
- * @param {string} [options.redirectTo] - URL для редиректа после выхода
  * @returns {Function} - Функция для выхода из системы
  */
-export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
+export function useLogout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isCatalogOpen = useSelector(selectIsOpen);
   const logoutInProgress = useRef(false);
 
   return useCallback(async () => {
@@ -25,10 +25,19 @@ export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
     if (logoutInProgress.current) return;
     logoutInProgress.current = true;
 
-    // Сразу очищаем UI для предотвращения моргания
-    if (resetSection) {
-      resetSection();
+    // Проверяем, находится ли пользователь на защищенном маршруте
+    const currentHash = location.hash;
+    const isAdminRoute = Object.values(adminHash).some(path => 
+      typeof path === 'string' ? currentHash === path : path.includes(currentHash)
+    );
+    const isAuthorRoute = Object.values(hashPaths).includes(currentHash);
+    const isProtectedRoute = isAdminRoute || isAuthorRoute;
+
+    // Очищаем UI только если не в каталоге
+    if (!isCatalogOpen) {
+      dispatch(setCurrentSection(''));
     }
+    
     dispatch(signOut());
 
     // Синхронизируем с другими вкладками
@@ -41,14 +50,10 @@ export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
       // Если ошибка 401, значит токен уже недействителен
       console.error('Ошибка при выходе:', err);
     } finally {
-      // Выполняем дополнительные действия после выхода
-      if (onSuccess) {
-        onSuccess();
-      }
-
-      // Если указан URL для редиректа, перенаправляем
-      if (redirectTo) {
-        navigate(redirectTo);
+      // Перенаправляем на главную только если пользователь на защищенном маршруте
+      if (isProtectedRoute) {
+        navigate('/');
+        window.location.hash = '';
       }
 
       // Сбрасываем флаг после небольшой задержки
@@ -56,5 +61,5 @@ export function useLogout({ resetSection, onSuccess, redirectTo } = {}) {
         logoutInProgress.current = false;
       }, 1000);
     }
-  }, [dispatch, navigate, resetSection, onSuccess, redirectTo]);
+  }, [dispatch, navigate, location, isCatalogOpen]);
 }

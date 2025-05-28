@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ErrorImage } from 'components';
+import { useTranslation } from 'react-i18next';
+import { COMMON } from 'utils/translationKeys';
 
 export default function ImageWithFallback({
   src,
@@ -7,9 +9,10 @@ export default function ImageWithFallback({
   className,
   imageClassName,
   fallbackClassName,
-  fallbackAlt = 'Заглушка',
+  fallbackAlt,
   showFallback = true,
 }) {
+  const { t } = useTranslation();
   const [imageError, setImageError] = useState(false);
 
   // Сбрасываем состояние imageError при изменении src
@@ -25,7 +28,7 @@ export default function ImageWithFallback({
     return (
       <ErrorImage
         className={fallbackClassName}
-        alt={fallbackAlt}
+        alt={fallbackAlt || t(COMMON.IMAGE_FALLBACK_TEXT)}
         show={showFallback}
         imageClassName={imageClassName}
       />
