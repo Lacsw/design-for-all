@@ -19,19 +19,12 @@ function scrollDiscretely(scrollableRef, step) {
     return;
   }
   const scrollTop = scrollableRef.current.scrollTop;
-  // const scrollHeight = scrollableRef.current.data.scrollHeight;
 
   const desiredStep = Math.round(scrollTop / step);
   scrollableRef.current.scrollTo({ behavior: 'smooth', top: desiredStep });
 }
 
 const scrollDiscretelyDebounced = debounce(scrollDiscretely, 500);
-
-/**
- * @param {HTMLLIElement} li
- * @param {number} idx
- */
-// const getScale = (li, idx) => {};
 
 /**
  * Модалка навигатора статей.
@@ -69,52 +62,6 @@ export const Modal = ({
     });
   }, [isOpen]);
 
-  // useEffect(() => {
-  //   const cleanRef = {
-  //     cur: () => null,
-  //   };
-
-  //   const idTime = setTimeout(() => {
-  //     if (!olRef.current) {
-  //       console.log('RETURN');
-  //       return;
-  //     }
-  //     console.log('GOOD');
-
-  //     /** @type {MutationCallback} */
-  //     const cb = (changes, observer) => {
-  //       console.log('changes', changes);
-  //     };
-  //     let observer = new MutationObserver(cb);
-
-  //     cleanRef.cur = () => {
-  //       observer.disconnect();
-  //       // @ts-ignore
-  //       observer = null;
-  //       return null;
-  //     };
-
-  //     const liArr = Array.from(olRef.current.querySelectorAll('li'));
-  //     liArr.forEach((li) => {
-  //       if (!li) {
-  //         console.log('NO LI');
-  //         return;
-  //       }
-
-  //       observer.observe(li, {
-  //         attributes: true,
-  //         characterData: true,
-  //         attributeOldValue: true,
-  //       });
-  //     });
-  //   });
-
-  //   return () => {
-  //     cleanRef.cur();
-  //     clearTimeout(idTime);
-  //   };
-  // }, [headings, isOpen]);
-
   return (
     <ModalMui
       open={isOpen}
@@ -142,18 +89,6 @@ export const Modal = ({
 
               scrollDiscretelyDebounced(olRef, rect.height + 10);
             }}
-            // onScroll={(e) => {
-            //   if (!olRef.current) return;
-
-            //   const liEls = Array.from(olRef.current.querySelectorAll('li'));
-
-            //   liEls.forEach((i, idx) => {
-            //     // i.style.transform = getScale(i, idx);
-            //     if (idx === 3) {
-            //       console.log('listIIII', { i });
-            //     }
-            //   });
-            // }}
           >
             {headings.map((headingEl, idx) => {
               return (
