@@ -17,7 +17,7 @@ const initI18n = async () => {
         backend: {
           loadPath: `${domain}/interface_{{lng}}.json`,
           requestOptions: {
-            cache: 'no-store'
+            cache: 'no-store',
           },
           reloadInterval: false,
           crossDomain: true,
@@ -36,13 +36,13 @@ const initI18n = async () => {
           transSupportBasicHtmlNodes: true,
           transKeepBasicHtmlNodesFor: ['br', 'strong', 'i', 'p'],
         },
-        debug: true,
+        debug: false,
         load: 'all',
         ns: ['translation'],
         defaultNS: 'translation',
       });
 
-    console.log('i18n initialized with language:', i18n.language);
+    // console.log('i18n initialized with language:', i18n.language);
   } catch (error) {
     console.error('Error initializing i18n:', error);
   }
@@ -59,13 +59,13 @@ export const getCurrentLanguage = () => {
 // Функция для изменения языка
 export const changeLanguage = async (lng) => {
   try {
-    console.log('Changing language to:', lng);
+    // console.log('Changing language to:', lng);
     await i18n.changeLanguage(lng);
-    console.log('Language changed to:', lng);
+    // console.log('Language changed to:', lng);
   } catch (error) {
     console.error('Error changing language:', error);
   }
 };
 
 // Экспортируем настроенный экземпляр i18next
-export default i18n; 
+export default i18n;

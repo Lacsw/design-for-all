@@ -1,30 +1,18 @@
 // @ts-check
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import useEmblaCarousel from 'embla-carousel-react';
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import { Box, Fade, Modal as ModalMui } from '@mui/material';
+import { deepmerge } from '@mui/utils';
 import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
-import { sxRoot } from './styles';
 import { defaultModalSlotProps } from '../constants';
-import { deepmerge } from '@mui/utils';
-import debounce from 'utils/helpers/debounce';
+import { sxRoot } from './styles';
 
 /** @import * as Types from "../types" */
 
-/**
- * @param {React.RefObject<HTMLOListElement>} scrollableRef
- * @param {number} step
- */
-function scrollDiscretely(scrollableRef, step) {
-  if (!scrollableRef.current) {
-    return;
-  }
-  const scrollTop = scrollableRef.current.scrollTop;
-
-  const desiredStep = Math.round(scrollTop / step);
-  scrollableRef.current.scrollTo({ behavior: 'smooth', top: desiredStep });
-}
-
-const scrollDiscretelyDebounced = debounce(scrollDiscretely, 500);
+const emblaPlugins = [WheelGesturesPlugin()];
 
 /**
  * Модалка навигатора статей.
@@ -48,6 +36,17 @@ export const Modal = ({
   const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
   const headingsLength = headings.length;
 
+  const [emblaOptions, setEmblaOptions] =
+    /** @type {TState<import('embla-carousel').EmblaOptionsType>} */ (
+      useState({
+        axis: 'y',
+        loop: true,
+        skipSnaps: true,
+        containScroll: 'keepSnaps',
+      })
+    );
+  const [emblaRef] = useEmblaCarousel(emblaOptions, emblaPlugins);
+
   const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
 
   useEffect(() => {
@@ -61,6 +60,15 @@ export const Modal = ({
       });
     });
   }, [isOpen]);
+
+  useEffect(() => {
+    if (headings.length && curHeading) {
+      const idx = curHeading.getAttribute('data-idx');
+      if (idx) {
+        setEmblaOptions((prev) => ({ ...prev, startIndex: +idx }));
+      }
+    }
+  }, [headings, curHeading]);
 
   return (
     <ModalMui
@@ -77,23 +85,13 @@ export const Modal = ({
       onClose={(evt, reason) => onClose(reason)}
     >
       <Fade in={isOpen}>
-        <Box className={clsx('article-navigator__modal')}>
-          <ol
-            ref={olRef}
-            className="article-navigator__list"
-            onScroll={() => {
-              if (!olRef.current) return;
-
-              const firstHeading = headings[0];
-              const rect = firstHeading.getBoundingClientRect();
-
-              scrollDiscretelyDebounced(olRef, rect.height + 10);
-            }}
-          >
+        <Box className={clsx('article-navigator__modal')} ref={emblaRef}>
+          <ol ref={olRef} className="article-navigator__list">
             {headings.map((headingEl, idx) => {
               return (
                 <li
-                  key={idx}
+                  data-idx={idx}
+                  key={idx + (headingEl.textContent || uuidv4())}
                   className={clsx(
                     'article-navigator__item',
                     curHeading === headingEl &&

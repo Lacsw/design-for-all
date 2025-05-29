@@ -256,8 +256,11 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
           entry.intersectionRect.y <= -topMargin + 70 &&
           entry.target?.textContent
         ) {
-          // @ts-ignore
-          setCurHeading(entry.target);
+          if (entry.target instanceof HTMLHeadingElement) {
+            setCurHeading(entry.target);
+          } else {
+            // console.warn('Observer target is not heading.');
+          }
         }
       },
       {

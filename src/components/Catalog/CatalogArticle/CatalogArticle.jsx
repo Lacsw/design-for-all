@@ -1,12 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {
-  fetchArticle,
-  selectArticle,
-  selectError,
-  selectLoading,
-} from 'store/slices/article';
+import { useTranslation, Trans } from 'react-i18next';
+
 import {
   NotFoundArticle,
   ArticleHeader,
@@ -16,75 +12,59 @@ import {
   ArticleNavigator,
   ImageWithFallback,
 } from 'components';
-import './CatalogArticle.css';
-import './withNavigator.css';
-import { useTranslation, Trans } from 'react-i18next';
-import { CATALOG } from 'utils/translationKeys';
+
+import {
+  fetchArticle,
+  selectArticle,
+  selectError,
+  selectLoading,
+} from 'store/slices/article';
 import { getLanguage } from 'store/slices/user';
+
+import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
+import { useIsMobile } from 'utils/hooks/useIsMobile';
+import { CATALOG } from 'utils/translationKeys';
 import tutorialRu from 'videos/tutorial_ru.mp4';
 import tutorialEn from 'videos/tutorial_en.mp4';
 import tutorialEs from 'videos/tutorial_es.mp4';
 import tutorialZh from 'videos/tutorial_zh.mp4';
-import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
-import { useIsMobile } from 'utils/hooks/useIsMobile';
+
+import './CatalogArticle.css';
+import './withNavigator.css';
+import { useArticleNavigator } from './hooks/useArtNavigator';
+import {
+  artNavSlotProps,
+  scrollableElParams,
+  targetHeadings,
+} from './constants';
 
 const tutorialVideos = {
   ru: tutorialRu,
   en: tutorialEn,
   es: tutorialEs,
-  zh: tutorialZh
-};
-
-/** @type {import('components/ArticleNavigator/types').IScrollableElParams} */
-const scrollableElParams = {
-  selector: 'html',
-  searchMode: 'root',
-  flag: true,
-  intersectionMargin: '-115px 0px 0px 0px',
-};
-const targetHeadings = [1, 2, 3];
-
-/** @type {import('components/ArticleNavigator/types').IArticleNavigatorProps['slotProps']} */
-const artNavSlotProps = {
-  bar: {
-    id: 'catalog-article__navigator-bar',
-  },
-  modal: {
-    id: 'catalog-article__navigator-modal',
-  },
+  zh: tutorialZh,
 };
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { lang, articleId } = useParams();
+
   const language = useSelector(getLanguage);
   const article = useSelector(selectArticle);
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
+
   const articleRef = useRef(null);
-  const { openComponent} = useInteractiveManager();
+  const editorContainerRef =
+    /** @type {React.RefObject<HTMLDivElement | null>} */ (useRef(null));
+
+  const { openComponent } = useInteractiveManager();
   const isMobile = useIsMobile();
+
   const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
-
-  useEffect(() => {
-    if (!needToFetch) return;
-    dispatch(fetchArticle({ lang, articleId }));
-  }, [lang, articleId, needToFetch, dispatch]);
-
-  // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
-
-  const headerElRef = useRef(/** @type {HTMLElement | null} */(null));
-  useEffect(() => {
-    headerElRef.current = document.querySelector('div#root header.header');
-  }, []);
-
-  const [navigatorFlag, setNavigatorFlag] = useState(false);
-  const handleEditorCreation = useCallback((editor) => {
-    setNavigatorFlag((prev) => !prev);
-  }, []);
 
   const handleTreeSearch = () => {
     if (isMobile) {
@@ -98,6 +78,20 @@ export default function CatalogArticle() {
     openComponent('headerSearch');
   };
 
+  const {
+    navigatorFlag,
+    headerElRef,
+    handleEditorUpdate,
+    handleEditorCreation,
+  } = useArticleNavigator({ editorContainerRef });
+
+  // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
+
+  useEffect(() => {
+    if (!needToFetch) return;
+    dispatch(fetchArticle({ lang, articleId }));
+  }, [lang, articleId, needToFetch, dispatch]);
+
   return isBlank ? (
     <div className="blank">
       <p className="blank__text">
@@ -105,7 +99,9 @@ export default function CatalogArticle() {
           i18nKey={CATALOG.ARTICLE.BLANK.SEARCH_TREE}
           components={{
             tree: <button className="blank__link" onClick={handleTreeSearch} />,
-            header: <button className="blank__link" onClick={handleHeaderSearch} />
+            header: (
+              <button className="blank__link" onClick={handleHeaderSearch} />
+            ),
           }}
         />
       </p>
@@ -120,10 +116,7 @@ export default function CatalogArticle() {
         height="auto"
         style={{ maxWidth: '800px', margin: '0 auto', display: 'block' }}
       >
-        <source
-          src={tutorialVideos[language] || tutorialRu}
-          type="video/mp4"
-        />
+        <source src={tutorialVideos[language] || tutorialRu} type="video/mp4" />
       </video>
     </div>
   ) : isError ? (
@@ -150,7 +143,7 @@ export default function CatalogArticle() {
             fallbackAlt={t(CATALOG.ARTICLE.IMAGE.FALLBACK_ALT)}
           />
 
-          <div className="article__editor-container">
+          <div className="article__editor-container" ref={editorContainerRef}>
             <ArticleNavigator
               flag={navigatorFlag}
               // parentSelector="body"
@@ -178,6 +171,7 @@ export default function CatalogArticle() {
               className="rte__article"
               initialValue={article.publication.description}
               readOnly={true}
+              onInput={handleEditorUpdate}
               onRealCreate={handleEditorCreation}
             />
           </div>

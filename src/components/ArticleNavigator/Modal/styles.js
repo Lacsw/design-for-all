@@ -21,6 +21,15 @@ export const sxRoot = (theme) => {
       top: '17vh',
       left: '50%',
       transform: 'translate(-50%)',
+      overflow: 'hidden',
+      borderRadius: '6px',
+      padding: '10px',
+      minWidth: '300px',
+      width: '40vw',
+      maxWidth: '601px',
+
+      background: 'var(--color-bg-secondary)',
+      boxShadow: '0px 0px 10px 3px #00000040',
 
       ':focus-visible': {
         outline: '0',
@@ -28,19 +37,12 @@ export const sxRoot = (theme) => {
     },
 
     '.article-navigator__list': {
-      overflow: 'auto',
+      margin: '0',
+      padding: '0',
+      height: '246px',
 
-      margin: 0,
-      borderRadius: '6px',
-      padding: '10px',
-      height: 'fit-content',
-      maxHeight: '246px',
-      minWidth: '300px',
-      width: '40vw',
-      maxWidth: '601px',
-
-      background: 'var(--color-bg-secondary)',
-      boxShadow: '0px 0px 10px 3px #00000040',
+      display: 'flex',
+      flexDirection: 'column',
 
       color: isLight ? '#838383' : '#585858',
       fontFamily: 'Gotham',
@@ -61,6 +63,8 @@ export const sxRoot = (theme) => {
       margin: '10px 0',
       borderRadius: '6px',
       padding: '5px 13px',
+      minWidth: '0',
+      flex: '1 1 100%',
 
       display: 'flex',
       justifyContent: 'space-between',

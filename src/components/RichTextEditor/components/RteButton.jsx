@@ -30,7 +30,7 @@ import { useTranslation } from 'react-i18next';
  * @property {TDRteButtonOnClickProp} [onClick]
  * @property {import('@tiptap/core').Editor | null} editor
  * @property {boolean} inFocusWithin
- * @property {string} className
+ * @property {string} [className]
  */
 
 /** @param {React.PropsWithChildren<TDRteButtonProps>} props */
@@ -44,7 +44,7 @@ export function RteButton({
   mode = 'direct',
 }) {
   const { t } = useTranslation();
-  
+
   const handleClick = useCallback(
     (/** @type {React.MouseEvent} */ evt) => {
       const directCb = tiptapCommands[name];
