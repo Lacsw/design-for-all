@@ -17,7 +17,7 @@ import {
 
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
-import { selectIsOpen as selectIsCatalogOpen } from 'store/slices/catalog/slice';
+import { selectCurrentCategory } from 'store/slices/catalog/slice';
 
 import {
   accountNavigationList,
@@ -42,17 +42,16 @@ export default function Header() {
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useSelector(getCurrentTheme);
   const isMobile = useIsMobile();
-  const isCatalogOpen = useSelector(selectIsCatalogOpen);
+  const isCatalogOpen = useSelector(selectCurrentCategory);
 
   const currentUser = useSelector(getCurrentUser);
   const isAdmin =
     currentUser?.role === 'super_admin' || currentUser?.role === 'admin';
-
   // Условие, при котором срабатывать таймаут:
   const shouldTimeout = isAdmin;
 
   const handleLogout = useLogout();
-
+  
   // Переопределяем функцию handleLogout для открытия окна авторизации
   const handleLogoutWithModal = () => {
     openAuthModal();

@@ -1,12 +1,18 @@
 import { useLocation, useParams } from 'react-router-dom';
-import { Main, Catalog, AccountAuthor, AccountAdmin, NotFound } from 'components';
-import { adminHash, hashPaths } from 'utils/constants';
+import {
+  Main,
+  Catalog,
+  AccountAuthor,
+  AccountAdmin,
+  NotFound,
+} from 'components';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTitles } from 'store/slices/article/slice';
 import UpdatesPage from 'components/Updates/UpdatesPage';
 import { getLanguage } from 'store/slices/user';
 import ProtectedHashRoute from '../ProtectedHashRoute/ProtectedHashRoute';
+import { useRouteType } from 'utils/hooks/useRouteType';
 
 const Fork = () => {
   const location = useLocation();
@@ -14,14 +20,24 @@ const Fork = () => {
   const titles = useSelector(selectTitles);
   const language = useSelector(getLanguage);
 
+  // проверка типа маршрута
+  const {
+    isAdminRoute,
+    isAuthorRoute,
+    isUpdatesRoute,
+    isCatalogRoute,
+    isMainRoute,
+  } = useRouteType(location, titles, language, articleId);
+
+  // при переходе на другую страницу скролл наверх
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', //для плавного скролла
+    });
   }, [location.key]);
 
-  const rawHash = location.hash ? location.hash.replace(/^#\/?/, '') : '';
-  const validKeys = Object.keys(titles?.[language] || {});
-
-  if (Object.values(adminHash).includes(location.hash)) {
+  if (isAdminRoute) {
     return (
       <ProtectedHashRoute requiredRoles={['admin', 'super_admin']}>
         <AccountAdmin hash={location.hash} />
@@ -29,19 +45,7 @@ const Fork = () => {
     );
   }
 
-  if (rawHash === 'updates') {
-    return <UpdatesPage />;
-  }
-
-  if (rawHash === 'articles') {
-    return <NotFound />;
-  }
-
-  if (articleId || (rawHash && validKeys.includes(rawHash))) {
-    return <Catalog section={articleId ? articleId : rawHash} />;
-  }
-
-  if (Object.values(hashPaths).includes(location.hash)) {
+  if (isAuthorRoute) {
     return (
       <ProtectedHashRoute requiredRole="mentor">
         <AccountAuthor hash={location.hash} />
@@ -49,13 +53,20 @@ const Fork = () => {
     );
   }
 
-  if (location.pathname === '/' && !location.hash) {
+  if (isUpdatesRoute) {
+    return <UpdatesPage />;
+  }
+
+  if (isCatalogRoute) {
+    return <Catalog />;
+  }
+
+  if (isMainRoute) {
     return <Main />;
   }
 
   // Для всех остальных случаев показываем 404
   return <NotFound />;
-
 };
 
 export default Fork;
