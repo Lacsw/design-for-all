@@ -39,7 +39,7 @@ export const sxRoot = (theme) => {
     '.article-navigator__list': {
       margin: '0',
       padding: '0',
-      height: '175px',
+      height: '246px',
 
       display: 'flex',
       flexDirection: 'column',

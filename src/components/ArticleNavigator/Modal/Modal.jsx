@@ -9,74 +9,11 @@ import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
+import { triangleWave } from 'utils/helpers/math';
 
 /** @import * as Types from "../types" */
 
-/**
- * Modulo operation
- *
- * @param {number} a dividend
- * @param {number} n divisor
- * @returns {number} remainder(unsigned)
- * @see https://en.wikipedia.org/wiki/Modulo
- */
-function mod(a, n) {
-  return ((a % n) + n) % n;
-}
-
-/**
- * @param {number} a - амплитуда
- * @param {number} p - период
- * @param {number} x - координата точки по оси абсцисс
- * @param {number} [c] - начальная фаза колебания
- * @returns {number} y - координата точки по оси ординат
- */
-function triangleWave(a, p, x, c) {
-  const initialPhase = c ?? -(p / 4);
-  return ((4 * a) / p) * Math.abs(mod(x - initialPhase, p) - p / 2) - a;
-}
-
-const k1 = 0.7;
-const k2 = 0.7;
-const MIN_SCALE = 0.75;
-
-/** @type {[number, number]} */
-const A = [0, MIN_SCALE];
-/** @type {[number, number]} */
-const C = [1, MIN_SCALE];
-
-/**
- * @param {[number, number]} point1
- * @param {[number, number]} point2
- * @param {number} x
- */
-// function calcY(point1, point2, x) {
-//   const [x1, y1] = point1;
-//   const [x2, y2] = point2;
-//   let denominator = x2 - x1;
-//   const isZero = denominator === 0;
-//   let numerator = isZero ? 0 : (x - x1) * (y2 - y1);
-//   denominator = isZero ? 1 : denominator;
-//   return numerator / denominator + y1;
-// }
-
-/**
- * @param {[number, number]} point1
- * @param {[number, number]} point2
- * @param {number} x
- */
-function calcY(point1, point2, x) {
-  const [x1, y1] = point1;
-  const [x2, y2] = point2;
-
-  const denominator = x2 - x1;
-  if (denominator === 0) {
-    throw new Error('x1 === x2, zero denominator!');
-  }
-
-  const incline = (y2 - y1) / (x2 - x1);
-}
-
+const MIN_SCALE = 0.5;
 const emblaPlugins = [WheelGesturesPlugin()];
 
 /**
@@ -126,25 +63,20 @@ export const Modal = ({
     if (snapsList.length < 2) {
       return;
     }
-    const snapStep = snapsList[2] - snapsList[1];
-    const scrollProgress = emblaApi.scrollProgress();
-    const remainingProgress = 1 - scrollProgress;
-    const progressSegmentsDiff = 0.5 - scrollProgress;
 
-    console.log(
-      '---------------------scrollProgress',
-      scrollProgress.toFixed(2)
-    );
+    const scrollProgress = emblaApi.scrollProgress();
+    if (scrollProgress === 0) {
+      return;
+    }
 
     emblaApi.slideNodes().forEach((slide, index) => {
       const slideSnap = snapsList[index];
-
-      const scale = Math.abs(
-        triangleWave(1, 2, 1 - slideSnap, -scrollProgress)
-      );
-      console.log(`${index}. slideSnap = ${slideSnap.toFixed(3)}
-        Calced scale = ${scale.toFixed(3)}
-        `);
+      // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
+      // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
+      // Если получаем отриц. ординату, то просто берем по модулю.
+      // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
+      const scaleRaw = Math.abs(triangleWave(1, 2, slideSnap, -scrollProgress));
+      const scale = Math.max(MIN_SCALE, Math.min(scaleRaw * 1.18, 1));
 
       let originTransform = originalTransforms.current[index].split(',');
       originTransform[0] = 'matrix(' + scale;
@@ -186,7 +118,8 @@ export const Modal = ({
         const res = value === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : value;
         return res;
       });
-      requestAnimationFrame(applyTransformStyles);
+      applyTransformStyles();
+      // requestAnimationFrame(applyTransformStyles); // при переходах через начало колеса(с loop: true) были подергивания
     };
 
     onScroll();
