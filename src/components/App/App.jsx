@@ -12,7 +12,7 @@ function App() {
 
   // Используем хук для синхронизации между вкладками
   useSyncTabs();
-  
+
   // Используем хук для синхронизации языка между Redux и i18next
   useLanguageSync();
 
@@ -22,10 +22,9 @@ function App() {
     }
   }, [categories, dispatch]);
 
-
   return (
     <div className="app">
-      <Layout >
+      <Layout>
         {categories && (
           <Routes>
             <Route path="/" element={<Fork />} />

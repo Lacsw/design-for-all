@@ -39,7 +39,7 @@ export const sxRoot = (theme) => {
     '.article-navigator__list': {
       margin: '0',
       padding: '0',
-      height: '246px',
+      height: '175px',
 
       display: 'flex',
       flexDirection: 'column',
@@ -129,17 +129,17 @@ export const sxRoot = (theme) => {
     },
 
     [media.down(1300)]: {
-      '.article-navigator__list': {
+      '.article-navigator__modal': {
         width: '60vw',
       },
     },
     [media.down(900)]: {
-      '.article-navigator__list': {
+      '.article-navigator__modal': {
         width: '80vw',
       },
     },
     [media.down(600)]: {
-      '.article-navigator__list': {
+      '.article-navigator__modal': {
         width: '90vw',
       },
     },
