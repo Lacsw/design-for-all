@@ -80,7 +80,6 @@ export const Modal = ({
 
       let originTransform = originalTransforms.current[index].split(',');
       originTransform[0] = 'matrix(' + scale;
-
       slide.style.transform = `${originTransform.join(',')}`;
     });
   }, [emblaApi]);

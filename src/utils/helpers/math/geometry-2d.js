@@ -10,7 +10,12 @@ import { mod } from './operators';
  *
  * @see https://www.desmos.com/Calculator \
  * Use this in desmos input:\
- * f\left(x\right)\ =\ \frac{4a}{p}\cdot\left|\operatorname{mod}\left(\left(x+c\right),\ p\right)\ -\ \frac{p}{2}\right|\ -\ a \
+ * f\left(x\right)\ =\ \frac{4a}{p}\cdot\left|\operatorname{mod}\left(\left(x+c\right),\ p\right)\ -\ \frac{p}{2}\right|\ -\ a
+ * a = ... --- амплитуда
+ * p = ... --- период
+ * c = -... --- начальная фаза
+ *
+ * See also wheel.dwg file.
  */
 export function triangleWave(a, p, x, c) {
   const initialPhase = c ?? -(p / 4); // начальную фазу прибавляем! Иначе приходилось делать <1 - смещение_вправо>
