@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // @ts-check
 
-import { alpha } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { getIsThemeLight } from 'store/slices/theme';
 import { getCssVar } from 'utils/helpers/css-in-js';
@@ -25,8 +24,9 @@ export const sxRoot = (theme) => {
       overflow: 'hidden',
       borderRadius: '6px',
       padding: '10px',
-      minWidth: '300px',
-      width: '40vw',
+      minWidth: '500px',
+      // width: '40vw',
+      width: 'fit-content',
       maxWidth: '601px',
 
       background: 'var(--color-bg-secondary)',
@@ -34,6 +34,20 @@ export const sxRoot = (theme) => {
 
       ':focus-visible': {
         outline: '0',
+      },
+
+      '::before': {
+        position: 'absolute',
+        content: '""',
+        top: '50%',
+        left: '0',
+        translate: '10px -50%',
+
+        borderRadius: '6px',
+        width: 'calc(100% - 20px)',
+        height: '46px',
+
+        background: curItemBg,
       },
     },
 
@@ -69,7 +83,7 @@ export const sxRoot = (theme) => {
       flex: '1 1 100%',
 
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       alignItems: 'center',
 
       cursor: 'pointer',
@@ -78,29 +92,30 @@ export const sxRoot = (theme) => {
       }),
 
       '&.article-navigator__item_current': {
-        background: curItemBg,
         borderRadius: '6px',
+        // background: curItemBg,
+        color: 'var(--color-success)',
+        fontWeight: 600,
+        letterSpacing: '2px',
 
         '&:hover': {
-          color: isLight ? '#838383' : '#585858',
-          background: curItemBg,
-
-          '.counter': {
-            color: isLight ? '#585858' : '#bcbcbc',
-          },
+          // color: isLight ? '#838383' : '#585858',
+          // background: curItemBg,
+          // '.counter': {
+          //   color: isLight ? '#585858' : '#bcbcbc',
+          // },
         },
       },
 
       '&:hover': {
-        color: '#fff',
-        background: alpha(curItemBg, 0.8),
-
-        '.counter': {
-          color: '#fff',
-        },
+        // color: '#fff',
+        // background: alpha(curItemBg, 0.8),
+        // '.counter': {
+        //   color: '#fff',
+        // },
       },
       '&:active': {
-        background: alpha(curItemBg, 0.95),
+        // background: alpha(curItemBg, 0.95),
       },
     },
 
@@ -133,17 +148,20 @@ export const sxRoot = (theme) => {
 
     [media.down(1300)]: {
       '.article-navigator__modal': {
-        width: '60vw',
+        minWidth: '50vw',
+        maxWidth: '60vw',
       },
     },
     [media.down(900)]: {
       '.article-navigator__modal': {
-        width: '80vw',
+        minWidth: '60vw',
+        maxWidth: '80vw',
       },
     },
     [media.down(600)]: {
       '.article-navigator__modal': {
-        width: '90vw',
+        minWidth: '80vw',
+        maxWidth: '90vw',
       },
     },
   };

@@ -58,7 +58,14 @@ export const Modal = ({
 
   // Кэшируем оригинальные трансформы Embla
   const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
-  const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
+
+  /* (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
+  При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
+  Потому когда мы сами меняем translate3d(матрицей или набором через запятую), то будет
+  накапливаться значение - оно будет расти - элемент будет улетать в космос.
+  Потому надо помнить, какую дельту мы применяли лично сами в прошлый раз. Сначал вычитаем ее, затем применяем
+  вычисленную нами лично новую прибавку к базовому смещению, рассчитанному эмблой. */
+  // const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
 
   const applyTransformStyles = useCallback(() => {
     if (!emblaApi) {
@@ -71,11 +78,9 @@ export const Modal = ({
     }
 
     const scrollProgress = emblaApi.scrollProgress();
-    // if (scrollProgress === 0) {
-    //   return;
-    // }
-
-    console.log('scrollProgress', scrollProgress);
+    if (scrollProgress === 0) {
+      return;
+    }
 
     emblaApi.slideNodes().forEach((slide, index) => {
       const slideSnap = snapsList[index];
@@ -93,31 +98,31 @@ export const Modal = ({
       originTransform[0] = 'matrix(' + scale; // scale X
       originTransform[3] = String(scale); // scale Y
 
+      /* При необходимости создании эффекта закольцованности
+      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
       const originalTranslateYForLoop = parseFloat(originTransform[5]) || 0;
 
+      // См. #1
       // const translateY = originTransform[5];
       // const translateYParsed = parseFloat(translateY) || 0;
       // const delta =
       //   interpolate([1, 0], [MIN_SCALE, 50], scale) * translateDirection;
-      // const res = translateYParsed + delta - previousDeltas.current[index];
       // previousDeltas.current[index] = delta;
+      // const res = translateYParsed + delta - previousDeltas.current[index];
       // originTransform[5] = res + ')';
-
-      // if (index === 7) {
-      //   originTransform[5] = '-400)';
-      // }
 
       slide.style.transform = `${originTransform.join(',')}`;
 
-      slide.style.translate =
-        '0px ' +
-        interpolate([1, 0], [0, 100], scale) *
-          invertSignIf(originalTranslateYForLoop, translateDirection) +
-        originalTranslateYForLoop +
-        'px';
+      const baseTranslate =
+        interpolate([1, 0], [0, 110], scale) *
+        invertSignIf(originalTranslateYForLoop, translateDirection);
+
+      slide.style.translate = '0px ' + baseTranslate + 'px';
+      // slide.style.translate = '0px ' + (index === 0 ? 0 : baseTranslate) + 'px';
 
       slide.style.opacity = String(inclusiveRange(0.7, scaleRawAbs, 1));
 
+      // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
       // slide.style.padding = `${interpolate(
       //   [1, 5],
       //   [0, 0],
@@ -218,7 +223,6 @@ export const Modal = ({
                         const curY = curHeading?.getBoundingClientRect().y ?? 0;
                         const delta = targetY > curY ? 2 : -2;
 
-                        // TODO: обращаться к прокручиваемому элементы через пропсы, потому что сейчас хардкод
                         document.documentElement.scrollTo({
                           top:
                             headingEl.getBoundingClientRect().y -
@@ -234,9 +238,9 @@ export const Modal = ({
                   }}
                 >
                   <span className="heading-text">{headingEl.textContent}</span>
-                  <span className="counter">
+                  {/* <span className="counter">
                     {idx + 1}/{headingsLength || '\u00A0'}
-                  </span>
+                  </span> */}
                 </li>
               );
             })}
