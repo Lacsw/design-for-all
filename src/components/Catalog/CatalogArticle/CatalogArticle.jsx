@@ -151,6 +151,8 @@ export default function CatalogArticle() {
               targetSelector=".tiptap.ProseMirror"
               scrollableElParams={scrollableElParams}
               targetHeadings={targetHeadings}
+              firstShowingOffset={0}
+              lastShowingOffset={0}
               onOpen={(params) => {
                 const header = headerElRef.current;
                 if (!header) {

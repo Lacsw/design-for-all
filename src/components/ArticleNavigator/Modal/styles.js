@@ -4,13 +4,14 @@
 import { alpha } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { getIsThemeLight } from 'store/slices/theme';
+import { getCssVar } from 'utils/helpers/css-in-js';
 
 /** @type {import('@mui/material').SxProps<import('@mui/material').Theme>} */
 export const sxRoot = (theme) => {
   const media = theme.breakpoints;
   const isLight = useSelector(getIsThemeLight);
 
-  const itemActionBg = isLight ? '#242424' : '#dadada';
+  const curItemBg = getCssVar('--color-item-active');
 
   return {
     right: 'var(--art-nav-right, 0px)',
@@ -39,7 +40,7 @@ export const sxRoot = (theme) => {
     '.article-navigator__list': {
       margin: '0',
       padding: '0',
-      height: '246px',
+      height: '226px',
 
       display: 'flex',
       flexDirection: 'column',
@@ -60,14 +61,16 @@ export const sxRoot = (theme) => {
     },
 
     '.article-navigator__item': {
-      margin: '10px 0',
+      margin: '5px 0',
       borderRadius: '6px',
       padding: '5px 13px',
-      minWidth: '0',
+      minHeight: '46px',
+      height: '46px',
       flex: '1 1 100%',
 
       display: 'flex',
       justifyContent: 'space-between',
+      alignItems: 'center',
 
       cursor: 'pointer',
       transition: theme.transitions.create(['background', 'color'], {
@@ -75,12 +78,12 @@ export const sxRoot = (theme) => {
       }),
 
       '&.article-navigator__item_current': {
-        background: 'var(--color-item-active)',
+        background: curItemBg,
         borderRadius: '6px',
 
         '&:hover': {
           color: isLight ? '#838383' : '#585858',
-          background: 'var(--color-item-active)',
+          background: curItemBg,
 
           '.counter': {
             color: isLight ? '#585858' : '#bcbcbc',
@@ -90,14 +93,14 @@ export const sxRoot = (theme) => {
 
       '&:hover': {
         color: '#fff',
-        background: alpha(itemActionBg, 0.8),
+        background: alpha(curItemBg, 0.8),
 
         '.counter': {
           color: '#fff',
         },
       },
       '&:active': {
-        background: alpha(itemActionBg, 0.95),
+        background: alpha(curItemBg, 0.95),
       },
     },
 

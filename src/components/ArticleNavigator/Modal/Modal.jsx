@@ -9,11 +9,16 @@ import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
-import { triangleWave } from 'utils/helpers/math';
+import {
+  inclusiveRange,
+  interpolate,
+  invertSignIf,
+  triangleWave,
+} from 'utils/helpers/math';
 
 /** @import * as Types from "../types" */
 
-const MIN_SCALE = 0.5;
+const MIN_SCALE = 0.2;
 const emblaPlugins = [WheelGesturesPlugin()];
 
 /**
@@ -53,6 +58,7 @@ export const Modal = ({
 
   // Кэшируем оригинальные трансформы Embla
   const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
+  const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
 
   const applyTransformStyles = useCallback(() => {
     if (!emblaApi) {
@@ -65,22 +71,67 @@ export const Modal = ({
     }
 
     const scrollProgress = emblaApi.scrollProgress();
-    if (scrollProgress === 0) {
-      return;
-    }
+    // if (scrollProgress === 0) {
+    //   return;
+    // }
+
+    console.log('scrollProgress', scrollProgress);
 
     emblaApi.slideNodes().forEach((slide, index) => {
       const slideSnap = snapsList[index];
+      const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
+
       // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
       // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
       // Если получаем отриц. ординату, то просто берем по модулю.
       // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
-      const scaleRaw = Math.abs(triangleWave(1, 2, slideSnap, -scrollProgress));
-      const scale = Math.max(MIN_SCALE, Math.min(scaleRaw * 1.18, 1));
+      const scaleRaw = triangleWave(1, 2, slideSnap, -scrollProgress);
+      const scaleRawAbs = Math.abs(scaleRaw);
+      const scale = inclusiveRange(MIN_SCALE, scaleRawAbs * 1.2, 1);
 
       let originTransform = originalTransforms.current[index].split(',');
-      originTransform[0] = 'matrix(' + scale;
+      originTransform[0] = 'matrix(' + scale; // scale X
+      originTransform[3] = String(scale); // scale Y
+
+      const originalTranslateYForLoop = parseFloat(originTransform[5]) || 0;
+
+      // const translateY = originTransform[5];
+      // const translateYParsed = parseFloat(translateY) || 0;
+      // const delta =
+      //   interpolate([1, 0], [MIN_SCALE, 50], scale) * translateDirection;
+      // const res = translateYParsed + delta - previousDeltas.current[index];
+      // previousDeltas.current[index] = delta;
+      // originTransform[5] = res + ')';
+
+      // if (index === 7) {
+      //   originTransform[5] = '-400)';
+      // }
+
       slide.style.transform = `${originTransform.join(',')}`;
+
+      slide.style.translate =
+        '0px ' +
+        interpolate([1, 0], [0, 100], scale) *
+          invertSignIf(originalTranslateYForLoop, translateDirection) +
+        originalTranslateYForLoop +
+        'px';
+
+      slide.style.opacity = String(inclusiveRange(0.7, scaleRawAbs, 1));
+
+      // slide.style.padding = `${interpolate(
+      //   [1, 5],
+      //   [0, 0],
+      //   scaleRawAbs
+      // )}px ${interpolate([1, 13], [0.3, 0], scaleRawAbs)}px`;
+
+      // slide.style.margin = `${interpolate(
+      //   [1, 13],
+      //   [0.3, 0],
+      //   scaleRawAbs
+      // )}px 0px`;
+
+      // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
+      // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
     });
   }, [emblaApi]);
 
