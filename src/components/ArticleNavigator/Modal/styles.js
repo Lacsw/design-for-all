@@ -89,7 +89,7 @@ export const sxRoot = (theme) => {
       cursor: 'pointer',
       transition: theme.transitions.create(['background', 'color'], {
         duration: 150,
-      }),
+      }) /*+ ', transalte 10ms'*/,
 
       '&.article-navigator__item_current': {
         borderRadius: '6px',
@@ -116,6 +116,10 @@ export const sxRoot = (theme) => {
       },
       '&:active': {
         // background: alpha(curItemBg, 0.95),
+      },
+
+      '.heading-text': {
+        WebkitFontSmoothing: 'antialiased',
       },
     },
 

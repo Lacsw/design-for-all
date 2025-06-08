@@ -18,7 +18,7 @@ import {
 
 /** @import * as Types from "../types" */
 
-const MIN_SCALE = 0.2;
+const MIN_SCALE = 0.0;
 const emblaPlugins = [WheelGesturesPlugin()];
 
 /**
@@ -49,15 +49,18 @@ export const Modal = ({
         axis: 'y',
         loop: true,
         skipSnaps: true,
+        // duration: 10,
         // containScroll: 'keepSnaps',
       })
     );
   const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, emblaPlugins);
-
   const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
-
+  const progRef = useRef(/** @type {HTMLElement | null} */ (null));
   // Кэшируем оригинальные трансформы Embla
   const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
+  /* При необходимости создании эффекта закольцованности
+  (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
+  const loopTransValRef = useRef(-448);
 
   /* (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
   При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
@@ -67,22 +70,44 @@ export const Modal = ({
   вычисленную нами лично новую прибавку к базовому смещению, рассчитанному эмблой. */
   // const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
 
-  const applyTransformStyles = useCallback(() => {
+  /**
+   * @param {HTMLElement | undefined} target
+   * @param {'+' | '-'} mode
+   */
+  function correctPosition(target, mode) {
+    if (!target) {
+      return;
+    }
+    const sign = mode === '+' ? 1 : -1;
+    /* При необходимости создании эффекта закольцованности
+      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
+    const loopTranslateVal = parseFloat(
+      target?.style.transform.split(',')[5] || ''
+    );
+    const curTranslateY = parseFloat(target.style.translate.split(' ')[1]);
+    target.style.translate = `0px ${
+      loopTranslateVal
+        ? curTranslateY
+        : sign * loopTransValRef.current + (-1 * curTranslateY || 0)
+    }px`;
+  }
+
+  const applyWheelStyles = useCallback(() => {
     if (!emblaApi) {
       return;
     }
-
     const snapsList = emblaApi.scrollSnapList();
     if (snapsList.length < 2) {
       return;
     }
 
     const scrollProgress = emblaApi.scrollProgress();
-    if (scrollProgress === 0) {
-      return;
+    const slides = emblaApi.slideNodes();
+    if (progRef.current) {
+      progRef.current.textContent = scrollProgress + '!';
     }
 
-    emblaApi.slideNodes().forEach((slide, index) => {
+    slides.forEach((slide, index) => {
       const slideSnap = snapsList[index];
       const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
 
@@ -100,7 +125,7 @@ export const Modal = ({
 
       /* При необходимости создании эффекта закольцованности
       (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-      const originalTranslateYForLoop = parseFloat(originTransform[5]) || 0;
+      const originalTranslateYForLoop = +parseFloat(originTransform[5]) || 0;
 
       // См. #1
       // const translateY = originTransform[5];
@@ -110,17 +135,15 @@ export const Modal = ({
       // previousDeltas.current[index] = delta;
       // const res = translateYParsed + delta - previousDeltas.current[index];
       // originTransform[5] = res + ')';
-
       slide.style.transform = `${originTransform.join(',')}`;
 
+      // браузер складывает смещение из transform и из отдельного правила translate
       const baseTranslate =
         interpolate([1, 0], [0, 110], scale) *
         invertSignIf(originalTranslateYForLoop, translateDirection);
-
       slide.style.translate = '0px ' + baseTranslate + 'px';
-      // slide.style.translate = '0px ' + (index === 0 ? 0 : baseTranslate) + 'px';
 
-      slide.style.opacity = String(inclusiveRange(0.7, scaleRawAbs, 1));
+      slide.style.opacity = String(inclusiveRange(0.5, scaleRawAbs, 1));
 
       // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
       // slide.style.padding = `${interpolate(
@@ -138,19 +161,51 @@ export const Modal = ({
       // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
       // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
     });
+
+    // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
+    //   const lastSlide = slides.at(-1);
+    //   const penultimateSlide = slides.at(-2);
+    //   const targetSlide = slides.at(-3);
+
+    //   const loopTranslateVal = parseFloat(
+    //     lastSlide?.style.transform.split(',')[5] || ''
+    //   );
+    //   if (loopTranslateVal) {
+    //     loopTransValRef.current = loopTranslateVal;
+    //   }
+
+    //   correctPosition(lastSlide, '+');
+    //   correctPosition(penultimateSlide, '+');
+    //   scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
+    // } else {
+    //   scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
+    //   scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
+    //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
+    //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
+    // }
   }, [emblaApi]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const curLi = olRef.current?.querySelector(
-        '.article-navigator__item_current'
-      );
-      curLi?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+  const onScroll = useCallback(
+    function () {
+      if (!emblaApi) {
+        return;
+      }
+
+      originalTransforms.current = emblaApi.slideNodes().map((slide) => {
+        const value = window.getComputedStyle(slide).transform;
+        const res = value === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : value;
+        return res;
       });
-    });
-  }, [isOpen]);
+      applyWheelStyles();
+      // requestAnimationFrame(applyTransformStyles); // при переходах через начало колеса(с loop: true) были подергивания
+    },
+    [emblaApi, applyWheelStyles]
+  );
+
+  // const onScrollThrottled = useThrottle(onScroll, 16, {
+  //   leading: false,
+  //   trailing: true,
+  // });
 
   useEffect(() => {
     if (headings.length && curHeading) {
@@ -166,24 +221,12 @@ export const Modal = ({
       return;
     }
 
-    const onScroll = () => {
-      if (!emblaApi) return;
-      originalTransforms.current = emblaApi.slideNodes().map((slide) => {
-        const value = window.getComputedStyle(slide).transform;
-        const res = value === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : value;
-        return res;
-      });
-      applyTransformStyles();
-      // requestAnimationFrame(applyTransformStyles); // при переходах через начало колеса(с loop: true) были подергивания
-    };
-
     onScroll();
     emblaApi.on('scroll', onScroll);
-
     return () => {
       emblaApi.off('scroll', onScroll);
     };
-  }, [applyTransformStyles, emblaApi]);
+  }, [onScroll, emblaApi]);
 
   return (
     <ModalMui
@@ -213,7 +256,9 @@ export const Modal = ({
                       'article-navigator__item_current'
                   )}
                   onClick={(evt) => {
-                    if (evt.detail > 1) return;
+                    if (evt.detail !== 2) {
+                      return;
+                    }
 
                     onClose('click', headingEl);
 
@@ -238,13 +283,23 @@ export const Modal = ({
                   }}
                 >
                   <span className="heading-text">{headingEl.textContent}</span>
-                  {/* <span className="counter">
+                  <span className="counter">
                     {idx + 1}/{headingsLength || '\u00A0'}
-                  </span> */}
+                  </span>
                 </li>
               );
             })}
           </ol>
+          <Box
+            ref={progRef}
+            sx={{
+              position: 'fixed',
+              top: '8px',
+              left: '12px',
+            }}
+          >
+            0.000
+          </Box>
         </Box>
       </Fade>
     </ModalMui>

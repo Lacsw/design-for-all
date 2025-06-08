@@ -1,3 +1,4 @@
 export { useFormValidation } from './useFormValidation';
 export { useDebounce } from './useDebounce';
-export { useSessionTimeout} from './useSessionTimeout';
+export { useThrottle } from './useThrottle';
+export { useSessionTimeout } from './useSessionTimeout';
