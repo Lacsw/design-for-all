@@ -11,53 +11,50 @@ export const sxRoot = (theme) => {
   const isLight = useSelector(getIsThemeLight);
 
   const curItemBg = getCssVar('--color-item-active');
-
   return {
     right: 'var(--art-nav-right, 0px)',
     zIndex: 110,
 
-    '.article-navigator__modal': {
+    '.ios-picker': {
       position: 'absolute',
-      top: '17vh',
+      top: '20vh',
       left: '50%',
       transform: 'translate(-50%)',
-      overflow: 'hidden',
+
       borderRadius: '6px',
-      padding: '10px',
-      minWidth: '500px',
-      // width: '40vw',
-      width: 'fit-content',
-      maxWidth: '601px',
+      width: '500px',
+      height: '246px',
 
       background: 'var(--color-bg-secondary)',
       boxShadow: '0px 0px 10px 3px #00000040',
-
-      ':focus-visible': {
-        outline: '0',
-      },
-
-      '::before': {
-        position: 'absolute',
-        content: '""',
-        top: '50%',
-        left: '0',
-        translate: '10px -50%',
-
-        borderRadius: '6px',
-        width: 'calc(100% - 20px)',
-        height: '46px',
-
-        background: curItemBg,
-      },
     },
 
-    '.article-navigator__list': {
-      margin: '0',
-      padding: '0',
-      height: '226px',
+    '.ios-picker__scene': {
+      minWidth: '100%',
+      height: '100%',
 
       display: 'flex',
-      flexDirection: 'column',
+      alignItems: 'center',
+      touchAction: 'pan-x',
+    },
+
+    '.ios-picker__viewport': {
+      height: '32px',
+      width: '100%',
+      perspective: '10000px',
+
+      WebkitUserSelect: 'none',
+      MozUserSelect: 'none',
+      MsUserSelect: 'none',
+      userSelect: 'none',
+      WebkitTouchCallout: 'none',
+      KhtmlUserSelect: 'none',
+      WebkitTapHighlightColor: 'transparent',
+    },
+
+    '.ios-picker__container': {
+      height: '100%',
+      width: '100%',
 
       color: isLight ? '#838383' : '#585858',
       fontFamily: 'Gotham',
@@ -65,62 +62,27 @@ export const sxRoot = (theme) => {
       fontSize: '14px',
       lineHeight: '130%',
 
-      ':focus-visible': {
-        outline: '0',
-      },
-
-      '::-webkit-scrollbar': {
-        display: 'none',
-      },
+      transformStyle: 'preserve-3d',
+      willChange: 'transform',
     },
 
-    '.article-navigator__item': {
-      margin: '5px 0',
-      borderRadius: '6px',
-      padding: '5px 13px',
-      minHeight: '46px',
-      height: '46px',
-      flex: '1 1 100%',
-
+    '.ios-picker__slide': {
+      width: '100%',
+      height: '100%',
+      fontSize: '19px',
+      textAlign: 'center',
       display: 'flex',
-      justifyContent: 'center',
       alignItems: 'center',
+      justifyContent: 'center',
+      backfaceVisibility: 'hidden',
+      opacity: 0,
 
-      cursor: 'pointer',
-      transition: theme.transitions.create(['background', 'color'], {
-        duration: 150,
-      }) /*+ ', transalte 10ms'*/,
-
-      '&.article-navigator__item_current': {
-        borderRadius: '6px',
-        // background: curItemBg,
-        color: 'var(--color-success)',
-        fontWeight: 600,
-        letterSpacing: '2px',
-
-        '&:hover': {
-          // color: isLight ? '#838383' : '#585858',
-          // background: curItemBg,
-          // '.counter': {
-          //   color: isLight ? '#585858' : '#bcbcbc',
-          // },
-        },
-      },
-
-      '&:hover': {
-        // color: '#fff',
-        // background: alpha(curItemBg, 0.8),
-        // '.counter': {
-        //   color: '#fff',
-        // },
-      },
-      '&:active': {
-        // background: alpha(curItemBg, 0.95),
-      },
-
-      '.heading-text': {
-        WebkitFontSmoothing: 'antialiased',
-      },
+      WebkitUserSelect: 'none',
+      MozUserSelect: 'none',
+      MsUserSelect: 'none',
+      userSelect: 'none',
+      WebkitTouchCallout: 'none',
+      KhtmlUserSelect: 'none',
     },
 
     '.heading-text': {
@@ -128,12 +90,6 @@ export const sxRoot = (theme) => {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textAlign: 'center',
-
-      userSelect: 'none',
-
-      transition: theme.transitions.create(['color'], {
-        duration: 150,
-      }),
     },
 
     '.counter': {
@@ -150,23 +106,17 @@ export const sxRoot = (theme) => {
       }),
     },
 
-    [media.down(1300)]: {
-      '.article-navigator__modal': {
-        minWidth: '50vw',
-        maxWidth: '60vw',
-      },
+    '.ios-picker__label': {
+      fontWeight: 700,
+      transform: 'translateX(-55px)',
+      pointerEvents: 'none',
     },
-    [media.down(900)]: {
-      '.article-navigator__modal': {
-        minWidth: '60vw',
-        maxWidth: '80vw',
-      },
-    },
-    [media.down(600)]: {
-      '.article-navigator__modal': {
-        minWidth: '80vw',
-        maxWidth: '90vw',
-      },
-    },
+
+    // [media.down(1300)]: {
+    //   '.ios-picker__viewport': {
+    //     minWidth: '50vw',
+    //     maxWidth: '60vw',
+    //   },
+    // },
   };
 };

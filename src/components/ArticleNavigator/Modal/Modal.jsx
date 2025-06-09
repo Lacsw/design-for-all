@@ -8,22 +8,19 @@ import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
-import {
-  inclusiveRange,
-  interpolate,
-  invertSignIf,
-  triangleWave,
-} from 'utils/helpers/math';
 
-/** @import * as Types from "../types" */
+/** @import * as ArtNavTypes from "../types" */
+/** @import * as Types from "./types" */
 
-const MIN_SCALE = 0.0;
-const emblaPlugins = [WheelGesturesPlugin()];
+const CIRCLE_DEGREES = 360;
+const wheelItemSize = 46;
+const wheelItemsInView = 7;
+const LOOP = false;
 
 /**
  * Модалка навигатора статей.
  *
- * @type {React.FC<Types.IArtNavModalProps>}
+ * @type {React.FC<ArtNavTypes.IArtNavModalProps>}
  */
 export const Modal = ({
   isOpen,
@@ -37,196 +34,158 @@ export const Modal = ({
   topMargin,
   scrollableEl,
   curHeading,
-  setCurHeading,
+  setCurHeading: _setCurHeading,
 }) => {
   const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
-  const headingsLength = headings.length;
 
-  const [emblaOptions, setEmblaOptions] =
+  const [emblaOptions, _setEmblaOptions] =
     /** @type {TState<import('embla-carousel').EmblaOptionsType>} */ (
       useState({
         axis: 'y',
-        loop: true,
+        loop: LOOP,
         skipSnaps: true,
+        dragFree: false,
+        containScroll: false,
+        watchSlides: false,
         // duration: 10,
-        // containScroll: 'keepSnaps',
       })
     );
   const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
 
   const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
-  const progRef = useRef(/** @type {HTMLElement | null} */ (null));
-  // Кэшируем оригинальные трансформы Embla
-  const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
-  /* При необходимости создании эффекта закольцованности
-  (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-  const loopTransValRef = useRef(-448);
+  const rootNodeRef = useRef(/** @type {HTMLDivElement | null} */ (null));
 
-  /* (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
-  При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
-  Потому когда мы сами меняем translate3d(матрицей или набором через запятую), то будет
-  накапливаться значение - оно будет расти - элемент будет улетать в космос.
-  Потому надо помнить, какую дельту мы применяли лично сами в прошлый раз. Сначал вычитаем ее, затем применяем
-  вычисленную нами лично новую прибавку к базовому смещению, рассчитанному эмблой. */
-  // const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
-
-  /**
-   * @param {HTMLElement | undefined} target
-   * @param {'+' | '-'} mode
-   */
-  function correctPosition(target, mode) {
-    if (!target) {
-      return;
-    }
-    const sign = mode === '+' ? 1 : -1;
-    /* При необходимости создании эффекта закольцованности
-      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-    const loopTranslateVal = parseFloat(
-      target?.style.transform.split(',')[5] || ''
-    );
-    const curTranslateY = parseFloat(target.style.translate.split(' ')[1]);
-    target.style.translate = `0px ${
-      loopTranslateVal
-        ? curTranslateY
-        : sign * loopTransValRef.current + (-1 * curTranslateY || 0)
-    }px`;
-  }
-
-  const applyWheelStyles = useCallback(() => {
-    if (!emblaApi) {
-      return;
-    }
-    const snapsList = emblaApi.scrollSnapList();
-    if (snapsList.length < 2) {
-      return;
-    }
-
-    const scrollProgress = emblaApi.scrollProgress();
-    const slides = emblaApi.slideNodes();
-    if (progRef.current) {
-      progRef.current.textContent = scrollProgress + '!';
-    }
-
-    slides.forEach((slide, index) => {
-      const slideSnap = snapsList[index];
-      const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
-
-      // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
-      // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
-      // Если получаем отриц. ординату, то просто берем по модулю.
-      // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
-      const scaleRaw = triangleWave(1, 2, slideSnap, -scrollProgress);
-      const scaleRawAbs = Math.abs(scaleRaw);
-      const scale = inclusiveRange(MIN_SCALE, scaleRawAbs * 1.2, 1);
-
-      let originTransform = originalTransforms.current[index].split(',');
-      originTransform[0] = 'matrix(' + scale; // scale X
-      originTransform[3] = String(scale); // scale Y
-
-      /* При необходимости создании эффекта закольцованности
-      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-      const originalTranslateYForLoop = +parseFloat(originTransform[5]) || 0;
-
-      // См. #1
-      // const translateY = originTransform[5];
-      // const translateYParsed = parseFloat(translateY) || 0;
-      // const delta =
-      //   interpolate([1, 0], [MIN_SCALE, 50], scale) * translateDirection;
-      // previousDeltas.current[index] = delta;
-      // const res = translateYParsed + delta - previousDeltas.current[index];
-      // originTransform[5] = res + ')';
-      slide.style.transform = `${originTransform.join(',')}`;
-
-      // браузер складывает смещение из transform и из отдельного правила translate
-      const baseTranslate =
-        interpolate([1, 0], [0, 110], scale) *
-        invertSignIf(originalTranslateYForLoop, translateDirection);
-      slide.style.translate = '0px ' + baseTranslate + 'px';
-
-      slide.style.opacity = String(inclusiveRange(0.5, scaleRawAbs, 1));
-
-      // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
-      // slide.style.padding = `${interpolate(
-      //   [1, 5],
-      //   [0, 0],
-      //   scaleRawAbs
-      // )}px ${interpolate([1, 13], [0.3, 0], scaleRawAbs)}px`;
-
-      // slide.style.margin = `${interpolate(
-      //   [1, 13],
-      //   [0.3, 0],
-      //   scaleRawAbs
-      // )}px 0px`;
-
-      // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
-      // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
-    });
-
-    // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
-    //   const lastSlide = slides.at(-1);
-    //   const penultimateSlide = slides.at(-2);
-    //   const targetSlide = slides.at(-3);
-
-    //   const loopTranslateVal = parseFloat(
-    //     lastSlide?.style.transform.split(',')[5] || ''
-    //   );
-    //   if (loopTranslateVal) {
-    //     loopTransValRef.current = loopTranslateVal;
-    //   }
-
-    //   correctPosition(lastSlide, '+');
-    //   correctPosition(penultimateSlide, '+');
-    //   scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
-    // } else {
-    //   scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
-    //   scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
-    //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
-    //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
-    // }
-  }, [emblaApi]);
-
-  const onScroll = useCallback(
-    function () {
-      if (!emblaApi) {
-        return;
-      }
-
-      originalTransforms.current = emblaApi.slideNodes().map((slide) => {
-        const value = window.getComputedStyle(slide).transform;
-        const res = value === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : value;
-        return res;
-      });
-      applyWheelStyles();
-      // requestAnimationFrame(applyTransformStyles); // при переходах через начало колеса(с loop: true) были подергивания
-    },
-    [emblaApi, applyWheelStyles]
+  const wheelItemCount = Math.max(headings.length, 15);
+  const wheelItemRadius = CIRCLE_DEGREES / wheelItemCount;
+  const inViewDegrees = wheelItemRadius * wheelItemsInView;
+  const wheelRadius = Math.round(
+    wheelItemSize / 2 / Math.tan(Math.PI / wheelItemCount)
   );
 
-  // const onScrollThrottled = useThrottle(onScroll, 16, {
-  //   leading: false,
-  //   trailing: true,
-  // });
+  const slideCount = 20;
+  const totalRadius = slideCount * wheelItemRadius;
+  const rotationOffset = LOOP ? 0 : wheelItemRadius;
 
-  useEffect(() => {
-    if (headings.length && curHeading) {
-      const idx = curHeading.getAttribute('data-idx');
-      if (idx) {
-        setEmblaOptions((prev) => ({ ...prev, startIndex: +idx }));
+  const isInView = useCallback(
+    /**
+     * @param {number} wheelLocation
+     * @param {number} slidePosition
+     * @returns {boolean}
+     */
+    (wheelLocation, slidePosition) =>
+      Math.abs(wheelLocation - slidePosition) < inViewDegrees,
+    [inViewDegrees]
+  );
+
+  /** @type {Types.TSetSlideStyles} */
+  const setSlideStyles = useCallback(
+    (emblaApi, index, loop, slideCount, totalRadius) => {
+      const slideNode = emblaApi.slideNodes()[index];
+      const wheelLocation = emblaApi.scrollProgress() * totalRadius;
+      const positionDefault = emblaApi.scrollSnapList()[index] * totalRadius;
+      const positionLoopStart = positionDefault + totalRadius;
+      const positionLoopEnd = positionDefault - totalRadius;
+
+      let inView = false;
+      let angle = index * -wheelItemRadius;
+
+      if (isInView(wheelLocation, positionDefault)) {
+        inView = true;
       }
-    }
-  }, [headings, curHeading]);
+
+      if (loop && isInView(wheelLocation, positionLoopEnd)) {
+        inView = true;
+        angle = -CIRCLE_DEGREES + (slideCount - index) * wheelItemRadius;
+      }
+
+      if (loop && isInView(wheelLocation, positionLoopStart)) {
+        inView = true;
+        angle = -(totalRadius % CIRCLE_DEGREES) - index * wheelItemRadius;
+      }
+
+      if (inView) {
+        slideNode.style.opacity = '1';
+        slideNode.style.transform = `translateY(-${
+          index * 100
+        }%) rotateX(${angle}deg) translateZ(${wheelRadius}px)`;
+      } else {
+        slideNode.style.opacity = '0';
+        slideNode.style.transform = 'none';
+      }
+    },
+    [wheelItemRadius, wheelRadius, isInView]
+  );
+
+  /** @type {Types.TSetContainerStyles} */
+  const setContainerStyles = useCallback(
+    (emblaApi, wheelRotation) => {
+      emblaApi.containerNode().style.transform = `translateZ(${wheelRadius}px) rotateX(${wheelRotation}deg)`;
+    },
+    [wheelRadius]
+  );
+
+  const inactivateEmblaTransform = useCallback(
+    /**
+     * @param {import('embla-carousel').EmblaCarouselType} emblaApi
+     * @returns
+     */
+    (emblaApi) => {
+      if (!emblaApi) return;
+      const { translate, slideLooper } = emblaApi.internalEngine();
+      translate.clear();
+      translate.toggleActive(false);
+      slideLooper.loopPoints.forEach(({ translate }) => {
+        translate.clear();
+        translate.toggleActive(false);
+      });
+    },
+    []
+  );
+
+  const rotateWheel = useCallback(
+    /**
+     * @param {import('embla-carousel').EmblaCarouselType} emblaApi
+     * @returns
+     */
+    (emblaApi) => {
+      const rotation = slideCount * wheelItemRadius - rotationOffset;
+      const wheelRotation = rotation * emblaApi.scrollProgress();
+      setContainerStyles(emblaApi, wheelRotation);
+      emblaApi.slideNodes().forEach((_, index) => {
+        setSlideStyles(emblaApi, index, LOOP, slideCount, totalRadius);
+      });
+    },
+    [
+      slideCount,
+      wheelItemRadius,
+      rotationOffset,
+      setContainerStyles,
+      setSlideStyles,
+      totalRadius,
+    ]
+  );
 
   useEffect(() => {
-    if (!emblaApi) {
-      return;
-    }
+    if (!emblaApi) return;
 
-    onScroll();
-    emblaApi.on('scroll', onScroll);
-    return () => {
-      emblaApi.off('scroll', onScroll);
-    };
-  }, [onScroll, emblaApi]);
+    emblaApi.on('pointerUp', (emblaApi) => {
+      const { scrollTo, target, location } = emblaApi.internalEngine();
+      const diffToTarget = target.get() - location.get();
+      const factor = Math.abs(diffToTarget) < wheelItemSize / 2.5 ? 10 : 0.1;
+      const distance = diffToTarget * factor;
+      scrollTo.distance(distance, true);
+    });
+
+    emblaApi.on('scroll', rotateWheel);
+
+    emblaApi.on('reInit', (emblaApi) => {
+      inactivateEmblaTransform(emblaApi);
+      rotateWheel(emblaApi);
+    });
+
+    inactivateEmblaTransform(emblaApi);
+    rotateWheel(emblaApi);
+  }, [emblaApi, inactivateEmblaTransform, rotateWheel]);
 
   return (
     <ModalMui
@@ -236,72 +195,67 @@ export const Modal = ({
       container={() =>
         parentSelector ? document.querySelector(parentSelector) : null
       }
-      className={className}
+      className={clsx(className, 'artnav__modal')}
       slotProps={slotProps}
       disableScrollLock
       closeAfterTransition
       onClose={(evt, reason) => onClose(reason)}
     >
       <Fade in={isOpen}>
-        <Box className={clsx('article-navigator__modal')} ref={emblaRef}>
-          <ol ref={olRef} className="article-navigator__list">
-            {headings.map((headingEl, idx) => {
-              return (
-                <li
-                  data-idx={idx}
-                  key={idx + (headingEl.textContent || uuidv4())}
-                  className={clsx(
-                    'article-navigator__item',
-                    curHeading === headingEl &&
-                      'article-navigator__item_current'
-                  )}
-                  onClick={(evt) => {
-                    if (evt.detail !== 2) {
-                      return;
-                    }
-
-                    onClose('click', headingEl);
-
-                    setTimeout(
-                      () => {
-                        const targetY = headingEl.getBoundingClientRect().y;
-                        const curY = curHeading?.getBoundingClientRect().y ?? 0;
-                        const delta = targetY > curY ? 2 : -2;
-
-                        document.documentElement.scrollTo({
-                          top:
-                            headingEl.getBoundingClientRect().y -
-                            (scrollableEl?.getBoundingClientRect().y ?? 0) -
-                            -topMargin +
-                            delta,
-                          left: 0,
-                          behavior: 'smooth',
-                        });
-                      },
-                      50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
-                    );
-                  }}
-                >
-                  <span className="heading-text">{headingEl.textContent}</span>
-                  <span className="counter">
-                    {idx + 1}/{headingsLength || '\u00A0'}
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
-          <Box
-            ref={progRef}
-            sx={{
-              position: 'fixed',
-              top: '8px',
-              left: '12px',
-            }}
-          >
-            0.000
+        <Box className="ios-picker">
+          <Box className="ios-picker__scene" ref={rootNodeRef}>
+            <Box className="ios-picker__viewport" ref={emblaRef}>
+              <ol ref={olRef} className="ios-picker__container">
+                {headings.map((headingEl, idx) => {
+                  return (
+                    <li
+                      data-idx={idx}
+                      key={idx + (headingEl.textContent || uuidv4())}
+                      className={clsx(
+                        curHeading === headingEl && 'ios-picker__item_current',
+                        'ios-picker__slide'
+                      )}
+                    >
+                      <span className="heading-text">
+                        {headingEl.textContent}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </Box>
           </Box>
+          <Box className="embla__ios-picker__label">{`0/${headings.length}`}</Box>
         </Box>
       </Fade>
     </ModalMui>
   );
 };
+
+// const a = (evt) => {
+//                         if (evt.detail !== 2) {
+//                           return;
+//                         }
+
+//                         onClose('click', headingEl);
+
+//                         setTimeout(
+//                           () => {
+//                             const targetY = headingEl.getBoundingClientRect().y;
+//                             const curY =
+//                               curHeading?.getBoundingClientRect().y ?? 0;
+//                             const delta = targetY > curY ? 2 : -2;
+
+//                             document.documentElement.scrollTo({
+//                               top:
+//                                 headingEl.getBoundingClientRect().y -
+//                                 (scrollableEl?.getBoundingClientRect().y ?? 0) -
+//                                 -topMargin +
+//                                 delta,
+//                               left: 0,
+//                               behavior: 'smooth',
+//                             });
+//                           },
+//                           50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
+//                         );
+//                       }
