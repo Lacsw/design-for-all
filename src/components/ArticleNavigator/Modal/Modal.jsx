@@ -2,7 +2,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useEmblaCarousel from 'embla-carousel-react';
-import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import { Box, Fade, Modal as ModalMui } from '@mui/material';
 import { deepmerge } from '@mui/utils';
 import { mergeSx } from 'merge-sx';
@@ -53,7 +52,8 @@ export const Modal = ({
         // containScroll: 'keepSnaps',
       })
     );
-  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, emblaPlugins);
+  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
+
   const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
   const progRef = useRef(/** @type {HTMLElement | null} */ (null));
   // Кэшируем оригинальные трансформы Embla
