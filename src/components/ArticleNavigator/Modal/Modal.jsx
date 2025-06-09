@@ -49,10 +49,10 @@ export const NavigatorModal = memo(
         /** @type {TState<import('embla-carousel').EmblaOptionsType>} */ (
           useState({
             axis: 'y',
-            loop: true,
+            loop: false,
             skipSnaps: true,
             // duration: 10,
-            // containScroll: 'keepSnaps',
+            containScroll: false,
           })
         );
       const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
@@ -62,8 +62,8 @@ export const NavigatorModal = memo(
       // Кэшируем оригинальные трансформы Embla
       const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
       /* При необходимости создании эффекта закольцованности
-  (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-      const loopTransValRef = useRef(-448);
+      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
+      // const loopTransValRef = useRef(-448);
 
       /* (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
       При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
@@ -77,23 +77,23 @@ export const NavigatorModal = memo(
        * @param {HTMLElement | undefined} target
        * @param {'+' | '-'} mode
        */
-      function correctPosition(target, mode) {
-        if (!target) {
-          return;
-        }
-        const sign = mode === '+' ? 1 : -1;
-        /* При необходимости создании эффекта закольцованности
-      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-        const loopTranslateVal = parseFloat(
-          target?.style.transform.split(',')[5] || ''
-        );
-        const curTranslateY = parseFloat(target.style.translate.split(' ')[1]);
-        target.style.translate = `0px ${
-          loopTranslateVal
-            ? curTranslateY
-            : sign * loopTransValRef.current + (-1 * curTranslateY || 0)
-        }px`;
-      }
+      // function correctPosition(target, mode) {
+      //   if (!target) {
+      //     return;
+      //   }
+      //   const sign = mode === '+' ? 1 : -1;
+      //   /* При необходимости создании эффекта закольцованности
+      //   (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
+      //   const loopTranslateVal = parseFloat(
+      //     target?.style.transform.split(',')[5] || ''
+      //   );
+      //   const curTranslateY = parseFloat(target.style.translate.split(' ')[1]);
+      //   target.style.translate = `0px ${
+      //     loopTranslateVal
+      //       ? curTranslateY
+      //       : sign * loopTransValRef.current + (-1 * curTranslateY || 0)
+      //   }px`;
+      // }
 
       const applyWheelStyles = useCallback(() => {
         if (!emblaApi) {
@@ -127,11 +127,11 @@ export const NavigatorModal = memo(
           originTransform[3] = String(scale); // scale Y
 
           /* При необходимости создании эффекта закольцованности
-      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
+          (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
           const originalTranslateYForLoop =
             +parseFloat(originTransform[5]) || 0;
 
-          // См. #1
+          // ----- См. #1 -----
           // const translateY = originTransform[5];
           // const translateYParsed = parseFloat(translateY) || 0;
           // const delta =
@@ -166,27 +166,28 @@ export const NavigatorModal = memo(
           // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
         });
 
-        if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
-          const lastSlide = slides.at(-1);
-          const penultimateSlide = slides.at(-2);
-          const targetSlide = slides.at(-3);
+        // ------ USE THIS FOR CORRECT SLIDES POSITIONs WHEN LOOP = TRUE --------
+        // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
+        //   const lastSlide = slides.at(-1);
+        //   const penultimateSlide = slides.at(-2);
+        //   const targetSlide = slides.at(-3);
 
-          const loopTranslateVal = parseFloat(
-            lastSlide?.style.transform.split(',')[5] || ''
-          );
-          if (loopTranslateVal) {
-            loopTransValRef.current = loopTranslateVal;
-          }
+        //   const loopTranslateVal = parseFloat(
+        //     lastSlide?.style.transform.split(',')[5] || ''
+        //   );
+        //   if (loopTranslateVal) {
+        //     loopTransValRef.current = loopTranslateVal;
+        //   }
 
-          correctPosition(lastSlide, '+');
-          correctPosition(penultimateSlide, '+');
-          scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
-        } else {
-          scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
-          scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
-          scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
-          scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
-        }
+        //   correctPosition(lastSlide, '+');
+        //   correctPosition(penultimateSlide, '+');
+        //   scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
+        // } else {
+        //   scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
+        //   scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
+        //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
+        //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
+        // }
       }, [emblaApi]);
 
       const onScroll = useCallback(
@@ -201,15 +202,10 @@ export const NavigatorModal = memo(
             return res;
           });
           applyWheelStyles();
-          // requestAnimationFrame(applyTransformStyles); // при переходах через начало колеса(с loop: true) были подергивания
+          // requestAnimationFrame(applyWheelStyles); // при переходах через начало колеса(с loop: true) были подергивания
         },
         [emblaApi, applyWheelStyles]
       );
-
-      // const onScrollThrottled = useThrottle(onScroll, 16, {
-      //   leading: false,
-      //   trailing: true,
-      // });
 
       useEffect(() => {
         if (headings.length && curHeading) {
