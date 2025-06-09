@@ -2,12 +2,10 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useEmblaCarousel from 'embla-carousel-react';
-import { Box, Fade, Modal as ModalMui } from '@mui/material';
+import { Box, Fade, Modal as ModalMui, styled } from '@mui/material';
 import { deepmerge } from '@mui/utils';
-import { mergeSx } from 'merge-sx';
 import clsx from 'clsx';
-import { defaultModalSlotProps } from '../constants';
-import { sxRoot } from './styles';
+
 import {
   inclusiveRange,
   interpolate,
@@ -15,9 +13,17 @@ import {
   triangleWave,
 } from 'utils/helpers/math';
 
+import { defaultModalSlotProps } from '../constants';
+import { sxRoot } from './styles';
+
 /** @import * as Types from "../types" */
 
 const MIN_SCALE = 0.0;
+
+const StyledModal = styled(ModalMui)(({ theme }) => {
+  // @ts-ignore
+  return sxRoot(theme);
+});
 
 /** Модалка навигатора статей. */
 export const NavigatorModal = memo(
@@ -227,9 +233,9 @@ export const NavigatorModal = memo(
       }, [onScroll, emblaApi]);
 
       return (
-        <ModalMui
+        <StyledModal
           open={isOpen}
-          sx={mergeSx(sxRoot, sx)}
+          sx={sx}
           id={id}
           container={() =>
             parentSelector ? document.querySelector(parentSelector) : null
@@ -303,7 +309,7 @@ export const NavigatorModal = memo(
               </Box>
             </Box>
           </Fade>
-        </ModalMui>
+        </StyledModal>
       );
     }
   )

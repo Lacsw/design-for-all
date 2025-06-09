@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // @ts-check
 
-import { useSelector } from 'react-redux';
-import { getIsThemeLight } from 'store/slices/theme';
+import { store } from '../../../store/index';
 import { getCssVar } from 'utils/helpers/css-in-js';
 
 /** @type {import('@mui/material').SxProps<import('@mui/material').Theme>} */
 export const sxRoot = (theme) => {
   const media = theme.breakpoints;
-  const isLight = useSelector(getIsThemeLight);
+  const isLight = store.getState().theme.currentTheme;
 
   const curItemBg = getCssVar('--color-item-active');
 
