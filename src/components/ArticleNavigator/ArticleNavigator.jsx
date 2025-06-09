@@ -15,7 +15,7 @@ import {
   scrollableRefStub,
 } from './constants';
 
-import { Modal } from './Modal/Modal';
+import { NavigatorModal } from './Modal/Modal';
 import { Bar } from './Bar/Bar';
 import './viteCheckerSavior';
 import {
@@ -119,7 +119,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
   };
 
   /** @type {Types.ICloseArtNavModal} */
-  const handleModalClosing = (reason, el) => {
+  const handleModalClosing = (_reason, _el) => {
     collapse();
   };
 
@@ -250,7 +250,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     }
 
     let observer = new IntersectionObserver(
-      (entries, observer) => {
+      (entries, _observer) => {
         const entry = entries[0];
         if (
           entry.intersectionRect.y <= -topMargin + 70 &&
@@ -309,7 +309,7 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
         {...barProps}
       />
 
-      <Modal
+      <NavigatorModal
         parentSelector={parentSelector}
         isOpen={isExpanded}
         headings={headings}
