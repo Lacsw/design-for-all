@@ -15,9 +15,9 @@ import {
 
 import {
   fetchArticle,
-  selectArticle,
-  selectError,
-  selectLoading,
+  // selectArticle,
+  // selectError,
+  // selectLoading,
 } from 'store/slices/article';
 import { getLanguage } from 'store/slices/user';
 
@@ -611,7 +611,7 @@ export default function CatalogArticle() {
                 header.style.setProperty('--scroll-w', params.barWidth + 'px');
                 header.classList.add('article-navigator_expanded');
               }}
-              onClose={(params) => {
+              onClose={(_params) => {
                 headerElRef.current?.classList.remove(
                   'article-navigator_expanded'
                 );

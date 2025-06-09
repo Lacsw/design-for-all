@@ -1,5 +1,5 @@
 // @ts-check
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ResolvedPos } from '@tiptap/pm/model';
 
 /**

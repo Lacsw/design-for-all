@@ -28,6 +28,7 @@ export const CustomImageExtension = ImgTiptap.extend({
     };
   },
 
+  // @ts-ignore
   parseHTML() {
     return [
       {
@@ -83,7 +84,7 @@ export const CustomImageExtension = ImgTiptap.extend({
     ];
   },
 
-  renderHTML({ HTMLAttributes, node }) {
+  renderHTML({ HTMLAttributes, node: _node }) {
     const aligningClass = getAligningClass(HTMLAttributes.class);
 
     // console.log(

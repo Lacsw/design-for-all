@@ -27,7 +27,7 @@ export const _useState = (initialValue) => {
  *
  * @param {never} props
  */
-const UseStateHack = (props) => {
+const _useStateHack = (props) => {
   const [state, setState] = /** @type {TState<'litA' | 'numeroFinco'>} */ (
     useState('litA')
   ); // NOTE: need extra parentheses around hook calling!!!

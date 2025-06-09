@@ -17,7 +17,10 @@ import {
 
 import { getCurrentUser } from 'store/slices/user';
 import { getCurrentTheme, setTheme } from 'store/slices/theme';
-import { selectIsOpen as selectIsCatalogOpen, setCurrentSection } from 'store/slices/catalog/slice';
+import {
+  selectIsOpen as selectIsCatalogOpen,
+  setCurrentSection,
+} from 'store/slices/catalog/slice';
 
 import {
   accountNavigationList,
@@ -56,7 +59,7 @@ export default function Header() {
   const shouldTimeout = isAdmin;
 
   const handleLogout = useLogout();
-  
+
   // Переопределяем функцию handleLogout для открытия окна авторизации
   const handleLogoutWithModal = () => {
     openAuthModal();
@@ -64,7 +67,7 @@ export default function Header() {
   };
 
   // Функция, которая вызывается по истечении таймаута
-  const handleTimeout = async (dispatch) => {
+  const handleTimeout = async (_dispatch) => {
     handleLogoutWithModal();
   };
 
@@ -124,8 +127,9 @@ export default function Header() {
         </Link>
         <ul className="header__navigation">
           <li
-            className={`header__navigation-item_mobile-third ${!isMobile ? 'header__search' : ''
-              }`}
+            className={`header__navigation-item_mobile-third ${
+              !isMobile ? 'header__search' : ''
+            }`}
           >
             <HeaderSearchInput isMobileVisible={isMobile} id="headerSearch" />
           </li>

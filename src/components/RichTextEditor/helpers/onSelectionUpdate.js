@@ -2,6 +2,7 @@
 // import { TextSelection } from '@tiptap/pm/state';
 
 /** @param {import('@tiptap/react').EditorEvents['selectionUpdate']} params */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const onSelectionUpdate = ({ editor, transaction }) => {
   // console.log('selectionUpdate');
   //   //   const { state } = editor.view;
