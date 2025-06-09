@@ -18,16 +18,16 @@ catalogListener.startListening({
     if (!VALID_SECTIONS.includes(section)) {
       return;
     }
-    
+
     const currentHash = window.location.hash.replace(/^#\/?/, '');
     if (currentHash !== section) {
       window.history.pushState({}, '', `#${section}`);
     }
-    
+
     // Проверяем наличие данных и их свежесть
     const sectionData = catalog?.[language]?.[section];
     const fetchTime = sectionData?.fetchTime || 0;
-    
+
     // Загружаем данные только если их нет или они устарели (старше 10.5 минут)
     if (!sectionData?.original || Date.now() - fetchTime > 630000) {
       listenerApi.dispatch(fetchTree(`${language}_${section}`));
@@ -49,7 +49,9 @@ catalogListener.startListening({
     )?.[0];
 
     if (section) {
-      const validSection = VALID_SECTIONS.includes(section) ? section : 'desktop';
+      const validSection = VALID_SECTIONS.includes(section)
+        ? section
+        : 'desktop';
       listenerApi.dispatch(setCurrentSection(validSection));
     }
   },
