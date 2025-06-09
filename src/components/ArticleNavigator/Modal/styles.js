@@ -85,7 +85,7 @@ export const sxRoot = (theme) => {
       justifyContent: 'center',
       alignItems: 'center',
 
-      cursor: 'pointer',
+      // cursor: 'pointer',
       transition: theme.transitions.create(['background', 'color'], {
         duration: 150,
       }),
@@ -116,10 +116,6 @@ export const sxRoot = (theme) => {
       },
       '&:active': {
         // background: alpha(curItemBg, 0.95),
-      },
-
-      '.heading-text': {
-        WebkitFontSmoothing: 'antialiased',
       },
     },
 
