@@ -2,7 +2,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useEmblaCarousel from 'embla-carousel-react';
-import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import { Box, Fade, Modal as ModalMui } from '@mui/material';
 import { deepmerge } from '@mui/utils';
 import { mergeSx } from 'merge-sx';
@@ -19,7 +18,6 @@ import {
 /** @import * as Types from "../types" */
 
 const MIN_SCALE = 0.0;
-const emblaPlugins = [WheelGesturesPlugin()];
 
 /**
  * Модалка навигатора статей.
@@ -38,7 +36,7 @@ export const Modal = ({
   topMargin,
   scrollableEl,
   curHeading,
-  setCurHeading,
+  setCurHeading: _setCurHeading,
 }) => {
   const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
   const headingsLength = headings.length;
@@ -53,7 +51,8 @@ export const Modal = ({
         // containScroll: 'keepSnaps',
       })
     );
-  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, emblaPlugins);
+  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
+
   const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
   const progRef = useRef(/** @type {HTMLElement | null} */ (null));
   // Кэшируем оригинальные трансформы Embla
@@ -162,27 +161,27 @@ export const Modal = ({
       // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
     });
 
-    // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
-    //   const lastSlide = slides.at(-1);
-    //   const penultimateSlide = slides.at(-2);
-    //   const targetSlide = slides.at(-3);
+    if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
+      const lastSlide = slides.at(-1);
+      const penultimateSlide = slides.at(-2);
+      const targetSlide = slides.at(-3);
 
-    //   const loopTranslateVal = parseFloat(
-    //     lastSlide?.style.transform.split(',')[5] || ''
-    //   );
-    //   if (loopTranslateVal) {
-    //     loopTransValRef.current = loopTranslateVal;
-    //   }
+      const loopTranslateVal = parseFloat(
+        lastSlide?.style.transform.split(',')[5] || ''
+      );
+      if (loopTranslateVal) {
+        loopTransValRef.current = loopTranslateVal;
+      }
 
-    //   correctPosition(lastSlide, '+');
-    //   correctPosition(penultimateSlide, '+');
-    //   scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
-    // } else {
-    //   scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
-    //   scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
-    //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
-    //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
-    // }
+      correctPosition(lastSlide, '+');
+      correctPosition(penultimateSlide, '+');
+      scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
+    } else {
+      scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
+      scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
+      scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
+      scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
+    }
   }, [emblaApi]);
 
   const onScroll = useCallback(
