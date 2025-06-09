@@ -88,7 +88,8 @@ export const sxRoot = (theme) => {
       cursor: 'pointer',
       transition: theme.transitions.create(['background', 'color'], {
         duration: 150,
-      }) /*+ ', transalte 10ms'*/,
+      }),
+      willChange: 'transform, transalte',
 
       '&.article-navigator__item_current': {
         borderRadius: '6px',
