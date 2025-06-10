@@ -25,6 +25,7 @@ export function useRouteCategory() {
   const currentCategory = useSelector(selectCurrentCategory);
   const isAlive = useRef(true);
   const currentArticleId = useSelector(selectArticleId);
+
   // флаг размонтирования
   useEffect(() => {
     return () => {
@@ -32,48 +33,56 @@ export function useRouteCategory() {
     };
   }, []);
 
-  // 1️⃣ Загружаем статью ровно один раз при смене lang/articleId
+  // При любом изменении articleId — сразу сбрасываем категорию, чтобы убрать дерево предыдущей секции
+  useEffect(() => {
+    if (articleId && articleId !== 'no-article') {
+      dispatch(setCurrentCategory(''));
+    }
+  }, [articleId, dispatch]);
+
+  // Загружаем статью один раз при смене lang/articleId
   useEffect(() => {
     if (!articleId || articleId === 'no-article') return;
-    dispatch(setCurrentCategory(''));
     dispatch(fetchArticle({ lang, articleId }));
   }, [lang, articleId, dispatch]);
 
-  // 1️⃣ Определяем категорию при **первом** заходе
+  // Определяем категорию при первом открытии каталога
   useEffect(() => {
     const validKeys = Object.keys(titles[language] || []);
     if (validKeys.length === 0) return;
 
-    // A) Попытка по hash: #/web → "web"
+    // Пытаемся найти категорию по hash: #/web → "web"
     const rawHash = hash.replace(/^#\/?/, '');
     if (rawHash && validKeys.includes(rawHash)) {
       dispatch(setCurrentCategory(rawHash));
       return;
     }
 
+    // Если статья не найдена, то ничего не делаем
     if (articleId === 'no-article') {
       return;
     }
 
-    // B) статья → ждём, пока в стейте появится наша статья
+    // Если статья найдена, то ждём, пока в стейте появится наша статья
     if (articleId) {
       if (!article || currentArticleId !== articleId) {
         return; // ждём дальше
       }
-      // теперь у нас в `article.publication.main_category`
-      // локализованное имя на языке статьи (langParam)
+      // Получаем локализованное имя категории
       const localized = article.publication.main_category;
-      // чтобы найти наш key, ищем по titles[langParam], а не по интерфейсным
+      // ищем key по titles[langParam]
       const foundKey = Object.keys(titles[lang] || []).find(
         (k) => titles[lang][k] === localized
       );
+      // Если ключ найден, то устанавливаем категорию
       if (foundKey) {
         dispatch(setCurrentCategory(foundKey));
       }
+      // Иначе устанавливаем первую категорию из списка
       return;
     }
 
-    // C) Иначе — первая секция из списка
+    // Если статья не найдена, то устанавливаем первую категорию из списка
     dispatch(setCurrentCategory(validKeys[0]));
   }, [
     hash,
@@ -86,7 +95,7 @@ export function useRouteCategory() {
     lang,
   ]);
 
-  // 2️⃣ Каждый раз, когда currentCategory меняется → загружаем дерево, если нужно
+  // Каждый раз, когда currentCategory меняется → загружаем дерево, если нужно
   useEffect(() => {
     if (!currentCategory) return;
     const section = catalog[language]?.[currentCategory];

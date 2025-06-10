@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ArticlesTree, Overlay, SearchInput } from 'components';
+import { Overlay, SearchInput, ArticlesTree } from 'components';
 import ResultItem from './ResultItem';
 import {
   selectCatalog,
@@ -41,7 +41,7 @@ export default function SideBar() {
   const isTreeSearchOpen = activeComponent === 'treeSearch';
   const isMobileSidebarOpen = activeComponent === 'mobileSidebar';
 
-  
+
   // список секций, исключая текущую для выбора в выпадающем списке
   const titlesList = useMemo(() =>
     Object.keys(titles?.[language] || {}).filter(
@@ -153,7 +153,6 @@ export default function SideBar() {
         )}
       </div>
       <ArticlesTree
-        key={currentCategory}
         path={currentCategory}
         catalog={catalog}
         language={language}

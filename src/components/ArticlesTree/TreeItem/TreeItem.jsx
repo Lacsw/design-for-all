@@ -1,69 +1,81 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { TreeList } from 'components';
-import './TreeItem.css';
-import { useSelector } from 'react-redux';
-import { getCurrentTheme } from 'store/slices/theme';
-import findId from './findId';
+import React, { useState, useMemo, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getCurrentTheme } from "store/slices/theme";
+import findId from "./findId";
+import TreeList from "../TreeList/TreeList";
+import "./TreeItem.css";
 
-export default function TreeItem({
-  title = '',
-  data = null,
-  language,
-  status,
-}) {
+function TreeItemInner({ title, data, language }) {
   const navigate = useNavigate();
   const { articleId } = useParams();
   const theme = useSelector(getCurrentTheme);
+
+  const hasChildren = data && typeof data === "object";
+  const id = hasChildren ? data.id : data;
+
+  // Локальный стейт для открытия/скрытия
   const [isOpen, setIsOpen] = useState(() => {
-    if (status === false) return false;
-    return data ? findId(data, articleId) : false;
+    return hasChildren && findId(data, articleId);
   });
 
-  const hasChildren = data && typeof data === 'object';
-  const id = hasChildren ? data.id : data;
-  const isActive = articleId ? articleId === id : false;
-  const newData = hasChildren ? { ...data } : {};
-  if (hasChildren) {
-    delete newData.id;
-  }
-
-  const arrowExtraClass = hasChildren
-    ? ' tree-item__arrow_visible_' + theme
-    : '';
-  const liExtraClass = isOpen ? ' tree-item_opened' : '';
-
-  function handleOpen() {
-    setIsOpen((prev) => !prev);
-  }
-
-  function handleNavigate() {
-    if (id) {
-      navigate(`/${language}/${id}`);
-    } else {
-      navigate(`/${language}/no-article`);
+  // При смене articleId — если наша ветка содержит этот id, открываем её
+  useEffect(() => {
+    if (hasChildren && findId(data, articleId)) {
+      setIsOpen(true);
     }
-  }
+    // (иначе ничего не трогаем — чтобы не закрывать вручную открытые юзером ветки)
+  }, [articleId, data, hasChildren]);
 
+
+
+  // останавливает всплытие, чтобы не навигировать
+  const toggleOpen = (e) => {
+    e.stopPropagation();
+    setIsOpen((prev) => !prev);
+  };
+
+  // Навигация по клику на заголовок
+  const handleClick = () => {
+    navigate(`/${language}/${id || "no-article"}`);
+  };
+
+  // Для отрисовки потомков убираем поле id
+  const children = useMemo(() => {
+    if (!hasChildren) return null;
+    return Object.entries(data).reduce((acc, [k, v]) => {
+      if (k !== "id") acc[k] = v;
+      return acc;
+    }, {});
+  }, [data, hasChildren]);
+
+  const isActive = articleId === id;
+  
   return (
-    <li className={'tree-item' + liExtraClass}>
+    <li className={`tree-item${isOpen ? " tree-item_opened" : ""}`}>
       <div className="tree-item__top">
+        {hasChildren && (
+          <span
+            className={"tree-item__arrow tree-item__arrow_visible_" + theme}
+            onClick={toggleOpen}                    // тут кликаем стрелку
+          />
+        )}
         <span
-          className={'tree-item__arrow' + arrowExtraClass}
-          onClick={handleOpen}
-        />
-        <span
-          className={`tree-item__title${
-            isActive ? ' tree-item__title_active' : ''
-          }`}
-          onClick={handleNavigate}
+          className={`tree-item__title${isActive ? " tree-item__title_active" : ""}`}
+          onClick={handleClick}                   // тут кликаем на текст
         >
           {title}
         </span>
       </div>
-      {!isOpen || !hasChildren ? null : (
-        <TreeList list={newData} language={language} status={isOpen} />
+      {hasChildren && isOpen && (
+        <TreeList list={children} language={language} />
       )}
     </li>
   );
 }
+
+// Останавливаем лишние рендеры: обновляем дерево только когда изменился заголовок(title) или сами данные дерева(data) для этого заголовка
+export const TreeItem = React.memo(
+  TreeItemInner,
+  (prev, next) => prev.title === next.title && prev.data === next.data
+);
