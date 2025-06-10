@@ -76,6 +76,13 @@ export const HEADER = {
   CURRENCY: {
     TITLE: 'header_currency_title', // Валюта
   },
+  DONATION_MODAL: {
+    TITLE: 'header_donation_modal_title', // Пожертвования
+    TEXT: 'header_donation_modal_text', // Пожертвования
+    KOFI: 'header_donation_modal_kofi', // Ko-fi
+    DONATTY: 'header_donation_modal_donatty', // Donatty
+    DONATION_ALERTS: 'header_donation_modal_donation_alerts', // DonationAlerts
+  },
   USER: {
     TITLE: 'header_user_title', // Пользователь
     PROFILE: 'header_user_profile', // Профиль
