@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  fetchArticle,
   selectArticle,
   selectError,
   selectLoading,
@@ -55,7 +54,7 @@ const artNavSlotProps = {
 };
 
 export default function CatalogArticle() {
-  const dispatch = useDispatch();
+
   const { t } = useTranslation();
   const { lang, articleId } = useParams();
   const language = useSelector(getLanguage);
@@ -65,18 +64,13 @@ export default function CatalogArticle() {
   const articleRef = useRef(null);
   const { openComponent} = useInteractiveManager();
   const isMobile = useIsMobile();
-  const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
+
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
 
-  useEffect(() => {
-    if (!needToFetch) return;
-    dispatch(fetchArticle({ lang, articleId }));
-  }, [lang, articleId, needToFetch, dispatch]);
-
-  // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
 
   const headerElRef = useRef(/** @type {HTMLElement | null} */(null));
+  
   useEffect(() => {
     headerElRef.current = document.querySelector('div#root header.header');
   }, []);

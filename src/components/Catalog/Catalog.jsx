@@ -6,27 +6,25 @@ import { useIsMobile } from 'utils/hooks/useIsMobile';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { useSelector } from 'react-redux';
 import { selectTitles } from 'store/slices/article';
+import { useRouteCategory } from 'utils/hooks/useRouteCategory';
 
 export default function Catalog({ section }) {
+  
   const catalogRef = useRef();
   const { lang, articleId } = useParams();
   const titles = useSelector(selectTitles);
   const isMobile = useIsMobile();
   const langs = Object.keys(titles);
-
   const { activeComponent, closeComponent } = useInteractiveManager();
 
-  const isWrong = (() => {
-    if (
+  useRouteCategory();
+
+  const isWrong = 
       lang &&
       articleId &&
       (!langs.includes(lang) ||
         (articleId.length !== 32 && articleId !== 'no-article'))
-    ) {
-      return true;
-    }
-    return false;
-  })();
+
 
   useEffect(() => {
     document.querySelector('.main-wrapper').scrollTo(0, 0);
@@ -47,7 +45,7 @@ export default function Catalog({ section }) {
           </Overlay>
         )
       ) : (
-        <SideBar section={section} />
+        <SideBar/>
       )}
       <CatalogArticle />
     </div>

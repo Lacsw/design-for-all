@@ -1,18 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setCurrentSection } from 'store/slices/catalog/slice';
 import { useTranslation } from 'react-i18next';
 import './NotFound.css';
 import notFound404Svg from 'images/404.svg';
 import { NOT_FOUND } from 'utils/translationKeys';
 
 function NotFound({ role }) {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const resetSection = () => {
-    dispatch(setCurrentSection(''));
-  };
 
   return (
     <section className="not-found">
@@ -35,7 +29,6 @@ function NotFound({ role }) {
         <Link
           to="/"
           className="button button_type_bright not-found__button"
-          onClick={resetSection}
         >
           {t(NOT_FOUND.HOME_BUTTON)}
         </Link>

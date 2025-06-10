@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setShouldRemountTree, setMainCategory } from 'store/slices/catalog/slice';
 
 export default function ResultItem({ language, item, onClick }) {
-  const dispatch = useDispatch();
   const textRef = useRef(null);
 
   useEffect(() => {
@@ -16,8 +13,6 @@ export default function ResultItem({ language, item, onClick }) {
     <li className="sidebar__item">
       <Link
         onClick={() => {
-          dispatch(setMainCategory(item.main_category));
-          dispatch(setShouldRemountTree(true));
           onClick();
         }}
         to={'/' + language + '/' + item.uuid}

@@ -36,7 +36,7 @@ const initI18n = async () => {
           transSupportBasicHtmlNodes: true,
           transKeepBasicHtmlNodesFor: ['br', 'strong', 'i', 'p'],
         },
-        debug: true,
+        debug: false,
         load: 'all',
         ns: ['translation'],
         defaultNS: 'translation',
