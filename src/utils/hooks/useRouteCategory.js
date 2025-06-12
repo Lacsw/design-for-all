@@ -33,12 +33,10 @@ export function useRouteCategory() {
     };
   }, []);
 
-  // При любом изменении articleId — сразу сбрасываем категорию, чтобы убрать дерево предыдущей секции
+  // При монтировании сбрасываем категорию, чтобы убрать дерево предыдущей секции
   useEffect(() => {
-    if (articleId && articleId !== 'no-article') {
       dispatch(setCurrentCategory(''));
-    }
-  }, [articleId, dispatch]);
+  }, [ dispatch]);
 
   // Загружаем статью один раз при смене lang/articleId
   useEffect(() => {
