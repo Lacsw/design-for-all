@@ -58,7 +58,7 @@ export const NavigatorModal = memo(
       const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
 
       const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
-      const progRef = useRef(/** @type {HTMLElement | null} */ (null));
+      // const progRef = useRef(/** @type {HTMLElement | null} */ (null));
       // Кэшируем оригинальные трансформы Embla
       const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
       /* При необходимости создании эффекта закольцованности
@@ -106,9 +106,9 @@ export const NavigatorModal = memo(
 
         const scrollProgress = emblaApi.scrollProgress();
         const slides = emblaApi.slideNodes();
-        if (progRef.current) {
-          progRef.current.textContent = scrollProgress + '!';
-        }
+        // if (progRef.current) {
+        //   progRef.current.textContent = scrollProgress + '!';
+        // }
 
         slides.forEach((slide, index) => {
           const slideSnap = snapsList[index];
@@ -293,7 +293,7 @@ export const NavigatorModal = memo(
                   );
                 })}
               </ol>
-              <Box
+              {/* <Box
                 ref={progRef}
                 sx={{
                   position: 'fixed',
@@ -302,7 +302,7 @@ export const NavigatorModal = memo(
                 }}
               >
                 0.000
-              </Box>
+              </Box>*/}
             </Box>
           </Fade>
         </StyledModal>
