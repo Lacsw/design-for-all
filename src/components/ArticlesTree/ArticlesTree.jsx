@@ -2,19 +2,19 @@ import React from 'react';
 import { TreeList } from 'components';
 import './ArticlesTree.css';
 
-
 function ArticlesTreeInner({ path, catalog, language }) {
-  const tree = catalog?.[language]?.[path]?.tree || {};
+  const nodes = catalog?.[language]?.[path]?.tree || [];
+  if (nodes.length === 0) {
+    return null;
+  }
+
+  console.log(nodes);
   return (
     <div className="tree">
-      {Object.keys(tree).length > 0 && (
-        <TreeList list={tree} language={language} />
-      )}
+      <TreeList nodes={nodes} language={language} />
     </div>
   );
 }
-
-// Останавливаем лишние рендеры: обновляем дерево только когда изменился путь(path), язык(language) или сами данные дерева(catalog[language][path].tree) для этого пути
 
 export const ArticlesTree = React.memo(
   ArticlesTreeInner,
@@ -22,6 +22,5 @@ export const ArticlesTree = React.memo(
     prev.path === next.path &&
     prev.language === next.language &&
     prev.catalog[next.language]?.[next.path]?.tree ===
-    next.catalog[next.language]?.[next.path]?.tree
+      next.catalog[next.language]?.[next.path]?.tree
 );
-
