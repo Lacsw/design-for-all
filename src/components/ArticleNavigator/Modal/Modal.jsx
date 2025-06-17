@@ -1,5 +1,12 @@
 // @ts-check
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Box, Fade, Modal as ModalMui, styled } from '@mui/material';
@@ -42,7 +49,10 @@ export const NavigatorModal = memo(
       curHeading,
       setCurHeading: _setCurHeading,
     }) {
-      const slotProps = deepmerge({ ...defaultModalSlotProps }, slotPropsOuter);
+      const slotProps = useMemo(
+        () => deepmerge({ ...defaultModalSlotProps }, slotPropsOuter),
+        [slotPropsOuter]
+      );
       const headingsLength = headings.length;
 
       const [emblaOptions, setEmblaOptions] =
