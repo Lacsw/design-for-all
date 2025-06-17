@@ -12,6 +12,7 @@ export const sxRoot = (theme) => {
   const curItemBg = getCssVar('--color-item-active');
 
   return {
+    '--cur-idx': '',
     right: 'var(--art-nav-right, 0px)',
     zIndex: 110,
 
@@ -79,6 +80,7 @@ export const sxRoot = (theme) => {
       padding: '5px 13px',
       minHeight: '46px',
       height: '46px',
+      maxWidth: '95%',
       flex: '1 1 100%',
 
       display: 'flex',
@@ -89,7 +91,19 @@ export const sxRoot = (theme) => {
       transition: theme.transitions.create(['background', 'color'], {
         duration: 150,
       }),
-      willChange: 'transform, transalte',
+      willChange: 'transform, transalte', // спасительный шнапс
+
+      '&:hover': {
+        // color: '#fff',
+        // background: alpha(curItemBg, 0.8),
+        // '.counter': {
+        //   color: '#fff',
+        // },
+      },
+
+      '&:active': {
+        // background: alpha(curItemBg, 0.95),
+      },
 
       '&.article-navigator__item_current': {
         borderRadius: '6px',
@@ -107,15 +121,8 @@ export const sxRoot = (theme) => {
         },
       },
 
-      '&:hover': {
-        // color: '#fff',
-        // background: alpha(curItemBg, 0.8),
-        // '.counter': {
-        //   color: '#fff',
-        // },
-      },
-      '&:active': {
-        // background: alpha(curItemBg, 0.95),
+      '&.closest': {
+        // color: 'red',
       },
     },
 
@@ -132,9 +139,13 @@ export const sxRoot = (theme) => {
       }),
     },
 
-    '.counter': {
+    '.article-navigator__cur-index': {
+      position: 'absolute',
+      top: '50%',
+      right: '23px',
+      transform: 'translate(0, -50%)',
+
       color: isLight ? '#585858' : '#bcbcbc',
-      marginLeft: '10px',
       minWidth: '30px',
       fontVariantNumeric: 'tabular-nums',
       textAlign: 'end',
@@ -157,11 +168,19 @@ export const sxRoot = (theme) => {
         minWidth: '60vw',
         maxWidth: '80vw',
       },
+
+      '.article-navigator__item': {
+        maxWidth: '92%',
+      },
     },
     [media.down(600)]: {
       '.article-navigator__modal': {
         minWidth: '80vw',
         maxWidth: '90vw',
+      },
+
+      '.article-navigator__item': {
+        maxWidth: '90%',
       },
     },
   };

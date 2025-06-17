@@ -65,10 +65,14 @@ export const NavigatorModal = memo(
         );
       const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
 
+      const emblaElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
       const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
       // const progRef = useRef(/** @type {HTMLElement | null} */ (null));
+      const curIndexElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
+
       // Кэшируем оригинальные трансформы Embla
       const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
+
       /* При необходимости создании эффекта закольцованности
       (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
       // const loopTransValRef = useRef(-448);
@@ -118,12 +122,21 @@ export const NavigatorModal = memo(
         //   progRef.current.textContent = scrollProgress + '!';
         // }
 
+        let closestSlideIndex = 0;
+        let smallestDistance = Infinity;
+
         slides.forEach((slide, index) => {
           const slideSnap = snapsList[index];
           const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
           const slideDistanceFromCenter = Math.abs(scrollProgress - slideSnap);
           /** Smoothing the scale for slides farthest from the center. */
           const scaleСorrection = slideDistanceFromCenter * 0.65;
+
+          let enough = false;
+          if (!enough && slideDistanceFromCenter < smallestDistance) {
+            smallestDistance = slideDistanceFromCenter;
+            closestSlideIndex = index;
+          }
 
           // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
           // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
@@ -180,6 +193,17 @@ export const NavigatorModal = memo(
           // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
           // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
         });
+
+        slides.forEach((s) => s.classList.remove('closest'));
+        slides[closestSlideIndex].classList.add('closest');
+        if (emblaElRef.current && curIndexElRef.current) {
+          emblaElRef.current.style.setProperty(
+            '--cur-idx',
+            String(closestSlideIndex)
+          );
+          curIndexElRef.current.textContent =
+            closestSlideIndex + 1 + '/' + slides.length;
+        }
 
         // ------ USE THIS FOR CORRECT SLIDES POSITIONs WHEN LOOP = TRUE --------
         // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
@@ -258,7 +282,15 @@ export const NavigatorModal = memo(
           onClose={(evt, reason) => onClose(reason)}
         >
           <Fade in={isOpen}>
-            <Box className={clsx('article-navigator__modal')} ref={emblaRef}>
+            <Box
+              className={clsx('article-navigator__modal')}
+              ref={
+                /** @param {HTMLDivElement | null} el */ (el) => {
+                  emblaRef(el);
+                  emblaElRef.current = el;
+                }
+              }
+            >
               <ol ref={olRef} className="article-navigator__list">
                 {headings.map((headingEl, idx) => {
                   return (
@@ -301,9 +333,6 @@ export const NavigatorModal = memo(
                       <span className="heading-text">
                         {headingEl.textContent}
                       </span>
-                      <span className="counter">
-                        {idx + 1}/{headingsLength || '\u00A0'}
-                      </span>
                     </li>
                   );
                 })}
@@ -318,6 +347,10 @@ export const NavigatorModal = memo(
               >
                 0.000
               </Box>*/}
+              <div
+                className="article-navigator__cur-index"
+                ref={curIndexElRef}
+              />
             </Box>
           </Fade>
         </StyledModal>
