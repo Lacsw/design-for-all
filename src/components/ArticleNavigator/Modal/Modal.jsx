@@ -25,8 +25,6 @@ import { sxRoot } from './styles';
 
 /** @import * as Types from "../types" */
 
-const MIN_SCALE = 0.0;
-
 const StyledModal = styled(ModalMui)(({ theme }) => {
   // @ts-ignore
   return sxRoot(theme);
@@ -123,6 +121,9 @@ export const NavigatorModal = memo(
         slides.forEach((slide, index) => {
           const slideSnap = snapsList[index];
           const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
+          const slideDistanceFromCenter = Math.abs(scrollProgress - slideSnap);
+          /** Smoothing the scale for slides farthest from the center. */
+          const scaleСorrection = slideDistanceFromCenter * 0.65;
 
           // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
           // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
@@ -130,7 +131,11 @@ export const NavigatorModal = memo(
           // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
           const scaleRaw = triangleWave(1, 2, slideSnap, -scrollProgress);
           const scaleRawAbs = Math.abs(scaleRaw);
-          const scale = inclusiveRange(MIN_SCALE, scaleRawAbs * 1.2, 1);
+          const scale = inclusiveRange(
+            0,
+            scaleRawAbs * 1.2 + scaleСorrection,
+            1
+          );
 
           let originTransform = originalTransforms.current[index].split(',');
           originTransform[0] = 'matrix(' + scale; // scale X
@@ -157,7 +162,7 @@ export const NavigatorModal = memo(
             invertSignIf(originalTranslateYForLoop, translateDirection);
           slide.style.translate = '0px ' + baseTranslate + 'px';
 
-          slide.style.opacity = String(inclusiveRange(0.5, scaleRawAbs, 1));
+          slide.style.opacity = String(inclusiveRange(0, scaleRawAbs * 1.2, 1));
 
           // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
           // slide.style.padding = `${interpolate(
