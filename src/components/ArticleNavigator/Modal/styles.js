@@ -12,7 +12,7 @@ export const sxRoot = (theme) => {
   const curItemBg = getCssVar('--color-item-active');
 
   return {
-    '--cur-idx': '',
+    '--cur-idx': '', // индекс пункта списка( = заголовка ), который ближе всего к центру колеса
     right: 'var(--art-nav-right, 0px)',
     zIndex: 110,
 

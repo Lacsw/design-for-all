@@ -70,6 +70,11 @@ export const NavigatorModal = memo(
       // const progRef = useRef(/** @type {HTMLElement | null} */ (null));
       /** Див с текстом о текущем номере заголовка в центре сцены. */
       const curIndexElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
+      /**
+       * Индекс пункта списка( = заголовка ), который ближе всего к центру
+       * колеса
+       */
+      const curIdx = useRef(/** @type {number | null} */ (null));
 
       // Кэшируем оригинальные трансформы Embla
       const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
@@ -205,6 +210,7 @@ export const NavigatorModal = memo(
           curIndexElRef.current.textContent =
             closestSlideIndex + 1 + '/' + slides.length;
         }
+        curIdx.current = closestSlideIndex;
 
         // ------ USE THIS FOR CORRECT SLIDES POSITIONs WHEN LOOP = TRUE --------
         // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
@@ -281,6 +287,37 @@ export const NavigatorModal = memo(
           disableScrollLock
           closeAfterTransition
           onClose={(evt, reason) => onClose(reason)}
+          onKeyDown={(evt) => {
+            if (!emblaApi) {
+              return;
+            }
+            if (evt.key === 'Enter') {
+              if (curIdx.current === null) {
+                return;
+              }
+              const headingForClosestSlide = headings[curIdx.current];
+              const rectForHeadingClosestSlide =
+                headingForClosestSlide.getBoundingClientRect();
+              const targetHeadingY = rectForHeadingClosestSlide.y;
+              const curHeadingY = curHeading?.getBoundingClientRect().y ?? 0;
+              const delta = targetHeadingY > curHeadingY ? 2 : -2; // чтобы IntersectionObserver сработал как надо
+
+              onClose('click', headingForClosestSlide);
+              scrollableEl?.scrollTo({
+                top:
+                  rectForHeadingClosestSlide.y -
+                  (scrollableEl?.getBoundingClientRect().y ?? 0) -
+                  -topMargin +
+                  delta,
+                left: 0,
+                behavior: 'smooth',
+              });
+            } else if (evt.key === 'ArrowDown') {
+              emblaApi.scrollNext();
+            } else if (evt.key === 'ArrowUp') {
+              emblaApi.scrollPrev();
+            }
+          }}
         >
           <Fade in={isOpen}>
             <Box
