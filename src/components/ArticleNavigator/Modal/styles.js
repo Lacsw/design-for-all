@@ -124,6 +124,11 @@ export const sxRoot = (theme) => {
       '&.closest': {
         // color: 'red',
       },
+
+      '*': {
+        pointerEvents: 'none',
+        touchAction: 'none',
+      },
     },
 
     '.heading-text': {

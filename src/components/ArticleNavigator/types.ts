@@ -136,8 +136,10 @@ export interface ICloseArtNavModal {
 export interface IArtNavModalProps extends IBaseProps {
   parentSelector?: IArticleNavigatorProps['parentSelector'];
   isOpen: boolean;
+  /** Заголовки, которые необходимо отобразить в навигаторе. */
   headings: HTMLHeadingElement[];
   onClose: ICloseArtNavModal;
+  /** Заголовок, на котором сейчас находится статья. */
   curHeading: HTMLHeadingElement | null;
   setCurHeading: React.Dispatch<
     React.SetStateAction<HTMLHeadingElement | null>

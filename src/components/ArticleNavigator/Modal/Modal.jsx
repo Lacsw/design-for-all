@@ -51,7 +51,7 @@ export const NavigatorModal = memo(
         () => deepmerge({ ...defaultModalSlotProps }, slotPropsOuter),
         [slotPropsOuter]
       );
-      const headingsLength = headings.length;
+      // const headingsLength = headings.length;
 
       const [emblaOptions, setEmblaOptions] =
         /** @type {TState<import('embla-carousel').EmblaOptionsType>} */ (
@@ -68,6 +68,7 @@ export const NavigatorModal = memo(
       const emblaElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
       const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
       // const progRef = useRef(/** @type {HTMLElement | null} */ (null));
+      /** Див с текстом о текущем номере заголовка в центре сцены. */
       const curIndexElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
 
       // Кэшируем оригинальные трансформы Embla
@@ -291,7 +292,59 @@ export const NavigatorModal = memo(
                 }
               }
             >
-              <ol ref={olRef} className="article-navigator__list">
+              <ol
+                ref={olRef}
+                className="article-navigator__list"
+                onClick={(evt) => {
+                  if (evt.detail > 1) {
+                    return;
+                  }
+
+                  if (!(evt.target instanceof HTMLLIElement)) {
+                    return;
+                  }
+                  const target = /** @type {EventTarget & HTMLLIElement} */ (
+                    evt.target
+                  );
+
+                  const targetIdx = target.getAttribute('data-idx');
+
+                  if (targetIdx === null) {
+                    return;
+                  }
+                  const targetIdxNum = Number(targetIdx);
+                  if (!target.classList.contains('closest')) {
+                    emblaApi?.scrollTo(Number(targetIdx));
+                    return;
+                  }
+
+                  const targetHeading = headings[targetIdxNum];
+                  const targetHeadingRect =
+                    targetHeading.getBoundingClientRect();
+
+                  onClose('click', targetHeading);
+
+                  setTimeout(
+                    () => {
+                      const targetHeadingY = targetHeadingRect.y;
+                      const curHeadingY =
+                        curHeading?.getBoundingClientRect().y ?? 0;
+                      const delta = targetHeadingY > curHeadingY ? 2 : -2; // чтобы IntersectionObserver сработал как надо
+
+                      document.documentElement.scrollTo({
+                        top:
+                          targetHeadingRect.y -
+                          (scrollableEl?.getBoundingClientRect().y ?? 0) -
+                          -topMargin +
+                          delta,
+                        left: 0,
+                        behavior: 'smooth',
+                      });
+                    },
+                    50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
+                  );
+                }}
+              >
                 {headings.map((headingEl, idx) => {
                   return (
                     <li
@@ -302,33 +355,6 @@ export const NavigatorModal = memo(
                         curHeading === headingEl &&
                           'article-navigator__item_current'
                       )}
-                      onClick={(evt) => {
-                        if (evt.detail !== 2) {
-                          return;
-                        }
-
-                        onClose('click', headingEl);
-
-                        setTimeout(
-                          () => {
-                            const targetY = headingEl.getBoundingClientRect().y;
-                            const curY =
-                              curHeading?.getBoundingClientRect().y ?? 0;
-                            const delta = targetY > curY ? 2 : -2;
-
-                            document.documentElement.scrollTo({
-                              top:
-                                headingEl.getBoundingClientRect().y -
-                                (scrollableEl?.getBoundingClientRect().y ?? 0) -
-                                -topMargin +
-                                delta,
-                              left: 0,
-                              behavior: 'smooth',
-                            });
-                          },
-                          50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
-                        );
-                      }}
                     >
                       <span className="heading-text">
                         {headingEl.textContent}
