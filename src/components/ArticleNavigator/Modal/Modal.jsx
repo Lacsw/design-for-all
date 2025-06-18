@@ -299,7 +299,6 @@ export const NavigatorModal = memo(
                   if (evt.detail > 1) {
                     return;
                   }
-
                   if (!(evt.target instanceof HTMLLIElement)) {
                     return;
                   }
@@ -331,7 +330,7 @@ export const NavigatorModal = memo(
                         curHeading?.getBoundingClientRect().y ?? 0;
                       const delta = targetHeadingY > curHeadingY ? 2 : -2; // чтобы IntersectionObserver сработал как надо
 
-                      document.documentElement.scrollTo({
+                      scrollableEl?.scrollTo({
                         top:
                           targetHeadingRect.y -
                           (scrollableEl?.getBoundingClientRect().y ?? 0) -
