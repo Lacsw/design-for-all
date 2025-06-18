@@ -22,6 +22,7 @@ import {
 
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
+import { AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME } from 'components/AuthorAndReviewers/const';
 
 /** @import * as Types from "../types" */
 
@@ -274,6 +275,27 @@ export const NavigatorModal = memo(
         };
       }, [onScroll, emblaApi]);
 
+      // на мобилке при открытии шапки она налазит на модалку колеса
+      useEffect(() => {
+        const handler = (/** @type {any} */ evt) => {
+          if (evt.detail.open) {
+            onClose('backdropClick');
+          }
+        };
+
+        window.addEventListener(
+          AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME,
+          handler
+        );
+
+        return () => {
+          window.removeEventListener(
+            AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME,
+            handler
+          );
+        };
+      }, [onClose]);
+
       return (
         <StyledModal
           open={isOpen}
@@ -287,14 +309,33 @@ export const NavigatorModal = memo(
           disableScrollLock
           closeAfterTransition
           onClose={(evt, reason) => onClose(reason)}
+          onWheel={(evt) => {
+            if (!emblaApi) {
+              return;
+            }
+
+            const directionSign = evt.deltaY > 0 ? 1 : -1;
+
+            if (directionSign > 0) {
+              emblaApi.scrollNext();
+            } else {
+              emblaApi.scrollPrev();
+            }
+          }}
           onKeyDown={(evt) => {
             if (!emblaApi) {
               return;
             }
-            if (evt.key === 'Enter') {
+            if (evt.key === 'Enter' || evt.keyCode === 32) {
               if (curIdx.current === null) {
                 return;
               }
+
+              if (evt.keyCode === 32) {
+                evt.preventDefault();
+                evt.stopPropagation();
+              }
+
               const headingForClosestSlide = headings[curIdx.current];
               const rectForHeadingClosestSlide =
                 headingForClosestSlide.getBoundingClientRect();
@@ -360,25 +401,25 @@ export const NavigatorModal = memo(
 
                   onClose('click', targetHeading);
 
-                  setTimeout(
-                    () => {
-                      const targetHeadingY = targetHeadingRect.y;
-                      const curHeadingY =
-                        curHeading?.getBoundingClientRect().y ?? 0;
-                      const delta = targetHeadingY > curHeadingY ? 2 : -2; // чтобы IntersectionObserver сработал как надо
+                  // setTimeout(
+                  // () => {
+                  const targetHeadingY = targetHeadingRect.y;
+                  const curHeadingY =
+                    curHeading?.getBoundingClientRect().y ?? 0;
+                  const delta = targetHeadingY > curHeadingY ? 2 : -2; // чтобы IntersectionObserver сработал как надо
 
-                      scrollableEl?.scrollTo({
-                        top:
-                          targetHeadingRect.y -
-                          (scrollableEl?.getBoundingClientRect().y ?? 0) -
-                          -topMargin +
-                          delta,
-                        left: 0,
-                        behavior: 'smooth',
-                      });
-                    },
-                    50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
-                  );
+                  scrollableEl?.scrollTo({
+                    top:
+                      targetHeadingRect.y -
+                      (scrollableEl?.getBoundingClientRect().y ?? 0) -
+                      -topMargin +
+                      delta,
+                    left: 0,
+                    behavior: 'smooth',
+                  });
+                  // },
+                  // 50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
+                  // );
                 }}
               >
                 {headings.map((headingEl, idx) => {
