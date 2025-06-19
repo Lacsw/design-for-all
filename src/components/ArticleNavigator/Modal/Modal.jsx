@@ -52,7 +52,6 @@ export const NavigatorModal = memo(
         () => deepmerge({ ...defaultModalSlotProps }, slotPropsOuter),
         [slotPropsOuter]
       );
-      // const headingsLength = headings.length;
 
       const [emblaOptions, setEmblaOptions] =
         /** @type {TState<import('embla-carousel').EmblaOptionsType>} */ (
@@ -65,8 +64,8 @@ export const NavigatorModal = memo(
           })
         );
       const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
-
       const emblaElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
+
       const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
       const progRef = useRef(/** @type {HTMLElement | null} */ (null));
       /** Див с текстом о текущем номере заголовка в центре сцены. */
@@ -80,22 +79,26 @@ export const NavigatorModal = memo(
       // Кэшируем оригинальные трансформы Embla
       const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
 
-      /* При необходимости создании эффекта закольцованности
-      (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
+      /*
+        При необходимости создании эффекта закольцованности
+        (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику.
+      */
       // const loopTransValRef = useRef(-448);
 
-      /* (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
-      При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
-      Потому когда мы сами меняем translate3d(матрицей или набором через запятую), то будет
-      накапливаться значение - оно будет расти - элемент будет улетать в космос.
-      Потому надо помнить, какую дельту мы применяли лично сами в прошлый раз. Сначал вычитаем ее, затем применяем
-      вычисленную нами лично новую прибавку к базовому смещению, рассчитанному эмблой. */
+      /*
+        (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
+        При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
+        Потому когда мы сами меняем translate3d(матрицей или набором через запятую), то будет
+        накапливаться значение - оно будет расти - элемент будет улетать в космос.
+        Потому надо помнить, какую дельту мы применяли лично сами в прошлый раз. Сначал вычитаем ее, затем применяем
+        вычисленную нами лично новую прибавку к базовому смещению, рассчитанному эмблой.
+      */
       // const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
 
-      /**
-       * @param {HTMLElement | undefined} target
-       * @param {'+' | '-'} mode
-       */
+      // /**
+      //  * @param {HTMLElement | undefined} target
+      //  * @param {'+' | '-'} mode
+      //  */
       // function correctPosition(target, mode) {
       //   if (!target) {
       //     return;
@@ -196,13 +199,13 @@ export const NavigatorModal = memo(
           //   [0, 0],
           //   scaleRawAbs
           // )}px ${interpolate([1, 13], [0.3, 0], scaleRawAbs)}px`;
-
+          //
           // slide.style.margin = `${interpolate(
           //   [1, 13],
           //   [0.3, 0],
           //   scaleRawAbs
           // )}px 0px`;
-
+          //
           // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
           // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
         });
@@ -224,14 +227,14 @@ export const NavigatorModal = memo(
         //   const lastSlide = slides.at(-1);
         //   const penultimateSlide = slides.at(-2);
         //   const targetSlide = slides.at(-3);
-
+        //
         //   const loopTranslateVal = parseFloat(
         //     lastSlide?.style.transform.split(',')[5] || ''
         //   );
         //   if (loopTranslateVal) {
         //     loopTransValRef.current = loopTranslateVal;
         //   }
-
+        //
         //   correctPosition(lastSlide, '+');
         //   correctPosition(penultimateSlide, '+');
         //   scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
