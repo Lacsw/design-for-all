@@ -1,3 +1,5 @@
+// @ts-check
+
 import { findClosestIdx, mod } from './operators';
 
 /**
@@ -11,6 +13,13 @@ import { findClosestIdx, mod } from './operators';
 export function linIntl(point1, point3, x2) {
   const [x1, y1] = point1;
   const [x3, y3] = point3;
+  if (x1 === x3) {
+    if (y1 === y3) {
+      return y1;
+    } else {
+      throw Error('x1 === x3 but y1 !== y3');
+    }
+  }
   return ((x2 - x1) * (y3 - y1)) / (x3 - x1) + y1;
 }
 
@@ -57,6 +66,30 @@ export function pickLinIntlPoints(xs, x) {
 /**
  * @param {number[]} xs
  * @param {number[]} ys
+ * @param {number} x
+ * @returns {number}
+ */
+export function calcIntledY(xs, ys, x) {
+  const [idxA, idxB] = pickLinIntlPoints(xs, x);
+  const xA = xs[idxA];
+  const yA = ys[idxA];
+  const xB = xs[idxB];
+  const yB = ys[idxB];
+
+  return linIntl([xA, yA], [xB, yB], x);
+}
+
+/**
+ * @example
+ *   ```js
+ *   const pol = createLinIEPolator([1, 5, 7], [4, 12, -9]);
+ *   pol.for(0) // 2   x = 0 ===> y = 2
+ *   pol.for(4) // 10
+ *   pol.for(5) // 12
+ *   ```;
+ *
+ * @param {number[]} xs
+ * @param {number[]} ys
  * @returns {object}
  */
 export function createLinIEPolator(xs, ys) {
@@ -69,20 +102,14 @@ export function createLinIEPolator(xs, ys) {
    * @returns {number}
    * @this {{ xs: number[]; ys: number[] }}
    */
-  function get(x) {
-    const [idxA, idxB] = pickLinIntlPoints(this.xs, x);
-    const xA = this.xs[idxA];
-    const yA = this.ys[idxB];
-    const xB = this.xs[idxB];
-    const yB = this.ys[idxB];
-
-    return linIntl([xA, yA], [xB, yB], x);
+  function calcY(x) {
+    return calcIntledY(this.xs, this.ys, x);
   }
 
   const interpolator = {
     xs,
     ys,
-    get,
+    for: calcY,
   };
 
   return interpolator;
