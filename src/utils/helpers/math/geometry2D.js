@@ -15,6 +15,11 @@ export function linIntl(point1, point3, x2) {
 }
 
 /**
+ * Follows for linear-piecewise functions logic.
+ *
+ * If the value is outside the graph, the last segment\
+ * of the graph will be extrapolated.
+ *
  * @param {number[]} xs
  * @param {number} x
  * @returns {[number, number]} indexes
@@ -23,33 +28,30 @@ export function pickLinIntlPoints(xs, x) {
   if (xs.length < 2) {
     throw new Error("Can't pick interpolator points. Length need to be >= 2.");
   }
+
   const [closestIdx, diff] = findClosestIdx(xs, x);
 
-  if (!diff) {
+  if (diff === 0) {
     return [closestIdx, closestIdx];
   }
 
-  const xBefore = xs[closestIdx - 1];
-  const xAfter = xs[closestIdx + 1];
+  const xBeforeClosest = xs[closestIdx - 1];
+  const xAfterClosest = xs[closestIdx + 1];
 
-  if (typeof xBefore === 'number' && typeof xAfter === 'number') {
-    if (diff < 0) {
-      return [closestIdx - 1, closestIdx + 1];
+  if (diff < 0) {
+    if (typeof xBeforeClosest === 'number') {
+      return [closestIdx - 1, closestIdx]; // interpolating
     } else {
-      return [];
+      return [closestIdx, closestIdx + 1]; // extrapolating
     }
   }
 
-  if (closestIdx === 0) {
-    return [0, closestIdx + 1];
+  // diff > 0
+  if (typeof xAfterClosest === 'number') {
+    return [closestIdx, closestIdx + 1]; // interpolating
+  } else {
+    return [closestIdx - 1, closestIdx]; // extrapolating
   }
-
-  if (closestIdx === xs.length - 1) {
-    // @ts-ignore
-    return [closestIdx - 1, closestIdx];
-  }
-
-  throw new Error("Can't pick interpolator points.");
 }
 
 /**
@@ -57,7 +59,7 @@ export function pickLinIntlPoints(xs, x) {
  * @param {number[]} ys
  * @returns {object}
  */
-export function createInterpolator(xs, ys) {
+export function createLinIEPolator(xs, ys) {
   if (xs.length < 2 || xs.length !== ys.length) {
     throw new Error('Lengths are bad!');
   }
@@ -68,10 +70,13 @@ export function createInterpolator(xs, ys) {
    * @this {{ xs: number[]; ys: number[] }}
    */
   function get(x) {
-    const [xa, xb] = pickLinIntlPoints(this.xs, x);
-    const [ya, yb] = pickLinIntlPoints(this.ys, x);
+    const [idxA, idxB] = pickLinIntlPoints(this.xs, x);
+    const xA = this.xs[idxA];
+    const yA = this.ys[idxB];
+    const xB = this.xs[idxB];
+    const yB = this.ys[idxB];
 
-    return 0;
+    return linIntl([xA, yA], [xB, yB], x);
   }
 
   const interpolator = {
