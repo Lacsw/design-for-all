@@ -49,3 +49,25 @@ export function interpolate(point1, point3, x2) {
 export function invertSignIf(condition, num) {
   return condition ? -1 * num : num;
 }
+
+/**
+ * @param {number[]} xs - отсортированный массив
+ * @param {number} x
+ * @returns {number}
+ */
+export function findClosestIdx(xs, x) {
+  let closestIndex = -1;
+  let smallestDistance = Infinity;
+
+  for (let i = 0; i < xs.length; i++) {
+    const distance = Math.abs(x - xs[i]);
+    if (distance < smallestDistance) {
+      closestIndex = i;
+      smallestDistance = distance;
+    } else {
+      break;
+    }
+  }
+
+  return closestIndex;
+}
