@@ -28,20 +28,6 @@ export function inclusiveRange(a, x, b) {
 }
 
 /**
- * Linear interpolation
- *
- * @param {[number, number]} point1
- * @param {[number, number]} point3
- * @param {number} x2
- * @returns {number}
- */
-export function interpolate(point1, point3, x2) {
-  const [x1, y1] = point1;
-  const [x3, y3] = point3;
-  return ((x2 - x1) * (y3 - y1)) / (x3 - x1) + y1;
-}
-
-/**
  * @param {any} condition
  * @param {number} num
  * @returns {number}
@@ -53,21 +39,25 @@ export function invertSignIf(condition, num) {
 /**
  * @param {number[]} xs - отсортированный массив
  * @param {number} x
- * @returns {number}
+ * @returns {[number, number]}
  */
 export function findClosestIdx(xs, x) {
   let closestIndex = -1;
-  let smallestDistance = Infinity;
+  let smallestDiff = Infinity;
+  let smallestDiffAbs = Infinity;
 
   for (let i = 0; i < xs.length; i++) {
-    const distance = Math.abs(x - xs[i]);
-    if (distance < smallestDistance) {
+    const diff = x - xs[i];
+    const diffAbs = Math.abs(diff);
+
+    if (diffAbs < smallestDiffAbs) {
       closestIndex = i;
-      smallestDistance = distance;
+      smallestDiff = diff;
+      smallestDiffAbs = diffAbs;
     } else {
       break;
     }
   }
 
-  return closestIndex;
+  return [closestIndex, smallestDiff];
 }

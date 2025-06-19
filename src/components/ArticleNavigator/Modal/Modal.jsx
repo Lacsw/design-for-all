@@ -15,7 +15,7 @@ import clsx from 'clsx';
 
 import {
   inclusiveRange,
-  interpolate,
+  linIntl,
   invertSignIf,
   triangleWave,
 } from 'utils/helpers/math';
@@ -68,7 +68,7 @@ export const NavigatorModal = memo(
 
       const emblaElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
       const olRef = useRef(/** @type {HTMLOListElement | null} */ (null));
-      // const progRef = useRef(/** @type {HTMLElement | null} */ (null));
+      const progRef = useRef(/** @type {HTMLElement | null} */ (null));
       /** Див с текстом о текущем номере заголовка в центре сцены. */
       const curIndexElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
       /**
@@ -119,15 +119,16 @@ export const NavigatorModal = memo(
           return;
         }
         const snapsList = emblaApi.scrollSnapList();
-        if (snapsList.length < 2) {
-          return;
-        }
+        console.log('snapsList', snapsList);
+        // if (snapsList.length < 4) {
+        //   return;
+        // }
 
         const scrollProgress = emblaApi.scrollProgress();
         const slides = emblaApi.slideNodes();
-        // if (progRef.current) {
-        //   progRef.current.textContent = scrollProgress + '!';
-        // }
+        if (progRef.current) {
+          progRef.current.textContent = scrollProgress.toFixed(4);
+        }
 
         let closestSlideIndex = 0;
         let smallestDistance = Infinity;
@@ -149,10 +150,11 @@ export const NavigatorModal = memo(
           // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
           // Если получаем отриц. ординату, то просто берем по модулю.
           // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
-          const scaleRaw = triangleWave(1, 2, slideSnap, -scrollProgress);
+          const scaleRaw = triangleWave(1, 3, slideSnap, -scrollProgress);
+          console.log('scaleRaw', scaleRaw);
           const scaleRawAbs = Math.abs(scaleRaw);
           const scale = inclusiveRange(
-            0,
+            0.3,
             scaleRawAbs * 1.2 + scaleСorrection,
             1
           );
@@ -176,13 +178,17 @@ export const NavigatorModal = memo(
           // originTransform[5] = res + ')';
           slide.style.transform = `${originTransform.join(',')}`;
 
-          // браузер складывает смещение из transform и из отдельного правила translate
-          const baseTranslate =
-            interpolate([1, 0], [0, 110], scale) *
-            invertSignIf(originalTranslateYForLoop, translateDirection);
-          slide.style.translate = '0px ' + baseTranslate + 'px';
+          if (headings.length > 4) {
+            // браузер складывает смещение из transform и из отдельного правила translate
+            const baseTranslate =
+              linIntl([1, 0], [0, 110], scale) *
+              invertSignIf(originalTranslateYForLoop, translateDirection);
+            slide.style.translate = '0px ' + baseTranslate + 'px';
+          }
 
-          slide.style.opacity = String(inclusiveRange(0, scaleRawAbs * 1.2, 1));
+          slide.style.opacity = String(
+            inclusiveRange(0.3, scaleRawAbs * 1.2, 1)
+          );
 
           // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
           // slide.style.padding = `${interpolate(
@@ -440,16 +446,17 @@ export const NavigatorModal = memo(
                   );
                 })}
               </ol>
-              {/* <Box
+              <Box
                 ref={progRef}
                 sx={{
                   position: 'fixed',
                   top: '8px',
                   left: '12px',
+                  color: 'red',
                 }}
               >
                 0.000
-              </Box>*/}
+              </Box>
               <div
                 className="article-navigator__cur-index"
                 ref={curIndexElRef}

@@ -31,7 +31,7 @@ import {
   targetHeadings,
 } from './constants';
 import { useArticleNavigator } from './hooks/useArtNavigator';
-import { ARTICLE, PELMENI } from './mocks';
+import { ARTICLE, h3_rte, PELMENI } from './mocks';
 import './withNavigator.css';
 
 const tutorialVideos = {
@@ -48,7 +48,7 @@ export default function CatalogArticle() {
 
   const language = useSelector(getLanguage);
   // const article = useSelector(selectArticle);
-  const article = ARTICLE(PELMENI);
+  const article = ARTICLE(h3_rte);
   // const error = useSelector(selectError);
   const error = false;
   // const loading = useSelector(selectLoading);
