@@ -241,7 +241,7 @@ export const NavigatorModal = memo(
         //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
         //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
         // }
-      }, [emblaApi]);
+      }, [emblaApi, headings.length]);
 
       const onScroll = useCallback(
         function () {
