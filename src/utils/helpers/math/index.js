@@ -1,2 +1,2 @@
 export * from './operators';
-export * from './geometry-2d';
+export * from './geometry2D';
