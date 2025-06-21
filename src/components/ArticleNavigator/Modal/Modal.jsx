@@ -24,6 +24,7 @@ import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
 import { AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME } from 'components/AuthorAndReviewers/const';
 import { WheelConfig } from './wheelConfig';
+import { calcCentralSlideIdx } from './helpers';
 
 /** @import * as Types from "../types" */
 
@@ -90,16 +91,15 @@ export const NavigatorModal = memo(
         if (!emblaApi) {
           return;
         }
-        const snapsList = emblaApi.scrollSnapList();
 
+        const snapsList = emblaApi.scrollSnapList();
         const scrollProgress = emblaApi.scrollProgress();
         const slides = emblaApi.slideNodes();
+        const [centralSlideIdx] = calcCentralSlideIdx(emblaApi);
+
         if (progRef.current) {
           progRef.current.textContent = scrollProgress.toFixed(4);
         }
-
-        let closestSlideIndex = 0;
-        let smallestDistance = Infinity;
 
         slides.forEach((slide, index) => {
           const slideSnap = snapsList[index];
@@ -108,12 +108,6 @@ export const NavigatorModal = memo(
           /** Smoothing the scale for slides farthest from the center. */
           const scaleСorrection =
             slideDistanceFromCenter * wCfg.scaleSmoothingCoeff;
-
-          let enough = false;
-          if (!enough && slideDistanceFromCenter < smallestDistance) {
-            smallestDistance = slideDistanceFromCenter;
-            closestSlideIndex = index;
-          }
 
           // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
           // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
@@ -157,16 +151,16 @@ export const NavigatorModal = memo(
         });
 
         slides.forEach((s) => s.classList.remove('closest'));
-        slides[closestSlideIndex].classList.add('closest');
+        slides[centralSlideIdx].classList.add('closest');
         if (emblaElRef.current && curIndexElRef.current) {
           emblaElRef.current.style.setProperty(
             '--cur-idx',
-            String(closestSlideIndex)
+            String(centralSlideIdx)
           );
           curIndexElRef.current.textContent =
-            closestSlideIndex + 1 + '/' + slides.length;
+            centralSlideIdx + 1 + '/' + slides.length;
         }
-        curIdx.current = closestSlideIndex;
+        curIdx.current = centralSlideIdx;
       }, [emblaApi, headings.length, wCfg]);
       // #endregion applyWheelStyles
 
