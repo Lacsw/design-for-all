@@ -85,44 +85,7 @@ export const NavigatorModal = memo(
       // Кэшируем оригинальные трансформы Embla
       const originalTransforms = React.useRef(/** @type {string[]} */ ([]));
 
-      /*
-        При необходимости создании эффекта закольцованности
-        (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику.
-      */
-      // const loopTransValRef = useRef(-448);
-
-      /*
-        (#1) embla вносит изменения в свойство transform, а именно в подствойство translate3d.
-        При этом она к текущему значению прибавляют свою необходимую по ее мнению поправку.
-        Потому когда мы сами меняем translate3d(матрицей или набором через запятую), то будет
-        накапливаться значение - оно будет расти - элемент будет улетать в космос.
-        Потому надо помнить, какую дельту мы применяли лично сами в прошлый раз. Сначал вычитаем ее, затем применяем
-        вычисленную нами лично новую прибавку к базовому смещению, рассчитанному эмблой.
-      */
-      // const previousDeltas = React.useRef(/** @type {number[]} */ ([]));
-
-      // /**
-      //  * @param {HTMLElement | undefined} target
-      //  * @param {'+' | '-'} mode
-      //  */
-      // function correctPosition(target, mode) {
-      //   if (!target) {
-      //     return;
-      //   }
-      //   const sign = mode === '+' ? 1 : -1;
-      //   /* При необходимости создании эффекта закольцованности
-      //   (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-      //   const loopTranslateVal = parseFloat(
-      //     target?.style.transform.split(',')[5] || ''
-      //   );
-      //   const curTranslateY = parseFloat(target.style.translate.split(' ')[1]);
-      //   target.style.translate = `0px ${
-      //     loopTranslateVal
-      //       ? curTranslateY
-      //       : sign * loopTransValRef.current + (-1 * curTranslateY || 0)
-      //   }px`;
-      // }
-
+      // #region applyWheelStyles
       const applyWheelStyles = useCallback(() => {
         if (!emblaApi) {
           return;
@@ -178,14 +141,6 @@ export const NavigatorModal = memo(
           const originalTranslateYForLoop =
             +parseFloat(originTransform[5]) || 0;
 
-          // ----- См. #1 -----
-          // const translateY = originTransform[5];
-          // const translateYParsed = parseFloat(translateY) || 0;
-          // const delta =
-          //   interpolate([1, 0], [MIN_SCALE, 50], scale) * translateDirection;
-          // previousDeltas.current[index] = delta;
-          // const res = translateYParsed + delta - previousDeltas.current[index];
-          // originTransform[5] = res + ')';
           slide.style.transform = `${originTransform.join(',')}`;
 
           if (headings.length > 3) {
@@ -199,22 +154,6 @@ export const NavigatorModal = memo(
           slide.style.opacity = String(
             inclusiveRange(wCfg.minOpacity, scaleRawAbs * wCfg.opacityCoeff, 1)
           );
-
-          // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
-          // slide.style.padding = `${interpolate(
-          //   [1, 5],
-          //   [0, 0],
-          //   scaleRawAbs
-          // )}px ${interpolate([1, 13], [0.3, 0], scaleRawAbs)}px`;
-          //
-          // slide.style.margin = `${interpolate(
-          //   [1, 13],
-          //   [0.3, 0],
-          //   scaleRawAbs
-          // )}px 0px`;
-          //
-          // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
-          // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
         });
 
         slides.forEach((s) => s.classList.remove('closest'));
@@ -228,31 +167,10 @@ export const NavigatorModal = memo(
             closestSlideIndex + 1 + '/' + slides.length;
         }
         curIdx.current = closestSlideIndex;
-
-        // ------ USE THIS FOR CORRECT SLIDES POSITIONs WHEN LOOP = TRUE --------
-        // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
-        //   const lastSlide = slides.at(-1);
-        //   const penultimateSlide = slides.at(-2);
-        //   const targetSlide = slides.at(-3);
-        //
-        //   const loopTranslateVal = parseFloat(
-        //     lastSlide?.style.transform.split(',')[5] || ''
-        //   );
-        //   if (loopTranslateVal) {
-        //     loopTransValRef.current = loopTranslateVal;
-        //   }
-        //
-        //   correctPosition(lastSlide, '+');
-        //   correctPosition(penultimateSlide, '+');
-        //   scrollProgress <= 0.123 && correctPosition(targetSlide, '+');
-        // } else {
-        //   scrollProgress >= 0.55 && correctPosition(slides.at(0), '-');
-        //   scrollProgress >= 0.65 && correctPosition(slides.at(1), '-');
-        //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
-        //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
-        // }
       }, [emblaApi, headings.length, wCfg]);
+      // #endregion applyWheelStyles
 
+      // #region onScroll
       const onScroll = useCallback(
         function () {
           if (!emblaApi) {
@@ -269,7 +187,9 @@ export const NavigatorModal = memo(
         },
         [emblaApi, applyWheelStyles]
       );
+      // #endregion onScroll
 
+      // #region effects
       useEffect(() => {
         if (headings.length && curHeading) {
           const idx = curHeading.getAttribute('data-idx');
@@ -311,7 +231,9 @@ export const NavigatorModal = memo(
           );
         };
       }, [onClose]);
+      // #endregion effects
 
+      // #region render
       return (
         <StyledModal
           open={isOpen}
@@ -475,6 +397,7 @@ export const NavigatorModal = memo(
           </Fade>
         </StyledModal>
       );
+      // #endregion render
     }
   )
 );
