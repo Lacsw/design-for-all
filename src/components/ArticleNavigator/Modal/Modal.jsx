@@ -110,6 +110,7 @@ export const NavigatorModal = memo(
           const stepsFromCenter = slideDistanceFromCenter / snapStep;
 
           // для отдаленных слайдов не делаем доп. манипуляций
+          // embla тоже так делает, круто!
           if (stepsFromCenter > 5) {
             return;
           }
