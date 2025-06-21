@@ -70,6 +70,10 @@ export function pickLinIntlPoints(xs, x) {
  * @returns {number}
  */
 export function calcIntledY(xs, ys, x) {
+  if (!xs.length || xs.length !== ys.length) {
+    throw new Error("Invalid arrays, can't interpolate!");
+  }
+
   const [idxA, idxB] = pickLinIntlPoints(xs, x);
   const xA = xs[idxA];
   const yA = ys[idxA];
@@ -80,21 +84,27 @@ export function calcIntledY(xs, ys, x) {
 }
 
 /**
+ * Specify extremum points for a linear-piecewise function and\
+ * get these points back, as well as a function `for` for calculating an
+ * arbitrary x.
+ *
  * @example
  *   ```js
- *   const pol = createLinIEPolator([1, 5, 7], [4, 12, -9]);
- *   pol.for(0) // 2   x = 0 ===> y = 2
- *   pol.for(4) // 10
- *   pol.for(5) // 12
+ *   const pwlFn = createPiecewiseLinearFunc(
+ *     [1, 5, 7],
+ *     [4, 12, -9]
+ *   );
+ *   pwlFn.for(0); // x = 0 ==> y = 2
+ *   pwlFn.for(4); // 10
+ *   console.log("5 ==>", pwlFn.for(5)); // 12
  *   ```;
  *
- * @param {number[]} xs
- * @param {number[]} ys
- * @returns {object}
+ * @param {number[]} xs - X's of extremes
+ * @param {number[]} ys - Y's of extremes
  */
-export function createLinIEPolator(xs, ys) {
+export function createPiecewiseLinearFunc(xs, ys) {
   if (xs.length < 2 || xs.length !== ys.length) {
-    throw new Error('Lengths are bad!');
+    throw new Error('The coordinates of the extremum points are invalid.');
   }
 
   /**
@@ -106,13 +116,13 @@ export function createLinIEPolator(xs, ys) {
     return calcIntledY(this.xs, this.ys, x);
   }
 
-  const interpolator = {
+  const piecewiseLinearFunc = {
     xs,
     ys,
     for: calcY,
   };
 
-  return interpolator;
+  return piecewiseLinearFunc;
 }
 
 /**

@@ -37,9 +37,12 @@ export function invertSignIf(condition, num) {
 }
 
 /**
- * @param {number[]} xs - отсортированный массив
+ * @param {number[]} xs - sorted array!
  * @param {number} x
  * @returns {[number, number]}
+ *
+ *   - closestIndex - this array member is closest to the passed value
+ *   - diff - the difference between the passed value and the closest array member
  */
 export function findClosestIdx(xs, x) {
   let closestIndex = -1;
