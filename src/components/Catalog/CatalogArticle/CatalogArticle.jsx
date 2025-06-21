@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -13,7 +14,12 @@ import {
   RichTextEditor,
 } from 'components';
 
-import { fetchArticle } from 'store/slices/article';
+import {
+  fetchArticle,
+  selectArticle,
+  selectError,
+  selectLoading,
+} from 'store/slices/article';
 import { getLanguage } from 'store/slices/user';
 
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
@@ -41,21 +47,19 @@ const tutorialVideos = {
   zh: tutorialZh,
 };
 
+const DEBUG = true;
+
 export default function CatalogArticle() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { lang, articleId } = useParams();
 
   const language = useSelector(getLanguage);
-  // const article = useSelector(selectArticle);
-  const article = ARTICLE(getMockedArticleContent(7));
-  // const error = useSelector(selectError);
-  const error = false;
-  // const loading = useSelector(selectLoading);
-  const [loading, setLoading] = useState(true);
-  setTimeout(() => {
-    setLoading(false);
-  }, 500);
+  const article = DEBUG
+    ? ARTICLE(getMockedArticleContent(60))
+    : useSelector(selectArticle);
+  const error = DEBUG ? false : useSelector(selectError);
+  const loading = DEBUG ? false : useSelector(selectLoading);
 
   const articleRef = useRef(null);
   const editorContainerRef =

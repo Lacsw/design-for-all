@@ -1,3 +1,5 @@
+import { createPiecewiseLinearFunc } from 'utils/helpers/math';
+
 /** @param {import('embla-carousel').EmblaCarouselType} emblaApi */
 export function calcCentralSlideIdx(emblaApi) {
   const scrollProgress = emblaApi.scrollProgress();
@@ -19,3 +21,9 @@ export function calcCentralSlideIdx(emblaApi) {
 
   return [closestSlideIndex, smallestDistance];
 }
+
+// что-то типа ветви параболы
+export const translateCorrector = createPiecewiseLinearFunc(
+  [0, 1, 2, 3, 4],
+  [0, 12, 37, 70, 110]
+);

@@ -13,20 +13,17 @@ import { Box, Fade, Modal as ModalMui, styled } from '@mui/material';
 import { deepmerge } from '@mui/utils';
 import clsx from 'clsx';
 
-import {
-  inclusiveRange,
-  linIntl,
-  invertSignIf,
-  triangleWave,
-} from 'utils/helpers/math';
+import { inclusiveRange, triangleWave } from 'utils/helpers/math';
 
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
 import { AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME } from 'components/AuthorAndReviewers/const';
 import { WheelConfig } from './wheelConfig';
-import { calcCentralSlideIdx } from './helpers';
+import { translateCorrector, calcCentralSlideIdx } from './helpers';
 
 /** @import * as Types from "../types" */
+
+const DEBUG = true;
 
 const StyledModal = styled(ModalMui)(({ theme }) => {
   // @ts-ignore
@@ -93,36 +90,49 @@ export const NavigatorModal = memo(
         }
 
         const snapsList = emblaApi.scrollSnapList();
+        // приращение в прогрессе прокрутки для одного слайда
+        const snapStep = snapsList[1];
+        // от 0 до 1 (если не скроллить за пределы списка)
         const scrollProgress = emblaApi.scrollProgress();
         const slides = emblaApi.slideNodes();
         const [centralSlideIdx] = calcCentralSlideIdx(emblaApi);
 
-        if (progRef.current) {
-          progRef.current.textContent = scrollProgress.toFixed(4);
+        if (DEBUG && progRef.current) {
+          progRef.current.textContent =
+            scrollProgress.toFixed(4) + '\n' + (centralSlideIdx + 1);
         }
 
         slides.forEach((slide, index) => {
           const slideSnap = snapsList[index];
-          const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
+          // расстояние от начала списка в долях прогресса прокрутки
           const slideDistanceFromCenter = Math.abs(scrollProgress - slideSnap);
+          // удаленность слайда от центра в шагах
+          const stepsFromCenter = slideDistanceFromCenter / snapStep;
+
+          // для отдаленных слайдов не делаем доп. манипуляций
+          if (stepsFromCenter > 5) {
+            return;
+          }
+
+          const extraTranslateDirection = slideSnap <= scrollProgress ? 1 : -1;
           /** Smoothing the scale for slides farthest from the center. */
-          const scaleСorrection =
-            slideDistanceFromCenter * wCfg.scaleSmoothingCoeff;
+          const scaleСorrection = stepsFromCenter * wCfg.scaleSmoothingCoeff;
 
           // Для текущей прокрутки масштаб 1.0 => это начальная фаза.
           // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
           // Если получаем отриц. ординату, то просто берем по модулю.
           // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
-          const scaleRaw = triangleWave(
+          const triangleVal = triangleWave(
             1,
             wCfg.triangleWavePeriod,
-            slideSnap,
-            -scrollProgress
+            slideSnap / snapStep, // сколь шагов от начала прокрутки для текущего обсчитываемого слайда
+            -(scrollProgress / snapStep) // сколько шагов прокрутили (сколько до центра сцены)
           );
-          const scaleRawAbs = Math.abs(scaleRaw);
+
+          const triangleValAbs = Math.abs(triangleVal);
           const scale = inclusiveRange(
             wCfg.minScale,
-            scaleRawAbs * wCfg.scaleCoeff + scaleСorrection,
+            triangleValAbs * wCfg.scaleCoeff + scaleСorrection,
             1
           );
 
@@ -130,23 +140,21 @@ export const NavigatorModal = memo(
           originTransform[0] = 'matrix(' + scale; // scale X
           originTransform[3] = String(scale); // scale Y
 
-          /* При необходимости создании эффекта закольцованности
-          (когда скролл близок к началу/концу списка) эмбла смещает соответствующие заголовки по игрику. */
-          const originalTranslateYForLoop =
-            +parseFloat(originTransform[5]) || 0;
-
           slide.style.transform = `${originTransform.join(',')}`;
 
           if (headings.length > 3) {
             // браузер складывает смещение из transform и из отдельного правила translate
-            const baseTranslate =
-              linIntl([1, 0], [0, wCfg.extraTranslateMaximum], scale) *
-              invertSignIf(originalTranslateYForLoop, translateDirection);
-            slide.style.translate = '0px ' + baseTranslate + 'px';
+            const extraTranslate =
+              translateCorrector.for(stepsFromCenter) * extraTranslateDirection;
+            slide.style.translate = '0px ' + extraTranslate + 'px';
           }
 
           slide.style.opacity = String(
-            inclusiveRange(wCfg.minOpacity, scaleRawAbs * wCfg.opacityCoeff, 1)
+            inclusiveRange(
+              wCfg.minOpacity,
+              triangleValAbs * wCfg.opacityCoeff,
+              1
+            )
           );
         });
 
@@ -372,17 +380,21 @@ export const NavigatorModal = memo(
                   );
                 })}
               </ol>
-              <Box
-                ref={progRef}
-                sx={{
-                  position: 'fixed',
-                  top: '8px',
-                  left: '12px',
-                  color: 'red',
-                }}
-              >
-                0.000
-              </Box>
+              {DEBUG && (
+                <Box
+                  ref={progRef}
+                  sx={{
+                    position: 'fixed',
+                    top: '8px',
+                    left: '12px',
+                    color: 'red',
+                    fontVariantNumeric: 'tabular-nums',
+                    whiteSpace: 'pre',
+                  }}
+                >
+                  0.000
+                </Box>
+              )}
               <div
                 className="article-navigator__cur-index"
                 ref={curIndexElRef}
