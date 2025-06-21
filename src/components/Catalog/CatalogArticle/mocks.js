@@ -7,30 +7,35 @@ export const stub = `<p>
       вкусными и сочными.
     </p>`;
 
-export const h3_rte = `
-<h1>Домашние пельмени</h1>
-${stub}
-${stub}
-${stub}
-${stub}
-<h2>Домашние пельмени 2</h2>
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-<h2>Домашние пельмени 3</h2>
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-${stub}
-`;
+/** @param {number} count */
+export const getMockedArticleContent = (count) => {
+  const justText = `
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+    ${stub}
+  `;
+  let res = '';
+  if (!count) {
+    res = justText;
+  }
+  for (let i = 1; i <= count; i++) {
+    res += `\n
+    <h3>Заголовок ${i}</h3>
+    ${justText}
+    `;
+  }
+  return res;
+};
 
 export const PELMENI = `
   <h1

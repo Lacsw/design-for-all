@@ -287,6 +287,10 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
     topMargin,
   ]);
 
+  if (headings.length < 3) {
+    return null;
+  }
+
   return (
     <>
       <Bar

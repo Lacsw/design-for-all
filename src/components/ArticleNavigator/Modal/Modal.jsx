@@ -23,6 +23,7 @@ import {
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
 import { AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME } from 'components/AuthorAndReviewers/const';
+import { WheelConfig } from './helpers';
 
 /** @import * as Types from "../types" */
 
@@ -35,22 +36,27 @@ const StyledModal = styled(ModalMui)(({ theme }) => {
 export const NavigatorModal = memo(
   /** @type {React.FC<Types.IArtNavModalProps>} */ (
     function NavigatorModalRaw({
-      isOpen,
       headings,
+      curHeading,
+      setCurHeading: _setCurHeading,
+      isOpen,
       onClose,
+      parentSelector,
+      scrollableEl,
       id,
       sx,
       className,
-      parentSelector,
       slotProps: slotPropsOuter,
       topMargin,
-      scrollableEl,
-      curHeading,
-      setCurHeading: _setCurHeading,
     }) {
       const slotProps = useMemo(
         () => deepmerge({ ...defaultModalSlotProps }, slotPropsOuter),
         [slotPropsOuter]
+      );
+
+      const wCfg = useMemo(
+        () => new WheelConfig(headings.length),
+        [headings.length]
       );
 
       const [emblaOptions, setEmblaOptions] =
@@ -122,10 +128,6 @@ export const NavigatorModal = memo(
           return;
         }
         const snapsList = emblaApi.scrollSnapList();
-        console.log('snapsList', snapsList);
-        // if (snapsList.length < 4) {
-        //   return;
-        // }
 
         const scrollProgress = emblaApi.scrollProgress();
         const slides = emblaApi.slideNodes();
@@ -141,7 +143,8 @@ export const NavigatorModal = memo(
           const translateDirection = slideSnap <= scrollProgress ? 1 : -1;
           const slideDistanceFromCenter = Math.abs(scrollProgress - slideSnap);
           /** Smoothing the scale for slides farthest from the center. */
-          const scaleСorrection = slideDistanceFromCenter * 0.65;
+          const scaleСorrection =
+            slideDistanceFromCenter * wCfg.scaleSmoothingCoeff;
 
           let enough = false;
           if (!enough && slideDistanceFromCenter < smallestDistance) {
@@ -153,12 +156,16 @@ export const NavigatorModal = memo(
           // Для каждого слайда движемся по треугольной волне и находим ординату, т.е. масштаб.
           // Если получаем отриц. ординату, то просто берем по модулю.
           // При каждом новом тике прокрутки - новый график, т.к. каждый раз новое начальное смещение.
-          const scaleRaw = triangleWave(1, 3, slideSnap, -scrollProgress);
-          console.log('scaleRaw', scaleRaw);
+          const scaleRaw = triangleWave(
+            1,
+            wCfg.triangleWavePeriod,
+            slideSnap,
+            -scrollProgress
+          );
           const scaleRawAbs = Math.abs(scaleRaw);
           const scale = inclusiveRange(
-            0.3,
-            scaleRawAbs * 1.2 + scaleСorrection,
+            wCfg.minScale,
+            scaleRawAbs * wCfg.scaleCoeff + scaleСorrection,
             1
           );
 
@@ -181,16 +188,16 @@ export const NavigatorModal = memo(
           // originTransform[5] = res + ')';
           slide.style.transform = `${originTransform.join(',')}`;
 
-          if (headings.length > 4) {
+          if (headings.length > 3) {
             // браузер складывает смещение из transform и из отдельного правила translate
             const baseTranslate =
-              linIntl([1, 0], [0, 110], scale) *
+              linIntl([1, 0], [0, wCfg.extraTranslateMaximum], scale) *
               invertSignIf(originalTranslateYForLoop, translateDirection);
             slide.style.translate = '0px ' + baseTranslate + 'px';
           }
 
           slide.style.opacity = String(
-            inclusiveRange(0.3, scaleRawAbs * 1.2, 1)
+            inclusiveRange(wCfg.minOpacity, scaleRawAbs * wCfg.opacityCoeff, 1)
           );
 
           // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
@@ -244,7 +251,7 @@ export const NavigatorModal = memo(
         //   scrollProgress >= 0.76 && correctPosition(slides.at(2), '-');
         //   scrollProgress >= 0.91 && correctPosition(slides.at(3), '-');
         // }
-      }, [emblaApi, headings.length]);
+      }, [emblaApi, headings.length, wCfg]);
 
       const onScroll = useCallback(
         function () {
