@@ -23,7 +23,7 @@ import {
 import { defaultModalSlotProps } from '../constants';
 import { sxRoot } from './styles';
 import { AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME } from 'components/AuthorAndReviewers/const';
-import { WheelConfig } from './helpers';
+import { WheelConfig } from './wheelConfig';
 
 /** @import * as Types from "../types" */
 
