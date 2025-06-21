@@ -47,7 +47,7 @@ const tutorialVideos = {
   zh: tutorialZh,
 };
 
-const DEBUG = true;
+const DEBUG = false;
 
 export default function CatalogArticle() {
   const dispatch = useDispatch();

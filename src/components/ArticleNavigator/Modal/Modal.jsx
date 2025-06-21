@@ -23,7 +23,7 @@ import { translateCorrector, calcCentralSlideIdx } from './helpers';
 
 /** @import * as Types from "../types" */
 
-const DEBUG = true;
+const DEBUG = false;
 
 const StyledModal = styled(ModalMui)(({ theme }) => {
   // @ts-ignore
