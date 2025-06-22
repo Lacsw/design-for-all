@@ -8,8 +8,7 @@ import { useSelector } from 'react-redux';
 import { selectTitles } from 'store/slices/article';
 import { useRouteCategory } from 'utils/hooks/useRouteCategory';
 
-export default function Catalog({ section }) {
-  
+export default function Catalog() {
   const catalogRef = useRef();
   const { lang, articleId } = useParams();
   const titles = useSelector(selectTitles);
@@ -19,12 +18,11 @@ export default function Catalog({ section }) {
 
   useRouteCategory();
 
-  const isWrong = 
-      lang &&
-      articleId &&
-      (!langs.includes(lang) ||
-        (articleId.length !== 32 && articleId !== 'no-article'))
-
+  const isWrong =
+    lang &&
+    articleId &&
+    (!langs.includes(lang) ||
+      (articleId.length !== 32 && articleId !== 'no-article'));
 
   useEffect(() => {
     document.querySelector('.main-wrapper').scrollTo(0, 0);
@@ -41,11 +39,11 @@ export default function Catalog({ section }) {
       {isMobile ? (
         activeComponent === 'mobileSidebar' && (
           <Overlay onClick={closeSidebar} zIndex={998} disableHover={true}>
-            <SideBar section={section} />
+            <SideBar />
           </Overlay>
         )
       ) : (
-        <SideBar/>
+        <SideBar />
       )}
       <CatalogArticle />
     </div>
