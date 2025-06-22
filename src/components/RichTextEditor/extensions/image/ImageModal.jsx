@@ -130,7 +130,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       authorApi
         .uploadImage(fileRef.current)
         .then((res) => {
-          onConfirm(res.original_size);
+          onConfirm(res.original_size); // TODO вешать на ноду картинки все три источника, чтобы для модалки использовать большое разрешение, а где-то маленькое
           setValue('');
           setError('');
           setMode('text');

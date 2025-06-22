@@ -14,8 +14,8 @@ import { RTE } from 'utils/translationKeys';
  *   | 'fromLinkLoading'}
  */
 
-/** 
- * @param {TImgErrors} errorKind 
+/**
+ * @param {TImgErrors} errorKind
  * @param {import('i18next').TFunction} t
  */
 export const getErrorText = (errorKind, t) => {
@@ -63,14 +63,14 @@ export const getImgByURL = ({
 
   promise
     .then((res) => {
-      onConfirm(res);
-      setValue('');
+      onConfirm?.(res);
+      setValue?.('');
     })
     .catch((err) => {
-      setError(err);
+      setError?.(err);
     })
     .finally(() => {
-      setIsLoading(false);
+      setIsLoading?.(false);
     });
 };
 
