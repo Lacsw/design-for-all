@@ -1,6 +1,10 @@
 import UpdateCard from './UpdateCard';
 import { useEffect, useRef, useCallback, useMemo } from 'react';
-import { fetchUpdates, selectUpdates, selectUpdatesError } from 'store/slices/article';
+import {
+  fetchUpdates,
+  selectUpdates,
+  selectUpdatesError,
+} from 'store/slices/article';
 import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'utils/helpers/debounce';
 import './Updates.css';
@@ -9,7 +13,12 @@ import { UPDATES } from 'utils/translationKeys';
 import Button from 'components/Button/Button';
 
 // Презентационный компонент
-const UpdatesList = ({ updates, onScroll, slideRef, currentPage }) => {
+const UpdatesList = ({
+  updates,
+  onScroll: _onScroll,
+  slideRef,
+  currentPage,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { error, canRetry, isEndReached } = useSelector(selectUpdatesError);
@@ -23,7 +32,9 @@ const UpdatesList = ({ updates, onScroll, slideRef, currentPage }) => {
         {updates.cards.map((item, index) => (
           <UpdateCard
             update={item}
-            key={`${(item.what_update || item.what_create) + item.lang}-${index}`}
+            key={`${
+              (item.what_update || item.what_create) + item.lang
+            }-${index}`}
           />
         ))}
       </ul>
@@ -41,9 +52,7 @@ const UpdatesList = ({ updates, onScroll, slideRef, currentPage }) => {
         </div>
       )}
       {isEndReached && updates.cards.length > 0 && (
-        <div className="updates-end-message">
-          {t(UPDATES.NO_MORE_UPDATES)}
-        </div>
+        <div className="updates-end-message">{t(UPDATES.NO_MORE_UPDATES)}</div>
       )}
     </section>
   );
@@ -60,7 +69,8 @@ export default function Updates({ section }) {
   // Сброс страницы при монтировании или изменении секции
   useEffect(() => {
     page.current = 1;
-    const shouldFetch = Date.now() - updates.fetchTime > 30000 || !updates.fetchTime;
+    const shouldFetch =
+      Date.now() - updates.fetchTime > 30000 || !updates.fetchTime;
     if (shouldFetch) {
       dispatch(fetchUpdates(1));
     }
@@ -70,8 +80,8 @@ export default function Updates({ section }) {
     (evt) => {
       if (
         evt.target.scrollHeight -
-        (evt.target.scrollTop + evt.target.offsetHeight) <
-        100 &&
+          (evt.target.scrollTop + evt.target.offsetHeight) <
+          100 &&
         !updates.loading &&
         !isEndReached &&
         !error // Не загружаем следующую страницу, если есть ошибка

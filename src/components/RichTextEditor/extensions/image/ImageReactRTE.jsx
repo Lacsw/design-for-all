@@ -2,11 +2,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 
 // eslint-disable-next-line no-unused-vars
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
+import { NodeViewWrapper } from '@tiptap/react';
 import clsx from 'clsx';
 import React from 'react';
 import { getAligningClass } from './helpers';
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { tiptapCommands } from 'components/RichTextEditor/helpers';
 
 /**

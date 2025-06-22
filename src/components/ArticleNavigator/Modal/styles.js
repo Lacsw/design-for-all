@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // @ts-check
 
-import { alpha } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { getIsThemeLight } from 'store/slices/theme';
+import { store } from '../../../store/index';
+import { getCssVar } from 'utils/helpers/css-in-js';
 
 /** @type {import('@mui/material').SxProps<import('@mui/material').Theme>} */
 export const sxRoot = (theme) => {
   const media = theme.breakpoints;
-  const isLight = useSelector(getIsThemeLight);
+  const isLight = store.getState().theme.currentTheme;
 
-  const itemActionBg = isLight ? '#242424' : '#dadada';
+  const curItemBg = getCssVar('--color-item-active');
 
   return {
+    '--cur-idx': '', // индекс пункта списка( = заголовка ), который ближе всего к центру колеса
     right: 'var(--art-nav-right, 0px)',
     zIndex: 110,
 
@@ -21,32 +21,51 @@ export const sxRoot = (theme) => {
       top: '17vh',
       left: '50%',
       transform: 'translate(-50%)',
-
-      ':focus-visible': {
-        outline: '0',
-      },
-    },
-
-    '.article-navigator__list': {
-      overflow: 'auto',
-
-      margin: 0,
+      overflow: 'hidden',
       borderRadius: '6px',
       padding: '10px',
-      height: 'fit-content',
-      maxHeight: '246px',
-      minWidth: '300px',
-      width: '40vw',
+      minWidth: '500px',
+      // width: '40vw',
+      width: 'fit-content',
       maxWidth: '601px',
 
       background: 'var(--color-bg-secondary)',
       boxShadow: '0px 0px 10px 3px #00000040',
+
+      ':focus-visible': {
+        outline: '0',
+      },
+
+      '::before': {
+        position: 'absolute',
+        content: '""',
+        top: '50%',
+        left: '0',
+        translate: '10px -50%',
+
+        borderRadius: '6px',
+        width: 'calc(100% - 20px)',
+        height: '46px',
+
+        background: curItemBg,
+      },
+    },
+
+    '.article-navigator__list': {
+      margin: '0',
+      padding: '0',
+      height: '226px',
+
+      display: 'flex',
+      flexDirection: 'column',
 
       color: isLight ? '#838383' : '#585858',
       fontFamily: 'Gotham',
       fontWeight: 400,
       fontSize: '14px',
       lineHeight: '130%',
+
+      // willChange: 'transform, transalte', // вызывает смещение пунктов списка 0_0
 
       ':focus-visible': {
         outline: '0',
@@ -58,42 +77,59 @@ export const sxRoot = (theme) => {
     },
 
     '.article-navigator__item': {
-      margin: '10px 0',
+      margin: '5px 0',
       borderRadius: '6px',
       padding: '5px 13px',
+      minHeight: '46px',
+      height: '46px',
+      maxWidth: '95%',
+      flex: '1 1 100%',
 
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
+      alignItems: 'center',
 
-      cursor: 'pointer',
+      // cursor: 'pointer',
       transition: theme.transitions.create(['background', 'color'], {
         duration: 150,
       }),
-
-      '&.article-navigator__item_current': {
-        background: 'var(--color-item-active)',
-        borderRadius: '6px',
-
-        '&:hover': {
-          color: isLight ? '#838383' : '#585858',
-          background: 'var(--color-item-active)',
-
-          '.counter': {
-            color: isLight ? '#585858' : '#bcbcbc',
-          },
-        },
-      },
+      willChange: 'transform, transalte', // спасительный шнапс
 
       '&:hover': {
-        color: '#fff',
-        background: alpha(itemActionBg, 0.8),
+        // color: '#fff',
+        // background: alpha(curItemBg, 0.8),
+        // '.counter': {
+        //   color: '#fff',
+        // },
+      },
 
-        '.counter': {
-          color: '#fff',
+      '&:active': {
+        // background: alpha(curItemBg, 0.95),
+      },
+
+      '&.article-navigator__item_current': {
+        // borderRadius: '6px',
+        // background: curItemBg,
+        color: 'var(--color-success)',
+        fontWeight: 600,
+        letterSpacing: '2px',
+
+        '&:hover': {
+          // color: isLight ? '#838383' : '#585858',
+          // background: curItemBg,
+          // '.counter': {
+          //   color: isLight ? '#585858' : '#bcbcbc',
+          // },
         },
       },
-      '&:active': {
-        background: alpha(itemActionBg, 0.95),
+
+      '&.closest': {
+        // color: 'red',
+      },
+
+      '*': {
+        pointerEvents: 'none',
+        touchAction: 'none',
       },
     },
 
@@ -108,11 +144,16 @@ export const sxRoot = (theme) => {
       transition: theme.transitions.create(['color'], {
         duration: 150,
       }),
+      willChange: 'transform, scale',
     },
 
-    '.counter': {
+    '.article-navigator__cur-index': {
+      position: 'absolute',
+      top: '50%',
+      right: '23px',
+      transform: 'translate(0, -50%)',
+
       color: isLight ? '#585858' : '#bcbcbc',
-      marginLeft: '10px',
       minWidth: '30px',
       fontVariantNumeric: 'tabular-nums',
       textAlign: 'end',
@@ -125,18 +166,29 @@ export const sxRoot = (theme) => {
     },
 
     [media.down(1300)]: {
-      '.article-navigator__list': {
-        width: '60vw',
+      '.article-navigator__modal': {
+        minWidth: '50vw',
+        maxWidth: '60vw',
       },
     },
     [media.down(900)]: {
-      '.article-navigator__list': {
-        width: '80vw',
+      '.article-navigator__modal': {
+        minWidth: '60vw',
+        maxWidth: '80vw',
+      },
+
+      '.article-navigator__item': {
+        maxWidth: '92%',
       },
     },
     [media.down(600)]: {
-      '.article-navigator__list': {
-        width: '90vw',
+      '.article-navigator__modal': {
+        minWidth: '80vw',
+        maxWidth: '90vw',
+      },
+
+      '.article-navigator__item': {
+        maxWidth: '90%',
       },
     },
   };

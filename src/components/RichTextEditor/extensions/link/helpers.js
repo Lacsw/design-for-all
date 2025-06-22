@@ -78,11 +78,11 @@ export function findLinkInParents(el, stopFactor, stoppingClass) {
   while (
     !result &&
     counter <= safeFactor &&
-    !curEl.classList.contains(stoppingClass)
+    !curEl?.classList.contains(stoppingClass)
   ) {
     result = curEl?.tagName === 'A';
     if (!result) {
-      curEl = curEl.parentElement;
+      curEl = curEl?.parentElement || null;
     }
     counter++;
   }
@@ -111,9 +111,9 @@ export function countLinksInSelection(view) {
   let count = 0;
 
   let prevAttrs = {};
-  state.doc.nodesBetween(from, to, (node, pos) => {
+  state.doc.nodesBetween(from, to, (node, _pos) => {
     if (node.isText) {
-      node.marks.forEach((mark, idx) => {
+      node.marks.forEach((mark) => {
         if (mark.type === state.schema.marks.link) {
           if (!shallowEqual(prevAttrs, mark.attrs)) {
             prevAttrs = mark.attrs;

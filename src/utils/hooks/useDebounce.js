@@ -8,8 +8,8 @@ import { useRef, useEffect, useCallback } from 'react';
  * @param {boolean} [cleanUp] Default is `false`.\
  *   If `true` when the component is unmounted, the deferred call will be
  *   cancelled.
- * @returns {(...args: Parameters<T>) => void} We can't always return what the
- *   original `func` returns.\
+ * @returns {(this: ThisParameterType<T>, ...args: Parameters<T>) => void} We
+ *   can't always return what the original `func` returns.\
  *   So we can either return a promise or void. In this hook variation - void.
  */
 export function useDebounce(func, delay, cleanUp = false) {
