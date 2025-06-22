@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { CatalogArticle, SideBar, NotFound, Overlay } from 'components';
 import './Catalog.css';
 import { useParams } from 'react-router-dom';
@@ -9,14 +9,12 @@ import { selectTitles } from 'store/slices/article';
 import { useRouteCategory } from 'utils/hooks/useRouteCategory';
 
 export default function Catalog() {
-  const catalogRef = useRef();
+  useRouteCategory(); // Вызов хука для обработки маршрута и загрузки данных каталог
   const { lang, articleId } = useParams();
   const titles = useSelector(selectTitles);
   const isMobile = useIsMobile();
   const langs = Object.keys(titles);
   const { activeComponent, closeComponent } = useInteractiveManager();
-
-  useRouteCategory();
 
   const isWrong =
     lang &&
@@ -28,6 +26,7 @@ export default function Catalog() {
     document.querySelector('.main-wrapper').scrollTo(0, 0);
   }, []);
 
+  // Функция для закрытия сайдбара на мобильных устройствах
   const closeSidebar = () => {
     closeComponent('mobileSidebar');
   };
@@ -35,7 +34,7 @@ export default function Catalog() {
   return isWrong ? (
     <NotFound />
   ) : (
-    <div className="catalog__container" ref={catalogRef}>
+    <div className="catalog__container">
       {isMobile ? (
         activeComponent === 'mobileSidebar' && (
           <Overlay onClick={closeSidebar} zIndex={998} disableHover={true}>
