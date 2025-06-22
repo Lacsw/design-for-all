@@ -12,7 +12,6 @@ const DropdownLanguage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const flag = languageList.find((item) => item.id === lang);
-  // console.log(flag);
   const otherFlags = languageList.filter((item) => item.id !== lang);
   const flagList = isOpen ? [flag, ...otherFlags] : [flag];
 

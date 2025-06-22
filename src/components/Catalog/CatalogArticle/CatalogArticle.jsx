@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -15,7 +15,6 @@ import {
 } from 'components';
 
 import {
-  fetchArticle,
   selectArticle,
   selectError,
   selectLoading,
@@ -50,7 +49,6 @@ const tutorialVideos = {
 const DEBUG = false;
 
 export default function CatalogArticle() {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { lang, articleId } = useParams();
 
@@ -65,10 +63,16 @@ export default function CatalogArticle() {
   const editorContainerRef =
     /** @type {React.RefObject<HTMLDivElement | null>} */ (useRef(null));
 
+  const {
+    navigatorFlag,
+    headerElRef,
+    handleEditorUpdate,
+    handleEditorCreation,
+  } = useArticleNavigator({ editorContainerRef });
+
   const { openComponent } = useInteractiveManager();
   const isMobile = useIsMobile();
 
-  const needToFetch = Boolean(lang && articleId && articleId !== 'no-article');
   const isBlank = !lang;
   const isError = Boolean(error || articleId === 'no-article');
 
@@ -83,20 +87,6 @@ export default function CatalogArticle() {
   const handleHeaderSearch = () => {
     openComponent('headerSearch');
   };
-
-  const {
-    navigatorFlag,
-    headerElRef,
-    handleEditorUpdate,
-    handleEditorCreation,
-  } = useArticleNavigator({ editorContainerRef });
-
-  // useEffect(() => document.querySelector('.main-wrapper').scrollTo(0, 0)); // зачем?
-
-  useEffect(() => {
-    if (!needToFetch) return;
-    dispatch(fetchArticle({ lang, articleId }));
-  }, [lang, articleId, needToFetch, dispatch]);
 
   return isBlank ? (
     <div className="blank">
