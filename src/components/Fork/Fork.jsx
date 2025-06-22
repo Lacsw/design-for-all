@@ -4,7 +4,6 @@ import {
   Catalog,
   AccountAuthor,
   AccountAdmin,
-  NotFound,
 } from 'components';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -65,8 +64,7 @@ const Fork = () => {
     return <Main />;
   }
 
-  // Для всех остальных случаев показываем 404
-  return <NotFound />;
+  return;
 };
 
 export default Fork;
