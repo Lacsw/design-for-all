@@ -65,6 +65,8 @@ export const sxRoot = (theme) => {
       fontSize: '14px',
       lineHeight: '130%',
 
+      // willChange: 'transform, transalte', // вызывает смещение пунктов списка 0_0
+
       ':focus-visible': {
         outline: '0',
       },
@@ -106,7 +108,7 @@ export const sxRoot = (theme) => {
       },
 
       '&.article-navigator__item_current': {
-        borderRadius: '6px',
+        // borderRadius: '6px',
         // background: curItemBg,
         color: 'var(--color-success)',
         fontWeight: 600,
@@ -142,6 +144,7 @@ export const sxRoot = (theme) => {
       transition: theme.transitions.create(['color'], {
         duration: 150,
       }),
+      willChange: 'transform, scale',
     },
 
     '.article-navigator__cur-index': {

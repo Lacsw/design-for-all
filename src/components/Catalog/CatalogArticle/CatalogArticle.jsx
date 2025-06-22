@@ -56,7 +56,7 @@ export default function CatalogArticle() {
 
   const language = useSelector(getLanguage);
   const article = DEBUG
-    ? ARTICLE(getMockedArticleContent(60))
+    ? ARTICLE(getMockedArticleContent(12))
     : useSelector(selectArticle);
   const error = DEBUG ? false : useSelector(selectError);
   const loading = DEBUG ? false : useSelector(selectLoading);

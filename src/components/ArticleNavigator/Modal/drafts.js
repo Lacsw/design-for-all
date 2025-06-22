@@ -52,20 +52,21 @@ const DRAFTS_FOR_WHEEL = () => {
   // originTransform[5] = res + ')';
 
   // !!! Если влиять на высоты элементов (не стилевую через scale, а реальную), то логика эмблы ломается
-  // slide.style.padding = `${interpolate(
+  // slide.style.padding = `${linIntl(
   //   [1, 5],
   //   [0, 0],
-  //   scaleRawAbs
-  // )}px ${interpolate([1, 13], [0.3, 0], scaleRawAbs)}px`;
-  //
-  // slide.style.margin = `${interpolate(
+  //   triangleValAbs
+  // )}px ${linIntl([1, 13], [0.3, 0], triangleValAbs)}px`;
+
+  // slide.style.margin = `${linIntl(
   //   [1, 13],
   //   [0.3, 0],
-  //   scaleRawAbs
+  //   triangleValAbs
   // )}px 0px`;
-  //
-  // slide.style.minHeight = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
-  // slide.style.height = interpolate([1, 46], [0, 5], scaleRawAbs) + 'px';
+
+  // slide.style.minHeight =
+  //   linIntl([1, 46], [0, 5], triangleValAbs) + 'px';
+  // slide.style.height = linIntl([1, 46], [0, 5], triangleValAbs) + 'px';
 
   // ------ USE THIS FOR CORRECT SLIDES POSITIONs WHEN LOOP = TRUE --------
   // if (scrollProgress >= -0.1 && scrollProgress <= 0.285) {
