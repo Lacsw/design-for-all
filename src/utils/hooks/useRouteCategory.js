@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectTitles,
@@ -11,96 +11,95 @@ import { getLanguage } from 'store/slices/user';
 import {
   setCurrentCategory,
   selectCurrentCategory,
+  setCurrentSubCategory,
 } from 'store/slices/catalog/slice';
 import { fetchTree, fetchArticle } from 'store/slices/article';
 
 export function useRouteCategory() {
-  const { hash } = useLocation();
+  const { hash, search } = useLocation();
   const { lang, articleId } = useParams();
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const titles = useSelector(selectTitles);
   const catalog = useSelector(selectCatalog);
   const article = useSelector(selectArticle);
   const language = useSelector(getLanguage);
   const currentCategory = useSelector(selectCurrentCategory);
-  const isAlive = useRef(true);
   const currentArticleId = useSelector(selectArticleId);
 
-  // флаг размонтирования
+  //  При размонтировании каталога — сбросываем state
   useEffect(() => {
     return () => {
-      isAlive.current = false;
-    };
-  }, []);
-
-  // При любом изменении articleId — сразу сбрасываем категорию, чтобы убрать дерево предыдущей секции
-  useEffect(() => {
-    if (articleId && articleId !== 'no-article') {
       dispatch(setCurrentCategory(''));
-    }
-  }, [articleId, dispatch]);
+      dispatch(setCurrentSubCategory(''));
+    };
+  }, [dispatch]);
 
-  // Загружаем статью один раз при смене lang/articleId
-  useEffect(() => {
-    if (!articleId || articleId === 'no-article') return;
-    dispatch(fetchArticle({ lang, articleId }));
-  }, [lang, articleId, dispatch]);
+  // Первичная установка главной категории
+  useLayoutEffect(() => {
+    const keys = Object.keys(titles?.[language] || []);
+    if (!keys.length) return;
 
-  // Определяем категорию при первом открытии каталога
-  useEffect(() => {
-    const validKeys = Object.keys(titles[language] || []);
-    if (validKeys.length === 0) return;
-
-    // Пытаемся найти категорию по hash: #/web → "web"
     const rawHash = hash.replace(/^#\/?/, '');
-    if (rawHash && validKeys.includes(rawHash)) {
+    if (rawHash && keys.includes(rawHash)) {
       dispatch(setCurrentCategory(rawHash));
+      dispatch(setCurrentSubCategory(''));
       return;
     }
 
-    // Если статья не найдена, то ничего не делаем
     if (articleId === 'no-article') {
+      const params = new URLSearchParams(search);
+      const category = params.get('category');
+      const subСategory = params.get('subcategory') || '';
+      // проверяем, что такая категория есть в списке
+      if (category && keys.includes(category)) {
+        dispatch(setCurrentCategory(category));
+        dispatch(setCurrentSubCategory(subСategory));
+      }
+
       return;
     }
 
-    // Если статья найдена, то ждём, пока в стейте появится наша статья
-    if (articleId) {
-      if (!article || currentArticleId !== articleId) {
-        return; // ждём дальше
-      }
-      // Получаем локализованное имя категории
-      const localized = article.publication.main_category;
-      // ищем key по titles[langParam]
-      const foundKey = Object.keys(titles[lang] || []).find(
-        (k) => titles[lang][k] === localized
-      );
-      // Если ключ найден, то устанавливаем категорию
+    if (articleId && article && currentArticleId === articleId) {
+      const mainCatLocalized = article.publication.main_category;
+      const foundKey = keys.find((k) => titles[lang][k] === mainCatLocalized);
+      const parts = article.publication.sub_category.split('/');
+
+      parts.shift();
+      const subPath = parts.join('/');
+
       if (foundKey) {
         dispatch(setCurrentCategory(foundKey));
+        dispatch(setCurrentSubCategory(subPath));
       }
-      // Иначе устанавливаем первую категорию из списка
       return;
     }
-
-    // Если статья не найдена, то устанавливаем первую категорию из списка
-    dispatch(setCurrentCategory(validKeys[0]));
   }, [
+    search,
     hash,
     articleId,
     article,
     titles,
     language,
-    dispatch,
     currentArticleId,
     lang,
+    dispatch,
+    navigate,
   ]);
 
-  // Каждый раз, когда currentCategory меняется → загружаем дерево, если нужно
+  //  Загрузка статьи при смене lang/articleId
+  useEffect(() => {
+    if (!articleId || articleId === 'no-article') return;
+    dispatch(fetchArticle({ lang, articleId }));
+  }, [lang, articleId, dispatch]);
+
+  // При изменении главной категории — загрузка её дерева
   useEffect(() => {
     if (!currentCategory) return;
     const section = catalog[language]?.[currentCategory];
     const age = Date.now() - (section?.fetchTime || 0);
-    const needsFetch = !section?.original || age > 630_000;
+    const needsFetch = !section?.original || age > 10 * 60 * 1000;
     if (needsFetch) {
       dispatch(fetchTree(`${language}_${currentCategory}`));
     }
