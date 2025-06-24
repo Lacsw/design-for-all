@@ -6,7 +6,7 @@ let spaceCount = 0;
 
 /** @type {import('@tiptap/core').EditorOptions['editorProps']} */
 export const editorProps = {
-  handleClickOn(view, pos, node, nodePos, event, direct) {
+  handleClickOn(view, pos, node, nodePos, event, _direct) {
     if (view.editable) {
       /**
        * @type {EventTarget & HTMLElement} Может быть как реальной ссылкой, так
@@ -31,9 +31,9 @@ export const editorProps = {
 
       if (isLink && event.button === 1 && linkEl) {
         goThroughLink({
-          href: linkEl.getAttribute('href'),
-          target: linkEl.getAttribute('target'),
-          rel: linkEl.getAttribute('rel'),
+          href: linkEl.getAttribute('href') || '',
+          target: linkEl.getAttribute('target') || '',
+          rel: linkEl.getAttribute('rel') || '',
         });
       }
     }

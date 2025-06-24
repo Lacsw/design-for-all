@@ -51,7 +51,7 @@ export default function Header() {
   const shouldTimeout = isAdmin;
 
   const handleLogout = useLogout();
-  
+
   // Переопределяем функцию handleLogout для открытия окна авторизации
   const handleLogoutWithModal = () => {
     openAuthModal();
@@ -59,7 +59,7 @@ export default function Header() {
   };
 
   // Функция, которая вызывается по истечении таймаута
-  const handleTimeout = async (dispatch) => {
+  const handleTimeout = async (_dispatch) => {
     handleLogoutWithModal();
   };
 
@@ -110,7 +110,7 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <Link to="/" className="logo-link" >
+        <Link to="/" className="logo-link">
           <img
             src={theme === 'dark' ? logo : logoBlack}
             alt={t(HEADER.LOGO.ALT)}
@@ -119,8 +119,9 @@ export default function Header() {
         </Link>
         <ul className="header__navigation">
           <li
-            className={`header__navigation-item_mobile-third ${!isMobile ? 'header__search' : ''
-              }`}
+            className={`header__navigation-item_mobile-third ${
+              !isMobile ? 'header__search' : ''
+            }`}
           >
             <HeaderSearchInput isMobileVisible={isMobile} id="headerSearch" />
           </li>

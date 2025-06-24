@@ -27,9 +27,10 @@ export interface IScrollableRefData {
  */
 export interface IScrollableElParams {
   /**
-   * селектор эл-та, который прокручивается. События скролла данного эл-та(и
-   * `firstShowingOffset`) будут использованы для вычисления необходимости
-   * появления компонента
+   * селектор эл-та, который прокручивается.
+   *
+   * События скролла данного эл-та(и `firstShowingOffset`) будут использованы\
+   * для вычисления необходимости появления компонента
    */
   selector: string;
   /**
@@ -94,7 +95,7 @@ export interface IArticleNavigatorProps {
    */
   firstShowingOffset?: number;
   /**
-   * Порог для величины прокрутки после которого эл-т скрывается.\
+   * Порог для величины прокрутки после которого эл-т скрывается.
    *
    * Если быть точнее, то это значение разницы scrollHeight и scrollTop.\
    * Если разница окажется меньше указанного значение - эл-т скроется.
@@ -135,8 +136,10 @@ export interface ICloseArtNavModal {
 export interface IArtNavModalProps extends IBaseProps {
   parentSelector?: IArticleNavigatorProps['parentSelector'];
   isOpen: boolean;
+  /** Заголовки, которые необходимо отобразить в навигаторе. */
   headings: HTMLHeadingElement[];
   onClose: ICloseArtNavModal;
+  /** Заголовок, на котором сейчас находится статья. */
   curHeading: HTMLHeadingElement | null;
   setCurHeading: React.Dispatch<
     React.SetStateAction<HTMLHeadingElement | null>

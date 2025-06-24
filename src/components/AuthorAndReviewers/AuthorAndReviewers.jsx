@@ -4,6 +4,7 @@ import { Author, Overlay, Reviewers } from 'components';
 import { useSelector } from 'react-redux';
 import { selectArticle } from 'store/slices/article';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
+import { AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME } from './const';
 
 export default function AuthorAndReviewers() {
   const { reviews } = useSelector(selectArticle);
@@ -14,8 +15,22 @@ export default function AuthorAndReviewers() {
 
   const toggleReviewers = () => {
     if (isOpen) {
-      closeComponent('authorAndReviewers');
+      window.dispatchEvent(
+        new CustomEvent(AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME, {
+          bubbles: true,
+          detail: { open: false },
+        })
+      );
+      setTimeout(() => {
+        closeComponent('authorAndReviewers');
+      }, 300);
     } else {
+      window.dispatchEvent(
+        new CustomEvent(AUTHOR_AND_REVIEWERS_TOGGLING_EVT_NAME, {
+          bubbles: true,
+          detail: { open: true },
+        })
+      );
       openComponent('authorAndReviewers');
     }
   };

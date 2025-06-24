@@ -1,4 +1,3 @@
-// @ts-check
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { IconButton, InputBase, Tooltip } from '@mui/material';
@@ -61,7 +60,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     let linkQtyWithExtraChecking = linkQty;
 
     if (isSingleLink) {
-      state.doc.nodesBetween(from, to, (node, pos) => {
+      state.doc.nodesBetween(from, to, (node, _pos) => {
         if (node.isText) {
           node.marks.forEach((mark) => {
             if (mark.type === markType) {
@@ -75,7 +74,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     } else if (linkQty === 0 && from === to) {
       // когда каретка в конце марки, то меню не показывается, фиксим это (#1)
       // ! при выделении нулевой длины
-      state.doc.nodesBetween(from - 1, to, (node, pos) => {
+      state.doc.nodesBetween(from - 1, to, (node, _pos) => {
         if (node.isText) {
           node.marks.forEach((mark) => {
             if (mark.type === markType) {

@@ -3,7 +3,14 @@
 @import url(./vars.css);
 @import url(./mui/overrides/components/index.css);
 
-html, body {
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
 }

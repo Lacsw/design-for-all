@@ -17,14 +17,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ReduxProvider store={store}>
     <PersistGate persistor={persistor}>
-    <I18nextProvider i18n={i18n}>
-      <BrowserRouter>
-        <GlobalCssPriority>
-          <CssBaseline />
-          <InteractiveManagerProvider>
-            <App />
-          </InteractiveManagerProvider>
-        </GlobalCssPriority>
+      <I18nextProvider i18n={i18n}>
+        <BrowserRouter>
+          <GlobalCssPriority>
+            <CssBaseline />
+            <InteractiveManagerProvider>
+              <App />
+            </InteractiveManagerProvider>
+          </GlobalCssPriority>
         </BrowserRouter>
       </I18nextProvider>
     </PersistGate>

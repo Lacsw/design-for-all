@@ -90,7 +90,9 @@ function _onUpdate(editor, onInput, _validationsOptions) {
   }
 }
 
+// @ts-ignore
 const incrementStateNumber = (setter) => (evt) => {
+  // @ts-ignore
   setter((prev) => prev + 1);
 };
 
@@ -186,7 +188,7 @@ const RichTextEditorRaw = memo(function RichTextEditor({
      * @param {import('@tiptap/react').EditorEvents['update']} props
      * @returns {void}
      */
-    ({ editor, transaction }) => {
+    ({ editor }) => {
       if (onInput) {
         _onUpdateDebounced(editor, onInput, _validationsOptions);
       }

@@ -7,6 +7,12 @@
  */
 
 /**
+ * @callback TRteOnRealCreateProp
+ * @param {import('@tiptap/react').Editor} editor
+ * @returns {void}
+ */
+
+/**
  * @typedef TRteClassesProp
  * @property {string} [menuBar]
  * @property {string} [textTypeSelector]
@@ -20,7 +26,8 @@
  * @property {TRteOnInputProp} [onInput] - Cb fires with debounce when content
  *   changes in RTE
  * @property {import('@tiptap/react').EditorOptions['onCreate']} [onCreate]
- * @property {(editor: import('@tiptap/react').Editor) => void} [onRealCreate]
+ * @property {TRteOnRealCreateProp} [onRealCreate]
+ *
  *   - `onCreate` cb is called when the element is created but not attached to the
  *       DOM-tree. `onRealCreate` cb is called in the effect when the attachment
  *       is already done
