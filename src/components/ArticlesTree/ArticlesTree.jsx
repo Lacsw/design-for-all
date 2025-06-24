@@ -8,7 +8,6 @@ function ArticlesTreeInner({ path, catalog, language }) {
     return null;
   }
 
-  console.log(nodes);
   return (
     <div className="tree">
       <TreeList nodes={nodes} language={language} />

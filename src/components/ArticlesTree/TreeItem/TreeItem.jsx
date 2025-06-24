@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
 import findInTree from './findInTree';
@@ -8,6 +8,7 @@ import './TreeItem.css';
 import {
   setCurrentSubCategory,
   selectCurrentSubCategory,
+  selectCurrentCategory,
 } from 'store/slices/catalog/slice';
 
 function TreeItemInner({
@@ -17,29 +18,21 @@ function TreeItemInner({
   nodeKey,
   language,
 }) {
-  const { articleId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useSelector(getCurrentTheme);
   const currentSub = useSelector(selectCurrentSubCategory);
-
+  const currentCategory = useSelector(selectCurrentCategory);
   const hasChildren = childrenNodes.length > 0;
-  const isActive = articleId === id || nodeKey === currentSub;
-
+  const isActive = nodeKey === currentSub;
   // Локальный стейт для открытия/скрытия ветки
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // если текущий узел или любой его потомок совпадает с articleId — раскрываем
-    if (id === articleId || findInTree(childrenNodes, articleId)) {
+    if (isActive || findInTree(childrenNodes, currentSub)) {
       setIsOpen(true);
     }
-  }, [articleId, childrenNodes, id]);
-
-  useEffect(() => {
-    // Открываем ветку, если она содержит активный элемент
-    if (isActive) setIsOpen(true);
-  }, [isActive]);
+  }, [currentSub, childrenNodes, isActive]);
 
   // останавливает всплытие, чтобы не навигировать
   const toggleOpen = (e) => {
@@ -48,8 +41,12 @@ function TreeItemInner({
   };
 
   const handleClick = () => {
+    navigate(
+      `/${language}/${
+        id || `no-article?category=${currentCategory}&subcategory=${nodeKey}`
+      }`
+    );
     dispatch(setCurrentSubCategory(nodeKey));
-    navigate(`/${language}/${id || 'no-article'}`);
   };
 
   return (

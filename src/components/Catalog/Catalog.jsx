@@ -9,7 +9,7 @@ import { selectTitles } from 'store/slices/article';
 import { useRouteCategory } from 'utils/hooks/useRouteCategory';
 
 export default function Catalog() {
-  useRouteCategory(); // Вызов хука для обработки маршрута и загрузки данных каталог
+   useRouteCategory(); // Вызов хука для обработки маршрута и загрузки данных каталог
   const { lang, articleId } = useParams();
   const titles = useSelector(selectTitles);
   const isMobile = useIsMobile();
