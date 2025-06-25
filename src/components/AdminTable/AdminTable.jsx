@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import { getCurrentTheme } from 'store/slices/theme';
 import debounce from 'utils/helpers/debounce';
 import './AdminTable.css';
 import '../AuthorArticlesList/AuthorArticlesList.css';
 import adminApi from 'utils/api/admin';
-import { useNavigate } from 'react-router-dom';
 import { editButton, viewButton, adminHash } from 'utils/constants';
-import { useTranslation } from 'react-i18next';
 import { ADMIN } from 'utils/translationKeys';
+import { Tooltip } from 'components';
+import { formatTimestamp } from 'utils/helpers/timeFormatters';
 
 export default function AdminTable({ hash, pagination }) {
   const navigate = useNavigate();
@@ -86,13 +89,27 @@ export default function AdminTable({ hash, pagination }) {
       <table className="author-articles-list__table">
         <thead className="author-articles-list__table-head">
           <tr>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_TYPE)}</th>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_CATEGORY)}</th>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_STATUS)}</th>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_LANGUAGE)}</th>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_CREATED)}</th>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_CLOSED)}</th>
-            <th className="author-articles-list__table-header">{t(ADMIN.TABLE.HEADER_RESULT)}</th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_TYPE)}
+            </th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_CATEGORY)}
+            </th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_STATUS)}
+            </th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_LANGUAGE)}
+            </th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_CREATED)}
+            </th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_CLOSED)}
+            </th>
+            <th className="author-articles-list__table-header">
+              {t(ADMIN.TABLE.HEADER_RESULT)}
+            </th>
             <th className="author-articles-list__table-header-action"></th>
           </tr>
         </thead>
@@ -121,12 +138,28 @@ export default function AdminTable({ hash, pagination }) {
                 <td className="author-articles-list__table-cell">
                   {item.lang}
                 </td>
-                <td className="author-articles-list__table-cell">
-                  {dateFormatter(item.date_create)}
-                </td>
-                <td className="author-articles-list__table-cell">
-                  {dateFormatter(item.date_closed) || '-'}
-                </td>
+                <Tooltip
+                  title={formatTimestamp(item.date_create, i18n.language)}
+                  placement="top"
+                  arrow
+                >
+                  <td className="author-articles-list__table-cell">
+                    {dateFormatter(item.date_create, i18n.language)}
+                  </td>
+                </Tooltip>
+                {item.date_closed ? (
+                  <Tooltip
+                    title={formatTimestamp(item.date_closed, i18n.language)}
+                    placement="top"
+                    arrow
+                  >
+                    <td className="author-articles-list__table-cell">
+                      {dateFormatter(item.date_closed)}
+                    </td>
+                  </Tooltip>
+                ) : (
+                  <td className="author-articles-list__table-cell">-</td>
+                )}
                 <td className="author-articles-list__table-cell">
                   {item.date_closed ? item.status : '-'}
                 </td>
