@@ -65,8 +65,7 @@ const Fork = () => {
     return <Main />;
   }
 
-  // Для всех остальных случаев показываем 404
-  return <NotFound />;
+  return <NotFound />; // если не совпадает ни один из маршрутов, возвращаем страницу 404
 };
 
 export default Fork;
