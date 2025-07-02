@@ -21,6 +21,7 @@ export const initialState = {
     isEndReached: false,
     currentPage: 1,
   },
+  articleId: null,
   article: null,
   loading: true,
   error: '',
@@ -60,6 +61,7 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.article = action.payload;
+        state.articleId = action.meta.arg.articleId;
         // условие для фиктивных статей
         if (
           !action.payload.publication?.image ||
@@ -143,6 +145,7 @@ export const selectUpdates = (state) => state.article.updates;
 export const selectError = (state) => state.article.error;
 export const selectLoading = (state) => state.article.loading;
 export const selectImgForShow = (state) => state.article.imgForShow;
+export const selectArticleId = (state) => state.article.articleId;
 
 export const selectUpdatesError = createSelector(
   [

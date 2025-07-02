@@ -1,19 +1,14 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
-// import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ArticlesTree, Overlay, SearchInput } from 'components';
+import { Overlay, SearchInput, ArticlesTree } from 'components';
 import ResultItem from './ResultItem';
 import {
   selectCatalog,
   selectTitles,
 } from 'store/slices/article/slice';
 import {
-  selectMainCategory,
-  selectShouldRemountTree,
-  setShouldRemountTree,
-  setMainCategory,
-  setCurrentSection,
-  selectCurrentSection,
+  selectCurrentCategory,
+  setCurrentCategory,
 } from 'store/slices/catalog/slice';
 import { getLanguage } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
@@ -24,95 +19,59 @@ import treeIconB from 'images/tree-menu-icon-black.svg';
 import './SideBar.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { useIsMobile } from 'utils/hooks/useIsMobile';
-
-import getSection from 'utils/helpers/getSection';
-import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CATALOG } from 'utils/translationKeys';
-  
-const SPECIAL_SECTIONS = ['updates', 'search'];
 
-export default function SideBar({ section }) {
+
+export default function SideBar() {
   const { t } = useTranslation();
-  const location = useLocation();
   const dispatch = useDispatch();
   const language = useSelector(getLanguage);
   const theme = useSelector(getCurrentTheme);
   const isMobile = useIsMobile();
   const catalog = useSelector(selectCatalog);
   const titles = useSelector(selectTitles);
-  const mainCategory = useSelector(selectMainCategory);
-  const shouldRemountTree = useSelector(selectShouldRemountTree);
-  const currentSection = useSelector(selectCurrentSection);
-  
+  const currentCategory = useSelector(selectCurrentCategory);
+
   const [isInput, setIsInput] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState(null);
-  const [treeKey, setTreeKey] = useState(currentSection);
 
   const { activeComponent, componentOptions, openComponent, closeComponent } = useInteractiveManager();
   const isTreeSearchOpen = activeComponent === 'treeSearch';
   const isMobileSidebarOpen = activeComponent === 'mobileSidebar';
 
-  const titlesList = useMemo(() => 
+
+  // список секций, исключая текущую для выбора в выпадающем списке
+  const titlesList = useMemo(() =>
     Object.keys(titles?.[language] || {}).filter(
-    (item) => item !== currentSection
+      (item) => item !== currentCategory
     ),
-    [titles, language, currentSection]
+    [titles, language, currentCategory]
   );
 
-  const updateSection = useCallback((newSection) => {
-    const cleanSection = newSection.replace(/^\//, '');
-    dispatch(setCurrentSection(cleanSection));
-    if (titles?.[language]?.[cleanSection]) {
-      dispatch(setMainCategory(titles[language][cleanSection]));
-    }
-  }, [titles, language, dispatch]);
-
+  // открытие инпута поиска
   useEffect(() => {
     setIsInput(isTreeSearchOpen);
   }, [isTreeSearchOpen]);
 
+  // локальный поиск по статьям в текущей категории
   const handleSearch = useCallback(({ target }) => {
     const value = prepareValue(target.value);
     const isReady = value.replace(/\s/g, '').length >= 3;
-    const articles = catalog?.[language]?.[currentSection]?.original || [];
+    const articles = catalog?.[language]?.[currentCategory]?.original || [];
     setResults(isReady ? searchArticles(value, articles) : null);
-  }, [catalog, language, currentSection]);
+  }, [catalog, language, currentCategory]);
 
+  // поиск с задержкой
   const searchWithDelay = debounce(handleSearch, 500);
 
-  const handleSectionClick = useCallback((section) => {
-    setIsOpen(!isOpen);
-    updateSection(section);
-  }, [isOpen, updateSection]);
+  const handleSectionClick = useCallback((category) => {
+    setIsOpen(o => !o);
+    dispatch(setCurrentCategory(category));
+  }, [dispatch]);
 
-  // Обработка изменений внешнего section
-  useEffect(() => {
-    if (!section && titles?.[language]) {
-      const newSection = getSection(titles, language, mainCategory);
-      updateSection(newSection);
-    }
-  }, [mainCategory, titles, language, section, updateSection]);
-
-  // Обработка изменений hash
-  useEffect(() => {
-    const hash = location.hash.slice(1);
-    if (hash && !SPECIAL_SECTIONS.includes(hash)) {
-      updateSection(hash);
-    }
-  }, [location.hash, updateSection]);
-
-  // Обработка remount tree
-  useEffect(() => {
-    if (shouldRemountTree) {
-      const newSection = getSection(titles, language, mainCategory);
-      updateSection(newSection);
-      setTreeKey(`${newSection}-${Date.now()}`);
-      dispatch(setShouldRemountTree(false));
-    }
-  }, [shouldRemountTree, titles, language, mainCategory, updateSection, dispatch]);
-
+  // открытие поиска при открытии мобильного меню
   useEffect(() => {
     if (isMobile && isMobileSidebarOpen && componentOptions?.activateSearch) {
       setIsInput(true);
@@ -129,7 +88,7 @@ export default function SideBar({ section }) {
               onClick={() => setIsOpen(!isOpen)}
             >
               <h2 className="sidebar__title">
-                {titles?.[language]?.[currentSection] || currentSection}
+                {titles?.[language]?.[currentCategory] || currentCategory}
               </h2>
               <img
                 className={isOpen ? 'sidebar__icon_open' : ''}
@@ -194,8 +153,7 @@ export default function SideBar({ section }) {
         )}
       </div>
       <ArticlesTree
-        key={treeKey}
-        path={currentSection}
+        path={currentCategory}
         catalog={catalog}
         language={language}
       />

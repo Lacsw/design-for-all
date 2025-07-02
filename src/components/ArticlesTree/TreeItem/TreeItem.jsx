@@ -1,69 +1,84 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { TreeList } from 'components';
-import './TreeItem.css';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentTheme } from 'store/slices/theme';
-import findId from './findId';
+import findInTree from './findInTree';
+import TreeList from '../TreeList/TreeList';
+import './TreeItem.css';
+import {
+  setCurrentSubCategory,
+  selectCurrentSubCategory,
+  selectCurrentCategory,
+} from 'store/slices/catalog/slice';
 
-export default function TreeItem({
-  title = '',
-  data = null,
+function TreeItemInner({
+  title,
+  id,
+  children: childrenNodes,
+  nodeKey,
   language,
-  status,
 }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { articleId } = useParams();
   const theme = useSelector(getCurrentTheme);
-  const [isOpen, setIsOpen] = useState(() => {
-    if (status === false) return false;
-    return data ? findId(data, articleId) : false;
-  });
+  const currentSub = useSelector(selectCurrentSubCategory);
+  const currentCategory = useSelector(selectCurrentCategory);
+  const hasChildren = childrenNodes.length > 0;
+  const isActive = nodeKey === currentSub;
+  // Локальный стейт для открытия/скрытия ветки
+  const [isOpen, setIsOpen] = useState(false);
 
-  const hasChildren = data && typeof data === 'object';
-  const id = hasChildren ? data.id : data;
-  const isActive = articleId ? articleId === id : false;
-  const newData = hasChildren ? { ...data } : {};
-  if (hasChildren) {
-    delete newData.id;
-  }
-
-  const arrowExtraClass = hasChildren
-    ? ' tree-item__arrow_visible_' + theme
-    : '';
-  const liExtraClass = isOpen ? ' tree-item_opened' : '';
-
-  function handleOpen() {
-    setIsOpen((prev) => !prev);
-  }
-
-  function handleNavigate() {
-    if (id) {
-      navigate(`/${language}/${id}`);
-    } else {
-      navigate(`/${language}/no-article`);
+  useEffect(() => {
+    if (isActive || findInTree(childrenNodes, currentSub)) {
+      setIsOpen(true);
     }
-  }
+  }, [currentSub, childrenNodes, isActive]);
+
+  // останавливает всплытие, чтобы не навигировать
+  const toggleOpen = (e) => {
+    e.stopPropagation();
+    setIsOpen((prev) => !prev);
+  };
+
+  const handleClick = () => {
+    navigate(
+      `/${language}/${
+        id || `no-article?category=${currentCategory}&subcategory=${nodeKey}`
+      }`
+    );
+    dispatch(setCurrentSubCategory(nodeKey));
+  };
 
   return (
-    <li className={'tree-item' + liExtraClass}>
+    <li className={`tree-item${isOpen ? ' tree-item_opened' : ''}`}>
       <div className="tree-item__top">
-        <span
-          className={'tree-item__arrow' + arrowExtraClass}
-          onClick={handleOpen}
-        />
+        {hasChildren && (
+          <span
+            className={'tree-item__arrow tree-item__arrow_visible_' + theme}
+            onClick={toggleOpen} // тут кликаем стрелку
+          />
+        )}
         <span
           className={`tree-item__title${
             isActive ? ' tree-item__title_active' : ''
           }`}
-          onClick={handleNavigate}
+          onClick={handleClick} // тут кликаем на текст
         >
           {title}
         </span>
       </div>
-      {!isOpen || !hasChildren ? null : (
-        <TreeList list={newData} language={language} status={isOpen} />
+      {hasChildren && isOpen && (
+        <TreeList nodes={childrenNodes} language={language} />
       )}
     </li>
   );
 }
+
+export const TreeItem = React.memo(
+  TreeItemInner,
+  (prev, next) =>
+    prev.title === next.title &&
+    prev.id === next.id &&
+    prev.nodeKey === next.nodeKey &&
+    prev.childrenNodes === next.childrenNodes
+);

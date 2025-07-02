@@ -24,10 +24,6 @@ import useSubCategoryCheck from 'utils/hooks/useSubCategoryCheck';
 import { useDebounce } from 'utils/hooks/useDebounce';
 import { useTranslation } from 'react-i18next';
 import { CREATION } from 'utils/translationKeys';
-import {
-  setShouldRemountTree,
-  setMainCategory,
-} from 'store/slices/catalog/slice';
 
 function createTitle(type, t) {
   if (type === 'updated') return t(CREATION.NEW_ARTICLE.UPDATED_TITLE);
@@ -169,11 +165,6 @@ export const NewArticle = memo(function NewArticle({
     [isLight]
   );
 
-  const handleSubCategoryLinkClick = () => {
-    dispatch(setMainCategory(draft.main_category));
-    dispatch(setShouldRemountTree(true));
-  };
-
   return (
     <section className="new-article">
       <h2 className="new-article__title">{mainTitle}</h2>
@@ -237,11 +228,7 @@ export const NewArticle = memo(function NewArticle({
               <span>
                 {hint}{' '}
                 {uuid && (
-                  <Link
-                    target="_blank"
-                    to={`/${draft.lang}/${uuid}`}
-                    onClick={handleSubCategoryLinkClick}
-                  >
+                  <Link target="_blank" to={`/${draft.lang}/${uuid}`}>
                     {t(CREATION.NEW_ARTICLE.CHECK_SUB_CATEGORY_HINT_LINK)}
                   </Link>
                 )}

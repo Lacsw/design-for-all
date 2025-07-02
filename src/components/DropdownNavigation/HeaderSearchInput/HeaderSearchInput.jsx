@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getLanguage } from 'store/slices/user';
 import { getCurrentTheme } from 'store/slices/theme';
 import Overlay from 'components/Overlay/Overlay';
@@ -10,14 +10,12 @@ import loupeLight from 'images/loupe-icon_white.svg';
 import './HeaderSearchInput.css';
 import { useInteractiveManager } from 'utils/contexts/InteractiveManagerContext';
 import { NavLink } from 'react-router-dom';
-import { setMainCategory, setShouldRemountTree } from 'store/slices/catalog/slice';
 import debounce from 'utils/helpers/debounce';
 import { useServerSearch } from 'utils/hooks/useServerSearch';
 import { useTranslation } from 'react-i18next';
 import { HEADER } from 'utils/translationKeys';
 
 export default function HeaderSearchInput({ id, isMobileVisible = false }) {
-  const dispatch = useDispatch();
   const inputRef = useRef();
   const resultsRef = useRef(null);
   const language = useSelector(getLanguage);
@@ -156,8 +154,6 @@ export default function HeaderSearchInput({ id, isMobileVisible = false }) {
                   to={`/${language}/${item.uuid}`}
                   className="header-search__link"
                   onClick={() => {
-                    dispatch(setMainCategory(item.main_category));
-                    dispatch(setShouldRemountTree(true));
                     handleCloseClick();
                   }}
                 >

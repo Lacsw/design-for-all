@@ -1,17 +1,17 @@
 import { TreeItem } from 'components';
 import './TreeList.css';
 
-export default function TreeList({ list = {}, language, status }) {
-  const topics = Object.keys(list || {});
+export default function TreeList({ nodes = [], language }) {
   return (
     <ul className="tree-list">
-      {topics.map((item, index) => (
+      {nodes.map((node) => (
         <TreeItem
-          key={index}
-          title={item}
-          data={list[item]}
+          key={node.key} // полный уникальный путь
+          title={node.title}
+          id={node.id} // uuid | null
+          children={node.children}
+          nodeKey={node.key}
           language={language}
-          status={status}
         />
       ))}
     </ul>

@@ -1,16 +1,25 @@
+import React from 'react';
 import { TreeList } from 'components';
 import './ArticlesTree.css';
 
-export default function ArticlesTree({ path, catalog, language }) {
-  // Получаем данные
-  const sectionData = catalog?.[language]?.[path];
-  const tree = sectionData?.tree || [];
+function ArticlesTreeInner({ path, catalog, language }) {
+  const nodes = catalog?.[language]?.[path]?.tree || [];
+  if (nodes.length === 0) {
+    return null;
+  }
 
   return (
     <div className="tree">
-      {tree && Object.keys(tree).length > 0 && (
-        <TreeList list={tree} language={language} />
-      )}
+      <TreeList nodes={nodes} language={language} />
     </div>
   );
 }
+
+export const ArticlesTree = React.memo(
+  ArticlesTreeInner,
+  (prev, next) =>
+    prev.path === next.path &&
+    prev.language === next.language &&
+    prev.catalog[next.language]?.[next.path]?.tree ===
+      next.catalog[next.language]?.[next.path]?.tree
+);
