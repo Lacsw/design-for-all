@@ -6,7 +6,7 @@ import { COMMANDS_NAMES } from './constants';
 /**
  * @callback TDRteCommand
  * @param {import('@tiptap/core').Editor | null} editor
- * @param {any} otherParams
+ * @param {any} [otherParams]
  * @returns {boolean}
  */
 
@@ -166,6 +166,20 @@ export const tiptapCommands = {
       .run();
   },
   // #endregion insert img
+
+  [COMMANDS_NAMES.link]: (editor) => {
+    if (!editor) {
+      return;
+    }
+
+    editor
+      .chain()
+      .toggleLink({
+        href: 'https://example.com',
+      })
+      .focus()
+      .run();
+  },
 };
 // #endregion tiptapCommands
 
@@ -178,7 +192,7 @@ export const tiptapCommands = {
  */
 export function checkIsCommandActive(commandName, editor) {
   if (!editor) {
-    return;
+    return false;
   }
 
   let needAnotherCheck = false;

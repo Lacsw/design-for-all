@@ -26,6 +26,7 @@ import DataObjectIcon from '@mui/icons-material/DataObject';
 import CodeIcon from '@mui/icons-material/Code';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
 import { Box, Divider, Typography } from '@mui/material';
 import React, {
@@ -348,6 +349,15 @@ const RichTextEditorRaw = memo(function RichTextEditor({
             mode="cb"
           >
             <AddPhotoAlternateRoundedIcon />
+          </RteButton>
+          <RteButton
+            key={COMMANDS_NAMES.link}
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.link}
+            inFocusWithin={inFocusWithin}
+          >
+            <InsertLinkIcon />
           </RteButton>
           <Divider orientation="vertical" />
           <RteButton

@@ -250,7 +250,7 @@ export const CATALOG = {
     BLANK: {
       SEARCH_TREE: 'catalog_article_blank_search_tree', // Воспользуйтесь {{tree}} или {{header}} статей
       TREE: 'catalog_article_blank_search_tree_tree', // поиском по дереву
-      HEADER: 'catalog_article_blank_search_tree_header' // поиском по заголовкам
+      HEADER: 'catalog_article_blank_search_tree_header', // поиском по заголовкам
     },
     IMAGE: {
       ALT: 'catalog_article_image_alt', // Превью статьи
@@ -319,8 +319,7 @@ export const CREATION = {
     MODAL_RECOMMENDATIONS: {
       CHANGE_BTN_TITLE:
         'creation_new_article_modal_recommendations_change_btn_title', // Заменить рекомендацию
-      ADD_BTN_TITLE:
-        'creation_new_article_modal_recommendations_add_btn_title', // Добавить рекомендацию
+      ADD_BTN_TITLE: 'creation_new_article_modal_recommendations_add_btn_title', // Добавить рекомендацию
       IMAGE_TITLE: 'creation_new_article_modal_recommendations_image_title', // Ссылка на картинку
       INPUT_IMAGE_PLACEHOLDER:
         'creation_new_article_modal_recommendations_input_image_placeholder', // https://site.com/image.jpg
@@ -334,10 +333,11 @@ export const CREATION = {
     SUB_CATEGORY: {
       OCCUPIED: 'creation_new_article_sub_category_occupied',
       UPDATE_HINT: 'creation_new_article_sub_category_update_hint',
-      OCCUPIED_WITH_HINT: 'creation_new_article_sub_category_occupied_with_hint',
+      OCCUPIED_WITH_HINT:
+        'creation_new_article_sub_category_occupied_with_hint',
       INVALID_REQUEST: 'creation_new_article_sub_category_invalid_request',
       AUTH_REQUIRED: 'creation_new_article_sub_category_auth_required',
-      CHECK_ERROR: 'creation_new_article_sub_category_check_error'
+      CHECK_ERROR: 'creation_new_article_sub_category_check_error',
     },
   },
   RECOMMENDATION: {
@@ -365,7 +365,7 @@ export const AUTHOR = {
 
   MOBILE: {
     PLACEHOLDER: 'author_mobile_placeholder',
-    LOGOUT_BUTTON: 'author_mobile_logout_button'
+    LOGOUT_BUTTON: 'author_mobile_logout_button',
   },
 
   NEW_ARTICLE: {
@@ -515,7 +515,7 @@ export const CHECK_FIELDS = {
   DESCRIPTION_TITLE: 'check_fields_description_title',
   RECOMMENDATIONS_TITLE: 'check_fields_recommendations_title',
   IMAGE_ALT: 'check_fields_image_alt',
-  IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt'
+  IMAGE_FALLBACK_ALT: 'check_fields_image_fallback_alt',
 };
 
 export const DROPDOWN = {
@@ -598,7 +598,8 @@ export const RTE = {
     ORDERED_LIST: 'rte_button_ordered_list',
     SUBSCRIPT: 'rte_button_subscript',
     SUPERSCRIPT: 'rte_button_superscript',
-    IMAGE: 'rte_button_image'
+    IMAGE: 'rte_button_image',
+    LINK: 'rte_button_link',
   },
   PLACEHOLDER: 'rte_placeholder', // Плейсхолдер для редактора
   IMAGE: {
@@ -609,7 +610,7 @@ export const RTE = {
       BROKEN_URL: 'rte_image_errors_broken_url', // Неккоректный URL-адрес
       FILE_READING: 'rte_image_errors_file_reading', // Ошибка при чтении файла
       ON_HOSTING_LOADING: 'rte_image_errors_on_hosting_loading', // Не удалось загрузить файл на хостинг
-      FROM_LINK_LOADING: 'rte_image_errors_from_link_loading' // Не удалось загрузить файл по указанной ссылке
-    }
-  }
+      FROM_LINK_LOADING: 'rte_image_errors_from_link_loading', // Не удалось загрузить файл по указанной ссылке
+    },
+  },
 };
