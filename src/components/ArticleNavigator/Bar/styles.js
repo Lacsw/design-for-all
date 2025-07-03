@@ -11,7 +11,7 @@ export const sxRoot = (theme) => {
   return {
     position: 'fixed',
     top: 0,
-    right: 'var(--art-nav-right, 0px)',
+    right: 'var(--modal-corrector, 0px)',
     bottom: 0,
     left: 0,
     transform: 'translateY(0px)',

@@ -341,8 +341,6 @@ export const NavigatorModal = memo(
 
                   onClose('click', targetHeading);
 
-                  // setTimeout(
-                  // () => {
                   const targetHeadingY = targetHeadingRect.y;
                   const curHeadingY =
                     curHeading?.getBoundingClientRect().y ?? 0;
@@ -357,9 +355,6 @@ export const NavigatorModal = memo(
                     left: 0,
                     behavior: 'smooth',
                   });
-                  // },
-                  // 50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
-                  // );
                 }}
               >
                 {headings.map((headingEl, idx) => {

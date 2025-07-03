@@ -1,15 +1,16 @@
 // @ts-check
 import { Box, Fade, IconButton, Modal, styled } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearImgForShow, selectImgForShow } from 'store/slices/article';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { getImgByURL } from 'components/RichTextEditor/extensions/image/helpers';
-
-const stubCb = () => null;
+import { IMG_SHOWING_MODAL_ANIM_DUR } from './constants';
+import { closeModalEvt, openModalEvt } from 'utils/modals';
 
 const StyledModal = styled(Modal)(() => {
   return {
+    right: 'var(--modal-corrector)',
+
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -30,8 +31,13 @@ const StyledModal = styled(Modal)(() => {
 
     img: {
       borderRadius: '16px',
-      width: '60vw',
-      maxWidth: '1100px',
+      minWidth: '60vw',
+      width: 'fit-content',
+      maxWidth: 'min(60vw, "1100px")',
+      height: 'auto',
+      maxHeight: '90vh',
+      objectFit: 'cover',
+      objectPosition: 'center',
     },
   };
 });
@@ -40,29 +46,26 @@ export const ImgShowingModal = () => {
   const dispatch = useDispatch();
   const imgForSHow = useSelector(selectImgForShow);
 
-  const [dataUrl, setDataUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  console.log('dataUrl', dataUrl);
+  const [isOpen, setIsOpen] = useState(!!imgForSHow);
 
-  useEffect(() => {
+  const close = () => {
+    setIsOpen(false);
+    window.dispatchEvent(closeModalEvt);
+    setTimeout(() => {
+      dispatch(clearImgForShow());
+    }, IMG_SHOWING_MODAL_ANIM_DUR);
+  };
+
+  useLayoutEffect(() => {
     if (imgForSHow) {
-      getImgByURL({
-        value: imgForSHow,
-        setValue: stubCb,
-        setIsLoading,
-        setError: stubCb,
-        onConfirm: setDataUrl,
-      });
+      window.dispatchEvent(openModalEvt);
+      setIsOpen(true);
     }
   }, [imgForSHow]);
 
-  const close = () => {
-    dispatch(clearImgForShow());
-  };
-
   return (
-    <StyledModal open={!!dataUrl && imgForSHow} onClose={close}>
-      <Fade in={imgForSHow}>
+    <StyledModal className="imgShowingModal-root" open={isOpen} onClose={close}>
+      <Fade in={isOpen} timeout={IMG_SHOWING_MODAL_ANIM_DUR}>
         <Box className="container">
           <IconButton className="closing-btn" onClick={close}>
             <CloseRoundedIcon />

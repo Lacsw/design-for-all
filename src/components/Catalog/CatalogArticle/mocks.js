@@ -1,37 +1,93 @@
-export const stub = `<p>
+import { getRandomInt } from 'utils/helpers/math';
+
+const mockedImages = [
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/0xf09f9984.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/1xf09f9895.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/2xf09f98a9.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/3xf09f9aac.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/4xf09f8cbf.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/5xf09f9ab4e2808de29982efb88f.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/6xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/7xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/8xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/9xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/10xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/11xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/12xf09f90b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/13xe29da4.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/14xe29da4.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/15xe29da4.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/16xf09f8f89.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/17xe29895efb88f.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/18xf09f98a0.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/19xf09f92aa.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/20xf09fa5ba.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/21xf09f8d85.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/22xf09fa4a8.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/23xf09f928b.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/24xf09f97a1.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/25xf09f90b0.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/26xf09f8d8c.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/27xf09f9aac.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/28xf09f8d8c.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/29xf09f94ab.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/30xf09f8dba.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/31xf09faa96.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/32xf09fa493.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/33xf09f98b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/34xf09f87aff09f87b5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/35xf09f8eb6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/36xf09fa790.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/37xf09f98b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/38xf09f98b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/39xf09f9893.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/40xf09f98b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/41xf09fa7a5.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/42xf09f9884.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/43xf09f9183.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/44xf09fa4af.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/45xf09fa5ac.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/46xf09f90b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/47xf09f90b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/48xf09f90b6.webp',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/49xf09f90b6.webp',
+];
+
+export const stub = () => `<p>
       Рецепт пельменного теста с горячей водой и растительным маслом. Вам очень
       понравится работать с этим тестом, оно очень эластичное, не рвётся, не
       разваривается, хорошо лепится и прекрасно переносит заморозку. Чтобы
       сделать сочнее фарш для начинки, не бойтесь добавлять в него немного воды.
       Я ещё добавляю немножко сала, если мясо постное. Пельмени получаются очень
       вкусными и сочными.
-    </p>`;
+    </p>
+    <img src='${mockedImages[getRandomInt(0, mockedImages.length - 1)]}' />`;
 
 /** @param {number} count */
 export const getMockedArticleContent = (count) => {
-  const justText = `
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
-    ${stub}
+  const justText = () => `
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
+    ${stub()}
   `;
   let res = '';
   if (!count) {
-    res = justText;
+    res = justText();
   }
   for (let i = 1; i <= count; i++) {
     res += `\n
     <h3>Заголовок ${i}</h3>
-    ${justText}
+    ${justText()}
     `;
   }
   return res;

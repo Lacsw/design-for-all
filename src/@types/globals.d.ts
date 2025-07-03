@@ -35,6 +35,10 @@ declare global {
    */
   type TState<T> = ReturnType<typeof React.useState<T>>;
   // #endregion React
+
+  interface RefObj<T = null> {
+    cur: T;
+  }
 }
 
 export {};

@@ -108,7 +108,7 @@ export default function Header() {
   }, [theme, dispatch]);
 
   return (
-    <header className="header">
+    <header className="header" id="app-header">
       <div className="header__container">
         <Link to="/" className="logo-link">
           <img
