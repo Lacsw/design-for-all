@@ -86,11 +86,13 @@ export const ImgShowingModal = () => {
   const [isOpen, setIsOpen] = useState(!!imgForSHow);
 
   const handleResize = useCallback(() => {
-    if (container.current && root.current) {
-      root.current.style.setProperty('--comp-h', 'auto');
-      const styles = getComputedStyle(container.current);
-      root.current.style.setProperty('--comp-h', styles.height);
+    if (!container.current || !root.current) {
+      return;
     }
+
+    root.current.style.setProperty('--comp-h', 'auto');
+    const styles = getComputedStyle(container.current);
+    root.current.style.setProperty('--comp-h', styles.height);
   }, []);
 
   const close = () => {
