@@ -1,6 +1,12 @@
 // @ts-check
 import { Box, Fade, IconButton, Modal, styled } from '@mui/material';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearImgForShow, selectImgForShow } from 'store/slices/article';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -13,7 +19,7 @@ const StyledModal = styled(Modal)(({ theme }) => {
   // const media = theme.breakpoints;
 
   return {
-    '--img-orig-w': '0px',
+    '--comp-h': 'auto',
     right: 'var(--modal-corrector)',
 
     display: 'flex',
@@ -54,6 +60,11 @@ const StyledModal = styled(Modal)(({ theme }) => {
       },
     },
 
+    '.img-container': {
+      height: 'var(--comp-h)',
+      overflow: 'auto',
+    },
+
     img: {
       display: 'block', // fix strip under the picture
       width: '100%',
@@ -70,32 +81,55 @@ export const ImgShowingModal = () => {
   const dispatch = useDispatch();
   const imgForSHow = useSelector(selectImgForShow);
 
-  const imgRef = useRef(/** @type {HTMLImageElement | null} */ (null));
+  const root = useRef(/** @type {HTMLElement | null} */ (null));
+  const container = useRef(/** @type {HTMLElement | null} */ (null));
   const [isOpen, setIsOpen] = useState(!!imgForSHow);
+
+  const handleResize = useCallback(() => {
+    if (container.current && root.current) {
+      root.current.style.setProperty('--comp-h', 'auto');
+      const styles = getComputedStyle(container.current);
+      root.current.style.setProperty('--comp-h', styles.height);
+    }
+  }, []);
 
   const close = () => {
     setIsOpen(false);
     window.dispatchEvent(closeModalEvt);
-    setTimeout(() => {
-      dispatch(clearImgForShow());
-    }, IMG_SHOWING_MODAL_ANIM_DUR);
+    root.current?.style.setProperty('--comp-h', 'auto');
+    dispatch(clearImgForShow());
   };
 
   useLayoutEffect(() => {
     if (imgForSHow) {
+      setTimeout(handleResize);
+
       window.dispatchEvent(openModalEvt);
       setIsOpen(true);
     }
-  }, [imgForSHow]);
+  }, [handleResize, imgForSHow]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
 
   return (
-    <StyledModal className="imgShowingModal-root" open={isOpen} onClose={close}>
+    <StyledModal
+      // @ts-ignore
+      ref={root}
+      className="imgShowingModal-root"
+      open={isOpen}
+      onClose={close}
+    >
       <Fade in={isOpen} timeout={IMG_SHOWING_MODAL_ANIM_DUR}>
-        <Box className="container">
+        <Box ref={container} className="container">
           <IconButton className="closing-btn" onClick={close}>
             <CloseRoundedIcon />
           </IconButton>
-          <img ref={imgRef} src={imgForSHow} alt="" />
+          <Box className="img-container">
+            <img src={imgForSHow} alt="" />
+          </Box>
         </Box>
       </Fade>
     </StyledModal>
