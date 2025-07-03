@@ -36,6 +36,16 @@ export const CustomLinkExtension = Link.extend({
   },
 
   // см. также editorProps handleKeyDown
+
+  addKeyboardShortcuts() {
+    return {
+      'Mod-k': () => {
+        return this.editor.commands.toggleLink({
+          href: 'https://example.com',
+        });
+      },
+    };
+  },
 });
 
 /**
