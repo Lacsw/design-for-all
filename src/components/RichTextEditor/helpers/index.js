@@ -309,7 +309,9 @@ const isDisabledMap = {
   [COMMANDS_NAMES.code]: (commandName) => {
     if (
       commandName === COMMANDS_NAMES.italic ||
-      commandName === COMMANDS_NAMES.bold
+      commandName === COMMANDS_NAMES.bold ||
+      commandName === COMMANDS_NAMES.img ||
+      commandName === COMMANDS_NAMES.link
     ) {
       return true;
     } else {
@@ -317,17 +319,10 @@ const isDisabledMap = {
     }
   },
   [COMMANDS_NAMES.codeBlock]: (commandName) => {
-    if (
-      commandName === COMMANDS_NAMES.italic ||
-      commandName === COMMANDS_NAMES.bold ||
-      commandName === COMMANDS_NAMES.left ||
-      commandName === COMMANDS_NAMES.center ||
-      commandName === COMMANDS_NAMES.right ||
-      commandName === COMMANDS_NAMES.justify
-    ) {
-      return true;
-    } else {
+    if (commandName === COMMANDS_NAMES.codeBlock) {
       return false;
+    } else {
+      return true;
     }
   },
 };
