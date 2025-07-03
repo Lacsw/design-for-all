@@ -35,6 +35,10 @@
   padding: 3px 7px;
 }
 
+.rte__bubble-menu .MuiInputBase-root .MuiInputBase-input:focus {
+  /* background-color: red !important; */
+}
+
 .rte__bubble-menu .MuiInputBase-root.editable {
   color: var(--color-main);
   background-color: var(--color-bg-low-accent);

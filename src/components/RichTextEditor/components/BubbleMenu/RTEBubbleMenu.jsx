@@ -10,6 +10,7 @@ import { useDebounce } from 'utils/hooks';
 import { validateLink } from 'components/RichTextEditor/extensions/link/link';
 import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config';
 import { countLinksInSelection } from 'components/RichTextEditor/extensions/link/helpers';
+import { linkHotkeyCreationEvtName } from 'components/RichTextEditor/extensions/link/constants';
 
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
@@ -25,7 +26,7 @@ import clsx from 'clsx';
 const RTEBubbleMenuRaw = ({ editor }) => {
   const isLight = useSelector(getIsThemeLight);
 
-  const [flag, setFlag] = useState(false);
+  const [isOpen, setIsOpen] = useState(/** @type {boolean | null} */ (null));
 
   const [inputMode, setInputMode] = useState(
     /** @type {'read' | 'write'} */ ('read')
@@ -49,8 +50,6 @@ const RTEBubbleMenuRaw = ({ editor }) => {
     if (!params.editor.isEditable) {
       return false;
     }
-
-    setFlag((prev) => !prev);
 
     const markType = editor.state.schema.marks.link;
     const { state, from, to } = params;
@@ -88,7 +87,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
       });
     }
 
-    return isSingleLink || linkQtyWithExtraChecking === 1;
+    const res = isSingleLink || linkQtyWithExtraChecking === 1;
+    setIsOpen(res);
+    return res;
   };
 
   /** @param {React.MouseEvent<HTMLButtonElement>} evt */
@@ -283,11 +284,31 @@ const RTEBubbleMenuRaw = ({ editor }) => {
   };
 
   useEffect(() => {
-    const id = window.setTimeout(() => {
-      setInputMode('read');
-    }, 300);
-    return () => clearTimeout(id);
-  }, [flag]);
+    if (!isOpen) {
+      const id = window.setTimeout(() => {
+        setInputMode('read');
+      }, 300);
+      return () => clearTimeout(id);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handler = () => {
+      if (!isOpen) {
+        setInputMode('write');
+        setTimeout(() => {
+          if (!inputRef.current) {
+            return;
+          }
+          const inputEl = inputRef.current.querySelector('input');
+          inputEl?.focus();
+        });
+      }
+    };
+
+    window.addEventListener(linkHotkeyCreationEvtName, handler);
+    return () => window.removeEventListener(linkHotkeyCreationEvtName, handler);
+  }, [isOpen]);
 
   return (
     editor && (
@@ -321,6 +342,15 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           error={!isValid}
           onKeyDown={handleInputKeyDown}
           onChange={handleInputChange}
+          onClick={(e) => {
+            if (e.detail > 2) {
+              return;
+            }
+
+            if (e.detail === 2) {
+              setInputMode((prev) => (prev === 'write' ? 'read' : 'write'));
+            }
+          }}
           className={clsx(inputMode === 'write' && 'editable')}
         />
 

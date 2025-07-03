@@ -73,3 +73,11 @@ PROTOCOLS.forEach((p) => {
 export const disallowedDomains = [
   'www.afk.com', // just for example
 ];
+
+export const STUB_LINK_HREF = 'https://example.com';
+export const STUB_LINK_TEXT = 'link';
+
+export const linkCreationEvtName = 'create-link';
+export const linkHotkeyCreationEvtName = 'hot-create-link';
+export const linkCreationEvt = new Event(linkCreationEvtName);
+export const linkHotCreationEvt = new Event(linkHotkeyCreationEvtName);
