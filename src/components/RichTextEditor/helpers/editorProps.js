@@ -13,7 +13,11 @@ export const editorProps = {
     // @ts-ignore
     const target = event.target;
 
-    if (target instanceof HTMLImageElement && target.src) {
+    if (
+      event.button === 0 &&
+      target instanceof HTMLImageElement &&
+      target.src
+    ) {
       store.dispatch(setImgForShow(target.src));
     }
 

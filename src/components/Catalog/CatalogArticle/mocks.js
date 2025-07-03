@@ -1,6 +1,7 @@
 import { getRandomInt } from 'utils/helpers/math';
 
-const mockedImages = [
+const _mockedImages = [
+  'https://yandex-images.clstorage.net/qtS9G7366/c73361mH6KI/mH6z1XFK1pLCnFa8mHbKQfmRLEjwyHeDre9PZRoEK6Hp9dl_PP2C7ozIjKufW7JfZ8WZtM018iVQjgE65I8m2cr8IZDnWUKDVliS-loiGkcpkDwKNQwlz-NiFOxUivRr4zqSujyvlvmYHBysyQ7pEOPUiekV4O01TFseuS2fpYWa42mKcgPXkgcYlysWNkqY-pyuj7IOJsQtZN0pUgqypakx0n2pKVP6W9sTMkYCqFa2mEHjm-MnfIcRUf4nmunE0GGhDT1K3FxJGVDqET1MVHPT7Uywy-CFLOhYZxmJemtsdB0_5uXc8JlRGv8Hi-icv1SPIVDobT3I0pR_715ugdqpJgZ0RdKTxlaT79e1w5n3WyQFP4UphWomFWnXwPTlpzqdtaWsnfmT1pJzQkgj3v7YxmGaoum0yFma9SIbK8HWqKLFcApXW0zbES-eNk_WNl8vQ3AEaM2o55Gsn8pwqySxH7Amr9p3HdPe-8eEph41WADm2W1vt4xWXDZonqoFnSEgxHvEVhRPndupVTZMUPGbZUd0g6iKb6vRp1dJs2uu9JM6Jm2Y9hvdlPTNjWBcPZQErptvKHvH2F3yJJDlRNdjrE49hZZWR9Ce5lP3RRiy1SeKOc_lTWBunawfhbiv57hQO-LnUn_VlxSzS4CoXPfXhWmfby99gZPU9uSeI86VLCWF-w8SHsqdn2TVew2Q8pjpgbAHrUaqLFUpE8c16Gd9WrMlb5MzE9nZtoiF653xE0BgnK_vNM9Ynv4h0iOA1yugyvCCmJLKXZksVjpCHjVdYsNxwCaM4efWJZ0KvGJrMVJw6adXv5VfXDwIg28dN1BBIRXi4j0DVlc1oNinSBnq5AbyxdvUQdgZr510hZN_Ha9Ddc0iBWQqGq6eAXbjK3Scfy_sWvPRlZu2SoCv0bjfi-OXYqhzABPdd6_Xo08c5mmE84qQ0YeaHObWP0-YNtUvBfAHpMUkZl9mU8',
   'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/0xf09f9984.webp',
   'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/1xf09f9895.webp',
   'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/2xf09f98a9.webp',
@@ -53,7 +54,17 @@ const mockedImages = [
   'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/49xf09f90b6.webp',
 ];
 
-export const stub = () => `<p>
+const _mockedImages2 = [
+  'https://i.ibb.co/GNcPpYP/very-horizontal.png', // очень горизонтальная
+  // горизонтальная
+  'https://yandex-images.clstorage.net/qtS9G7366/c73361mH6KI/mH6z1XFK1pLCnFa8mHbKQfmRLEjwyHeDre9PZRoEK6Hp9dl_PP2C7ozIjKufW7JfZ8WZtM018iVQjgE65I8m2cr8IZDnWUKDVliS-loiGkcpkDwKNQwlz-NiFOxUivRr4zqSujyvlvmYHBysyQ7pEOPUiekV4O01TFseuS2fpYWa42mKcgPXkgcYlysWNkqY-pyuj7IOJsQtZN0pUgqypakx0n2pKVP6W9sTMkYCqFa2mEHjm-MnfIcRUf4nmunE0GGhDT1K3FxJGVDqET1MVHPT7Uywy-CFLOhYZxmJemtsdB0_5uXc8JlRGv8Hi-icv1SPIVDobT3I0pR_715ugdqpJgZ0RdKTxlaT79e1w5n3WyQFP4UphWomFWnXwPTlpzqdtaWsnfmT1pJzQkgj3v7YxmGaoum0yFma9SIbK8HWqKLFcApXW0zbES-eNk_WNl8vQ3AEaM2o55Gsn8pwqySxH7Amr9p3HdPe-8eEph41WADm2W1vt4xWXDZonqoFnSEgxHvEVhRPndupVTZMUPGbZUd0g6iKb6vRp1dJs2uu9JM6Jm2Y9hvdlPTNjWBcPZQErptvKHvH2F3yJJDlRNdjrE49hZZWR9Ce5lP3RRiy1SeKOc_lTWBunawfhbiv57hQO-LnUn_VlxSzS4CoXPfXhWmfby99gZPU9uSeI86VLCWF-w8SHsqdn2TVew2Q8pjpgbAHrUaqLFUpE8c16Gd9WrMlb5MzE9nZtoiF653xE0BgnK_vNM9Ynv4h0iOA1yugyvCCmJLKXZksVjpCHjVdYsNxwCaM4efWJZ0KvGJrMVJw6adXv5VfXDwIg28dN1BBIRXi4j0DVlc1oNinSBnq5AbyxdvUQdgZr510hZN_Ha9Ddc0iBWQqGq6eAXbjK3Scfy_sWvPRlZu2SoCv0bjfi-OXYqhzABPdd6_Xo08c5mmE84qQ0YeaHObWP0-YNtUvBfAHpMUkZl9mU8',
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/12xf09f90b5.webp', // вертикальная
+  'https://cdn2.combot.org/monkiz3_by_fstikbot/webp/15xe29da4.webp', // квадратная
+];
+
+export const stub = () => {
+  const arr = _mockedImages2;
+  return `<p>
       Рецепт пельменного теста с горячей водой и растительным маслом. Вам очень
       понравится работать с этим тестом, оно очень эластичное, не рвётся, не
       разваривается, хорошо лепится и прекрасно переносит заморозку. Чтобы
@@ -61,7 +72,8 @@ export const stub = () => `<p>
       Я ещё добавляю немножко сала, если мясо постное. Пельмени получаются очень
       вкусными и сочными.
     </p>
-    <img src='${mockedImages[getRandomInt(0, mockedImages.length - 1)]}' />`;
+    <img src='${arr[getRandomInt(0, arr.length - 1)]}' />`;
+};
 
 /** @param {number} count */
 export const getMockedArticleContent = (count) => {

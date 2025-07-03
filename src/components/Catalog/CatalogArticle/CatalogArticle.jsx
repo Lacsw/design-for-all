@@ -46,7 +46,7 @@ const tutorialVideos = {
   zh: tutorialZh,
 };
 
-const DEBUG = false;
+const DEBUG = true;
 
 export default function CatalogArticle() {
   const { t } = useTranslation();
