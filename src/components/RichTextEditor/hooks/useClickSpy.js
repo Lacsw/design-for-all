@@ -59,6 +59,10 @@ export const useClickSpy = ({ editor }) => {
       }
     };
 
+    const handleBlur = () => {
+      setIsContrlPressed(false);
+    };
+
     const editorElement = editor.view.dom;
 
     editorElement.addEventListener('mousedown', handleClick);
@@ -67,12 +71,16 @@ export const useClickSpy = ({ editor }) => {
     editorElement.addEventListener('keydown', handleKeyDown);
     editorElement.addEventListener('keyup', handleKeyUp);
 
+    editorElement.addEventListener('blur', handleBlur);
+
     return () => {
       editorElement.removeEventListener('mousedown', handleClick);
       editorElement.removeEventListener('mouseup', handleMouseUp);
 
       editorElement.removeEventListener('keydown', handleKeyDown);
       editorElement.removeEventListener('keyup', handleKeyUp);
+
+      editorElement.removeEventListener('blur', handleBlur);
     };
   }, [editor]);
 
