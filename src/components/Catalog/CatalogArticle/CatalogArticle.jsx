@@ -48,6 +48,10 @@ const tutorialVideos = {
 
 const DEBUG = true;
 
+if (DEBUG) {
+  document.body.style.overflowX = 'hidden';
+}
+
 export default function CatalogArticle() {
   const { t } = useTranslation();
   const { lang, articleId } = useParams();

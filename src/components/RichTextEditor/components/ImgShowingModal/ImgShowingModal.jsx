@@ -1,6 +1,6 @@
 // @ts-check
 import { Box, Fade, IconButton, Modal, styled } from '@mui/material';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearImgForShow, selectImgForShow } from 'store/slices/article';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -10,7 +10,7 @@ import { store } from '../../../../store';
 
 const StyledModal = styled(Modal)(({ theme }) => {
   const isLight = store.getState().theme.currentTheme === 'light';
-  const media = theme.breakpoints;
+  // const media = theme.breakpoints;
 
   return {
     '--img-orig-w': '0px',
@@ -23,7 +23,14 @@ const StyledModal = styled(Modal)(({ theme }) => {
     '.container': {
       overflow: 'hidden',
       position: 'relative',
+
       borderRadius: '16px',
+      minWidth: 'min(90vw, 500px)',
+      width: 'fit-content',
+      maxWidth: 'min(90vw, 1400px)',
+
+      height: 'fit-content',
+      maxHeight: '90vh',
 
       backgroundColor: 'var(--color-bg-secondary)',
       boxShadow: isLight
@@ -49,33 +56,13 @@ const StyledModal = styled(Modal)(({ theme }) => {
 
     img: {
       display: 'block', // fix strip under the picture
-      // minWidth: '60vw',
-      width: 'fit-content',
-      maxWidth: 'min(80vw, 1400px)',
-      minHeight: '40px',
-      height: 'auto',
-      maxHeight: '90vh',
+      width: '100%',
       objectFit: 'contain',
       objectPosition: 'center',
     },
 
-    [media.down(900)]: {
-      img: {
-        // minWidth: '70vw',
-      },
-    },
-
-    [media.down(650)]: {
-      img: {
-        // minWidth: '90vw',
-      },
-    },
-
-    [media.down(520)]: {
-      img: {
-        // minWidth: '96vw',
-      },
-    },
+    // [media.down(900)]: {
+    // },
   };
 });
 
@@ -96,10 +83,6 @@ export const ImgShowingModal = () => {
 
   useLayoutEffect(() => {
     if (imgForSHow) {
-      let testImage = new Image();
-      testImage.src = imgForSHow;
-      console.log('testImage', testImage.width);
-
       window.dispatchEvent(openModalEvt);
       setIsOpen(true);
     }
