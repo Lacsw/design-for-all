@@ -36,7 +36,7 @@ const StyledModal = styled(Modal)(({ theme }) => {
       maxWidth: 'min(90vw, 1400px)',
 
       height: 'fit-content',
-      maxHeight: '90vh',
+      maxHeight: '95vh',
 
       backgroundColor: 'var(--color-bg-secondary)',
       boxShadow: isLight
