@@ -23,18 +23,14 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
   const [isDragHover, setIsDragHover] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDebouncing, setIsDebouncing] = useState(false);
-  /** @type {import('types/react/hooks').TUseState<'text' | 'file'>} */
-  const [mode, setMode] = useState('text');
+  const [mode, setMode] = useState(/** @type {'text' | 'file'} */ ('text'));
 
   /** @type {React.MutableRefObject<null | File>} */
   const fileRef = useRef(null);
 
-  /**
-   * @type {import('types/react/hooks').TUseState<
-   *   import('./helpers').TImgErrors
-   * >}
-   */
-  const [error, setError] = useState('');
+  const [error, setError] = useState(
+    /** @type {import('./helpers').TImgErrors | ''} */ ('')
+  );
 
   /** @type {React.RefObject<HTMLInputElement>} */
   const fileInputRef = useRef(null);

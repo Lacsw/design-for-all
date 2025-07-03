@@ -27,9 +27,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   const [flag, setFlag] = useState(false);
 
-  const [inputMode, setInputMode] =
-    /** @type {TState<'read' | 'write'>} */
-    (useState('read'));
+  const [inputMode, setInputMode] = useState(
+    /** @type {'read' | 'write'} */ ('read')
+  );
 
   const [href, setHref] = useState('');
   const [isValid, setIsValid] = useState(true);
