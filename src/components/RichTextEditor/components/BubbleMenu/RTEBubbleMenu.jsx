@@ -26,6 +26,8 @@ import clsx from 'clsx';
 const RTEBubbleMenuRaw = ({ editor }) => {
   const isLight = useSelector(getIsThemeLight);
 
+  /** @type {React.RefObject<HTMLElement | null>} */
+  const menuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(/** @type {boolean | null} */ (null));
 
   const [inputMode, setInputMode] = useState(
@@ -47,6 +49,10 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   /** @type {import('@tiptap/extension-bubble-menu').BubbleMenuPluginProps['shouldShow']} */
   const shouldShow = (params) => {
+    // TODO можно ввести локальный стейт открытости
+    // при вызовах данной функции результат её вычисления записывать в этот стейт
+    // BubbleMenu само решает, когда делать очередную проверку
+    // При введении стейта можно будет управлять видимостью дополнительно. По идее
     if (!params.editor.isEditable) {
       return false;
     }
@@ -278,6 +284,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
       ) {
         return;
       } else {
+        // предотвращаем ввод букв, если read режим
         evt.preventDefault();
       }
     }
@@ -294,16 +301,20 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   useEffect(() => {
     const handler = () => {
-      if (!isOpen) {
-        setInputMode('write');
-        setTimeout(() => {
-          if (!inputRef.current) {
-            return;
-          }
-          const inputEl = inputRef.current.querySelector('input');
-          inputEl?.focus();
-        });
-      }
+      /*
+        При создании ссылки через хоткеи я хотел, чтобы инпут внутри бабл-меню сразу переходил в режим редактирования и фокусился.
+        Код ниже работает, однако потом я подумал, что желаемое мною поведение не так однозначно удобно и решил отказаться.
+      */
+      // if (!isOpen) {
+      //   setInputMode('write');
+      //   setTimeout(() => {
+      //     if (!inputRef.current) {
+      //       return;
+      //     }
+      //     const inputEl = inputRef.current.querySelector('input');
+      //     inputEl?.focus();
+      //   });
+      // }
     };
 
     window.addEventListener(linkHotkeyCreationEvtName, handler);
@@ -313,6 +324,7 @@ const RTEBubbleMenuRaw = ({ editor }) => {
   return (
     editor && (
       <BubbleMenu
+        ref={menuRef}
         shouldShow={shouldShow}
         tippyOptions={{
           interactive: true,
