@@ -46,7 +46,7 @@ const tutorialVideos = {
   zh: tutorialZh,
 };
 
-const DEBUG = true;
+const DEBUG = false;
 
 if (DEBUG) {
   document.body.style.overflowX = 'hidden';
