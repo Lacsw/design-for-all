@@ -1,4 +1,6 @@
 // @ts-check
+import { setImgForShow } from 'store/slices/article';
+import { store } from '../../../store';
 import { findLinkInParents, goThroughLink } from '../extensions/link/helpers';
 import { isActive /*isMarkActive*/ } from '@tiptap/core';
 
@@ -7,6 +9,18 @@ let spaceCount = 0;
 /** @type {import('@tiptap/core').EditorOptions['editorProps']} */
 export const editorProps = {
   handleClickOn(view, pos, node, nodePos, event, _direct) {
+    /** - @type {EventTarget & HTMLElement} */
+    // @ts-ignore
+    const target = event.target;
+
+    if (
+      event.button === 0 &&
+      target instanceof HTMLImageElement &&
+      target.src
+    ) {
+      store.dispatch(setImgForShow(target.src));
+    }
+
     if (view.editable) {
       /**
        * @type {EventTarget & HTMLElement} Может быть как реальной ссылкой, так

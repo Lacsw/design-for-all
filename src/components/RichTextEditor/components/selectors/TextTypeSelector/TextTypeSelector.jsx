@@ -7,6 +7,7 @@ import {
 } from 'components/RichTextEditor/helpers';
 import { COMMANDS_NAMES } from 'components/RichTextEditor/helpers/constants';
 import { iconButtonSizes } from 'styles/mui/overrides/components/iconButton';
+import { closeModalEvt, openModalEvt } from 'utils/modals';
 
 const commandsForSelector = [
   COMMANDS_NAMES.paragraph,
@@ -74,6 +75,12 @@ export const TextTypeSelector = memo(function TextTypeSelector({
         className
       )}
       value={textKind}
+      onOpen={() => {
+        window.dispatchEvent(openModalEvt);
+      }}
+      onClose={() => {
+        window.dispatchEvent(closeModalEvt);
+      }}
       onChange={handleTextKindChange}
       MenuProps={{
         classes: {

@@ -10,6 +10,7 @@ import { useDebounce } from 'utils/hooks';
 import { validateLink } from 'components/RichTextEditor/extensions/link/link';
 import { linkExtConfig } from 'components/RichTextEditor/extensions/link/config';
 import { countLinksInSelection } from 'components/RichTextEditor/extensions/link/helpers';
+import { linkHotkeyCreationEvtName } from 'components/RichTextEditor/extensions/link/constants';
 
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
@@ -25,11 +26,13 @@ import clsx from 'clsx';
 const RTEBubbleMenuRaw = ({ editor }) => {
   const isLight = useSelector(getIsThemeLight);
 
-  const [flag, setFlag] = useState(false);
+  /** @type {React.RefObject<HTMLElement | null>} */
+  const menuRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(/** @type {boolean | null} */ (null));
 
-  const [inputMode, setInputMode] =
-    /** @type {TState<'read' | 'write'>} */
-    (useState('read'));
+  const [inputMode, setInputMode] = useState(
+    /** @type {'read' | 'write'} */ ('read')
+  );
 
   const [href, setHref] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -46,11 +49,13 @@ const RTEBubbleMenuRaw = ({ editor }) => {
 
   /** @type {import('@tiptap/extension-bubble-menu').BubbleMenuPluginProps['shouldShow']} */
   const shouldShow = (params) => {
+    // TODO можно ввести локальный стейт открытости
+    // при вызовах данной функции результат её вычисления записывать в этот стейт
+    // BubbleMenu само решает, когда делать очередную проверку
+    // При введении стейта можно будет управлять видимостью дополнительно. По идее
     if (!params.editor.isEditable) {
       return false;
     }
-
-    setFlag((prev) => !prev);
 
     const markType = editor.state.schema.marks.link;
     const { state, from, to } = params;
@@ -88,7 +93,9 @@ const RTEBubbleMenuRaw = ({ editor }) => {
       });
     }
 
-    return isSingleLink || linkQtyWithExtraChecking === 1;
+    const res = isSingleLink || linkQtyWithExtraChecking === 1;
+    setIsOpen(res);
+    return res;
   };
 
   /** @param {React.MouseEvent<HTMLButtonElement>} evt */
@@ -277,21 +284,47 @@ const RTEBubbleMenuRaw = ({ editor }) => {
       ) {
         return;
       } else {
+        // предотвращаем ввод букв, если read режим
         evt.preventDefault();
       }
     }
   };
 
   useEffect(() => {
-    const id = window.setTimeout(() => {
-      setInputMode('read');
-    }, 300);
-    return () => clearTimeout(id);
-  }, [flag]);
+    if (!isOpen) {
+      const id = window.setTimeout(() => {
+        setInputMode('read');
+      }, 300);
+      return () => clearTimeout(id);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handler = () => {
+      /*
+        При создании ссылки через хоткеи я хотел, чтобы инпут внутри бабл-меню сразу переходил в режим редактирования и фокусился.
+        Код ниже работает, однако потом я подумал, что желаемое мною поведение не так однозначно удобно и решил отказаться.
+      */
+      // if (!isOpen) {
+      //   setInputMode('write');
+      //   setTimeout(() => {
+      //     if (!inputRef.current) {
+      //       return;
+      //     }
+      //     const inputEl = inputRef.current.querySelector('input');
+      //     inputEl?.focus();
+      //   });
+      // }
+    };
+
+    window.addEventListener(linkHotkeyCreationEvtName, handler);
+    return () => window.removeEventListener(linkHotkeyCreationEvtName, handler);
+  }, [isOpen]);
 
   return (
     editor && (
       <BubbleMenu
+        ref={menuRef}
         shouldShow={shouldShow}
         tippyOptions={{
           interactive: true,
@@ -321,6 +354,15 @@ const RTEBubbleMenuRaw = ({ editor }) => {
           error={!isValid}
           onKeyDown={handleInputKeyDown}
           onChange={handleInputChange}
+          onClick={(e) => {
+            if (e.detail > 2) {
+              return;
+            }
+
+            if (e.detail === 2) {
+              setInputMode((prev) => (prev === 'write' ? 'read' : 'write'));
+            }
+          }}
           className={clsx(inputMode === 'write' && 'editable')}
         />
 

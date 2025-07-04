@@ -7,7 +7,7 @@ import { getCssVar } from 'utils/helpers/css-in-js';
 /** @type {import('@mui/material').SxProps<import('@mui/material').Theme>} */
 export const sxRoot = (theme) => {
   const media = theme.breakpoints;
-  const isLight = store.getState().theme.currentTheme;
+  const isLight = store.getState().theme.currentTheme === 'light';
 
   const curItemBg = getCssVar('--color-item-active');
 

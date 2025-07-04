@@ -24,6 +24,7 @@ export const COMMANDS_NAMES = {
   subscript: 'subscript',
   superscript: 'superscript',
   img: 'imageCustom', // custom command
+  link: 'link',
 };
 
 /** Человеческие названия команд на русском языке */
@@ -48,7 +49,8 @@ export const buttonsHeadings = {
   [COMMANDS_NAMES.orderedList]: RTE.BUTTON.ORDERED_LIST,
   [COMMANDS_NAMES.subscript]: RTE.BUTTON.SUBSCRIPT,
   [COMMANDS_NAMES.superscript]: RTE.BUTTON.SUPERSCRIPT,
-  [COMMANDS_NAMES.img]: RTE.BUTTON.IMAGE
+  [COMMANDS_NAMES.img]: RTE.BUTTON.IMAGE,
+  [COMMANDS_NAMES.link]: RTE.BUTTON.LINK,
 };
 
 /**

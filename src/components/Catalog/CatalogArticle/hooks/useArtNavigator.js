@@ -36,7 +36,7 @@ export const useArticleNavigator = ({ editorContainerRef }) => {
   }, [numberateHeadings]);
 
   useEffect(() => {
-    headerElRef.current = document.querySelector('div#root header.header');
+    headerElRef.current = document.getElementById('app-header');
   }, []);
 
   return {

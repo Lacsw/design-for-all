@@ -49,8 +49,9 @@ export const ArticleNavigator = memo(function ArticleNavigatorRaw({
 }) {
   const { bar: barProps, modal: modalProps } = slotProps ?? {};
 
-  const [targetEl, setTargetEl] =
-    /** @type {TState<HTMLElement | null | undefined>} */ (useState());
+  const [targetEl, setTargetEl] = useState(
+    /** @type {HTMLElement | null | undefined} */ (undefined)
+  );
 
   const [headings, setHeadings] = useState(
     /** @type {HTMLHeadingElement[]} */ ([])

@@ -37,7 +37,7 @@ import {
 } from './constants';
 import { useArticleNavigator } from './hooks/useArtNavigator';
 import { ARTICLE, getMockedArticleContent } from './mocks';
-import './withNavigator.css';
+import { closeModalEvt, openModalEvt } from 'utils/modals';
 
 const tutorialVideos = {
   ru: tutorialRu,
@@ -46,7 +46,11 @@ const tutorialVideos = {
   zh: tutorialZh,
 };
 
-const DEBUG = false;
+const DEBUG = true;
+
+if (DEBUG) {
+  document.body.style.overflowX = 'hidden';
+}
 
 export default function CatalogArticle() {
   const { t } = useTranslation();
@@ -63,12 +67,8 @@ export default function CatalogArticle() {
   const editorContainerRef =
     /** @type {React.RefObject<HTMLDivElement | null>} */ (useRef(null));
 
-  const {
-    navigatorFlag,
-    headerElRef,
-    handleEditorUpdate,
-    handleEditorCreation,
-  } = useArticleNavigator({ editorContainerRef });
+  const { navigatorFlag, handleEditorUpdate, handleEditorCreation } =
+    useArticleNavigator({ editorContainerRef });
 
   const { openComponent } = useInteractiveManager();
   const isMobile = useIsMobile();
@@ -149,18 +149,11 @@ export default function CatalogArticle() {
               targetHeadings={targetHeadings}
               firstShowingOffset={0}
               lastShowingOffset={0}
-              onOpen={(params) => {
-                const header = headerElRef.current;
-                if (!header) {
-                  return;
-                }
-                header.style.setProperty('--scroll-w', params.barWidth + 'px');
-                header.classList.add('article-navigator_expanded');
+              onOpen={(_params) => {
+                window.dispatchEvent(openModalEvt);
               }}
               onClose={(_params) => {
-                headerElRef.current?.classList.remove(
-                  'article-navigator_expanded'
-                );
+                window.dispatchEvent(closeModalEvt);
               }}
               slotProps={artNavSlotProps}
             />

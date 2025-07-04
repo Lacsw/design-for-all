@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  createSelector,
+} from '@reduxjs/toolkit';
 import createTree from 'utils/helpers/createTree';
 import treeApi from 'utils/api/tree';
 import authorApi from 'utils/api/author';
@@ -15,18 +19,27 @@ export const initialState = {
     cards: [],
     hasMore: true,
     isEndReached: false,
-    currentPage: 1
+    currentPage: 1,
   },
   articleId: null,
   article: null,
   loading: true,
-  error: ''
+  error: '',
+  // для модалки, показ картинки на весь экран
+  imgForShow: null,
 };
 
 const articleSlice = createSlice({
   name: 'article',
   initialState,
-  reducers: {},
+  reducers: {
+    setImgForShow(state, action) {
+      state.imgForShow = action.payload;
+    },
+    clearImgForShow(state) {
+      state.imgForShow = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTree.fulfilled, (state, action) => {
@@ -48,7 +61,7 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.article = action.payload;
-        state.articleId = action.meta.arg.articleId; 
+        state.articleId = action.meta.arg.articleId;
         // условие для фиктивных статей
         if (
           !action.payload.publication?.image ||
@@ -94,7 +107,7 @@ const articleSlice = createSlice({
       })
       .addCase(fetchUpdates.rejected, (state, action) => {
         state.updates.loading = false;
-        
+
         // action.payload будет содержать errorData из handleResponse
         const errorData = action.payload || action.error;
         state.updates.error = errorData.message;
@@ -131,18 +144,21 @@ export const selectArticle = (state) => state.article.article;
 export const selectUpdates = (state) => state.article.updates;
 export const selectError = (state) => state.article.error;
 export const selectLoading = (state) => state.article.loading;
+export const selectImgForShow = (state) => state.article.imgForShow;
 export const selectArticleId = (state) => state.article.articleId;
 
-
 export const selectUpdatesError = createSelector(
-  [(state) => state.article.updates.error, 
-   (state) => state.article.updates.isEndReached,
-   (state) => state.article.updates.hasMore],
+  [
+    (state) => state.article.updates.error,
+    (state) => state.article.updates.isEndReached,
+    (state) => state.article.updates.hasMore,
+  ],
   (error, isEndReached, hasMore) => ({
     error,
     isEndReached,
-    canRetry: hasMore
+    canRetry: hasMore,
   })
 );
 
+export const { setImgForShow, clearImgForShow } = articleSlice.actions;
 export const articleReducer = articleSlice.reducer;

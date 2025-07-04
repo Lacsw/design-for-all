@@ -1,7 +1,7 @@
 .header {
   position: fixed;
   left: 0;
-  right: 0;
+  right: var(--modal-corrector);
   z-index: 999;
 
   border-radius: 0px 0px 12px 12px;

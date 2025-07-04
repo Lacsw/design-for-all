@@ -51,7 +51,11 @@ export const Bar = memo(
     }, [parentSelector]);
 
     const markup = (
-      <Box sx={mergeSx(sxRoot, sx)} id={id} className={className}>
+      <Box
+        sx={mergeSx(sxRoot, sx)}
+        id={id}
+        className={clsx('artNav-barRoot', className)}
+      >
         <Fade in={isShowing} timeout={timeout}>
           <Box
             className={clsx('article-navigator', isShowing && 'visible')}

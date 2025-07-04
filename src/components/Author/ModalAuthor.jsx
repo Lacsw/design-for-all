@@ -1,12 +1,12 @@
 import { createPortal } from 'react-dom';
-import { modalRoot } from 'utils/modal';
+import { modalRoot } from 'utils/modals/constants';
 import defaultAvatar from 'images/admin/avatar_default.svg';
 import './ModalAuthor.css';
 import { useCallback, useEffect, useState } from 'react';
 import Preloader from 'components/Preloader/Preloader';
 import authorApi from 'utils/api/author';
 import SocialLinks from './SocialLinks';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 import { CATALOG, COMMON } from 'utils/translationKeys';
 
 const ModalAuthor = ({ author, isOpen, onClose }) => {

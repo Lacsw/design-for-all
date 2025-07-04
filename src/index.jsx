@@ -12,6 +12,7 @@ import './styles/index.css';
 import { store, persistor } from 'store';
 import { App } from 'components';
 import { InteractiveManagerProvider } from 'utils/contexts/InteractiveManagerContext';
+import 'utils/modals/appHeaderHandler';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

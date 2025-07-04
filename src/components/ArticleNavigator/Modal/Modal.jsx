@@ -57,16 +57,15 @@ export const NavigatorModal = memo(
         [headings.length]
       );
 
-      const [emblaOptions, setEmblaOptions] =
-        /** @type {TState<import('embla-carousel').EmblaOptionsType>} */ (
-          useState({
-            axis: 'y',
-            loop: false,
-            skipSnaps: true,
-            // duration: 10,
-            containScroll: false,
-          })
-        );
+      const [emblaOptions, setEmblaOptions] = useState(
+        /** @type {import('embla-carousel').EmblaOptionsType} */ ({
+          axis: 'y',
+          loop: false,
+          skipSnaps: true,
+          // duration: 10,
+          containScroll: false,
+        })
+      );
       const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions);
       const emblaElRef = useRef(/** @type {HTMLDivElement | null} */ (null));
 
@@ -342,8 +341,6 @@ export const NavigatorModal = memo(
 
                   onClose('click', targetHeading);
 
-                  // setTimeout(
-                  // () => {
                   const targetHeadingY = targetHeadingRect.y;
                   const curHeadingY =
                     curHeading?.getBoundingClientRect().y ?? 0;
@@ -358,9 +355,6 @@ export const NavigatorModal = memo(
                     left: 0,
                     behavior: 'smooth',
                   });
-                  // },
-                  // 50 // equals to transition delay for .header (see #25-04-01-00-14) ---- UDP obsolete
-                  // );
                 }}
               >
                 {headings.map((headingEl, idx) => {

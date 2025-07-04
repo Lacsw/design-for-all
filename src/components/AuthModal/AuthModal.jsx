@@ -4,12 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import './AuthModal.css';
 import { LoginForm, SignUpForm } from 'components';
-import { modalRoot } from 'utils/modal';
+import { modalRoot } from 'utils/modals/constants';
 import { AUTH } from 'utils/translationKeys';
 
-/**
- * modalMode - 'login' (по ум.) | 'signUp'
- */
+/** modalMode - 'login' (по ум.) | 'signUp' */
 const AuthModal = ({ isOpen, onChange, modalMode = 'login' }) => {
   const { t } = useTranslation();
 

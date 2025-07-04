@@ -6,7 +6,7 @@ import { customHeadingNodeName } from './extensions/heading/constants';
 import { CustomHeadingExtension } from './extensions/heading/heading';
 import { ListItemCustom } from './extensions/listItem';
 import { CustomImageExtension } from './extensions/image/image';
-import { ImageModal } from './extensions/image/ImageModal';
+import { ImageModal as ImageAdditionModal } from './extensions/image/ImageModal';
 
 // extensions
 import Placeholder from '@tiptap/extension-placeholder';
@@ -26,6 +26,7 @@ import DataObjectIcon from '@mui/icons-material/DataObject';
 import CodeIcon from '@mui/icons-material/Code';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
 import { Box, Divider, Typography } from '@mui/material';
 import React, {
@@ -64,6 +65,7 @@ import './components/index.css';
 import './extensions/heading/index.css';
 import './extensions/link/index.css';
 import { sxEditorWrapper, sxErrorBoundary } from './styles';
+import { ImgShowingModal } from './components/ImgShowingModal/ImgShowingModal';
 
 /**
  * @param {import('@tiptap/core').Editor} editor
@@ -348,6 +350,15 @@ const RichTextEditorRaw = memo(function RichTextEditor({
           >
             <AddPhotoAlternateRoundedIcon />
           </RteButton>
+          <RteButton
+            key={COMMANDS_NAMES.link}
+            className={classes.button}
+            editor={editor}
+            name={COMMANDS_NAMES.link}
+            inFocusWithin={inFocusWithin}
+          >
+            <InsertLinkIcon />
+          </RteButton>
           <Divider orientation="vertical" />
           <RteButton
             key={COMMANDS_NAMES.left}
@@ -445,11 +456,13 @@ const RichTextEditorRaw = memo(function RichTextEditor({
 
       {Bar}
 
-      <ImageModal
+      <ImageAdditionModal
         open={imgModalOpen}
         onClose={handleImgModalClose}
         onConfirm={handleImgInserting}
       />
+
+      <ImgShowingModal />
     </Box>
   );
   // #endregion Render

@@ -1,12 +1,17 @@
 // @ts-check
 import { customHeadingNodeName } from '../extensions/heading/constants';
 import { customImgNodeName } from '../extensions/image/constants';
+import {
+  STUB_LINK_HREF,
+  STUB_LINK_TEXT,
+  linkCreationEvt,
+} from '../extensions/link/constants';
 import { COMMANDS_NAMES } from './constants';
 
 /**
  * @callback TDRteCommand
  * @param {import('@tiptap/core').Editor | null} editor
- * @param {any} otherParams
+ * @param {any} [otherParams]
  * @returns {boolean}
  */
 
@@ -50,18 +55,6 @@ export const tiptapCommands = {
   //   editor?.chain().focus().toggleHeading({ level: 6 }).run();
   // },
   // #endregion headings
-
-  [COMMANDS_NAMES.italic]: (editor) => {
-    editor?.chain().focus().toggleItalic().run();
-  },
-  [COMMANDS_NAMES.bold]: (editor) => editor?.chain().focus().toggleBold().run(),
-  [COMMANDS_NAMES.underline]: (editor) =>
-    // @ts-ignore
-    editor?.chain().focus().toggleUnderline().run(),
-
-  [COMMANDS_NAMES.code]: (editor) => editor?.chain().focus().toggleCode().run(),
-  [COMMANDS_NAMES.codeBlock]: (editor) =>
-    editor?.chain().focus().toggleCodeBlock().run(),
 
   // #region text aligning
   [COMMANDS_NAMES.left]: (editor) => {
@@ -134,20 +127,6 @@ export const tiptapCommands = {
   },
   // #endregion text aligning
 
-  // #region ETC
-  [COMMANDS_NAMES.bulletList]: (editor) =>
-    editor?.chain().focus().toggleBulletList().run(),
-  [COMMANDS_NAMES.orderedList]: (editor) =>
-    editor?.chain().focus().toggleOrderedList().run(),
-
-  [COMMANDS_NAMES.subscript]: (editor) =>
-    // @ts-ignore
-    editor?.chain().focus().toggleSubscript().run(),
-  [COMMANDS_NAMES.superscript]: (editor) =>
-    // @ts-ignore
-    editor?.chain().focus().toggleSuperscript().run(),
-  // #endregion ETC
-
   // #region insert img
   [COMMANDS_NAMES.img]: (editor, url) => {
     if (!editor || !url || editor?.isActive(COMMANDS_NAMES.img)) {
@@ -166,6 +145,73 @@ export const tiptapCommands = {
       .run();
   },
   // #endregion insert img
+
+  // #region link
+  [COMMANDS_NAMES.link]: (editor) => {
+    if (!editor) {
+      return;
+    }
+
+    const { from, to } = editor.state.selection;
+    const isLinkInSelection = checkIsCommandActive(COMMANDS_NAMES.link, editor);
+    const stubText = STUB_LINK_TEXT;
+
+    window.dispatchEvent(linkCreationEvt);
+
+    if (!isLinkInSelection && from === to) {
+      editor.commands.insertContent(stubText);
+      const from = editor.state.selection.from - stubText.length;
+      const to = editor.state.selection.from;
+
+      return editor
+        .chain()
+        .setTextSelection({ from, to })
+        .toggleLink({
+          href: STUB_LINK_HREF,
+        })
+        .setTextSelection({
+          from: editor.state.selection.to,
+          to: editor.state.selection.to,
+        })
+        .focus()
+        .run();
+    }
+
+    return editor
+      .chain()
+      .toggleLink({
+        href: STUB_LINK_HREF,
+      })
+      .focus()
+      .run();
+  },
+  // #endregion link
+
+  // #region ETC
+  [COMMANDS_NAMES.italic]: (editor) => {
+    editor?.chain().focus().toggleItalic().run();
+  },
+  [COMMANDS_NAMES.bold]: (editor) => editor?.chain().focus().toggleBold().run(),
+  [COMMANDS_NAMES.underline]: (editor) =>
+    // @ts-ignore
+    editor?.chain().focus().toggleUnderline().run(),
+
+  [COMMANDS_NAMES.code]: (editor) => editor?.chain().focus().toggleCode().run(),
+  [COMMANDS_NAMES.codeBlock]: (editor) =>
+    editor?.chain().focus().toggleCodeBlock().run(),
+
+  [COMMANDS_NAMES.bulletList]: (editor) =>
+    editor?.chain().focus().toggleBulletList().run(),
+  [COMMANDS_NAMES.orderedList]: (editor) =>
+    editor?.chain().focus().toggleOrderedList().run(),
+
+  [COMMANDS_NAMES.subscript]: (editor) =>
+    // @ts-ignore
+    editor?.chain().focus().toggleSubscript().run(),
+  [COMMANDS_NAMES.superscript]: (editor) =>
+    // @ts-ignore
+    editor?.chain().focus().toggleSuperscript().run(),
+  // #endregion ETC
 };
 // #endregion tiptapCommands
 
@@ -178,7 +224,7 @@ export const tiptapCommands = {
  */
 export function checkIsCommandActive(commandName, editor) {
   if (!editor) {
-    return;
+    return false;
   }
 
   let needAnotherCheck = false;
@@ -295,7 +341,9 @@ const isDisabledMap = {
   [COMMANDS_NAMES.code]: (commandName) => {
     if (
       commandName === COMMANDS_NAMES.italic ||
-      commandName === COMMANDS_NAMES.bold
+      commandName === COMMANDS_NAMES.bold ||
+      commandName === COMMANDS_NAMES.img ||
+      commandName === COMMANDS_NAMES.link
     ) {
       return true;
     } else {
@@ -303,17 +351,10 @@ const isDisabledMap = {
     }
   },
   [COMMANDS_NAMES.codeBlock]: (commandName) => {
-    if (
-      commandName === COMMANDS_NAMES.italic ||
-      commandName === COMMANDS_NAMES.bold ||
-      commandName === COMMANDS_NAMES.left ||
-      commandName === COMMANDS_NAMES.center ||
-      commandName === COMMANDS_NAMES.right ||
-      commandName === COMMANDS_NAMES.justify
-    ) {
-      return true;
-    } else {
+    if (commandName === COMMANDS_NAMES.codeBlock) {
       return false;
+    } else {
+      return true;
     }
   },
 };

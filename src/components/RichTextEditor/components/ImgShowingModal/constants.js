@@ -1,0 +1,1 @@
+export const IMG_SHOWING_MODAL_ANIM_DUR = 300;
