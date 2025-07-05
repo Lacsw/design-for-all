@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { CssBaseline } from '@mui/material';
@@ -19,14 +19,14 @@ root.render(
   <ReduxProvider store={store}>
     <PersistGate persistor={persistor}>
       <I18nextProvider i18n={i18n}>
-        <BrowserRouter>
+        <HashRouter>
           <GlobalCssPriority>
             <CssBaseline />
             <InteractiveManagerProvider>
               <App />
             </InteractiveManagerProvider>
           </GlobalCssPriority>
-        </BrowserRouter>
+        </HashRouter>
       </I18nextProvider>
     </PersistGate>
   </ReduxProvider>
