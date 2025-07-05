@@ -6,6 +6,9 @@ import { checker } from 'vite-plugin-checker';
 export default defineConfig(() => {
   return {
     base: '/',
+    server: {
+      historyApiFallback: true
+    },
     build: {
       outDir: 'build',
       chunkSizeWarningLimit: 1000,
