@@ -242,6 +242,7 @@ export const NewArticle = memo(function NewArticle({
             placeholder={t(CREATION.NEW_ARTICLE.SUB_CATEGORY_PLACEHOLDER)}
             id="sub_category"
             className="new-article__input"
+            maxLength={400}
             size={32}
             value={draft.sub_category}
             onChange={handleSubCategoryChange}
@@ -301,6 +302,7 @@ export const NewArticle = memo(function NewArticle({
             {t(CREATION.NEW_ARTICLE.ARTICLE_TITLE)}
           </span>
           <input
+          maxLength={70}
             disabled={draft.main_category && draft.lang ? false : true}
             type="text"
             name="article-title"
@@ -430,6 +432,7 @@ export const NewArticle = memo(function NewArticle({
           className="input-reason"
           ref={inputRef}
           onChange={handleInput}
+          maxLength={400}
         />
       </Modal>
     </section>

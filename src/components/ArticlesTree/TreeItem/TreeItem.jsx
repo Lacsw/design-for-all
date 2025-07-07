@@ -52,12 +52,14 @@ function TreeItemInner({
   return (
     <li className={`tree-item${isOpen ? ' tree-item_opened' : ''}`}>
       <div className="tree-item__top">
-        {hasChildren && (
-          <span
-            className={'tree-item__arrow tree-item__arrow_visible_' + theme}
-            onClick={toggleOpen} // тут кликаем стрелку
-          />
-        )}
+        <span
+          className={`tree-item__arrow ${
+            hasChildren
+              ? `tree-item__arrow_visible_${theme}`
+              : 'tree-item__arrow_hidden'
+          }`}
+          onClick={hasChildren ? toggleOpen : undefined}
+        />
         <span
           className={`tree-item__title${
             isActive ? ' tree-item__title_active' : ''
