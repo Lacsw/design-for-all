@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setDecision } from 'store/slices/user';
 import { ViewArticle } from 'components';
 import previewImage from 'images/article/preview.png';
 import CheckFields from 'components/CheckFields/CheckFields';
+import { ADMIN } from 'utils/translationKeys';
 
 function correctData(info) {
   const whatUpdate = { ...info.what_update };
@@ -16,6 +18,7 @@ function correctData(info) {
 }
 
 const ArticlesDecision = ({ info, state }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,14 +29,20 @@ const ArticlesDecision = ({ info, state }) => {
     <ViewArticle original={info} />
   ) : (
     <>
-      <ViewArticle original={correctData(info)} title="Оригинал статьи" />
+      <ViewArticle
+        original={correctData(info)}
+        title={t(ADMIN.ARTICLE_DECISION.ORIGINAL_ARTICLE_TITLE)}
+      />
       {info.offered_update.type === 'created_lang' || state.status ? (
         <ViewArticle
           original={info.offered_update}
           rejectFields={info.offered_update.rejected_fields}
         />
       ) : (
-        <CheckFields offer={info.offered_update} title="Обновление статьи" />
+        <CheckFields
+          offer={info.offered_update}
+          title={t(ADMIN.ARTICLE_DECISION.UPDATED_TITLE)}
+        />
       )}
     </>
   );
