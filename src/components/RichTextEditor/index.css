@@ -163,7 +163,7 @@
 .rte__menu-bar {
   position: sticky;
   bottom: 10px;
-  background-color: var(--color-bg-accent);
+  background-color: #ffffff;
   /* background-color: var(--color-bg-main); */
   border-radius: 15px;
   padding: 3px 10px;
@@ -172,6 +172,6 @@
   z-index: 2;
 }
 
-.theme-light .rte__menu-bar {
+/* .theme-light .rte__menu-bar {
   background-color: var(--color-bg-secondary);
-}
+} */
