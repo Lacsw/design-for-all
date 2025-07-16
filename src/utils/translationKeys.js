@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material';
+
 // Общие ключи
 export const COMMON = {
   THEME: {
@@ -480,6 +482,11 @@ export const ADMIN = {
     NO_REQUESTS: 'admin_table_no_requests', // Нет запросов
   },
 
+  ARTICLE_DECISION: {
+    ORIGINAL_ARTICLE_TITLE: 'admin_article_decision_original_article_title', // Оригинал статьи
+    UPDATED_TITLE: 'admin_article_decision_updated_title', // Обновление статьи
+  },
+
   ACCOUNT_DECISION: {
     TITLE: 'admin_account_decision_title', // Заголовок для заявки регистрации автора
     SUBTITLE: 'admin_account_decision_subtitle', // Подзаголовок для заявки регистрации автора
@@ -612,5 +619,10 @@ export const RTE = {
       ON_HOSTING_LOADING: 'rte_image_errors_on_hosting_loading', // Не удалось загрузить файл на хостинг
       FROM_LINK_LOADING: 'rte_image_errors_from_link_loading', // Не удалось загрузить файл по указанной ссылке
     },
+  },
+  IMAGE_MODAL: {
+    TITLE: 'rte_image_modal_title', //  Добавить изображение
+    TYPOGRAPHY: 'rte_image_modal_input_placeholder', //   Укажите ссылку или выберите/перетащите файл
+    INPUT_PLACEHOLDER: 'rte_image_modal_input_placeholder', // Адрес изображения
   },
 };

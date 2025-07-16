@@ -15,6 +15,7 @@ import { getErrorText, getImgByURL } from './helpers';
 import authorApi from 'utils/api/author';
 import { useDebounce } from 'utils/hooks';
 import { useTranslation } from 'react-i18next';
+import { RTE } from 'utils/translationKeys';
 
 export const ImageModal = ({ open, onClose, onConfirm }) => {
   const { t } = useTranslation();
@@ -235,12 +236,10 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
       onConfirm={handleSubmit}
       twoBtns
       isBlocked={!value || error || isLoading || isDebouncing}
-      title="Добавить изображение"
+      title={t(RTE.IMAGE_MODAL.TITLE)}
       sx={sxImageModalRoot({ isDragging, isDragHover })}
     >
-      <Typography className="tip">
-        Укажите ссылку или выберите/перетащите файл
-      </Typography>
+      <Typography className="tip">{t(RTE.IMAGE_MODAL.TYPOGRAPHY)}</Typography>
 
       <Box className="container">
         <Box className="inputs-container">
@@ -258,7 +257,7 @@ export const ImageModal = ({ open, onClose, onConfirm }) => {
           {/* @ts-ignore */}
           <Input
             className="text-input"
-            placeholder="Адрес изображения"
+            placeholder={t(RTE.IMAGE_MODAL.INPUT_PLACEHOLDER)}
             // @ts-ignore
             disabled={isLoading || mode === 'file'}
             value={value}
