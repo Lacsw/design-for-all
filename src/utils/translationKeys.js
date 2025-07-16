@@ -1,5 +1,3 @@
-import { Typography } from '@mui/material';
-
 // Общие ключи
 export const COMMON = {
   THEME: {
