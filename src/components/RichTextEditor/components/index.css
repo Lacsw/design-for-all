@@ -3,30 +3,37 @@
 @import url('./BubbleMenu//index.css');
 
 .rte .rte__button {
-  background-color: transparent;
-  color: var(--color-main);
+  background-color: var(--rte-bg-secondary);
+  color: var(--rte-bg-main);
 }
 
 .rte .rte__button:focus-visible {
-  outline: 2px solid var(--color-main);
+  outline: 2px solid var(--rte-bg-secondary);
 }
 .rte .rte__button.inverted:focus-visible {
-  outline: 2px solid var(--color-secondary);
+  outline: 2px solid var(--rte-bg-secondary);
+}
+
+.rte .rte__button:hover {
+  border: 2px solid var(--rte-bg-secondary);
 }
 
 .rte .rte__button.inverted {
-  background-color: transparent;
-  color: var(--color-secondary);
+  background-color: var(--rte-bg-secondary);
+  color: var(--rte-bg-main);
+  border: 2px solid var(--color-bg-secondary);
 }
 
 .rte .rte__button.selected {
-  background-color: var(--color-main);
-  color: var(--color-secondary);
+  background-color: var(--rte-bg-main);
+  color: var(--rte-bg-secondary);
+  border: 2px solid var(--color-bg-secondary);
 }
 
 .rte .rte__button.inverted.selected {
-  background-color: var(--color-secondary);
-  color: var(--color-main);
+  background-color: var(--rte-bg-main);
+  color: var(--rte-bg-secondary);
+  border: 2px solid var(--color-bg-secondary);
 }
 
 .rte .rte__button.Mui-disabled {

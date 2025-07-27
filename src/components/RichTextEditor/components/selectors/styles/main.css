@@ -12,8 +12,8 @@
   box-sizing: border-box;
 
   color: var(--color-secondary);
-  background-color: transparent;
-  border: 2px solid var(--color-bg-accent);
+  background-color: var(--rte-bg-secondary);
+  border: 2px solid var(--rte-bg-main);
   border-radius: 50%;
   box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
 
@@ -31,8 +31,8 @@
 }
 
 .rte__selector:active .MuiSelect-select {
-  color: var(--color-main);
-  background-color: transparent;
+  color: var(--rte-bg-secondary);
+  background-color: var(--rte-bg-main);
   border: 2px solid var(--color-bg-accent);
   box-shadow: 0px 0px 5px 0px rgba(141, 141, 141, 0.3);
 }
@@ -62,23 +62,23 @@
 /* TODO check styles if NOT inverted */
 /* --- IF INVERTED ↓↓↓ ------------------------------------------------------------------------------------------------------------------------*/
 .rte__selector.inverted .MuiSelect-select {
-  color: var(--color-secondary);
-  background-color: transparent;
+  color: var(--rte-bg-secondary);
+  background-color: var(--rte-bg-main);
   border: 2px solid var(--color-bg-secondary);
 }
 
 .rte__selector.inverted:hover .MuiSelect-select {
-  color: var(--color-secondary);
-  background-color: transparent;
+  color: var(--rte-bg-main);
+  background-color: var(--rte-bg-secondary);
   border: 2px solid var(--color-bg-low-accent);
 }
 .rte__selector.inverted:active .MuiSelect-select {
-  color: var(--color-secondary);
-  background-color: transparent;
+  background-color: var(--rte-bg-main);
+  color: var(--rte-bg-secondary);
   border: 2px solid var(--color-bg-secondary);
 }
 
-.theme-light {
+/* .theme-light {
   .rte__selector.inverted .MuiSelect-select {
     color: var(--color-main);
     background-color: transparent;
@@ -95,7 +95,7 @@
     background-color: transparent;
     border: 2px solid var(--color-main);
   }
-}
+} */
 /* --- IF INVERTED ↑↑↑ ------------------------------------------------------------------------------------------------------------------------*/
 
 /* ----------------------------------------------------------------------------------------------------------------------------------- */
@@ -139,7 +139,7 @@
 
 /* ----------------------------------------------------------------------------------------------------------------------------------- */
 /* LIGHT THEME */
-.theme-light {
+/* .theme-light {
   .rte__selector .MuiSelect-select {
     color: var(--color-secondary);
     background-color: transparent;
@@ -156,5 +156,5 @@
     background-color: transparent;
     border: 2px solid var(--color-main);
   }
-}
+} */
 /* ----------------------------------------------------------------------------------------------------------------------------------- */

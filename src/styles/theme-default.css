@@ -33,4 +33,6 @@
   /* tooltip*/
   --tooltip-bg: rgba(218, 218, 218, 0.5);
 
+  --rte-bg-main: #ffffff;
+  --rte-bg-secondary: #161616;
 }
