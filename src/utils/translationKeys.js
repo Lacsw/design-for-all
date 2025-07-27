@@ -620,7 +620,7 @@ export const RTE = {
   },
   IMAGE_MODAL: {
     TITLE: 'rte_image_modal_title', //  Добавить изображение
-    TYPOGRAPHY: 'rte_image_modal_input_placeholder', //   Укажите ссылку или выберите/перетащите файл
+    TYPOGRAPHY: 'rte_image_modal_typography', //   Укажите ссылку или выберите/перетащите файл
     INPUT_PLACEHOLDER: 'rte_image_modal_input_placeholder', // Адрес изображения
   },
 };
