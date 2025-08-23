@@ -198,8 +198,11 @@ export default function AdminAppNewAuthorNavbar() {
       >
         {decisionModal === 'conflict' ? (
           <div className="reject-textbox">
+            <p className="reject-text reject-text_center">
+              {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_TITLE)}
+            </p>
             <p className="small-text">
-             Заявка автоматически отклонена из-за дублирования подкатегории.
+              Заявка автоматически отклонена из-за дублирования подкатегории.
             </p>
           </div>
         ) : (
