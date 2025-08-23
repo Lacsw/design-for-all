@@ -54,6 +54,7 @@ export default function AdminAppNewAuthorNavbar() {
   const postData = useSelector(getDecision);
   const [reasonModal, setReasonModal] = useState('');
   const [decisionModal, setDecisionModal] = useState('');
+  
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
   const approveDisabled = !canApprove(state, postData.fields);
@@ -93,7 +94,13 @@ export default function AdminAppNewAuthorNavbar() {
         const modalArg = link?.url_link || 'reject';
         setDecisionModal(modalArg);
       })
-      .catch((err) => console.warn(err));
+      .catch((err) => {
+        if (err && err.status === 409) {
+          setDecisionModal('conflict');
+          return;
+        }
+        console.warn(err);
+      });
   }
 
   function approveUpdate() {
@@ -181,7 +188,7 @@ export default function AdminAppNewAuthorNavbar() {
 
       <Modal
         title={
-          decisionModal === 'reject'
+          decisionModal === 'conflict' || decisionModal === 'reject'
             ? t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_STATUS)
             : t(ADMIN.NEW_AUTHOR_NAVBAR.APPROVE_STATUS)
         }
@@ -189,31 +196,46 @@ export default function AdminAppNewAuthorNavbar() {
         isOpen={decisionModal}
         large
       >
-        <p className="small-text">
-          {t(ADMIN.NEW_AUTHOR_NAVBAR.DECISION.TEXT, {
-            decision: t(decisionModal === 'reject'
-              ? ADMIN.NEW_AUTHOR_NAVBAR.DECISION.REJECTED
-              : ADMIN.NEW_AUTHOR_NAVBAR.DECISION.APPROVED),
-            type: state.type
-          })}
-        </p>
-        {decisionModal === 'reject' ? (
+        {decisionModal === 'conflict' ? (
           <div className="reject-textbox">
             <p className="reject-text reject-text_center">
               {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_TITLE)}
             </p>
-            {inputRef.current.value.split('\n').map((text, i) => (
-              <p key={i} className="reject-text">
-                {text}
-              </p>
-            ))}
+            <p className="small-text">
+              Заявка автоматически отклонена из-за дублирования подкатегории.
+            </p>
           </div>
         ) : (
-          <p className="small-text">
-            {t(ADMIN.NEW_AUTHOR_NAVBAR.ARTICLE_LINK_TITLE)}
-            <br />
-            {domain + '/' + decisionModal}
-          </p>
+          <>
+            <p className="small-text">
+              {t(ADMIN.NEW_AUTHOR_NAVBAR.DECISION.TEXT, {
+                decision: t(
+                  decisionModal === 'reject'
+                    ? ADMIN.NEW_AUTHOR_NAVBAR.DECISION.REJECTED
+                    : ADMIN.NEW_AUTHOR_NAVBAR.DECISION.APPROVED
+                ),
+                type: state.type,
+              })}
+            </p>
+            {decisionModal === 'reject' ? (
+              <div className="reject-textbox">
+                <p className="reject-text reject-text_center">
+                  {t(ADMIN.NEW_AUTHOR_NAVBAR.REJECT_REASON_TITLE)}
+                </p>
+                {inputRef.current.value.split('\n').map((text, i) => (
+                  <p key={i} className="reject-text">
+                    {text}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <p className="small-text">
+                {t(ADMIN.NEW_AUTHOR_NAVBAR.ARTICLE_LINK_TITLE)}
+                <br />
+                {domain + '/' + decisionModal}
+              </p>
+            )}
+          </>
         )}
       </Modal>
     </nav>
