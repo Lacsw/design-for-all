@@ -54,7 +54,7 @@ export default function AdminAppNewAuthorNavbar() {
   const postData = useSelector(getDecision);
   const [reasonModal, setReasonModal] = useState('');
   const [decisionModal, setDecisionModal] = useState('');
-  const [serverMessage, setServerMessage] = useState('');
+  
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
   const approveDisabled = !canApprove(state, postData.fields);
@@ -96,7 +96,6 @@ export default function AdminAppNewAuthorNavbar() {
       })
       .catch((err) => {
         if (err && err.status === 409) {
-          setServerMessage(err?.data?.message || err?.message || '');
           setDecisionModal('conflict');
           return;
         }
